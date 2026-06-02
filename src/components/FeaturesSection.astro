@@ -1,0 +1,126 @@
+---
+const classic = [
+  { icon:'♠', cls:'icon-spade',   title:'Play Online',           desc:'Host multiplayer tables and challenge real opponents.' },
+  { icon:'♣', cls:'icon-clubs',   title:'Practice with CPU',     desc:'Sharpen strategy offline with responsive AI opponents.' },
+  { icon:'♦', cls:'icon-diamond', title:'Join Friends & Family', desc:'Enter a table code and jump into a private room.' },
+  { icon:'♣', cls:'icon-purple',  title:'Clubs',                 desc:'Create or join a club and climb the leaderboard.' },
+  { icon:'🏆',cls:'icon-trophy',  title:'Tournaments',           desc:"Compete in brackets, earn trophies, prove you're champion." },
+];
+const multi = [
+  { icon:'♠', cls:'icon-spade',   title:'Ranked Matches',   desc:'Face opponents from around the world in competitive ranked play.' },
+  { icon:'♣', cls:'icon-clubs',   title:'Quick Match',      desc:'Jump into a live table instantly — no waiting, no setup.' },
+  { icon:'♦', cls:'icon-diamond', title:'Private Tables',   desc:'Invite only who you want and set your own house rules.' },
+  { icon:'♣', cls:'icon-purple',  title:'Club Leagues',     desc:'Your club competes together in weekly league standings.' },
+  { icon:'🏆',cls:'icon-trophy',  title:'Live Tournaments', desc:'Real-time bracket tournaments with live leaderboards and prizes.' },
+];
+---
+
+<section class="features" id="features">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">♣ How do you want to play?</div>
+      <h2 class="section-title">Pick Your Game Mode</h2>
+      <p class="section-subtitle">
+        Jump into solo practice, go live in multiplayer, or join a friend's table.
+      </p>
+    </div>
+
+    <div class="mode-tabs">
+      <button class="mode-tab mode-tab--active" data-mode="classic">Classic Play</button>
+      <button class="mode-tab" data-mode="multi">Multiplayer</button>
+    </div>
+
+    <!-- Both lists rendered in HTML; JS toggles visibility -->
+    <div class="features-list" id="classic-features">
+      {classic.map(f => (
+        <div class="feature-card">
+          <div class={`feature-icon ${f.cls}`}>{f.icon}</div>
+          <div class="feature-text">
+            <div class="feature-title">{f.title}</div>
+            <div class="feature-desc">{f.desc}</div>
+          </div>
+          <span class="feature-arrow">›</span>
+        </div>
+      ))}
+    </div>
+
+    <div class="features-list" id="multi-features" hidden>
+      {multi.map(f => (
+        <div class="feature-card">
+          <div class={`feature-icon ${f.cls}`}>{f.icon}</div>
+          <div class="feature-text">
+            <div class="feature-title">{f.title}</div>
+            <div class="feature-desc">{f.desc}</div>
+          </div>
+          <span class="feature-arrow">›</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  const tabs  = document.querySelectorAll<HTMLButtonElement>('.mode-tab');
+  const sets  = { classic: document.getElementById('classic-features')!, multi: document.getElementById('multi-features')! };
+
+  tabs.forEach(tab => tab.addEventListener('click', () => {
+    const mode = tab.dataset.mode as 'classic' | 'multi';
+    tabs.forEach(t => t.classList.toggle('mode-tab--active', t === tab));
+    sets.classic.hidden = mode !== 'classic';
+    sets.multi.hidden   = mode !== 'multi';
+  }));
+</script>
+
+<style>
+  .features { background: var(--bg-primary); }
+  .mode-tabs {
+    display: flex; justify-content: center; gap: .75rem;
+    margin-bottom: 2.5rem; flex-wrap: wrap;
+  }
+  .mode-tab {
+    padding: .55rem 1.75rem; border-radius: var(--radius-full);
+    font-size: .82rem; font-weight: 700; letter-spacing: .1em;
+    text-transform: uppercase; border: 1.5px solid var(--border);
+    background: transparent; color: var(--text-muted); transition: all var(--transition);
+  }
+  .mode-tab--active, .mode-tab:hover {
+    background: var(--gold); border-color: var(--gold); color: var(--bg-deep);
+    box-shadow: 0 3px 14px rgba(201,162,39,.35);
+  }
+  .features-list {
+    display: grid; gap: .9rem;
+    max-width: 680px; margin: 0 auto;
+  }
+  .feature-card {
+    display: flex; align-items: center; gap: 1.25rem;
+    background: var(--bg-feature); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); padding: 1.2rem 1.4rem;
+    transition: all var(--transition);
+  }
+  .feature-card:hover {
+    border-color: var(--gold-border); background: var(--bg-card-elevated);
+    transform: translateX(5px); box-shadow: var(--shadow-md), var(--glow-gold);
+  }
+  .feature-icon {
+    flex-shrink: 0; width: 52px; height: 52px;
+    border-radius: var(--radius-md);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.35rem; line-height: 1;
+  }
+  .icon-spade   { background: var(--icon-spade);   border: 1px solid #333;    }
+  .icon-clubs   { background: var(--icon-clubs);   border: 1px solid #1a6a3e; }
+  .icon-diamond { background: var(--icon-diamond); border: 1px solid #6a1a2e; }
+  .icon-purple  { background: var(--icon-purple);  border: 1px solid #3a1a6a; }
+  .icon-trophy  { background: var(--icon-trophy);  border: 1px solid #6a5a20; }
+  .feature-text  { flex: 1; min-width: 0; }
+  .feature-title {
+    font-size: .975rem; font-weight: 700; color: var(--text-primary);
+    margin-bottom: .2rem; font-family: 'Inter',sans-serif;
+  }
+  .feature-desc { font-size: .85rem; color: var(--text-muted); line-height: 1.55; }
+  .feature-arrow {
+    color: var(--text-dim); font-size: 1.4rem; flex-shrink: 0;
+    transition: transform var(--transition), color var(--transition);
+  }
+  .feature-card:hover .feature-arrow { transform: translateX(5px); color: var(--gold); }
+</style>

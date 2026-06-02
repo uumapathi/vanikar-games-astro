@@ -1,0 +1,143 @@
+---
+import BaseLayout     from '../layouts/BaseLayout.astro';
+import PricingSection from '../components/PricingSection.astro';
+import { standardGames, premiumGames } from '../data/games';
+---
+<BaseLayout
+  title="Pricing – Card Games by Vanikar"
+  description="2-week free trial with all games. Keep any 5 standard games free forever, or go premium for $1.49/month to unlock everything including online play and all future games."
+>
+  <!-- Header -->
+  <section class="pricing-header">
+    <div class="container" style="text-align:center">
+      <div class="section-tag">♦ Pricing</div>
+      <h1>Simple, Honest Pricing</h1>
+      <p class="pricing-lead">
+        Start with a full 2-week free trial. No credit card. No obligations.
+        Choose your path after — free forever or premium.
+      </p>
+    </div>
+  </section>
+
+  <PricingSection />
+
+  <!-- FAQ -->
+  <section class="faq">
+    <div class="container">
+      <h2 class="faq-title">Frequently Asked Questions</h2>
+      <div class="faq-grid">
+
+        <div class="faq-item">
+          <h3>What happens after the 2-week trial?</h3>
+          <p>
+            You can pick any 5 standard games to keep for free — permanently, with no expiry.
+            Free play is offline (CPU) only. If you want online multiplayer, hints, or premium games,
+            you can subscribe for $1.49/month or $11.99/year.
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Which games are "standard" and which are "premium"?</h3>
+          <p>
+            <strong>Standard games</strong> ({standardGames.length}):
+            {standardGames.map(g => g.name).join(', ')}.
+          </p>
+          <p style="margin-top:.5rem">
+            <strong>Premium games</strong> ({premiumGames.length}):
+            {premiumGames.map(g => g.name).join(', ')}.
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Do I need a credit card for the trial?</h3>
+          <p>
+            No. Just download the app and play. The trial starts automatically when you
+            first open the app. Payment is only needed if you choose to subscribe after the trial.
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <h3>How does billing work?</h3>
+          <p>
+            Subscriptions are managed and billed by the Apple App Store (iOS) or
+            Google Play (Android). You can cancel at any time from your device's
+            subscription settings — no contacting us required.
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <h3>What's included in the premium subscription?</h3>
+          <p>
+            All 11 current games (online + offline), hints, Clubs, Tournaments,
+            priority support — and every new game we release, available to
+            subscribers first.
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Can I change my 5 free games later?</h3>
+          <p>
+            Yes. You can swap your free game selection once every 30 days via
+            <em>Settings → My Games</em> in the app.
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Is the yearly plan cheaper?</h3>
+          <p>
+            Yes — $11.99/year works out to roughly $1.00/month, saving you about 33%
+            compared to $1.49/month billed monthly.
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <h3>What happens to my progress if I cancel?</h3>
+          <p>
+            Your game history, club membership, and statistics are saved.
+            You'll drop back to the free tier (5 standard games offline).
+            If you resubscribe, everything is restored.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Bottom CTA -->
+  <section class="bottom-cta">
+    <div class="container" style="text-align:center">
+      <h2>Ready to deal?</h2>
+      <p class="cta-sub">Download free. 11 games unlocked. 14 days. No card needed.</p>
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:1.75rem">
+        <a href="/#download" class="btn btn-primary">Download Free</a>
+        <a href="/games"     class="btn btn-secondary">Browse Games</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .pricing-header {
+    background: linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-primary) 100%);
+    padding: 4rem 0 3rem; border-bottom: 1px solid var(--border);
+  }
+  .pricing-header h1 { font-size: clamp(2rem,5vw,3rem); margin-bottom: .75rem; }
+  .pricing-lead { font-size: 1.05rem; color: var(--text-muted); max-width: 560px; margin: 0 auto; line-height: 1.7; }
+
+  .faq { padding: 4rem 0; background: var(--bg-primary); border-top: 1px solid var(--border); }
+  .faq-title { font-size: 1.6rem; margin-bottom: 2rem; text-align: center; }
+  .faq-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(320px,1fr));
+    gap: 1.25rem;
+  }
+  .faq-item {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); padding: 1.5rem;
+  }
+  .faq-item h3 { font-size: .95rem; font-weight: 700; color: var(--gold-light); margin-bottom: .6rem; font-family: 'Inter',sans-serif; }
+  .faq-item p  { font-size: .875rem; color: var(--text-secondary); line-height: 1.75; }
+
+  .bottom-cta { background: var(--bg-deep); border-top: 1px solid var(--border); padding: 4rem 0; }
+  .bottom-cta h2 { font-size: 2rem; margin-bottom: .5rem; }
+  .cta-sub    { font-size: 1rem; color: var(--text-muted); }
+</style>

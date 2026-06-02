@@ -1,0 +1,75 @@
+---
+const year = new Date().getFullYear();
+---
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-brand-text"><span>♛</span> Card Games by Vanikar</div>
+        <p class="footer-tagline">
+          Classic card tables, beautifully reimagined. Play online,
+          practice with AI, and compete in tournaments — all in one app.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <div class="footer-heading">Game Modes</div>
+        <ul class="footer-links">
+          <li><a href="/#features">Play Online</a></li>
+          <li><a href="/#features">Practice with CPU</a></li>
+          <li><a href="/#features">Join Friends &amp; Family</a></li>
+          <li><a href="/#features">Clubs</a></li>
+          <li><a href="/#features">Tournaments</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <div class="footer-heading">Company</div>
+        <ul class="footer-links">
+          <li><a href="https://vanikar.games" target="_blank" rel="noopener">Vanikar.Games</a></li>
+          <li><a href="/privacy">Privacy Policy</a></li>
+          <li><a href="/terms">Terms of Service</a></li>
+          <li><a href="mailto:support@vanikar.games">Support</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-copy">&copy; {year} Vanikar LLC. All rights reserved.</p>
+      <div class="footer-legal">
+        <a href="/terms">Terms</a>
+        <a href="/privacy">Privacy</a>
+        <a href="mailto:support@vanikar.games">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer { background: var(--bg-deep); border-top: 1px solid var(--border); padding: 4rem 0 1.5rem; }
+  .footer-grid {
+    display: grid; grid-template-columns: 1fr; gap: 2.5rem; margin-bottom: 3rem;
+  }
+  .footer-brand-text {
+    font-family: 'Cinzel',serif; font-size: 1.05rem; font-weight: 700;
+    color: var(--gold-light); display: flex; align-items: center; gap: .5rem; margin-bottom: .75rem;
+  }
+  .footer-tagline { font-size: .875rem; color: var(--text-muted); line-height: 1.7; max-width: 340px; }
+  .footer-heading {
+    font-size: .72rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .18em; color: var(--text-muted); margin-bottom: 1rem;
+  }
+  .footer-links { display: flex; flex-direction: column; gap: .55rem; }
+  .footer-links a { font-size: .9rem; color: var(--text-secondary); transition: color var(--transition); }
+  .footer-links a:hover { color: var(--gold-light); }
+  .footer-bottom {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-top: 1.5rem; border-top: 1px solid var(--border); flex-wrap: wrap; gap: .75rem;
+  }
+  .footer-copy  { font-size: .78rem; color: var(--text-dim); }
+  .footer-legal { display: flex; gap: 1.5rem; }
+  .footer-legal a { font-size: .78rem; color: var(--text-dim); transition: color var(--transition); }
+  .footer-legal a:hover { color: var(--text-secondary); }
+  @media (min-width: 640px)  { .footer-grid { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 768px)  { .footer-grid { grid-template-columns: 2fr 1fr 1fr; } }
+</style>

@@ -1,0 +1,337 @@
+---
+import BaseLayout                    from '../../layouts/BaseLayout.astro';
+import { games, standardGames, premiumGames, comingSoonGames, availableGames } from '../../data/games';
+import { allRegions, regionMeta }    from '../../data/regions';
+import type { Region }               from '../../data/regions';
+
+const total      = games.length;
+const stdCount   = standardGames.length;
+const prmCount   = premiumGames.length;
+const csCount    = comingSoonGames.length;
+const avail      = availableGames.length;
+
+// Per-region counts
+const regionCounts = Object.fromEntries(
+  allRegions.map(r => [r, games.filter(g => g.regions.includes(r)).length])
+) as Record<Region, number>;
+---
+
+<BaseLayout
+  title={`All ${total} Card Games | Vanikar`}
+  description={`Explore all ${total} card games on Vanikar: Hearts, Spades, Big Two, Durak, Belote, Indian Rummy, Truco, Cribbage, Skat and many more. Rules, how to play, strategy tips.`}
+>
+
+  <!-- Hero -->
+  <section class="games-hero">
+    <div class="container">
+      <div class="section-tag">♠ ♥ ♦ ♣</div>
+      <h1>All Card Games</h1>
+      <p class="games-lead">
+        {avail} games available now · {csCount} more coming soon — all free during your 2-week trial.
+      </p>
+      <div class="tier-legend">
+        <span class="badge badge-free">Standard</span>
+        <span class="badge-desc">Pick 5 free after trial · {stdCount} games</span>
+        <span class="badge badge-premium">Premium</span>
+        <span class="badge-desc">Subscription required · {prmCount} games</span>
+        <span class="badge badge-soon">Coming Soon</span>
+        <span class="badge-desc">{csCount} games in development</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Region filter tabs -->
+  <div class="region-bar" role="tablist" aria-label="Filter by region">
+    <div class="container">
+      <div class="region-tabs">
+        <button class="rtab rtab--active" data-filter="all" role="tab" aria-selected="true">
+          🌍 All <span class="rtab-count">{total}</span>
+        </button>
+        {allRegions.map(r => (
+          <button class="rtab" data-filter={r} role="tab" aria-selected="false">
+            {regionMeta[r].flag} {regionMeta[r].label}
+            <span class="rtab-count">{regionCounts[r]}</span>
+          </button>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <!-- Games grid — all pre-rendered; JS filters by data-regions -->
+  <section class="games-section">
+    <div class="container">
+
+      <!-- Standard games -->
+      <div id="standard-group" class="games-group">
+        <h2 class="games-group-title">
+          <span class="badge badge-free">Standard</span>
+          Standard Games
+          <span class="games-count" id="std-count">{stdCount} games</span>
+        </h2>
+        <p class="games-group-sub">After your trial, choose any 5 of these to keep free forever for offline CPU play.</p>
+
+        <div class="games-grid" id="standard-grid">
+          {standardGames.map(game => (
+            <a href={`/games/${game.slug}`}
+               class="game-card"
+               data-regions={game.regions.join('|')}>
+              <div class="game-card-icon">{game.icon}</div>
+              <div class="game-card-body">
+                <div class="game-card-header">
+                  <h3 class="game-card-name">{game.name}</h3>
+                  <span class={`diff-badge diff-${game.difficulty.toLowerCase()}`}>{game.difficulty}</span>
+                </div>
+                <p class="game-card-tagline">{game.tagline}</p>
+                <div class="game-card-meta">
+                  <span>👥 {game.playerCount}</span>
+                  <span class="region-pills">
+                    {game.regions.map(r => (
+                      <span class="region-pip" title={regionMeta[r]?.label ?? r}>
+                        {regionMeta[r]?.flag ?? '🌍'}
+                      </span>
+                    ))}
+                  </span>
+                </div>
+                {game.languages.slice(0,3).map(l => (
+                  <span class="lang-chip" title={l.name}>{l.native}</span>
+                ))}
+                {game.languages.length > 3 && (
+                  <span class="lang-chip lang-chip--more">+{game.languages.length - 3}</span>
+                )}
+              </div>
+              <span class="game-card-arrow">›</span>
+            </a>
+          ))}
+        </div>
+        <p class="games-group-empty" hidden id="std-empty">No standard games match this region.</p>
+      </div>
+
+      <!-- Premium games -->
+      <div id="premium-group" class="games-group games-group--premium">
+        <h2 class="games-group-title">
+          <span class="badge badge-premium">Premium</span>
+          Premium Games
+          <span class="games-count" id="prm-count">{prmCount} games</span>
+        </h2>
+        <p class="games-group-sub">
+          The most popular game in each region. Fully unlocked during trial; subscription required after.
+          New games go to premium subscribers first.
+        </p>
+
+        <div class="games-grid" id="premium-grid">
+          {premiumGames.map(game => (
+            <a href={`/games/${game.slug}`}
+               class="game-card game-card--premium"
+               data-regions={game.regions.join('|')}>
+              <div class="game-card-icon">{game.icon}</div>
+              <div class="game-card-body">
+                <div class="game-card-header">
+                  <h3 class="game-card-name">{game.name}</h3>
+                  <span class={`diff-badge diff-${game.difficulty.toLowerCase()}`}>{game.difficulty}</span>
+                </div>
+                <p class="game-card-tagline">{game.tagline}</p>
+                <div class="game-card-meta">
+                  <span>👥 {game.playerCount}</span>
+                  <span class="badge badge-premium badge-sm">Premium</span>
+                  <span class="region-pills">
+                    {game.regions.map(r => (
+                      <span class="region-pip" title={regionMeta[r]?.label ?? r}>
+                        {regionMeta[r]?.flag ?? '🌍'}
+                      </span>
+                    ))}
+                  </span>
+                </div>
+                {game.languages.slice(0,3).map(l => (
+                  <span class="lang-chip" title={l.name}>{l.native}</span>
+                ))}
+                {game.languages.length > 3 && (
+                  <span class="lang-chip lang-chip--more">+{game.languages.length - 3}</span>
+                )}
+              </div>
+              <span class="game-card-arrow">›</span>
+            </a>
+          ))}
+        </div>
+        <p class="games-group-empty" hidden id="prm-empty">No premium games match this region.</p>
+      </div>
+
+    </div>
+  </section>
+
+      <!-- Coming Soon -->
+      <div id="coming-soon-group" class="games-group games-group--soon">
+        <h2 class="games-group-title">
+          <span class="badge badge-soon">Coming Soon</span>
+          In Development
+          <span class="games-count" id="cs-count">{csCount} games</span>
+        </h2>
+        <p class="games-group-sub">
+          These games are in development and will be added to the app. Premium subscribers get access first.
+        </p>
+
+        <div class="games-grid" id="coming-soon-grid">
+          {comingSoonGames.map(game => (
+            <a href={`/games/${game.slug}`}
+               class="game-card game-card--soon"
+               data-regions={game.regions.join('|')}>
+              <div class="game-card-icon soon-icon">{game.icon}</div>
+              <div class="game-card-body">
+                <div class="game-card-header">
+                  <h3 class="game-card-name">{game.name}</h3>
+                  <span class={`diff-badge diff-${game.difficulty.toLowerCase()}`}>{game.difficulty}</span>
+                  <span class="badge badge-soon badge-sm">Coming Soon</span>
+                </div>
+                <p class="game-card-tagline">{game.tagline}</p>
+                <div class="game-card-meta">
+                  <span>👥 {game.playerCount}</span>
+                  <span class="region-pills">
+                    {game.regions.map(r => (
+                      <span class="region-pip" title={regionMeta[r]?.label ?? r}>
+                        {regionMeta[r]?.flag ?? '🌍'}
+                      </span>
+                    ))}
+                  </span>
+                </div>
+              </div>
+              <span class="game-card-arrow">›</span>
+            </a>
+          ))}
+        </div>
+        <p class="games-group-empty" hidden id="cs-empty">No coming-soon games match this region.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="games-cta">
+    <div class="container" style="text-align:center">
+      <p class="games-cta-sub">Try every game free for 2 weeks. No credit card required.</p>
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:1.5rem">
+        <a href="/pricing"   class="btn btn-primary">View Pricing</a>
+        <a href="/#download" class="btn btn-secondary">Download Free</a>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<script>
+  const tabs     = document.querySelectorAll<HTMLButtonElement>('.rtab');
+  const stdGrid  = document.getElementById('standard-grid')!;
+  const prmGrid  = document.getElementById('premium-grid')!;
+  const csGrid   = document.getElementById('coming-soon-grid')!;
+  const stdEmpty = document.getElementById('std-empty')!;
+  const prmEmpty = document.getElementById('prm-empty')!;
+  const csEmpty  = document.getElementById('cs-empty')!;
+  const stdCount = document.getElementById('std-count')!;
+  const prmCount = document.getElementById('prm-count')!;
+  const csCount  = document.getElementById('cs-count')!;
+
+  function filterGames(region: string) {
+    let stdVis = 0, prmVis = 0, csVis = 0;
+
+    [stdGrid, prmGrid, csGrid].forEach((grid, i) => {
+      grid.querySelectorAll<HTMLElement>('.game-card').forEach(card => {
+        const match = region === 'all' || card.dataset.regions!.split('|').includes(region);
+        card.style.display = match ? '' : 'none';
+        if (match) { if (i===0) stdVis++; else if (i===1) prmVis++; else csVis++; }
+      });
+    });
+
+    stdEmpty.hidden = stdVis > 0;
+    prmEmpty.hidden = prmVis > 0;
+    csEmpty.hidden  = csVis  > 0;
+    stdCount.textContent = `${stdVis} game${stdVis !== 1 ? 's' : ''}`;
+    prmCount.textContent = `${prmVis} game${prmVis !== 1 ? 's' : ''}`;
+    csCount.textContent  = `${csVis}  game${csVis  !== 1 ? 's' : ''}`;
+  }
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => { t.classList.remove('rtab--active'); t.setAttribute('aria-selected','false'); });
+      tab.classList.add('rtab--active');
+      tab.setAttribute('aria-selected','true');
+      filterGames(tab.dataset.filter!);
+    });
+  });
+</script>
+
+<style>
+  /* Hero */
+  .games-hero { background: linear-gradient(180deg,var(--bg-deep) 0%,var(--bg-primary) 100%); padding: 4rem 0 2.5rem; text-align: center; border-bottom: 1px solid var(--border); }
+  .games-hero h1 { font-size: clamp(2.2rem,5vw,3.5rem); margin-bottom: .75rem; }
+  .games-lead    { font-size: 1.05rem; color: var(--text-muted); max-width: 560px; margin: 0 auto 1.25rem; line-height: 1.7; }
+  .tier-legend   { display: inline-flex; align-items: center; gap: .6rem; flex-wrap: wrap; justify-content: center; font-size: .82rem; }
+  .badge-desc    { color: var(--text-dim); }
+
+  /* Badges */
+  .badge         { display: inline-block; padding: .2rem .6rem; border-radius: var(--radius-full); font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; }
+  .badge-free    { background: rgba(45,90,45,.25); color: #7acc7a; border: 1px solid rgba(122,204,122,.3); }
+  .badge-premium { background: rgba(201,162,39,.15); color: var(--gold); border: 1px solid var(--gold-border); }
+  .badge-sm      { font-size: .62rem; padding: .12rem .45rem; }
+
+  /* Region bar */
+  .region-bar { background: var(--bg-secondary); border-bottom: 1px solid var(--border); position: sticky; top: var(--nav-height); z-index: 100; }
+  .region-tabs { display: flex; gap: .25rem; overflow-x: auto; padding: .6rem 0; scrollbar-width: none; }
+  .region-tabs::-webkit-scrollbar { display: none; }
+  .rtab {
+    flex-shrink: 0; display: flex; align-items: center; gap: .35rem;
+    padding: .4rem .9rem; border-radius: var(--radius-full); font-size: .8rem; font-weight: 600;
+    background: transparent; border: 1px solid var(--border); color: var(--text-muted);
+    cursor: pointer; transition: all var(--transition); white-space: nowrap;
+  }
+  .rtab:hover, .rtab--active { background: var(--gold-subtle); border-color: var(--gold-border); color: var(--gold-light); }
+  .rtab-count { font-size: .7rem; background: var(--bg-card); border-radius: var(--radius-full); padding: .05rem .4rem; color: var(--text-dim); }
+
+  /* Section */
+  .games-section { padding: 2.5rem 0 4rem; }
+  .games-group { margin-bottom: 3.5rem; }
+  .games-group--premium { background: var(--bg-secondary); border-top: 1px solid var(--border); border-radius: var(--radius-lg); padding: 2rem; }
+  .games-group-title { display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; font-size: 1.3rem; margin-bottom: .4rem; }
+  .games-count { font-size: .82rem; color: var(--text-dim); font-family: 'Inter',sans-serif; font-weight: 400; margin-left: auto; }
+  .games-group-sub { font-size: .875rem; color: var(--text-muted); margin-bottom: 1.5rem; max-width: 640px; }
+  .games-group-empty { font-size: .875rem; color: var(--text-dim); margin-top: 1rem; }
+
+  /* Card grid */
+  .games-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px,1fr)); gap: .85rem; }
+
+  .game-card { display: flex; align-items: flex-start; gap: .9rem; background: var(--bg-feature); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.1rem 1.2rem; transition: all var(--transition); text-decoration: none; color: inherit; }
+  .game-card--premium { border-color: var(--gold-border); }
+  .game-card:hover { border-color: var(--gold-border); background: var(--bg-card-elevated); transform: translateY(-2px); box-shadow: var(--shadow-md), var(--glow-gold); }
+
+  .game-card-icon { font-size: 1.9rem; flex-shrink: 0; width: 44px; text-align: center; margin-top: .1rem; }
+  .game-card-body { flex: 1; min-width: 0; }
+  .game-card-header { display: flex; align-items: center; gap: .4rem; margin-bottom: .2rem; flex-wrap: wrap; }
+  .game-card-name  { font-size: .9rem; font-weight: 700; font-family: 'Inter',sans-serif; color: var(--text-primary); }
+
+  .diff-badge       { font-size: .62rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: .12rem .45rem; border-radius: var(--radius-full); border: 1px solid; }
+  .diff-easy        { background: rgba(45,90,45,.2);  color: #7acc7a; border-color: rgba(122,204,122,.3); }
+  .diff-medium      { background: rgba(122,90,16,.2); color: #d4a020; border-color: rgba(212,160,32,.3); }
+  .diff-hard        { background: rgba(100,26,26,.2); color: #e07070; border-color: rgba(180,60,60,.3); }
+
+  .game-card-tagline { font-size: .8rem; color: var(--text-muted); line-height: 1.5; margin-bottom: .35rem; }
+  .game-card-meta    { display: flex; align-items: center; gap: .4rem; font-size: .72rem; color: var(--text-dim); flex-wrap: wrap; margin-bottom: .3rem; }
+
+  /* Region pips */
+  .region-pills { display: inline-flex; gap: .1rem; }
+  .region-pip   { font-size: .9rem; }
+
+  /* Language chips */
+  .lang-chip      { display: inline-block; font-size: .62rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: .05rem .35rem; color: var(--text-dim); margin-right: .2rem; margin-top: .15rem; }
+  .lang-chip--more{ color: var(--gold); border-color: var(--gold-border); }
+
+  .game-card-arrow { color: var(--text-dim); font-size: 1.3rem; margin-left: auto; flex-shrink: 0; align-self: center; transition: transform var(--transition), color var(--transition); }
+  .game-card:hover .game-card-arrow { transform: translateX(4px); color: var(--gold); }
+
+  /* Coming Soon group */
+  .games-group--soon { background: var(--bg-secondary); border-top: 1px solid var(--border); border-radius: var(--radius-lg); padding: 2rem; opacity: .85; }
+  .badge-soon  { background: rgba(120,80,200,.18); color: #b490f5; border: 1px solid rgba(180,144,245,.3); }
+  .game-card--soon { opacity: .7; border-style: dashed; }
+  .game-card--soon:hover { opacity: 1; }
+  .soon-icon { filter: grayscale(40%); }
+
+  /* CTA */
+  .games-cta     { background: var(--bg-deep); border-top: 1px solid var(--border); padding: 3rem 0; }
+  .games-cta-sub { font-size: 1rem; color: var(--text-muted); }
+</style>

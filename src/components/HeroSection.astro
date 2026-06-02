@@ -1,0 +1,134 @@
+---
+---
+<section class="hero" id="home">
+  <div class="hero-decorations" aria-hidden="true">
+    <span class="hero-suit">♠</span>
+    <span class="hero-suit">♥</span>
+    <span class="hero-suit">♦</span>
+    <span class="hero-suit">♣</span>
+  </div>
+
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span>♛</span> Vanikar LLC
+      </div>
+
+      <h1 class="hero-title">Card Games</h1>
+
+      <p class="hero-tagline">Classic card tables, beautifully reimagined.</p>
+
+      <p class="hero-subtitle">
+        Polished visuals, smart CPU opponents, and online tables
+        for quick, confident play.
+      </p>
+
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <span class="hero-stat-value">15+</span>
+          <span class="hero-stat-label">Games</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-value">AI</span>
+          <span class="hero-stat-label">Practice</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-value">LIVE</span>
+          <span class="hero-stat-label">Tables</span>
+        </div>
+      </div>
+
+      <div class="hero-actions">
+        <a href="#download" class="btn btn-primary">⬇ Download Free</a>
+        <a href="#features" class="btn btn-secondary">Explore Features</a>
+      </div>
+
+      <div class="hero-platforms">
+        <span class="platform-badge">iOS</span>
+        <span>&middot;</span>
+        <span class="platform-badge">Android</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: calc(100vh - var(--nav-height));
+    display: flex; align-items: center;
+    background:
+      radial-gradient(ellipse at 50% 20%, rgba(201,162,39,.07) 0%, transparent 55%),
+      linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-primary) 100%);
+    overflow: hidden; padding: 5rem 0 4rem;
+  }
+  .hero-decorations { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+  .hero-suit {
+    position: absolute; font-size: clamp(4rem,10vw,9rem);
+    opacity: .04; color: var(--gold); user-select: none;
+    animation: hero-float 10s ease-in-out infinite;
+  }
+  .hero-suit:nth-child(1) { top:  8%; left:  4%; animation-delay: 0s;   }
+  .hero-suit:nth-child(2) { top: 12%; right: 6%; animation-delay: 2.5s; }
+  .hero-suit:nth-child(3) { bottom: 18%; left:  8%; animation-delay: 5s;}
+  .hero-suit:nth-child(4) { bottom: 12%; right: 4%; animation-delay: 1.5s; }
+  @keyframes hero-float {
+    0%,100% { transform: translateY(0)     rotate(0deg); }
+    33%      { transform: translateY(-18px) rotate(4deg); }
+    66%      { transform: translateY(9px)   rotate(-3deg); }
+  }
+  .hero-content {
+    position: relative; text-align: center;
+    max-width: 780px; margin: 0 auto; padding: 0 1.5rem; width: 100%;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: .5rem;
+    background: var(--gold-subtle); border: 1px solid var(--gold-border);
+    border-radius: var(--radius-full); padding: .4rem 1.1rem;
+    font-size: .78rem; font-weight: 700; letter-spacing: .18em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem;
+  }
+  .hero-title {
+    font-size: clamp(3rem,8vw,5.5rem); font-weight: 900;
+    letter-spacing: .06em; margin-bottom: 1rem;
+    background: linear-gradient(135deg,#fff 10%,var(--gold-light) 50%,#fff 90%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .hero-tagline {
+    font-size: clamp(1.1rem,2.5vw,1.45rem); color: var(--text-secondary);
+    margin-bottom: .75rem; font-family: 'Inter',sans-serif;
+  }
+  .hero-subtitle {
+    font-size: 1rem; color: var(--text-muted);
+    max-width: 520px; margin: 0 auto 2.5rem; line-height: 1.8;
+  }
+  .hero-stats {
+    display: flex; justify-content: center; gap: 1rem;
+    margin-bottom: 2.5rem; flex-wrap: wrap;
+  }
+  .hero-stat {
+    display: flex; flex-direction: column; align-items: center;
+    background: var(--gold-subtle); border: 1px solid var(--gold-border);
+    border-radius: var(--radius-md); padding: .75rem 1.75rem; min-width: 100px;
+  }
+  .hero-stat-value {
+    font-family: 'Cinzel',serif; font-size: 1.6rem; font-weight: 700;
+    color: var(--gold-light); line-height: 1;
+  }
+  .hero-stat-label {
+    font-size: .7rem; color: var(--text-muted);
+    text-transform: uppercase; letter-spacing: .12em; margin-top: .3rem;
+  }
+  .hero-actions { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.75rem; }
+  .hero-platforms {
+    display: flex; justify-content: center; align-items: center;
+    gap: .5rem; font-size: .78rem; color: var(--text-dim);
+  }
+  .platform-badge {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); padding: .2rem .6rem; font-weight: 500;
+  }
+  @media (max-width: 767px) {
+    .hero-actions { flex-direction: column; align-items: center; }
+  }
+</style>

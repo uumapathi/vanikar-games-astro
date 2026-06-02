@@ -1,0 +1,118 @@
+---
+const path = Astro.url.pathname;
+const isHome    = path === '/';
+const isGames   = path.startsWith('/games');
+const isPricing = path.startsWith('/pricing');
+const isPrivacy = path.startsWith('/privacy');
+const isTerms   = path.startsWith('/terms');
+---
+
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a href="/" class="navbar-brand">
+      <span class="brand-icon">♛</span>
+      <span>CARD GAMES</span>
+    </a>
+
+    <div class="navbar-nav">
+      <a href="/"          class:list={['nav-link', { active: isHome }]}>Home</a>
+      <a href="/games"     class:list={['nav-link', { active: isGames }]}>Games</a>
+      <a href="/pricing"   class:list={['nav-link', { active: isPricing }]}>Pricing</a>
+      <a href="/privacy"   class:list={['nav-link', { active: isPrivacy }]}>Privacy</a>
+      <a href="/terms"     class:list={['nav-link', { active: isTerms }]}>Terms</a>
+      <a href="/#download" class="nav-link nav-cta">Get the App</a>
+    </div>
+
+    <button class="navbar-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+      ☰
+    </button>
+  </div>
+
+  <div class="navbar-mobile" id="nav-mobile" aria-hidden="true">
+    <a href="/">Home</a>
+    <a href="/games">Games</a>
+    <a href="/pricing">Pricing</a>
+    <a href="/privacy">Privacy Policy</a>
+    <a href="/terms">Terms of Service</a>
+    <a href="/#download" class="nav-cta" style="text-align:center;margin-top:.5rem">Get the App</a>
+  </div>
+</nav>
+
+<script>
+  const toggle = document.getElementById('nav-toggle') as HTMLButtonElement;
+  const mobile = document.getElementById('nav-mobile') as HTMLElement;
+
+  toggle?.addEventListener('click', () => {
+    const open = mobile.classList.toggle('open');
+    toggle.textContent  = open ? '✕' : '☰';
+    toggle.setAttribute('aria-expanded', String(open));
+    mobile.setAttribute('aria-hidden',   String(!open));
+  });
+
+  mobile?.querySelectorAll('a').forEach(a =>
+    a.addEventListener('click', () => {
+      mobile.classList.remove('open');
+      toggle.textContent = '☰';
+      toggle.setAttribute('aria-expanded', 'false');
+      mobile.setAttribute('aria-hidden', 'true');
+    })
+  );
+</script>
+
+<style>
+  .navbar {
+    position: fixed; top: 0; left: 0; right: 0;
+    height: var(--nav-height);
+    background: rgba(8,14,8,.94);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border-gold, rgba(201,162,39,.22));
+    z-index: 1000;
+  }
+  .navbar-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    height: var(--nav-height);
+    max-width: var(--max-width); margin: 0 auto; padding: 0 1.5rem;
+  }
+  .navbar-brand {
+    display: flex; align-items: center; gap: .5rem;
+    font-family: 'Cinzel', serif; font-weight: 700; font-size: 1.15rem;
+    letter-spacing: .12em; color: var(--gold-light);
+  }
+  .brand-icon { font-size: 1.3rem; }
+  .navbar-nav { display: flex; align-items: center; gap: .15rem; }
+  .nav-link {
+    padding: .45rem .85rem; border-radius: var(--radius-sm);
+    color: var(--text-secondary); font-size: .875rem; font-weight: 500;
+    transition: color var(--transition), background var(--transition);
+  }
+  .nav-link:hover, .nav-link.active {
+    color: var(--text-primary); background: var(--gold-subtle);
+  }
+  .nav-cta {
+    background: var(--gold); color: var(--bg-deep) !important;
+    font-weight: 700; border-radius: var(--radius-full);
+    padding: .5rem 1.2rem; margin-left: .5rem;
+  }
+  .nav-cta:hover { background: var(--gold-light); }
+  .navbar-toggle {
+    display: none; background: none; border: none;
+    color: var(--text-primary); font-size: 1.4rem; padding: .5rem; line-height: 1;
+  }
+  .navbar-mobile {
+    display: none; position: fixed; top: var(--nav-height);
+    left: 0; right: 0; background: rgba(8,14,8,.98);
+    backdrop-filter: blur(14px); border-bottom: 1px solid var(--border);
+    padding: 1rem; flex-direction: column; gap: .25rem; z-index: 999;
+  }
+  .navbar-mobile.open { display: flex; }
+  .navbar-mobile a {
+    padding: .75rem 1rem; border-radius: var(--radius-sm);
+    color: var(--text-secondary); transition: color var(--transition), background var(--transition);
+  }
+  .navbar-mobile a:hover { color: var(--text-primary); background: var(--gold-subtle); }
+  @media (max-width: 767px) {
+    .navbar-nav  { display: none; }
+    .navbar-toggle { display: flex; align-items: center; }
+  }
+</style>

@@ -1,0 +1,270 @@
+---
+import BaseLayout  from '../../layouts/BaseLayout.astro';
+import { games, getGame } from '../../data/games';
+import { regionMeta } from '../../data/regions';
+import type { GetStaticPaths } from 'astro';
+
+export const getStaticPaths: GetStaticPaths = () =>
+  games.map(g => ({ params: { slug: g.slug } }));
+
+const { slug } = Astro.params;
+const game = getGame(slug as string)!;
+
+const diffColor: Record<string, string> = {
+  Easy: '#2d6a2d', Medium: '#7a5a10', Hard: '#6a1a1a',
+};
+---
+
+<BaseLayout
+  title={`${game.name} – How to Play | Vanikar Card Games`}
+  description={game.description}
+>
+  {game.comingSoon && (
+    <div class="soon-banner" role="alert">
+      <span class="soon-banner-icon">🚀</span>
+      <div>
+        <strong>Coming Soon</strong> — This game is in development and not yet available to play.
+        Premium subscribers will get access first when it launches.
+      </div>
+      <a href="/pricing" class="soon-banner-link">Get Premium →</a>
+    </div>
+  )}
+
+  <!-- Back link -->
+  <div class="back-bar">
+    <div class="container">
+      <a href="/games" class="back-link">← All Games</a>
+    </div>
+  </div>
+
+  <!-- Game hero -->
+  <section class="game-hero">
+    <div class="container">
+      <div class="game-hero-inner">
+        <div class="game-icon-lg">{game.icon}</div>
+        <div>
+          <div class="game-badges">
+            <span class="diff-badge" style={`background:${diffColor[game.difficulty]}22;color:${diffColor[game.difficulty]};border:1px solid ${diffColor[game.difficulty]}55`}>
+              {game.difficulty}
+            </span>
+            {game.premium
+              ? <span class="tier-badge tier-premium">Premium</span>
+              : <span class="tier-badge tier-free">Standard</span>
+            }
+          </div>
+          <h1 class="game-title">{game.name}</h1>
+          <p class="game-tagline">{game.tagline}</p>
+          <div class="game-meta">
+            <span>👥 {game.players}</span>
+            <span class="meta-sep">·</span>
+            <span>{game.difficulty} difficulty</span>
+          </div>
+        </div>
+      </div>
+      <p class="game-description">{game.description}</p>
+    </div>
+  </section>
+
+  <!-- Content -->
+  <section class="game-content">
+    <div class="container game-layout">
+
+      <!-- Main column -->
+      <div class="game-main">
+
+        <div class="game-section">
+          <h2>🎯 Objective</h2>
+          <p>{game.objective}</p>
+        </div>
+
+        <div class="game-section">
+          <h2>🃏 Setup</h2>
+          <ol class="styled-list">
+            {game.setup.map(step => <li>{step}</li>)}
+          </ol>
+        </div>
+
+        <div class="game-section">
+          <h2>▶ How to Play</h2>
+          <ol class="styled-list">
+            {game.gameplay.map(step => <li>{step}</li>)}
+          </ol>
+        </div>
+
+        <div class="game-section">
+          <h2>📊 Scoring</h2>
+          <p>{game.scoring}</p>
+        </div>
+
+      </div>
+
+      <!-- Sidebar -->
+      <aside class="game-sidebar">
+
+        <div class="sidebar-card">
+          <h3>Quick Facts</h3>
+          <dl class="fact-list">
+            <dt>Players</dt><dd>{game.playerCount}</dd>
+            <dt>Difficulty</dt>
+            <dd>
+              <span class="diff-badge" style={`background:${diffColor[game.difficulty]}22;color:${diffColor[game.difficulty]};border:1px solid ${diffColor[game.difficulty]}55`}>
+                {game.difficulty}
+              </span>
+            </dd>
+            <dt>Tier</dt>
+            <dd>
+              {game.premium
+                ? <span class="tier-badge tier-premium">Premium</span>
+                : <span class="tier-badge tier-free">Standard</span>
+              }
+            </dd>
+            <dt>Region</dt>
+            <dd class="dd-regions">
+              {game.regions.map(r => (
+                <span class="region-chip" title={regionMeta[r]?.label ?? r}>
+                  {regionMeta[r]?.flag ?? '🌍'} {regionMeta[r]?.label ?? r}
+                </span>
+              ))}
+            </dd>
+            <dt>Languages</dt>
+            <dd class="dd-langs">
+              {game.languages.map(l => (
+                <span class="lang-pill" title={l.name}>{l.native}</span>
+              ))}
+            </dd>
+          </dl>
+        </div>
+
+        <div class="sidebar-card">
+          <h3>💡 Strategy Tips</h3>
+          <ul class="tips-list">
+            {game.tips.map(tip => <li>{tip}</li>)}
+          </ul>
+        </div>
+
+        <div class="sidebar-card sidebar-cta">
+          <p>Play {game.name} free for 2 weeks — no credit card needed.</p>
+          <a href="/#download" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:.75rem">
+            Download Free
+          </a>
+          {game.premium && (
+            <a href="/pricing" class="btn btn-secondary" style="width:100%;justify-content:center;margin-top:.5rem">
+              View Pricing
+            </a>
+          )}
+        </div>
+
+      </aside>
+
+    </div>
+  </section>
+
+  <!-- Other games -->
+  <section class="other-games">
+    <div class="container">
+      <h2 class="other-title">More Games</h2>
+      <div class="other-grid">
+        {games.filter(g => g.slug !== game.slug).slice(0,4).map(g => (
+          <a href={`/games/${g.slug}`} class="other-card">
+            <span class="other-icon">{g.icon}</span>
+            <span class="other-name">{g.name}</span>
+            <span class="other-arrow">›</span>
+          </a>
+        ))}
+      </div>
+      <div style="text-align:center;margin-top:1.5rem">
+        <a href="/games" class="btn btn-secondary">View All {games.length} Games</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .soon-banner {
+    display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
+    background: rgba(120,80,200,.12); border-bottom: 2px solid rgba(180,144,245,.4);
+    padding: 1rem 1.5rem; font-size: .9rem; color: #c8aaff;
+  }
+  .soon-banner strong { color: #b490f5; }
+  .soon-banner-icon   { font-size: 1.4rem; flex-shrink: 0; }
+  .soon-banner-link   { margin-left: auto; font-size: .82rem; color: #b490f5; text-decoration: underline; white-space: nowrap; }
+  .back-bar  { background: var(--bg-deep); border-bottom: 1px solid var(--border); padding: .75rem 0; }
+  .back-link { font-size: .85rem; color: var(--text-muted); transition: color var(--transition); }
+  .back-link:hover { color: var(--gold-light); }
+
+  .game-hero {
+    background: linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-primary) 100%);
+    padding: 3rem 0 2.5rem; border-bottom: 1px solid var(--border);
+  }
+  .game-hero-inner { display: flex; align-items: flex-start; gap: 1.5rem; margin-bottom: 1.25rem; flex-wrap: wrap; }
+  .game-icon-lg   { font-size: 4rem; line-height: 1; }
+  .game-badges    { display: flex; gap: .5rem; margin-bottom: .5rem; flex-wrap: wrap; }
+
+  .diff-badge { display: inline-block; font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; padding: .2rem .6rem; border-radius: var(--radius-full); }
+  .tier-badge { display: inline-block; font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; padding: .2rem .6rem; border-radius: var(--radius-full); }
+  .tier-free    { background: rgba(45,90,45,.25); color: #7acc7a; border: 1px solid rgba(122,204,122,.3); }
+  .tier-premium { background: rgba(201,162,39,.15); color: var(--gold); border: 1px solid var(--gold-border); }
+
+  .game-title   { font-size: clamp(1.8rem,4vw,2.8rem); margin-bottom: .35rem; }
+  .game-tagline { font-size: 1.05rem; color: var(--text-secondary); margin-bottom: .5rem; }
+  .game-meta    { display: flex; align-items: center; gap: .5rem; font-size: .85rem; color: var(--text-dim); }
+  .meta-sep     { color: var(--border); }
+  .game-description { font-size: 1rem; color: var(--text-muted); line-height: 1.8; max-width: 760px; }
+
+  .game-content { padding: 3rem 0 4rem; }
+  .game-layout  {
+    display: grid; grid-template-columns: 1fr 320px; gap: 3rem; align-items: start;
+  }
+  .game-section { margin-bottom: 2.5rem; }
+  .game-section h2 {
+    font-size: 1.15rem; color: var(--text-primary); margin-bottom: .85rem;
+    padding-bottom: .5rem; border-bottom: 1px solid var(--border);
+    font-family: 'Inter',sans-serif; font-weight: 700;
+  }
+  .game-section p  { color: var(--text-secondary); line-height: 1.8; }
+
+  .styled-list { list-style: decimal; padding-left: 1.4rem; color: var(--text-secondary); line-height: 1.9; }
+  .styled-list li { margin-bottom: .35rem; }
+
+  /* Sidebar */
+  .sidebar-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); padding: 1.25rem; margin-bottom: 1rem;
+  }
+  .sidebar-card h3 { font-size: .9rem; font-weight: 700; color: var(--text-primary); margin-bottom: .85rem; font-family: 'Inter',sans-serif; }
+  .sidebar-cta     { background: var(--gold-subtle); border-color: var(--gold-border); }
+  .sidebar-cta p   { font-size: .875rem; color: var(--text-secondary); }
+
+  .fact-list       { display: grid; grid-template-columns: auto 1fr; gap: .5rem .75rem; font-size: .875rem; align-items: start; }
+  .fact-list dt    { color: var(--text-dim); padding-top: .15rem; }
+  .fact-list dd    { color: var(--text-primary); }
+  .dd-regions, .dd-langs { display: flex; flex-wrap: wrap; gap: .3rem; }
+  .region-chip { font-size: .72rem; background: var(--gold-subtle); border: 1px solid var(--gold-border); border-radius: var(--radius-sm); padding: .15rem .5rem; color: var(--gold-light); white-space: nowrap; }
+  .lang-pill   { font-size: .72rem; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: .15rem .5rem; color: var(--text-secondary); white-space: nowrap; }
+
+  .tips-list       { list-style: none; padding: 0; }
+  .tips-list li    { font-size: .875rem; color: var(--text-secondary); line-height: 1.65; padding: .5rem 0; border-bottom: 1px solid var(--border); }
+  .tips-list li:last-child { border-bottom: none; }
+  .tips-list li::before { content: '💡 '; }
+
+  /* Other games */
+  .other-games  { background: var(--bg-secondary); border-top: 1px solid var(--border); padding: 3rem 0; }
+  .other-title  { font-size: 1.2rem; margin-bottom: 1rem; }
+  .other-grid   { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px,1fr)); gap: .75rem; margin-bottom: 0; }
+  .other-card   {
+    display: flex; align-items: center; gap: .75rem;
+    background: var(--bg-feature); border: 1px solid var(--border);
+    border-radius: var(--radius-md); padding: .85rem 1rem;
+    transition: all var(--transition); text-decoration: none; color: inherit;
+  }
+  .other-card:hover { border-color: var(--gold-border); transform: translateY(-1px); }
+  .other-icon  { font-size: 1.5rem; }
+  .other-name  { flex: 1; font-size: .875rem; font-weight: 600; color: var(--text-primary); }
+  .other-arrow { color: var(--text-dim); transition: transform var(--transition); }
+  .other-card:hover .other-arrow { transform: translateX(3px); color: var(--gold); }
+
+  @media (max-width: 900px) {
+    .game-layout { grid-template-columns: 1fr; }
+    .game-sidebar { order: -1; }
+  }
+</style>

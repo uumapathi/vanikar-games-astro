@@ -1,0 +1,182 @@
+---
+import { standardGames, premiumGames, availableGames, comingSoonGames } from '../data/games';
+const availCount = availableGames.length;
+const csCount    = comingSoonGames.length;
+---
+<section class="pricing" id="pricing">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">♦ Simple, Fair Pricing</div>
+      <h2 class="section-title">Start Free. Stay Free or Go Premium.</h2>
+      <p class="section-subtitle">
+        Every game unlocked for 2 weeks. No credit card required.
+      </p>
+    </div>
+
+    <div class="pricing-grid">
+
+      <!-- Trial -->
+      <div class="price-card price-card--trial">
+        <div class="price-badge">2-Week Trial</div>
+        <div class="price-icon">🎉</div>
+        <div class="price-amount">Free</div>
+        <div class="price-period">for 14 days</div>
+        <p class="price-desc">Everything unlocked. No credit card. Just download and play.</p>
+        <ul class="price-features">
+          <li>✓ All {availCount} available games</li>
+          <li>✓ Online multiplayer</li>
+          <li>✓ CPU / offline practice</li>
+          <li>✓ Hints &amp; tips</li>
+          <li>✓ Clubs &amp; Tournaments</li>
+          <li>✓ No credit card needed</li>
+        </ul>
+        <a href="/#download" class="btn btn-primary price-btn">Start Free Trial</a>
+      </div>
+
+      <!-- Free Forever -->
+      <div class="price-card price-card--free">
+        <div class="price-badge price-badge--free">After Trial</div>
+        <div class="price-icon">♣</div>
+        <div class="price-amount">Free</div>
+        <div class="price-period">forever</div>
+        <p class="price-desc">Pick any 5 standard games to keep — offline &amp; CPU play, no expiry.</p>
+        <ul class="price-features">
+          <li>✓ Choose any 5 standard games</li>
+          <li>✓ Offline / CPU play</li>
+          <li class="feat-no">✗ Online multiplayer</li>
+          <li class="feat-no">✗ Hints</li>
+          <li class="feat-no">✗ Premium games</li>
+          <li class="feat-no">✗ Clubs &amp; Tournaments</li>
+        </ul>
+        <a href="/games" class="btn btn-secondary price-btn">See Standard Games</a>
+      </div>
+
+      <!-- Premium -->
+      <div class="price-card price-card--premium">
+        <div class="price-badge price-badge--premium">Most Popular</div>
+        <div class="price-icon">👑</div>
+        <div class="price-toggle-wrap">
+          <div class="price-toggle" id="price-toggle">
+            <button class="ptab ptab--active" data-plan="monthly">Monthly</button>
+            <button class="ptab" data-plan="yearly">Yearly <span class="save-chip">Save 33%</span></button>
+          </div>
+        </div>
+        <div class="price-amount" id="price-amount">$1.49</div>
+        <div class="price-period" id="price-period">per month</div>
+        <div class="price-yearly-note" id="price-yearly-note" style="display:none">
+          Billed as $11.99/year
+        </div>
+        <p class="price-desc">Everything, forever. New games for subscribers first.</p>
+        <ul class="price-features">
+          <li>✓ All {availCount} current games</li>
+          <li>✓ Early access to {csCount} coming soon games</li>
+          <li>✓ New games as released</li>
+          <li>✓ Online multiplayer</li>
+          <li>✓ CPU / offline practice</li>
+          <li>✓ Hints &amp; tips</li>
+          <li>✓ Clubs &amp; Tournaments</li>
+          <li>✓ Priority support</li>
+        </ul>
+        <a href="/#download" class="btn btn-primary price-btn">Get Premium</a>
+        <p class="price-fine">Cancel anytime · Billed via App Store / Google Play</p>
+      </div>
+
+    </div>
+
+    <p class="pricing-note">
+      <strong>{standardGames.length} standard</strong> (free pick-5 after trial): {standardGames.map(g => g.name).join(', ')}.<br/>
+      <strong>{premiumGames.length} premium</strong> (subscription): {premiumGames.map(g => g.name).join(', ')}.<br/>
+      <strong>{csCount} coming soon</strong> — premium subscribers get early access.
+      &nbsp;<a href="/games">See all games →</a>
+    </p>
+  </div>
+</section>
+
+<script>
+  const toggle  = document.getElementById('price-toggle');
+  const amount  = document.getElementById('price-amount')!;
+  const period  = document.getElementById('price-period')!;
+  const ynote   = document.getElementById('price-yearly-note')!;
+
+  toggle?.querySelectorAll<HTMLButtonElement>('.ptab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      toggle.querySelectorAll('.ptab').forEach(b => b.classList.remove('ptab--active'));
+      btn.classList.add('ptab--active');
+      const yearly = btn.dataset.plan === 'yearly';
+      amount.textContent = yearly ? '$0.99' : '$1.49';
+      period.textContent = yearly ? 'per month' : 'per month';
+      ynote.style.display = yearly ? 'block' : 'none';
+    });
+  });
+</script>
+
+<style>
+  .pricing { background: var(--bg-secondary); border-top: 1px solid var(--border); }
+
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.25rem; margin-bottom: 2rem;
+    align-items: start;
+  }
+
+  .price-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius-xl); padding: 2rem 1.75rem;
+    position: relative; transition: box-shadow var(--transition);
+  }
+  .price-card--premium {
+    border-color: var(--gold-border);
+    background: linear-gradient(160deg, var(--bg-card) 0%, rgba(201,162,39,.05) 100%);
+  }
+  .price-card--premium:hover { box-shadow: var(--glow-gold); }
+
+  .price-badge {
+    display: inline-block; font-size: .65rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .14em;
+    padding: .25rem .7rem; border-radius: var(--radius-full); margin-bottom: 1rem;
+    background: var(--bg-secondary); color: var(--text-dim); border: 1px solid var(--border);
+  }
+  .price-badge--free    { background: rgba(45,90,45,.25); color: #7acc7a; border-color: rgba(122,204,122,.3); }
+  .price-badge--premium { background: var(--gold-subtle); color: var(--gold); border-color: var(--gold-border); }
+
+  .price-icon   { font-size: 2.5rem; margin-bottom: .75rem; }
+  .price-amount { font-family: 'Cinzel',serif; font-size: 2.8rem; font-weight: 700; color: var(--gold-light); line-height: 1; }
+  .price-period { font-size: .8rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: .1em; margin: .25rem 0 1rem; }
+  .price-yearly-note { font-size: .78rem; color: var(--text-muted); margin-top: -.75rem; margin-bottom: 1rem; }
+  .price-desc   { font-size: .9rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 1.25rem; }
+
+  .price-features { list-style: none; padding: 0; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: .45rem; }
+  .price-features li { font-size: .875rem; color: var(--text-secondary); }
+  .feat-no { color: var(--text-dim) !important; }
+
+  .price-btn    { width: 100%; justify-content: center; }
+  .price-fine   { font-size: .72rem; color: var(--text-dim); text-align: center; margin-top: .6rem; }
+
+  /* Toggle */
+  .price-toggle-wrap { margin-bottom: .75rem; }
+  .price-toggle {
+    display: inline-flex; background: var(--bg-secondary); border: 1px solid var(--border);
+    border-radius: var(--radius-full); padding: .2rem;
+  }
+  .ptab {
+    padding: .3rem .9rem; border-radius: var(--radius-full); font-size: .78rem;
+    font-weight: 600; background: none; border: none; color: var(--text-muted);
+    cursor: pointer; transition: all var(--transition);
+  }
+  .ptab--active { background: var(--gold); color: var(--bg-deep); }
+  .save-chip {
+    display: inline-block; background: rgba(45,90,45,.4); color: #7acc7a;
+    font-size: .6rem; padding: .05rem .4rem; border-radius: var(--radius-full);
+    margin-left: .3rem; vertical-align: middle;
+  }
+
+  .pricing-note {
+    text-align: center; font-size: .82rem; color: var(--text-dim); line-height: 1.7;
+  }
+  .pricing-note a { color: var(--gold); text-decoration: underline; text-underline-offset: 3px; }
+
+  @media (max-width: 640px) {
+    .pricing-grid { grid-template-columns: 1fr; }
+  }
+</style>

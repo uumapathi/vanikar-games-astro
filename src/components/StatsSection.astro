@@ -1,0 +1,47 @@
+---
+---
+<section class="stats">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <div class="stat-value">15+</div>
+        <div class="stat-label">Card Games</div>
+        <div class="stat-sub">Classic &amp; modern titles</div>
+      </div>
+      <div class="stat-item stat-divider">
+        <div class="stat-value">AI</div>
+        <div class="stat-label">Smart Opponents</div>
+        <div class="stat-sub">Multiple difficulty levels</div>
+      </div>
+      <div class="stat-item stat-divider">
+        <div class="stat-value">LIVE</div>
+        <div class="stat-label">Online Tables</div>
+        <div class="stat-sub">Real players, real stakes</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .stats {
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    padding: 3rem 0;
+  }
+  .stats-grid {
+    display: grid; grid-template-columns: repeat(3,1fr);
+    gap: 1.5rem; text-align: center;
+  }
+  .stat-item    { padding: 1.25rem; }
+  .stat-value   {
+    font-family: 'Cinzel',serif; font-size: clamp(2.2rem,5vw,3.5rem);
+    font-weight: 700; color: var(--gold-light); line-height: 1; margin-bottom: .5rem;
+  }
+  .stat-label   { font-size: .95rem; color: var(--text-secondary); font-weight: 500; }
+  .stat-sub     { font-size: .75rem; color: var(--text-dim); margin-top: .3rem; }
+  .stat-divider { border-left: 1px solid var(--border); }
+  @media (max-width: 767px) {
+    .stats-grid   { grid-template-columns: 1fr; gap: 0; }
+    .stat-divider { border-left: none; border-top: 1px solid var(--border); }
+  }
+</style>
