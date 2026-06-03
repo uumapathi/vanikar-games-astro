@@ -63,7 +63,15 @@ Write-Host "IIS_IUSRS ReadAndExecute granted"
 # ── 6. Start ───────────────────────────────────────────────────────────────────
 Start-WebAppPool -Name $AppPoolName
 Start-Website    -Name $SiteName
+
+# ── 6b. Re-add HTTP :11080 (plain, no TLS) ────────────────────────────────────
+$httpPort = 11080
+Get-WebBinding -Name $SiteName -Protocol http -Port $httpPort -ErrorAction SilentlyContinue |
+    Remove-WebBinding -ErrorAction SilentlyContinue
+New-WebBinding -Name $SiteName -Protocol http -Port $httpPort -IPAddress '*'
+Write-Host "HTTP binding added on :$httpPort"
+
 Write-Host "Site state: $((Get-Website -Name $SiteName).State)"
-Write-Host "Done. https://localhost:$Port"
+Write-Host "Done. https://localhost:$Port  |  http://localhost:$httpPort"
 
 Stop-Transcript

@@ -12,19 +12,21 @@
     </div>
 
     <div class="store-buttons">
-      <a href="#" class="btn-store" aria-label="Download on the App Store">
+      <a href="/ios" class="btn-store" aria-label="Download on the App Store">
         <span class="btn-store-icon">&#xF8FF;</span>
         <div class="btn-store-text">
           <span class="btn-store-label">Download on the</span>
           <span class="btn-store-name">App Store</span>
         </div>
+        <span class="store-soon-pip">Soon</span>
       </a>
-      <a href="#" class="btn-store" aria-label="Get it on Google Play">
+      <a href="/android" class="btn-store" aria-label="Get it on Google Play">
         <span class="btn-store-icon">▶</span>
         <div class="btn-store-text">
           <span class="btn-store-label">Get it on</span>
           <span class="btn-store-name">Google Play</span>
         </div>
+        <span class="store-soon-pip">Soon</span>
       </a>
     </div>
 
@@ -45,4 +47,9 @@
     flex-wrap: wrap; margin-top: 2.5rem;
   }
   .download-note { margin-top: 1.5rem; font-size: .8rem; color: var(--text-dim); }
+  .store-soon-pip {
+    margin-left: .4rem; font-size: .62rem; font-weight: 700; text-transform: uppercase;
+    background: rgba(120,80,200,.18); color: #b490f5; border: 1px solid rgba(180,144,245,.3);
+    border-radius: var(--radius-full); padding: .12rem .45rem; white-space: nowrap;
+  }
 </style>

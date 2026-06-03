@@ -3,6 +3,7 @@ const path = Astro.url.pathname;
 const isHome    = path === '/';
 const isGames   = path.startsWith('/games');
 const isPricing = path.startsWith('/pricing');
+const isSocial  = path === '/#social';
 const isPrivacy = path.startsWith('/privacy');
 const isTerms   = path.startsWith('/terms');
 ---
@@ -17,6 +18,7 @@ const isTerms   = path.startsWith('/terms');
     <div class="navbar-nav">
       <a href="/"          class:list={['nav-link', { active: isHome }]}>Home</a>
       <a href="/games"     class:list={['nav-link', { active: isGames }]}>Games</a>
+      <a href="/#social"   class="nav-link">Community</a>
       <a href="/pricing"   class:list={['nav-link', { active: isPricing }]}>Pricing</a>
       <a href="/privacy"   class:list={['nav-link', { active: isPrivacy }]}>Privacy</a>
       <a href="/terms"     class:list={['nav-link', { active: isTerms }]}>Terms</a>
@@ -31,6 +33,7 @@ const isTerms   = path.startsWith('/terms');
   <div class="navbar-mobile" id="nav-mobile" aria-hidden="true">
     <a href="/">Home</a>
     <a href="/games">Games</a>
+    <a href="/#social">Community</a>
     <a href="/pricing">Pricing</a>
     <a href="/privacy">Privacy Policy</a>
     <a href="/terms">Terms of Service</a>
