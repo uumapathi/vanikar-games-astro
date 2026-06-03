@@ -55,17 +55,8 @@ const csCount    = comingSoonGames.length;
       <div class="price-card price-card--premium">
         <div class="price-badge price-badge--premium">Most Popular</div>
         <div class="price-icon">👑</div>
-        <div class="price-toggle-wrap">
-          <div class="price-toggle" id="price-toggle">
-            <button class="ptab ptab--active" data-plan="monthly">Monthly</button>
-            <button class="ptab" data-plan="yearly">Yearly <span class="save-chip">Save 33%</span></button>
-          </div>
-        </div>
-        <div class="price-amount" id="price-amount">$1.49</div>
-        <div class="price-period" id="price-period">per month</div>
-        <div class="price-yearly-note" id="price-yearly-note" style="display:none">
-          Billed as $11.99/year
-        </div>
+        <div class="price-amount price-soon">Coming<br/>Soon</div>
+        <div class="price-period">pricing announced at launch</div>
         <p class="price-desc">Everything, forever. New games for subscribers first.</p>
         <ul class="price-features">
           <li>✓ All {availCount} current games</li>
@@ -98,23 +89,6 @@ const csCount    = comingSoonGames.length;
   </div>
 </section>
 
-<script>
-  const toggle  = document.getElementById('price-toggle');
-  const amount  = document.getElementById('price-amount')!;
-  const period  = document.getElementById('price-period')!;
-  const ynote   = document.getElementById('price-yearly-note')!;
-
-  toggle?.querySelectorAll<HTMLButtonElement>('.ptab').forEach(btn => {
-    btn.addEventListener('click', () => {
-      toggle.querySelectorAll('.ptab').forEach(b => b.classList.remove('ptab--active'));
-      btn.classList.add('ptab--active');
-      const yearly = btn.dataset.plan === 'yearly';
-      amount.textContent = yearly ? '$0.99' : '$1.49';
-      period.textContent = yearly ? 'per month' : 'per month';
-      ynote.style.display = yearly ? 'block' : 'none';
-    });
-  });
-</script>
 
 <style>
   .pricing { background: var(--bg-secondary); border-top: 1px solid var(--border); }
@@ -148,6 +122,7 @@ const csCount    = comingSoonGames.length;
 
   .price-icon   { font-size: 2.5rem; margin-bottom: .75rem; }
   .price-amount { font-family: 'Cinzel',serif; font-size: 2.8rem; font-weight: 700; color: var(--gold-light); line-height: 1; }
+  .price-soon   { font-size: 1.8rem; line-height: 1.2; }
   .price-period { font-size: .8rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: .1em; margin: .25rem 0 1rem; }
   .price-yearly-note { font-size: .78rem; color: var(--text-muted); margin-top: -.75rem; margin-bottom: 1rem; }
   .price-desc   { font-size: .9rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 1.25rem; }
