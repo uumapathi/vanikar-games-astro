@@ -39,11 +39,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <h2>Get notified at launch</h2>
           <p>Be the first to know when the app hits the App Store. We'll send one email — nothing else.</p>
         </div>
-        <form class="notify-form" onsubmit="handleSubmit(event)">
-          <input type="email" placeholder="your@email.com" required class="notify-input" aria-label="Email address" />
-          <button type="submit" class="btn btn-primary notify-btn">Notify Me</button>
+        <form class="notify-form" id="notify-form-ios" novalidate>
+          <input type="email" id="notify-email-ios" placeholder="your@email.com"
+                 required class="notify-input" aria-label="Email address" />
+          <button type="button" class="btn btn-primary notify-btn"
+                  id="notify-btn-ios">Notify Me</button>
         </form>
-        <p class="notify-fine" id="notify-confirm" hidden>✓ You're on the list — we'll email you at launch!</p>
+        <p class="notify-fine" id="notify-confirm-ios" hidden>
+          ✓ You're on the list — we'll email you at launch!
+        </p>
       </div>
     </section>
 
@@ -141,11 +145,47 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 </BaseLayout>
 
 <script>
-  function handleSubmit(e: Event) {
-    e.preventDefault();
-    (e.target as HTMLFormElement).style.display = 'none';
-    document.getElementById('notify-confirm')!.hidden = false;
-  }
+  // ─── Google Forms config ──────────────────────────────────────────────────
+  // TODO: replace with your actual values from forms.google.com
+  const GF_FORM_ID     = '1FAIpQLSeEtXUBBZXTR602ygQLThvrW1MTFbmky5ZaMa3caILWr9S4nQ';
+  const GF_EMAIL_ENTRY = 'entry.302574150';
+  const GF_PLATFORM   = 'iOS';                 // sent as a hidden platform value
+  // ─────────────────────────────────────────────────────────────────────────
+
+  const btn     = document.getElementById('notify-btn-ios')!;
+  const input   = document.getElementById('notify-email-ios') as HTMLInputElement;
+  const form    = document.getElementById('notify-form-ios')!;
+  const confirm = document.getElementById('notify-confirm-ios')!;
+
+  btn.addEventListener('click', async () => {
+    if (!input.checkValidity() || !input.value) {
+      input.reportValidity();
+      return;
+    }
+
+    btn.textContent = 'Sending…';
+    btn.setAttribute('disabled', 'true');
+
+    try {
+      await fetch(
+        `https://docs.google.com/forms/d/e/${GF_FORM_ID}/formResponse`,
+        {
+          method:  'POST',
+          mode:    'no-cors',           // Google Forms doesn't allow CORS; response is opaque
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body:    new URLSearchParams({
+            [GF_EMAIL_ENTRY]:   input.value,
+            'entry.platform':   GF_PLATFORM,   // ignored if field doesn't exist — harmless
+          }).toString(),
+        }
+      );
+    } catch {
+      // no-cors always throws on response reading — submission still goes through
+    }
+
+    form.style.display    = 'none';
+    confirm.hidden        = false;
+  });
 </script>
 
 <style>
