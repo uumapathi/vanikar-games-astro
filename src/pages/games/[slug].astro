@@ -1,7 +1,6 @@
 ---
 import BaseLayout  from '../../layouts/BaseLayout.astro';
 import { games, getGame } from '../../data/games';
-import { regionMeta } from '../../data/regions';
 import type { GetStaticPaths } from 'astro';
 
 export const getStaticPaths: GetStaticPaths = () =>
@@ -118,14 +117,6 @@ const diffColor: Record<string, string> = {
                 : <span class="tier-badge tier-free">Standard</span>
               }
             </dd>
-            <dt>Region</dt>
-            <dd class="dd-regions">
-              {game.regions.map(r => (
-                <span class="region-chip" title={regionMeta[r]?.label ?? r}>
-                  {regionMeta[r]?.flag ?? '🌍'} {regionMeta[r]?.label ?? r}
-                </span>
-              ))}
-            </dd>
             <dt>Languages</dt>
             <dd class="dd-langs">
               {game.languages.map(l => (
@@ -238,9 +229,8 @@ const diffColor: Record<string, string> = {
   .fact-list       { display: grid; grid-template-columns: auto 1fr; gap: .5rem .75rem; font-size: .875rem; align-items: start; }
   .fact-list dt    { color: var(--text-dim); padding-top: .15rem; }
   .fact-list dd    { color: var(--text-primary); }
-  .dd-regions, .dd-langs { display: flex; flex-wrap: wrap; gap: .3rem; }
-  .region-chip { font-size: .72rem; background: var(--gold-subtle); border: 1px solid var(--gold-border); border-radius: var(--radius-sm); padding: .15rem .5rem; color: var(--gold-light); white-space: nowrap; }
-  .lang-pill   { font-size: .72rem; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: .15rem .5rem; color: var(--text-secondary); white-space: nowrap; }
+  .dd-langs  { display: flex; flex-wrap: wrap; gap: .3rem; }
+  .lang-pill { font-size: .72rem; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: .15rem .5rem; color: var(--text-secondary); white-space: nowrap; }
 
   .tips-list       { list-style: none; padding: 0; }
   .tips-list li    { font-size: .875rem; color: var(--text-secondary); line-height: 1.65; padding: .5rem 0; border-bottom: 1px solid var(--border); }

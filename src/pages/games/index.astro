@@ -1,19 +1,12 @@
 ---
 import BaseLayout                    from '../../layouts/BaseLayout.astro';
 import { games, standardGames, premiumGames, comingSoonGames, availableGames } from '../../data/games';
-import { allRegions, regionMeta }    from '../../data/regions';
-import type { Region }               from '../../data/regions';
 
-const total      = games.length;
-const stdCount   = standardGames.length;
-const prmCount   = premiumGames.length;
-const csCount    = comingSoonGames.length;
-const avail      = availableGames.length;
-
-// Per-region counts
-const regionCounts = Object.fromEntries(
-  allRegions.map(r => [r, games.filter(g => g.regions.includes(r)).length])
-) as Record<Region, number>;
+const total    = games.length;
+const stdCount = standardGames.length;
+const prmCount = premiumGames.length;
+const csCount  = comingSoonGames.length;
+const avail    = availableGames.length;
 ---
 
 <BaseLayout
@@ -40,24 +33,7 @@ const regionCounts = Object.fromEntries(
     </div>
   </section>
 
-  <!-- Region filter tabs -->
-  <div class="region-bar" role="tablist" aria-label="Filter by region">
-    <div class="container">
-      <div class="region-tabs">
-        <button class="rtab rtab--active" data-filter="all" role="tab" aria-selected="true">
-          🌍 All <span class="rtab-count">{total}</span>
-        </button>
-        {allRegions.map(r => (
-          <button class="rtab" data-filter={r} role="tab" aria-selected="false">
-            {regionMeta[r].flag} {regionMeta[r].label}
-            <span class="rtab-count">{regionCounts[r]}</span>
-          </button>
-        ))}
-      </div>
-    </div>
-  </div>
-
-  <!-- Games grid — all pre-rendered; JS filters by data-regions -->
+  <!-- Games grid -->
   <section class="games-section">
     <div class="container">
 
@@ -72,9 +48,7 @@ const regionCounts = Object.fromEntries(
 
         <div class="games-grid" id="standard-grid">
           {standardGames.map(game => (
-            <a href={`/games/${game.slug}`}
-               class="game-card"
-               data-regions={game.regions.join('|')}>
+            <a href={`/games/${game.slug}`} class="game-card">
               <div class="game-card-icon">{game.icon}</div>
               <div class="game-card-body">
                 <div class="game-card-header">
@@ -82,16 +56,7 @@ const regionCounts = Object.fromEntries(
                   <span class={`diff-badge diff-${game.difficulty.toLowerCase()}`}>{game.difficulty}</span>
                 </div>
                 <p class="game-card-tagline">{game.tagline}</p>
-                <div class="game-card-meta">
-                  <span>👥 {game.playerCount}</span>
-                  <span class="region-pills">
-                    {game.regions.map(r => (
-                      <span class="region-pip" title={regionMeta[r]?.label ?? r}>
-                        {regionMeta[r]?.flag ?? '🌍'}
-                      </span>
-                    ))}
-                  </span>
-                </div>
+                <div class="game-card-meta"><span>👥 {game.playerCount}</span></div>
                 {game.languages.slice(0,3).map(l => (
                   <span class="lang-chip" title={l.name}>{l.native}</span>
                 ))}
@@ -102,8 +67,6 @@ const regionCounts = Object.fromEntries(
               <span class="game-card-arrow">›</span>
             </a>
           ))}
-        </div>
-        <p class="games-group-empty" hidden id="std-empty">No standard games match this region.</p>
       </div>
 
       <!-- Premium games -->
@@ -120,9 +83,7 @@ const regionCounts = Object.fromEntries(
 
         <div class="games-grid" id="premium-grid">
           {premiumGames.map(game => (
-            <a href={`/games/${game.slug}`}
-               class="game-card game-card--premium"
-               data-regions={game.regions.join('|')}>
+            <a href={`/games/${game.slug}`} class="game-card game-card--premium">
               <div class="game-card-icon">{game.icon}</div>
               <div class="game-card-body">
                 <div class="game-card-header">
@@ -133,13 +94,6 @@ const regionCounts = Object.fromEntries(
                 <div class="game-card-meta">
                   <span>👥 {game.playerCount}</span>
                   <span class="badge badge-premium badge-sm">Premium</span>
-                  <span class="region-pills">
-                    {game.regions.map(r => (
-                      <span class="region-pip" title={regionMeta[r]?.label ?? r}>
-                        {regionMeta[r]?.flag ?? '🌍'}
-                      </span>
-                    ))}
-                  </span>
                 </div>
                 {game.languages.slice(0,3).map(l => (
                   <span class="lang-chip" title={l.name}>{l.native}</span>
@@ -151,8 +105,6 @@ const regionCounts = Object.fromEntries(
               <span class="game-card-arrow">›</span>
             </a>
           ))}
-        </div>
-        <p class="games-group-empty" hidden id="prm-empty">No premium games match this region.</p>
       </div>
 
     </div>
@@ -171,9 +123,7 @@ const regionCounts = Object.fromEntries(
 
         <div class="games-grid" id="coming-soon-grid">
           {comingSoonGames.map(game => (
-            <a href={`/games/${game.slug}`}
-               class="game-card game-card--soon"
-               data-regions={game.regions.join('|')}>
+            <a href={`/games/${game.slug}`} class="game-card game-card--soon">
               <div class="game-card-icon soon-icon">{game.icon}</div>
               <div class="game-card-body">
                 <div class="game-card-header">
@@ -182,22 +132,11 @@ const regionCounts = Object.fromEntries(
                   <span class="badge badge-soon badge-sm">Coming Soon</span>
                 </div>
                 <p class="game-card-tagline">{game.tagline}</p>
-                <div class="game-card-meta">
-                  <span>👥 {game.playerCount}</span>
-                  <span class="region-pills">
-                    {game.regions.map(r => (
-                      <span class="region-pip" title={regionMeta[r]?.label ?? r}>
-                        {regionMeta[r]?.flag ?? '🌍'}
-                      </span>
-                    ))}
-                  </span>
-                </div>
+                <div class="game-card-meta"><span>👥 {game.playerCount}</span></div>
               </div>
               <span class="game-card-arrow">›</span>
             </a>
           ))}
-        </div>
-        <p class="games-group-empty" hidden id="cs-empty">No coming-soon games match this region.</p>
       </div>
 
     </div>
@@ -216,46 +155,6 @@ const regionCounts = Object.fromEntries(
 
 </BaseLayout>
 
-<script>
-  const tabs     = document.querySelectorAll<HTMLButtonElement>('.rtab');
-  const stdGrid  = document.getElementById('standard-grid')!;
-  const prmGrid  = document.getElementById('premium-grid')!;
-  const csGrid   = document.getElementById('coming-soon-grid')!;
-  const stdEmpty = document.getElementById('std-empty')!;
-  const prmEmpty = document.getElementById('prm-empty')!;
-  const csEmpty  = document.getElementById('cs-empty')!;
-  const stdCount = document.getElementById('std-count')!;
-  const prmCount = document.getElementById('prm-count')!;
-  const csCount  = document.getElementById('cs-count')!;
-
-  function filterGames(region: string) {
-    let stdVis = 0, prmVis = 0, csVis = 0;
-
-    [stdGrid, prmGrid, csGrid].forEach((grid, i) => {
-      grid.querySelectorAll<HTMLElement>('.game-card').forEach(card => {
-        const match = region === 'all' || card.dataset.regions!.split('|').includes(region);
-        card.style.display = match ? '' : 'none';
-        if (match) { if (i===0) stdVis++; else if (i===1) prmVis++; else csVis++; }
-      });
-    });
-
-    stdEmpty.hidden = stdVis > 0;
-    prmEmpty.hidden = prmVis > 0;
-    csEmpty.hidden  = csVis  > 0;
-    stdCount.textContent = `${stdVis} game${stdVis !== 1 ? 's' : ''}`;
-    prmCount.textContent = `${prmVis} game${prmVis !== 1 ? 's' : ''}`;
-    csCount.textContent  = `${csVis}  game${csVis  !== 1 ? 's' : ''}`;
-  }
-
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      tabs.forEach(t => { t.classList.remove('rtab--active'); t.setAttribute('aria-selected','false'); });
-      tab.classList.add('rtab--active');
-      tab.setAttribute('aria-selected','true');
-      filterGames(tab.dataset.filter!);
-    });
-  });
-</script>
 
 <style>
   /* Hero */
@@ -271,20 +170,7 @@ const regionCounts = Object.fromEntries(
   .badge-premium { background: rgba(201,162,39,.15); color: var(--gold); border: 1px solid var(--gold-border); }
   .badge-sm      { font-size: .62rem; padding: .12rem .45rem; }
 
-  /* Region bar */
-  .region-bar { background: var(--bg-secondary); border-bottom: 1px solid var(--border); position: sticky; top: var(--nav-height); z-index: 100; }
-  .region-tabs { display: flex; gap: .25rem; overflow-x: auto; padding: .6rem 0; scrollbar-width: none; }
-  .region-tabs::-webkit-scrollbar { display: none; }
-  .rtab {
-    flex-shrink: 0; display: flex; align-items: center; gap: .35rem;
-    padding: .4rem .9rem; border-radius: var(--radius-full); font-size: .8rem; font-weight: 600;
-    background: transparent; border: 1px solid var(--border); color: var(--text-muted);
-    cursor: pointer; transition: all var(--transition); white-space: nowrap;
-  }
-  .rtab:hover, .rtab--active { background: var(--gold-subtle); border-color: var(--gold-border); color: var(--gold-light); }
-  .rtab-count { font-size: .7rem; background: var(--bg-card); border-radius: var(--radius-full); padding: .05rem .4rem; color: var(--text-dim); }
-
-  /* Section */
+/* Section */
   .games-section { padding: 2.5rem 0 4rem; }
   .games-group { margin-bottom: 3.5rem; }
   .games-group--premium { background: var(--bg-secondary); border-top: 1px solid var(--border); border-radius: var(--radius-lg); padding: 2rem; }
@@ -313,11 +199,7 @@ const regionCounts = Object.fromEntries(
   .game-card-tagline { font-size: .8rem; color: var(--text-muted); line-height: 1.5; margin-bottom: .35rem; }
   .game-card-meta    { display: flex; align-items: center; gap: .4rem; font-size: .72rem; color: var(--text-dim); flex-wrap: wrap; margin-bottom: .3rem; }
 
-  /* Region pips */
-  .region-pills { display: inline-flex; gap: .1rem; }
-  .region-pip   { font-size: .9rem; }
-
-  /* Language chips */
+/* Language chips */
   .lang-chip      { display: inline-block; font-size: .62rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: .05rem .35rem; color: var(--text-dim); margin-right: .2rem; margin-top: .15rem; }
   .lang-chip--more{ color: var(--gold); border-color: var(--gold-border); }
 
