@@ -30,15 +30,9 @@ const {
 
   {gaId && (
       <>
-        {/* Google tag (gtag.js) */}
+        {/* Google Analytics 4 */}
         <script is:inline src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
-        <script is:inline>
-          {(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-          new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-          })(window,document,'script','dataLayer', {gaId});}
-        </script>
+        <script is:inline set:html={`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${gaId}');`}></script>
       </>
     )}
 
@@ -54,14 +48,6 @@ const {
   <link rel="apple-touch-icon"                      href="/icon-180.png" />
 </head>
 <body>
-  <noscript>
-      <iframe
-        src={`https://www.googletagmanager.com/ns.html?id=${gaId}`}
-        height="0"
-        width="0"
-        style="display:none;visibility:hidden">
-      </iframe>
-    </noscript>
   <NavMenu />
   <main class="main-content">
     <slot />
