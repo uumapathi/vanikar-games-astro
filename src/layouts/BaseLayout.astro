@@ -6,11 +6,13 @@ import '../styles/global.css';
 interface Props {
   title?:       string;
   description?: string;
+  gaId?:       string;
 }
 
 const {
   title       = 'Card Games by Vanikar – Classic Card Tables, Beautifully Reimagined',
   description = 'Play 15+ classic card games online or offline. Challenge real opponents, practice with smart AI, join private tables, build clubs, and compete in live tournaments.',
+  gaId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID,
 } = Astro.props;
 ---
 <!doctype html>
@@ -25,6 +27,19 @@ const {
   <meta property="og:description" content={description} />
   <meta property="og:type"        content="website" />
   <meta name="twitter:card"       content="summary_large_image" />
+
+  {gaId && (
+      <>
+        {/* Google tag (gtag.js) */}
+        <script is:inline src={`https://googletagmanager.com{gaId}`}></script>
+        <script is:inline define:vars={{ gaId }}>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', gaId);
+        </script>
+      </>
+    )}
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
