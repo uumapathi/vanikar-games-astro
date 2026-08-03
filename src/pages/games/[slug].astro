@@ -1,5 +1,7 @@
 ---
 import BaseLayout  from '../../layouts/BaseLayout.astro';
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
 import { games, getGame } from '../../data/games';
 import type { GetStaticPaths } from 'astro';
 
@@ -8,6 +10,14 @@ export const getStaticPaths: GetStaticPaths = () =>
 
 const { slug } = Astro.params;
 const game = getGame(slug as string)!;
+
+const shotModules = import.meta.glob<{ default: ImageMetadata }>('../../assets/screenshots/*/*.png', { eager: true });
+const shots = (game.screenshots ?? [])
+  .map(s => {
+    const mod = shotModules[`../../assets/screenshots/${s.file}`];
+    return mod ? { ...s, image: mod.default } : null;
+  })
+  .filter((s): s is Exclude<typeof s, null> => s !== null);
 
 const diffColor: Record<string, string> = {
   Easy: '#2d6a2d', Medium: '#7a5a10', Hard: '#6a1a1a',
@@ -46,10 +56,7 @@ const diffColor: Record<string, string> = {
             <span class="diff-badge" style={`background:${diffColor[game.difficulty]}22;color:${diffColor[game.difficulty]};border:1px solid ${diffColor[game.difficulty]}55`}>
               {game.difficulty}
             </span>
-            {game.premium
-              ? <span class="tier-badge tier-premium">Premium</span>
-              : <span class="tier-badge tier-free">Standard</span>
-            }
+            <span class="tier-badge tier-premium">Premium</span>
           </div>
           <h1 class="game-title">{game.name}</h1>
           <p class="game-tagline">{game.tagline}</p>
@@ -90,6 +97,20 @@ const diffColor: Record<string, string> = {
           </ol>
         </div>
 
+        {game.playGuide && (
+          <div class="game-section">
+            <h2>📖 Detailed Guide</h2>
+            {game.playGuide.map(sec => (
+              <div class="guide-sub">
+                <h3>{sec.heading}</h3>
+                <ul class="guide-list">
+                  {sec.points.map(p => <li>{p}</li>)}
+                </ul>
+              </div>
+            ))}
+          </div>
+        )}
+
         <div class="game-section">
           <h2>📊 Scoring</h2>
           <p>{game.scoring}</p>
@@ -112,10 +133,7 @@ const diffColor: Record<string, string> = {
             </dd>
             <dt>Tier</dt>
             <dd>
-              {game.premium
-                ? <span class="tier-badge tier-premium">Premium</span>
-                : <span class="tier-badge tier-free">Standard</span>
-              }
+              <span class="tier-badge tier-premium">Premium</span>
             </dd>
             <dt>Languages</dt>
             <dd class="dd-langs">
@@ -138,17 +156,35 @@ const diffColor: Record<string, string> = {
           <a href="/#download" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:.75rem">
             Download Free
           </a>
-          {game.premium && (
-            <a href="/pricing" class="btn btn-secondary" style="width:100%;justify-content:center;margin-top:.5rem">
-              View Pricing
-            </a>
-          )}
+          <a href="/pricing" class="btn btn-secondary" style="width:100%;justify-content:center;margin-top:.5rem">
+            View Pricing
+          </a>
         </div>
 
       </aside>
 
     </div>
   </section>
+
+  {shots.length > 0 && (
+    <section class="shots-section">
+      <div class="container">
+        <h2 class="shots-title">📱 {game.name} in the app</h2>
+        <p class="shots-sub">A step-by-step look at a real game on the table.</p>
+        <div class="shots-grid">
+          {shots.map(s => (
+            <figure class="shot-card">
+              <Image src={s.image} alt={`${game.name} — ${s.title}`} width={420} class="shot-img" />
+              <figcaption>
+                <strong>{s.title}</strong>
+                <span>{s.caption}</span>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
 
   <!-- Other games -->
   <section class="other-games">
@@ -193,7 +229,6 @@ const diffColor: Record<string, string> = {
 
   .diff-badge { display: inline-block; font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; padding: .2rem .6rem; border-radius: var(--radius-full); }
   .tier-badge { display: inline-block; font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; padding: .2rem .6rem; border-radius: var(--radius-full); }
-  .tier-free    { background: rgba(45,90,45,.25); color: #7acc7a; border: 1px solid rgba(122,204,122,.3); }
   .tier-premium { background: rgba(201,162,39,.15); color: var(--gold); border: 1px solid var(--gold-border); }
 
   .game-title   { font-size: clamp(1.8rem,4vw,2.8rem); margin-bottom: .35rem; }
@@ -216,6 +251,30 @@ const diffColor: Record<string, string> = {
 
   .styled-list { list-style: decimal; padding-left: 1.4rem; color: var(--text-secondary); line-height: 1.9; }
   .styled-list li { margin-bottom: .35rem; }
+
+  /* Detailed guide */
+  .guide-sub { margin-bottom: 1.75rem; }
+  .guide-sub h3 {
+    font-size: .95rem; font-weight: 700; color: var(--gold-light);
+    font-family: 'Inter',sans-serif; margin-bottom: .5rem;
+  }
+  .guide-list { list-style: disc; padding-left: 1.4rem; color: var(--text-secondary); line-height: 1.8; }
+  .guide-list li { margin-bottom: .4rem; }
+
+  /* Screenshots */
+  .shots-section { background: var(--bg-deep); border-top: 1px solid var(--border); padding: 3.5rem 0; }
+  .shots-title   { font-size: 1.4rem; margin-bottom: .35rem; }
+  .shots-sub     { font-size: .9rem; color: var(--text-muted); margin-bottom: 1.75rem; }
+  .shots-grid    {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 1.25rem;
+  }
+  .shot-card { margin: 0; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; transition: all var(--transition); }
+  .shot-card:hover { border-color: var(--gold-border); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+  .shot-card :global(.shot-img) { display: block; width: 100%; height: auto; }
+  .shot-card figcaption { padding: .85rem 1rem 1rem; }
+  .shot-card figcaption strong { display: block; font-size: .85rem; color: var(--text-primary); font-family: 'Inter',sans-serif; margin-bottom: .25rem; }
+  .shot-card figcaption span   { font-size: .78rem; color: var(--text-muted); line-height: 1.55; }
 
   /* Sidebar */
   .sidebar-card {

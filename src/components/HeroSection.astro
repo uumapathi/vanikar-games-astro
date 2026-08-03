@@ -1,4 +1,14 @@
 ---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import { availableGames, comingSoonGames } from '../data/games';
+
+const shots = import.meta.glob<{ default: ImageMetadata }>('../assets/screenshots/app/*.png', { eager: true });
+const homeShot  = shots['../assets/screenshots/app/home.png'].default;
+const gamesShot = shots['../assets/screenshots/app/offline-game-selection.png'].default;
+
+const avail = availableGames.length;
+const cs    = comingSoonGames.length;
 ---
 <section class="hero" id="home">
   <div class="hero-decorations" aria-hidden="true">
@@ -9,44 +19,58 @@
   </div>
 
   <div class="container">
-    <div class="hero-content">
-      <div class="hero-badge">
-        <span>♛</span> Vanikar LLC
+    <div class="hero-grid">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span>♛</span> Vanikar LLC
+        </div>
+
+        <h1 class="hero-title">Card Games</h1>
+
+        <p class="hero-tagline">Classic card tables, beautifully reimagined.</p>
+
+        <p class="hero-subtitle">
+          Polished visuals, smart CPU opponents, and online tables
+          for quick, confident play.
+        </p>
+
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <span class="hero-stat-value">{avail}</span>
+            <span class="hero-stat-label">Games Live</span>
+          </div>
+          <div class="hero-stat">
+            <span class="hero-stat-value">{cs}</span>
+            <span class="hero-stat-label">Coming Soon</span>
+          </div>
+          <div class="hero-stat">
+            <span class="hero-stat-value">LIVE</span>
+            <span class="hero-stat-label">Tables</span>
+          </div>
+        </div>
+
+        <div class="hero-actions">
+          <a href="#download" class="btn btn-primary">⬇ Download Free</a>
+          <a href="/games" class="btn btn-secondary">Browse the Games</a>
+        </div>
+
+        <div class="hero-platforms">
+          <span class="platform-badge">iOS</span>
+          <span>&middot;</span>
+          <span class="platform-badge">Android</span>
+        </div>
       </div>
 
-      <h1 class="hero-title">Card Games</h1>
-
-      <p class="hero-tagline">Classic card tables, beautifully reimagined.</p>
-
-      <p class="hero-subtitle">
-        Polished visuals, smart CPU opponents, and online tables
-        for quick, confident play.
-      </p>
-
-      <div class="hero-stats">
-        <div class="hero-stat">
-          <span class="hero-stat-value">15+</span>
-          <span class="hero-stat-label">Games</span>
+      <div class="hero-visual" aria-hidden="true">
+        <div class="float-card float-card--1"><span>A</span>♠</div>
+        <div class="float-card float-card--2"><span>K</span>♥</div>
+        <div class="float-card float-card--3"><span>Q</span>♦</div>
+        <div class="phone phone--back">
+          <Image src={gamesShot} alt="" width={300} class="phone-img" />
         </div>
-        <div class="hero-stat">
-          <span class="hero-stat-value">AI</span>
-          <span class="hero-stat-label">Practice</span>
+        <div class="phone phone--front">
+          <Image src={homeShot} alt="Card Games app home screen" width={340} class="phone-img" />
         </div>
-        <div class="hero-stat">
-          <span class="hero-stat-value">LIVE</span>
-          <span class="hero-stat-label">Tables</span>
-        </div>
-      </div>
-
-      <div class="hero-actions">
-        <a href="#download" class="btn btn-primary">⬇ Download Free</a>
-        <a href="#features" class="btn btn-secondary">Explore Features</a>
-      </div>
-
-      <div class="hero-platforms">
-        <span class="platform-badge">iOS</span>
-        <span>&middot;</span>
-        <span class="platform-badge">Android</span>
       </div>
     </div>
   </div>
@@ -77,10 +101,13 @@
     33%      { transform: translateY(-18px) rotate(4deg); }
     66%      { transform: translateY(9px)   rotate(-3deg); }
   }
-  .hero-content {
-    position: relative; text-align: center;
-    max-width: 780px; margin: 0 auto; padding: 0 1.5rem; width: 100%;
+
+  .hero-grid {
+    display: grid; grid-template-columns: minmax(0,1.1fr) minmax(0,.9fr);
+    gap: 3rem; align-items: center;
   }
+  .hero-content { position: relative; max-width: 620px; padding: 0 1.5rem; }
+
   .hero-badge {
     display: inline-flex; align-items: center; gap: .5rem;
     background: var(--gold-subtle); border: 1px solid var(--gold-border);
@@ -89,7 +116,7 @@
     text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem;
   }
   .hero-title {
-    font-size: clamp(3rem,8vw,5.5rem); font-weight: 900;
+    font-size: clamp(3rem,7vw,5rem); font-weight: 900;
     letter-spacing: .06em; margin-bottom: 1rem;
     background: linear-gradient(135deg,#fff 10%,var(--gold-light) 50%,#fff 90%);
     -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
@@ -100,16 +127,16 @@
   }
   .hero-subtitle {
     font-size: 1rem; color: var(--text-muted);
-    max-width: 520px; margin: 0 auto 2.5rem; line-height: 1.8;
+    max-width: 520px; margin: 0 0 2.25rem; line-height: 1.8;
   }
   .hero-stats {
-    display: flex; justify-content: center; gap: 1rem;
-    margin-bottom: 2.5rem; flex-wrap: wrap;
+    display: flex; gap: 1rem;
+    margin-bottom: 2.25rem; flex-wrap: wrap;
   }
   .hero-stat {
     display: flex; flex-direction: column; align-items: center;
     background: var(--gold-subtle); border: 1px solid var(--gold-border);
-    border-radius: var(--radius-md); padding: .75rem 1.75rem; min-width: 100px;
+    border-radius: var(--radius-md); padding: .75rem 1.5rem; min-width: 96px;
   }
   .hero-stat-value {
     font-family: 'Cinzel',serif; font-size: 1.6rem; font-weight: 700;
@@ -119,14 +146,75 @@
     font-size: .7rem; color: var(--text-muted);
     text-transform: uppercase; letter-spacing: .12em; margin-top: .3rem;
   }
-  .hero-actions { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.75rem; }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.75rem; }
   .hero-platforms {
-    display: flex; justify-content: center; align-items: center;
+    display: flex; align-items: center;
     gap: .5rem; font-size: .78rem; color: var(--text-dim);
   }
   .platform-badge {
     background: var(--bg-card); border: 1px solid var(--border);
     border-radius: var(--radius-sm); padding: .2rem .6rem; font-weight: 500;
+  }
+
+  /* Phone composition */
+  .hero-visual {
+    position: relative; display: flex; justify-content: center;
+    min-height: 560px; align-items: center;
+  }
+  .phone {
+    border-radius: 1.9rem; overflow: hidden;
+    border: 3px solid #2e2e2e; background: #000;
+    box-shadow: 0 24px 60px rgba(0,0,0,.55), 0 0 40px rgba(201,162,39,.12);
+  }
+  .phone :global(.phone-img) { display: block; width: 100%; height: auto; }
+  .phone--front {
+    position: relative; width: min(300px, 70%); z-index: 2;
+    transform: rotate(-5deg);
+    animation: phone-bob 7s ease-in-out infinite;
+  }
+  .phone--back {
+    position: absolute; width: min(250px, 55%); z-index: 1;
+    right: 2%; top: 6%;
+    transform: rotate(7deg) scale(.96);
+    opacity: .75; filter: brightness(.8);
+    animation: phone-bob 7s ease-in-out infinite reverse;
+  }
+  @keyframes phone-bob {
+    0%,100% { translate: 0 0; }
+    50%     { translate: 0 -12px; }
+  }
+
+  /* Floating cards */
+  .float-card {
+    position: absolute; z-index: 3;
+    width: 58px; height: 80px; border-radius: 8px;
+    background: linear-gradient(160deg, #fdfdf6 0%, #efeadb 100%);
+    border: 1px solid rgba(0,0,0,.25);
+    box-shadow: 0 10px 26px rgba(0,0,0,.45);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    font-size: 1.5rem; line-height: 1; font-weight: 700;
+    animation: card-drift 9s ease-in-out infinite;
+  }
+  .float-card span { font-family: 'Cinzel',serif; font-size: 1.05rem; }
+  .float-card--1 { color: #16161a; left: 4%;  top: 8%;   rotate: -14deg; animation-delay: 0s; }
+  .float-card--2 { color: #a3222c; right: 0%; bottom: 12%; rotate: 12deg;  animation-delay: 3s; }
+  .float-card--3 { color: #a3222c; left: 10%; bottom: 4%;  rotate: -7deg;  animation-delay: 6s; }
+  @keyframes card-drift {
+    0%,100% { translate: 0 0; }
+    33%     { translate: -6px -14px; }
+    66%     { translate: 5px 8px; }
+  }
+
+  @media (max-width: 900px) {
+    .hero { padding: 4rem 0 3.5rem; }
+    .hero-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .hero-content { text-align: center; margin: 0 auto; }
+    .hero-subtitle { margin-left: auto; margin-right: auto; }
+    .hero-stats, .hero-actions, .hero-platforms { justify-content: center; }
+    .hero-visual { min-height: 0; }
+    .phone--front { width: min(260px, 78%); }
+    .phone--back  { display: none; }
+    .float-card   { display: none; }
   }
   @media (max-width: 767px) {
     .hero-actions { flex-direction: column; align-items: center; }

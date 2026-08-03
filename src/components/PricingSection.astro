@@ -1,5 +1,5 @@
 ---
-import { standardGames, premiumGames, availableGames, comingSoonGames } from '../data/games';
+import { availableGames, comingSoonGames } from '../data/games';
 const availCount = availableGames.length;
 const csCount    = comingSoonGames.length;
 ---
@@ -39,16 +39,16 @@ const csCount    = comingSoonGames.length;
         <div class="price-icon">♣</div>
         <div class="price-amount">Free</div>
         <div class="price-period">forever</div>
-        <p class="price-desc">Pick any 5 standard games to keep — offline &amp; CPU play, no expiry.</p>
+        <p class="price-desc">Pick any 5 games to keep — offline &amp; CPU play, no expiry.</p>
         <ul class="price-features">
-          <li>✓ Choose any 5 standard games</li>
+          <li>✓ Choose any 5 games</li>
           <li>✓ Offline / CPU play</li>
           <li class="feat-no">✗ Online multiplayer</li>
           <li class="feat-no">✗ Hints</li>
-          <li class="feat-no">✗ Premium games</li>
+          <li class="feat-no">✗ All other games</li>
           <li class="feat-no">✗ Clubs &amp; Tournaments</li>
         </ul>
-        <a href="/games" class="btn btn-secondary price-btn">See Standard Games</a>
+        <a href="/games" class="btn btn-secondary price-btn">See All Games</a>
       </div>
 
       <!-- Premium -->
@@ -81,8 +81,7 @@ const csCount    = comingSoonGames.length;
     </div>
 
     <p class="pricing-note">
-      <strong>{standardGames.length} standard</strong> (free pick-5 after trial): {standardGames.map(g => g.name).join(', ')}.<br/>
-      <strong>{premiumGames.length} premium</strong> (subscription): {premiumGames.map(g => g.name).join(', ')}.<br/>
+      <strong>{availCount} premium games</strong>: {availableGames.map(g => g.name).join(', ')} — pick any 5 to keep free after the trial, or subscribe for everything.<br/>
       <strong>{csCount} coming soon</strong> — premium subscribers get early access.
       &nbsp;<a href="/games">See all games →</a>
     </p>

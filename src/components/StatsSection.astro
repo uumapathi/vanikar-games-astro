@@ -1,12 +1,20 @@
 ---
+import { availableGames, comingSoonGames } from '../data/games';
+const avail = availableGames.length;
+const cs    = comingSoonGames.length;
 ---
 <section class="stats">
   <div class="container">
     <div class="stats-grid">
       <div class="stat-item">
-        <div class="stat-value">15+</div>
+        <div class="stat-value">{avail}</div>
         <div class="stat-label">Card Games</div>
-        <div class="stat-sub">Classic &amp; modern titles</div>
+        <div class="stat-sub">Playable today</div>
+      </div>
+      <div class="stat-item stat-divider">
+        <div class="stat-value">{cs}</div>
+        <div class="stat-label">Coming Soon</div>
+        <div class="stat-sub">In development now</div>
       </div>
       <div class="stat-item stat-divider">
         <div class="stat-value">AI</div>
@@ -29,7 +37,7 @@
     padding: 3rem 0;
   }
   .stats-grid {
-    display: grid; grid-template-columns: repeat(3,1fr);
+    display: grid; grid-template-columns: repeat(4,1fr);
     gap: 1.5rem; text-align: center;
   }
   .stat-item    { padding: 1.25rem; }
@@ -40,7 +48,11 @@
   .stat-label   { font-size: .95rem; color: var(--text-secondary); font-weight: 500; }
   .stat-sub     { font-size: .75rem; color: var(--text-dim); margin-top: .3rem; }
   .stat-divider { border-left: 1px solid var(--border); }
-  @media (max-width: 767px) {
+  @media (max-width: 900px) {
+    .stats-grid { grid-template-columns: repeat(2,1fr); gap: .5rem; }
+    .stat-item:nth-child(3) { border-left: none; }
+  }
+  @media (max-width: 520px) {
     .stats-grid   { grid-template-columns: 1fr; gap: 0; }
     .stat-divider { border-left: none; border-top: 1px solid var(--border); }
   }

@@ -1,0 +1,61 @@
+---
+import { availableGames, comingSoonGames } from '../data/games';
+const ordered = [...availableGames, ...comingSoonGames];
+---
+<div class="marquee">
+  <div class="marquee-track">
+    {[0, 1].map(copy => (
+      <div class="marquee-group" aria-hidden={copy === 1 ? 'true' : undefined}>
+        {ordered.map(g => (
+          <a href={`/games/${g.slug}`} class="marquee-chip" tabindex={copy === 1 ? -1 : undefined}>
+            <span class="chip-icon">{g.icon}</span>
+            {g.name}
+            {g.comingSoon && <span class="chip-soon">Soon</span>}
+          </a>
+        ))}
+      </div>
+    ))}
+  </div>
+</div>
+
+<style>
+  .marquee {
+    background: var(--bg-deep);
+    border-bottom: 1px solid var(--border);
+    overflow: hidden; padding: .9rem 0;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+  .marquee-track {
+    display: flex; width: max-content;
+    animation: marquee-scroll 80s linear infinite;
+  }
+  .marquee:hover .marquee-track { animation-play-state: paused; }
+  .marquee-group { display: flex; gap: .6rem; padding-right: .6rem; }
+  .marquee-chip {
+    display: inline-flex; align-items: center; gap: .45rem;
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius-full); padding: .35rem .95rem;
+    font-size: .8rem; font-weight: 600; color: var(--text-secondary);
+    white-space: nowrap; text-decoration: none;
+    transition: all var(--transition);
+  }
+  .marquee-chip:hover {
+    border-color: var(--gold-border); color: var(--gold-light);
+    background: var(--bg-card-elevated);
+  }
+  .chip-icon { font-size: 1rem; line-height: 1; }
+  .chip-soon {
+    font-size: .58rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em;
+    background: rgba(120,80,200,.18); color: #b490f5;
+    border: 1px solid rgba(180,144,245,.3);
+    border-radius: var(--radius-full); padding: .08rem .4rem;
+  }
+  @keyframes marquee-scroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track { animation: none; }
+  }
+</style>

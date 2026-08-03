@@ -1,11 +1,11 @@
 ---
 import BaseLayout     from '../layouts/BaseLayout.astro';
 import PricingSection from '../components/PricingSection.astro';
-import { standardGames, premiumGames } from '../data/games';
+import { availableGames } from '../data/games';
 ---
 <BaseLayout
   title="Pricing – Card Games by Vanikar"
-  description="2-week free trial with all games. Keep any 5 standard games free forever, or go premium to unlock everything including online play and all future games. Pricing coming soon."
+  description="2-week free trial with all games. Keep any 5 games free forever, or go premium to unlock everything including online play and all future games. Pricing coming soon."
 >
   <!-- Header -->
   <section class="pricing-header">
@@ -30,21 +30,17 @@ import { standardGames, premiumGames } from '../data/games';
         <div class="faq-item">
           <h3>What happens after the 2-week trial?</h3>
           <p>
-            You can pick any 5 standard games to keep for free — permanently, with no expiry.
-            Free play is offline (CPU) only. If you want online multiplayer, hints, or premium games,
-            you can subscribe — pricing will be announced at launch.
+            You can pick any 5 games to keep for free — permanently, with no expiry.
+            Free play is offline (CPU) only. If you want online multiplayer, hints, or the
+            full catalog, you can subscribe — pricing will be announced at launch.
           </p>
         </div>
 
         <div class="faq-item">
-          <h3>Which games are "standard" and which are "premium"?</h3>
+          <h3>Which games are included?</h3>
           <p>
-            <strong>Standard games</strong> ({standardGames.length}):
-            {standardGames.map(g => g.name).join(', ')}.
-          </p>
-          <p style="margin-top:.5rem">
-            <strong>Premium games</strong> ({premiumGames.length}):
-            {premiumGames.map(g => g.name).join(', ')}.
+            <strong>Premium games</strong> ({availableGames.length}):
+            {availableGames.map(g => g.name).join(', ')}.
           </p>
         </div>
 
@@ -94,7 +90,7 @@ import { standardGames, premiumGames } from '../data/games';
           <h3>What happens to my progress if I cancel?</h3>
           <p>
             Your game history, club membership, and statistics are saved.
-            You'll drop back to the free tier (5 standard games offline).
+            You'll drop back to the free tier (your 5 chosen games, offline).
             If you resubscribe, everything is restored.
           </p>
         </div>

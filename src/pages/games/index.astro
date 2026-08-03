@@ -1,10 +1,8 @@
 ---
 import BaseLayout                    from '../../layouts/BaseLayout.astro';
-import { games, standardGames, premiumGames, comingSoonGames, availableGames } from '../../data/games';
+import { games, comingSoonGames, availableGames } from '../../data/games';
 
 const total    = games.length;
-const stdCount = standardGames.length;
-const prmCount = premiumGames.length;
 const csCount  = comingSoonGames.length;
 const avail    = availableGames.length;
 ---
@@ -23,10 +21,8 @@ const avail    = availableGames.length;
         {avail} games available now · {csCount} more coming soon — all free during your 2-week trial.
       </p>
       <div class="tier-legend">
-        <span class="badge badge-free">Standard</span>
-        <span class="badge-desc">Pick 5 free after trial · {stdCount} games</span>
         <span class="badge badge-premium">Premium</span>
-        <span class="badge-desc">Subscription required · {prmCount} games</span>
+        <span class="badge-desc">{avail} games available now</span>
         <span class="badge badge-soon">Coming Soon</span>
         <span class="badge-desc">{csCount} games in development</span>
       </div>
@@ -37,52 +33,20 @@ const avail    = availableGames.length;
   <section class="games-section">
     <div class="container">
 
-      <!-- Standard games -->
-      <div id="standard-group" class="games-group">
-        <h2 class="games-group-title">
-          <span class="badge badge-free">Standard</span>
-          Standard Games
-          <span class="games-count" id="std-count">{stdCount} games</span>
-        </h2>
-        <p class="games-group-sub">After your trial, choose any 5 of these to keep free forever for offline CPU play.</p>
-
-        <div class="games-grid" id="standard-grid">
-          {standardGames.map(game => (
-            <a href={`/games/${game.slug}`} class="game-card">
-              <div class="game-card-icon">{game.icon}</div>
-              <div class="game-card-body">
-                <div class="game-card-header">
-                  <h3 class="game-card-name">{game.name}</h3>
-                  <span class={`diff-badge diff-${game.difficulty.toLowerCase()}`}>{game.difficulty}</span>
-                </div>
-                <p class="game-card-tagline">{game.tagline}</p>
-                <div class="game-card-meta"><span>👥 {game.playerCount}</span></div>
-                {game.languages.slice(0,3).map(l => (
-                  <span class="lang-chip" title={l.name}>{l.native}</span>
-                ))}
-                {game.languages.length > 3 && (
-                  <span class="lang-chip lang-chip--more">+{game.languages.length - 3}</span>
-                )}
-              </div>
-              <span class="game-card-arrow">›</span>
-            </a>
-          ))}
-      </div>
-
       <!-- Premium games -->
       <div id="premium-group" class="games-group games-group--premium">
         <h2 class="games-group-title">
           <span class="badge badge-premium">Premium</span>
           Premium Games
-          <span class="games-count" id="prm-count">{prmCount} games</span>
+          <span class="games-count" id="prm-count">{avail} games</span>
         </h2>
         <p class="games-group-sub">
-          The most popular game in each region. Fully unlocked during trial; subscription required after.
+          The most popular games in each region. Fully unlocked during trial.
           New games go to premium subscribers first.
         </p>
 
         <div class="games-grid" id="premium-grid">
-          {premiumGames.map(game => (
+          {availableGames.map(game => (
             <a href={`/games/${game.slug}`} class="game-card game-card--premium">
               <div class="game-card-icon">{game.icon}</div>
               <div class="game-card-body">
@@ -105,10 +69,8 @@ const avail    = availableGames.length;
               <span class="game-card-arrow">›</span>
             </a>
           ))}
+        </div>
       </div>
-
-    </div>
-  </section>
 
       <!-- Coming Soon -->
       <div id="coming-soon-group" class="games-group games-group--soon">
@@ -137,6 +99,7 @@ const avail    = availableGames.length;
               <span class="game-card-arrow">›</span>
             </a>
           ))}
+        </div>
       </div>
 
     </div>
@@ -166,7 +129,6 @@ const avail    = availableGames.length;
 
   /* Badges */
   .badge         { display: inline-block; padding: .2rem .6rem; border-radius: var(--radius-full); font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; }
-  .badge-free    { background: rgba(45,90,45,.25); color: #7acc7a; border: 1px solid rgba(122,204,122,.3); }
   .badge-premium { background: rgba(201,162,39,.15); color: var(--gold); border: 1px solid var(--gold-border); }
   .badge-sm      { font-size: .62rem; padding: .12rem .45rem; }
 

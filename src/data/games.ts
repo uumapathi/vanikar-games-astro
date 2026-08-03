@@ -4,6 +4,19 @@ import type { Region, Language } from './regions';
 export type Difficulty = 'Easy' | 'Medium' | 'Hard';
 export type { Region, Language };
 
+/** One subsection of the detailed how-to-play guide */
+export interface PlayGuideSection {
+  heading: string;
+  points:  string[];
+}
+
+/** An in-app screenshot; `file` is a path under src/assets/screenshots/ */
+export interface Screenshot {
+  file:    string;
+  title:   string;
+  caption: string;
+}
+
 export interface Game {
   slug:           string;
   name:           string;
@@ -13,7 +26,6 @@ export interface Game {
   players:        string;
   playerCount:    string;
   difficulty:     Difficulty;
-  premium:        boolean;
   /** Not yet released — shown in catalog with Coming Soon badge */
   comingSoon?:    boolean;
   /** Primary regions — used for filtering on the Games page */
@@ -26,6 +38,10 @@ export interface Game {
   gameplay:       string[];
   scoring:        string;
   tips:           string[];
+  /** Detailed step-by-step guide shown on the game page (available games) */
+  playGuide?:     PlayGuideSection[];
+  /** In-app screenshots shown on the game page */
+  screenshots?:   Screenshot[];
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -38,7 +54,7 @@ const universalGames: Game[] = [
     tagline: 'The simplest card game — highest card wins.',
     icon: '🂡',
     players: '2–4 players', playerCount: '2–4',
-    difficulty: 'Easy', premium: false,
+    difficulty: 'Easy',
     regions: ['Universal'],
     languages: [LANG.en, LANG.hi, LANG['zh-CN'], LANG.es, LANG.fr, LANG.de, LANG.pt, LANG.ja, LANG.ar],
     description: 'High Card is the perfect introduction to card games. Each round every player simultaneously reveals one card; the player with the highest card wins all cards played that round. Simple, fast, and endlessly replayable.',
@@ -60,6 +76,44 @@ const universalGames: Game[] = [
       'No strategy exists in the base game — great for younger players.',
       'Try the memory variant: keep a face-up discard pile to track which high cards have appeared.',
     ],
+    playGuide: [
+      {
+        heading: 'Setting up your table',
+        points: [
+          'From the game menu choose High Card, then pick 2–6 seats. Fill empty seats with AI players using "+ Add AI Player" and set each one\'s difficulty.',
+          'Set "Max Points" — the match target. The first player to reach it wins the whole match, so a higher target means a longer game.',
+          'Tap "Start Game" to shuffle and deal. The deck is split face-down as evenly as possible; nobody looks at their cards.',
+        ],
+      },
+      {
+        heading: 'Playing a round',
+        points: [
+          'Every player flips the top card of their stack to the centre at the same time — in the app, just tap your stack when prompted.',
+          'Cards rank Ace high down to 2 low. The highest rank wins every card flipped this round; suits don\'t matter unless your table enables suit tie-breaks.',
+          'Won cards go under the winner\'s stack, and the score for the round is added automatically.',
+        ],
+      },
+      {
+        heading: 'Ties and wars',
+        points: [
+          'If two or more players tie for highest, only the tied players flip again — a "war." The winner of the war takes everything on the table, including the tied cards.',
+          'Wars can chain: another tie means another flip. Big wars are where matches swing.',
+        ],
+      },
+      {
+        heading: 'Winning the match',
+        points: [
+          'When the deck runs out the round ends and the app shows the Round Complete summary with everyone\'s totals.',
+          'Rounds repeat until someone reaches the Max Points target set at the table — they win the match.',
+        ],
+      },
+    ],
+    screenshots: [
+      { file: 'high-card/01-game-setup.png',     title: 'Set up the table',  caption: 'Pick 2–6 players, add AI opponents at your preferred difficulty, and set the Max Points target before dealing.' },
+      { file: 'high-card/02-deal.png',           title: 'The deal',          caption: 'The deck is split evenly into face-down stacks — no peeking, no decisions, pure suspense.' },
+      { file: 'high-card/03-reveal.png',         title: 'The reveal',        caption: 'Everyone flips their top card at once; the highest rank sweeps every card played this round.' },
+      { file: 'high-card/04-round-complete.png', title: 'Round complete',    caption: 'The app tallies each round automatically and tracks progress toward the Max Points target.' },
+    ],
   },
   {
     slug: 'go-fish',
@@ -67,7 +121,7 @@ const universalGames: Game[] = [
     tagline: 'Ask, fish, and collect the most books.',
     icon: '🐟',
     players: '2–6 players', playerCount: '2–6',
-    difficulty: 'Easy', premium: false,
+    difficulty: 'Easy', comingSoon: true,
     regions: ['Universal'],
     languages: [LANG.en, LANG['zh-CN'], LANG.ja, LANG.ko, LANG.hi, LANG.es, LANG.fr, LANG.pt, LANG.de],
     description: 'Go Fish is a classic card game loved by players of all ages. Ask opponents for cards you need, build complete sets of four (books), and collect the most books to win.',
@@ -96,7 +150,7 @@ const universalGames: Game[] = [
     tagline: 'Lie, challenge, and get rid of your cards.',
     icon: '🎭',
     players: '3–8 players', playerCount: '3–8',
-    difficulty: 'Easy', premium: false,
+    difficulty: 'Easy',
     regions: ['Universal', 'India'],
     languages: [LANG.en, LANG.hi, LANG.mr, LANG.bn, LANG['zh-CN'], LANG.ru, LANG.de, LANG.fr, LANG.es, LANG.pt],
     description: 'Bluff (also known as Cheat, BS, or I Doubt It) is a deceptive shedding game. You must play cards face-down claiming a specific rank — but you can lie. Anyone can call you out, making every turn electric.',
@@ -118,6 +172,47 @@ const universalGames: Game[] = [
       'Don\'t challenge every play — save accusations for large piles.',
       'Very fast players are often telling the truth (or very skilled liars).',
     ],
+    playGuide: [
+      {
+        heading: 'Setting up your table',
+        points: [
+          'Bluff shines with a crowd — set up 3–8 seats and fill them with AI players if needed.',
+          'Start the game and the whole deck is dealt out evenly. Some players may hold one card more than others; that\'s normal.',
+          'Your hand is fanned at the bottom of the screen. Only you can see it.',
+        ],
+      },
+      {
+        heading: 'Making a claim',
+        points: [
+          'The rank to be played cycles in order: 2, 3, 4 … King, Ace, then back to 2. The app shows which rank is due this turn.',
+          'On your turn, select 1–4 cards and play them face-down while claiming they are the current rank ("two Queens").',
+          'You do NOT have to tell the truth — playing off-rank cards while claiming the rank is the heart of the game.',
+          'You can\'t pass in the standard rules: if it\'s your turn, you must play at least one card, so sometimes you\'re forced to lie.',
+        ],
+      },
+      {
+        heading: 'Calling a bluff',
+        points: [
+          'Immediately after any play, every other player gets a moment to challenge — tap "Bluff!" if you don\'t believe the claim.',
+          'On a challenge, the played cards are flipped for everyone to see.',
+          'If even one card doesn\'t match the claim, the liar picks up the entire centre pile. If all cards match, the challenger takes the pile instead.',
+          'If nobody challenges, the cards stay face-down on the pile and the next rank comes due.',
+        ],
+      },
+      {
+        heading: 'Reading the table',
+        points: [
+          'Tap any player\'s avatar to open their info card — card count and play history help you judge whether they could really hold what they claim.',
+          'Track claims: if three Kings have already been claimed and someone claims two more, at least one is a lie.',
+          'The first player to shed every card — and survive a final challenge — wins.',
+        ],
+      },
+    ],
+    screenshots: [
+      { file: 'bluff/01-game-setup.png',  title: 'Set up the table',   caption: 'Bluff plays best with 3–8 — add AI players and deal the whole deck out.' },
+      { file: 'bluff/02-deal.png',        title: 'All cards dealt',    caption: 'Hands are hidden; the claimed rank cycles 2 through Ace as the centre pile grows.' },
+      { file: 'bluff/03-player-info.png', title: 'Know your opponents', caption: 'Tap a player to see their card count and history — spotting a pattern is half the game.' },
+    ],
   },
   {
     slug: 'president',
@@ -126,7 +221,7 @@ const universalGames: Game[] = [
     tagline: 'Climb the social ladder — or end up the Scum.',
     icon: '👑',
     players: '3–7 players', playerCount: '3–7',
-    difficulty: 'Easy', premium: false,
+    difficulty: 'Easy', comingSoon: true,
     regions: ['Universal', 'Asia', 'India'],
     languages: [LANG.en, LANG.ja, LANG.ko, LANG['zh-CN'], LANG.hi, LANG.fr, LANG.de, LANG.ru, LANG.es, LANG.vi],
     description: 'President (Daifugō in Japan, Scum or Asshole in the US) is a shedding game where players race to empty their hands. Finishing order determines a pecking order for the next round, with mandatory card trades between top and bottom players.',
@@ -155,7 +250,7 @@ const universalGames: Game[] = [
     tagline: 'Flip, battle, and collect every card.',
     icon: '⚔️',
     players: '2 players', playerCount: '2',
-    difficulty: 'Easy', premium: false, comingSoon: true,
+    difficulty: 'Easy', comingSoon: true,
     regions: ['Universal', 'North America'],
     languages: [LANG.en, LANG.fr, LANG.de, LANG.es, LANG.pt, LANG.hi, LANG.ar],
     description: 'War is the ultimate beginner card game — no decisions required. Both players flip their top card simultaneously; the higher card wins the pile. Ties trigger a dramatic "war" that raises the stakes. A game of pure chance that\'s endlessly tense.',
@@ -184,7 +279,7 @@ const universalGames: Game[] = [
     tagline: 'Match the suit or rank — 8s are always wild.',
     icon: '8️⃣',
     players: '2–7 players', playerCount: '2–7',
-    difficulty: 'Easy', premium: false, comingSoon: true,
+    difficulty: 'Easy', comingSoon: true,
     regions: ['Universal', 'North America'],
     languages: [LANG.en, LANG.de, LANG.es, LANG.fr, LANG.pt, LANG.nl, LANG.hi, LANG['zh-CN']],
     description: 'Crazy Eights is a classic shedding game that inspired Uno. Play a card matching the suit or rank of the top discard; 8s are wild and let you call any suit. First player to empty their hand wins.',
@@ -214,7 +309,7 @@ const universalGames: Game[] = [
     tagline: 'Don\'t be left holding the unpaired Queen.',
     icon: '👵',
     players: '2–6 players', playerCount: '2–6',
-    difficulty: 'Easy', premium: false, comingSoon: true,
+    difficulty: 'Easy', comingSoon: true,
     regions: ['Universal', 'North America', 'Asia'],
     languages: [LANG.en, LANG.ja, LANG.ko, LANG['zh-CN'], LANG.de, LANG.fr, LANG.es, LANG.hi],
     description: 'Old Maid is a charming matching game for all ages. Remove one Queen so one "Old Maid" is left unpaired; discard all your pairs and pray your opponent doesn\'t foist the unmatchable Queen on you.',
@@ -243,7 +338,7 @@ const universalGames: Game[] = [
     tagline: 'Build from 7 out — first to empty their hand wins.',
     icon: '7️⃣',
     players: '3–7 players', playerCount: '3–7',
-    difficulty: 'Easy', premium: false, comingSoon: true,
+    difficulty: 'Easy', comingSoon: true,
     regions: ['Universal', 'Asia', 'India'],
     languages: [LANG.en, LANG['zh-CN'], LANG.ja, LANG.ko, LANG.hi, LANG.vi, LANG.fr, LANG.de, LANG.es, LANG.it],
     description: 'Sevens (Fan Tan) is one of the most universally played card games. Build four suit sequences outward from each suit\'s 7; every turn you must extend a sequence or pass. Plan your holds carefully to block opponents.',
@@ -272,7 +367,7 @@ const universalGames: Game[] = [
     tagline: 'Match the cards — and shout first.',
     icon: '👋',
     players: '2–6 players', playerCount: '2–6',
-    difficulty: 'Easy', premium: false, comingSoon: true,
+    difficulty: 'Easy', comingSoon: true,
     regions: ['Universal', 'EU'],
     languages: [LANG.en, LANG.fr, LANG.de, LANG.it, LANG.es, LANG.nl, LANG.hi],
     description: 'Snap is a fast-reaction matching game beloved in the UK and across Europe. Players flip cards to a central pile; when two consecutive cards match in rank, the first to shout "Snap!" wins the pile. Speed beats strategy every time.',
@@ -305,7 +400,7 @@ const northAmericaGames: Game[] = [
     tagline: 'Avoid the hearts — and beware the Queen of Spades.',
     icon: '♥',
     players: '4 players', playerCount: '4',
-    difficulty: 'Medium', premium: false,
+    difficulty: 'Medium',
     regions: ['North America'],
     languages: [LANG.en, LANG.fr, LANG.de, LANG.es, LANG.hi],
     description: 'Hearts is a classic trick-avoidance game where you want to avoid winning hearts or the dreaded Queen of Spades. But if you collect ALL the penalty cards you "Shoot the Moon" and punish everyone else instead.',
@@ -327,6 +422,48 @@ const northAmericaGames: Game[] = [
       'Pass high spades early to avoid holding the Q♠.',
       'Shooting the Moon is risky but decisive — start collecting if you already have 6+ hearts.',
     ],
+    playGuide: [
+      {
+        heading: 'Setting up your table',
+        points: [
+          'Hearts is a strict 4-player game — take one seat and fill the other three with AI opponents.',
+          'Each player card at the top of the table shows round points and running total, so you always know who\'s in danger of reaching 100.',
+          'All 52 cards are dealt: 13 to each player, fanned at the bottom of your screen.',
+        ],
+      },
+      {
+        heading: 'The pass',
+        points: [
+          'Before play, select exactly 3 cards to pass: round 1 passes left, round 2 right, round 3 across, and round 4 keeps all cards (no pass).',
+          'Passing well matters more than any single trick: ship out your high spades (A♠, K♠) unless well protected, and dangerous high hearts.',
+          'You receive 3 cards in return — check your new hand before planning the round.',
+        ],
+      },
+      {
+        heading: 'Trick play',
+        points: [
+          'The player holding the 2♣ leads it to the first trick — the app enforces this automatically.',
+          'You must follow the led suit if you can; the app highlights your legal cards. If you\'re void, discard anything — this is how hearts and the Q♠ get dumped.',
+          'There is no trump: the highest card of the led suit wins the trick and leads the next one.',
+          'Hearts can\'t be led until a heart has been discarded on an earlier trick ("breaking hearts"), unless you hold nothing but hearts.',
+          'On the very first trick you may not drop a heart or the Q♠ (unless your hand forces it).',
+        ],
+      },
+      {
+        heading: 'Scoring and the Moon',
+        points: [
+          'At the end of each hand: every heart taken = 1 point, the Q♠ = 13 points. Points are bad — lowest total wins.',
+          'Shooting the Moon: if one player captures ALL 13 hearts and the Q♠, they score 0 and everyone else gets 26.',
+          'The game ends when any player reaches 100 points; the player with the lowest score at that moment wins.',
+        ],
+      },
+    ],
+    screenshots: [
+      { file: 'hearts/01-game-setup.png', title: 'Set up the table', caption: 'Hearts is a 4-player game — fill the remaining seats with AI and start.' },
+      { file: 'hearts/02-deal.png',       title: '13 cards each',    caption: 'The full deck is dealt; every player card shows round and total penalty points.' },
+      { file: 'hearts/03-pass.png',       title: 'Pass three cards', caption: 'Select 3 cards to pass — the direction rotates each round, and the fourth round has no pass.' },
+      { file: 'hearts/04-gameplay.png',   title: 'Trick play',       caption: 'Follow the led suit if you can; the highest card of that suit takes the trick.' },
+    ],
   },
   {
     slug: 'spades',
@@ -334,7 +471,7 @@ const northAmericaGames: Game[] = [
     tagline: 'Bid smart. Spades are always trump.',
     icon: '♠',
     players: '4 players (2 teams)', playerCount: '4',
-    difficulty: 'Medium', premium: true,
+    difficulty: 'Medium',
     regions: ['North America'],
     languages: [LANG.en, LANG.es, LANG.fr],
     description: 'Spades is North America\'s most iconic trick-taking partnership game. Every hand starts with a bidding phase — your team must win exactly the tricks you bid. Too few costs points; too many "sandbags" accumulate into penalties.',
@@ -354,6 +491,50 @@ const northAmericaGames: Game[] = [
       'Don\'t overbid; bags accumulate slowly but hit hard.',
       'Support your partner\'s nil by leading low cards they can underplay.',
     ],
+    playGuide: [
+      {
+        heading: 'Setting up your table',
+        points: [
+          'Spades is 4 players in two fixed partnerships — you and the seat across from you are Team A; the other two are Team B.',
+          'Each player card shows bid, tricks taken, team score, and bags at all times, so you can read the state of the hand at a glance.',
+          '13 cards are dealt to each player. Use the arrange helper to sort your hand by suit before bidding.',
+        ],
+      },
+      {
+        heading: 'Bidding',
+        points: [
+          'Starting left of the dealer, each player bids the number of tricks they expect to personally win (0–13). Your team\'s contract is the sum of both partners\' bids.',
+          'Count likely winners: Aces and Kings in side suits, plus long spades. A typical starting hand bids 3–4.',
+          'Bidding 0 is "Nil" — a bold declaration that you\'ll win no tricks at all. Made Nil = +100, failed Nil = −100, on top of your partner\'s normal bid.',
+          'In the app, use the +/− dialog to set your number and tap "Place Bid." Both teams\' totals are shown as bids come in.',
+        ],
+      },
+      {
+        heading: 'Trick play',
+        points: [
+          'The player left of the dealer leads the first trick. You must follow the led suit if you can — the app highlights legal plays.',
+          'Spades are always trump: if any spade is played to a trick, the highest spade wins it; otherwise the highest card of the led suit wins.',
+          'You may not LEAD spades until they\'re "broken" — a spade discarded on another suit\'s trick — unless spades are all you have left.',
+          'The trick winner leads next. Keep counting: how many spades are out, and how many tricks your team still needs.',
+        ],
+      },
+      {
+        heading: 'Scoring, bags, and winning',
+        points: [
+          'Make your team contract and you score 10 × bid. Fall short and you LOSE 10 × bid.',
+          'Every trick over your bid is a "bag" worth +1 — but collect 10 bags and your team is docked 100 points. Don\'t hoard cheap tricks.',
+          'Nil results are scored separately from the partner\'s bid. Blind Nil (bid before looking at your cards) doubles the stakes to ±200.',
+          'First team to 500 points wins the match.',
+        ],
+      },
+    ],
+    screenshots: [
+      { file: 'spades/01-game-setup.png', title: 'Set up the table',  caption: 'Four players in two teams — you partner the seat across from you.' },
+      { file: 'spades/02-deal.png',       title: 'The deal',          caption: '13 cards each, with team score and bags tracked on every player card.' },
+      { file: 'spades/03-arrange-help.png', title: 'Arrange your hand', caption: 'Sort by suit and rank with the arrange helper before deciding your bid.' },
+      { file: 'spades/04-bid.png',        title: 'Place your bid',    caption: 'Count your sure tricks and bid — 0 declares a daring Nil worth ±100.' },
+      { file: 'spades/05-gameplay.png',   title: 'Trick play',        caption: 'Spades always trump but can\'t be led until broken; bids, tricks, and bags update live.' },
+    ],
   },
   {
     slug: 'gin-rummy',
@@ -361,7 +542,7 @@ const northAmericaGames: Game[] = [
     tagline: 'Knock before they do.',
     icon: '🍸',
     players: '2 players', playerCount: '2',
-    difficulty: 'Medium', premium: false,
+    difficulty: 'Medium',
     regions: ['North America'],
     languages: [LANG.en, LANG.es, LANG.fr, LANG.de, LANG.hi],
     description: 'Gin Rummy is a beloved two-player rummy variant known for its tense knock-or-gin decisions. Draw, discard, build melds — then knock when your unmatched cards total 10 or fewer.',
@@ -384,6 +565,48 @@ const northAmericaGames: Game[] = [
       'Avoid feeding cards your opponent is collecting.',
       'A gin is worth the extra turns if you\'re close.',
     ],
+    playGuide: [
+      {
+        heading: 'Setting up the game',
+        points: [
+          'Gin Rummy is heads-up: you against one opponent, racing to 100 points across multiple hands.',
+          'Each player gets 10 cards. One card is flipped face-up to start the discard pile; the rest sit face-down as the stock with a live counter ("Draw: 31").',
+          'On the first turn the non-dealer may take the face-up card or decline; if both decline, the non-dealer draws from stock and play begins.',
+        ],
+      },
+      {
+        heading: 'Arranging your hand',
+        points: [
+          'Use the sort bar at the bottom to instantly arrange your hand: by suit (C D H S) or by rank (A→2), then confirm with the check mark.',
+          'Group toward melds: a SET is 3–4 cards of the same rank; a RUN is 3+ consecutive cards of the same suit (Aces are low).',
+          'Everything not in a meld is "deadwood," counted at face value (face cards 10, Ace 1). Your whole game is about shrinking that number.',
+        ],
+      },
+      {
+        heading: 'Draw, then discard',
+        points: [
+          'Each turn has exactly two actions: draw one card (from the stock or the top of the discard pile), then discard one card face-up.',
+          'Taking from the discard pile telegraphs what you\'re collecting — sometimes drawing blind from stock is worth the privacy.',
+          'Watch what your opponent picks up and never feed the cards they want.',
+        ],
+      },
+      {
+        heading: 'Knocking, Gin, and scoring',
+        points: [
+          'When your deadwood totals 10 or less you may "knock": discard face-down and reveal your melds.',
+          'Your opponent then lays off any of their cards that fit YOUR melds, shrinking their own deadwood, and the difference in deadwood goes to the knocker.',
+          'If the opponent\'s final deadwood is equal or lower, they "undercut" you: they score the difference plus a 25-point bonus.',
+          'GIN — knocking with zero deadwood — earns a 25-point bonus and blocks all layoffs.',
+          'Hands repeat until someone reaches 100 points; bonuses for each hand won are added at the end.',
+        ],
+      },
+    ],
+    screenshots: [
+      { file: 'gin-rummy/01-game-setup.png', title: 'Set up the game', caption: 'Heads-up Gin Rummy — two players, first to 100 points.' },
+      { file: 'gin-rummy/02-deal.png',       title: 'The deal',        caption: 'Ten cards each; the stock shows a live draw counter and one card starts the discard pile.' },
+      { file: 'gin-rummy/03-arrange.png',    title: 'Sort your hand',  caption: 'One tap sorts by suit or rank (C D H S / A→2) — spot your sets and runs instantly.' },
+      { file: 'gin-rummy/04-gameplay.png',   title: 'Draw and discard', caption: 'Draw from stock or the discard, build melds, then discard — knock when deadwood is 10 or less.' },
+    ],
   },
   {
     slug: 'euchre',
@@ -391,7 +614,7 @@ const northAmericaGames: Game[] = [
     tagline: 'Name the trump. Take three tricks. Prove your Right Bower.',
     icon: '🪄',
     players: '4 players (2 teams)', playerCount: '4',
-    difficulty: 'Hard', premium: true,
+    difficulty: 'Hard', comingSoon: true,
     regions: ['North America'],
     languages: [LANG.en, LANG.de],
     description: 'Euchre is a fast trick-taking partnership game enormously popular in the US Midwest, Canada, and UK. The defining feature: the Jack of trump (Right Bower) is highest, and the Jack of the same-colour suit (Left Bower) is second highest.',
@@ -419,7 +642,7 @@ const northAmericaGames: Game[] = [
     tagline: 'Peg your way to 121 — every combination counts.',
     icon: '📌',
     players: '2 players', playerCount: '2',
-    difficulty: 'Hard', premium: true,
+    difficulty: 'Hard',
     regions: ['North America', 'EU'],
     languages: [LANG.en, LANG.fr],
     description: 'Cribbage is a 17th-century English game famous for its pegging board and depth of scoring. It features two distinct phases — pegging (playing cards alternately) and counting (scoring hand combinations).',
@@ -441,6 +664,50 @@ const northAmericaGames: Game[] = [
       'Keep cards that form multiple 15s (e.g., 5+any-10-value).',
       'Run scoring during pegging beats individual pairs — extend runs.',
     ],
+    playGuide: [
+      {
+        heading: 'Setting up the game',
+        points: [
+          'Cribbage is heads-up in the app: you versus one opponent, racing pegs to 121 points on the board.',
+          'Six cards are dealt to each player. The board and both players\' peg tracks are shown on the table throughout.',
+          'Scores peg IMMEDIATELY as they happen — the first peg to touch 121 wins on the spot, even mid-hand.',
+        ],
+      },
+      {
+        heading: 'The crib and the starter',
+        points: [
+          'Both players choose 2 of their 6 cards to throw into the "crib" — a third hand that scores for the DEALER at the end of the hand.',
+          'When you\'re dealer, feed the crib with pairs and cards that make 15s (especially 5s). When you\'re not, throw it your most useless, disconnected cards.',
+          'The deck is then cut and the top card flipped as the "starter" — it counts as a fifth card in every hand at counting time. A Jack starter pegs the dealer 2 immediately ("His Heels").',
+        ],
+      },
+      {
+        heading: 'The play (pegging)',
+        points: [
+          'Players alternate laying one card face-up, announcing the running total, which may never exceed 31.',
+          'Peg as you play: making the total exactly 15 = 2 points; a pair with the previous card = 2 (triple = 6, quad = 12); completing a run of 3+ in any order = 1 per card.',
+          'If you can\'t play without passing 31, say "Go" — your opponent pegs 1, plays any cards they still can, and the count resets to 0.',
+          'Playing the last card of the whole pegging phase scores 1 ("last card"), or 2 if it lands exactly on 31.',
+        ],
+      },
+      {
+        heading: 'Counting hands',
+        points: [
+          'Hands are counted in strict order: non-dealer first, then dealer\'s hand, then the crib — order matters in tight endgames near 121.',
+          'Count every combination with the starter included: each 15 = 2, each pair = 2, runs = 1 per card, a 4-card flush = 4 (5 with starter), and the Jack matching the starter\'s suit = 1 ("His Nobs").',
+          'Combinations stack: 7-8-8-9 holds two 15s, a pair, and two runs of three — 16 points before the starter helps.',
+          'The app\'s round summary breaks down every hand\'s count, so you can check what you missed.',
+        ],
+      },
+    ],
+    screenshots: [
+      { file: 'cribbage/01-game-setup.png',  title: 'Set up the game',  caption: 'Heads-up Cribbage — race your pegs to 121.' },
+      { file: 'cribbage/02-before-deal.png', title: 'The board is set', caption: 'Peg tracks ready, deck shuffled — six cards each are on the way.' },
+      { file: 'cribbage/03-after-deal.png',  title: 'Feed the crib',    caption: 'Throw 2 of your 6 cards to the crib — it scores for the dealer, so feed it or starve it.' },
+      { file: 'cribbage/04-pegging.png',     title: 'The play',         caption: 'Alternate cards toward 31, pegging 15s, pairs, and runs as they happen.' },
+      { file: 'cribbage/05-counting.png',    title: 'The show',         caption: 'Hands are counted in order — non-dealer, dealer, then the crib, all with the starter card.' },
+      { file: 'cribbage/06-result.png',      title: 'Round summary',    caption: 'Every hand\'s count is broken down as the pegs race down the board.' },
+    ],
   },
 ];
 
@@ -455,7 +722,7 @@ const latinAmericaGames: Game[] = [
     tagline: 'Build 7-card melds and go out first.',
     icon: '🧺',
     players: '4 players (2 teams)', playerCount: '4',
-    difficulty: 'Medium', premium: false, comingSoon: true,
+    difficulty: 'Medium', comingSoon: true,
     regions: ['Latin America', 'North America', 'EU'],
     languages: [LANG.es, LANG.pt, LANG.en, LANG.it, LANG.de, LANG.fr],
     description: 'Canasta originated in Montevideo, Uruguay and swept the world in the 1950s. Teams build melds of 7+ cards of the same rank (called "canastas") using wild cards freely. The game combines rummy-style building with partnership strategy.',
@@ -486,7 +753,7 @@ const latinAmericaGames: Game[] = [
     tagline: 'Complete your canastas — then grab the pot.',
     icon: '🇧🇷',
     players: '4 players (2 teams)', playerCount: '4',
-    difficulty: 'Medium', premium: false, comingSoon: true,
+    difficulty: 'Medium', comingSoon: true,
     regions: ['Latin America', 'EU'],
     languages: [LANG.pt, LANG.it, LANG.es, LANG.en],
     description: 'Buraco is Italy\'s gift to South America (via immigrants) and is now a national passion in Brazil and Argentina. Two hidden "pot" piles add a dramatic mid-game refill; natural Buracos (7-card pure sequences) earn top bonuses.',
@@ -515,7 +782,7 @@ const latinAmericaGames: Game[] = [
     tagline: 'Form your runs and sets — Chinchón closes the round instantly.',
     icon: '🇦🇷',
     players: '2–8 players', playerCount: '2–8',
-    difficulty: 'Medium', premium: false, comingSoon: true,
+    difficulty: 'Medium', comingSoon: true,
     regions: ['Latin America', 'EU'],
     languages: [LANG.es, LANG.pt, LANG.en],
     description: 'Chinchón is a beloved Spanish/Argentinian rummy variant played with a 40-card Spanish deck. Build sets and runs to minimise deadwood — or complete all 7 cards of the same suit (Chinchón) to instantly win the round.',
@@ -546,7 +813,7 @@ const latinAmericaGames: Game[] = [
     tagline: 'Take the high-value cards — trump beats everything else.',
     icon: '🍷',
     players: '2–4 players', playerCount: '2–4',
-    difficulty: 'Medium', premium: false, comingSoon: true,
+    difficulty: 'Medium', comingSoon: true,
     regions: ['EU', 'Latin America'],
     languages: [LANG.it, LANG.es, LANG.pt, LANG.en],
     description: 'Briscola is Italy\'s most popular card game and a staple across Spain and Latin America under the name Brisca. There\'s no obligation to follow suit — trump your opponents, capture point-laden Aces and Threes, and outscore them.',
@@ -576,7 +843,7 @@ const latinAmericaGames: Game[] = [
     tagline: 'Bluff, bet, and outwit — Latin America\'s card game.',
     icon: '🌶️',
     players: '2–4 players', playerCount: '2 or 4',
-    difficulty: 'Hard', premium: true,
+    difficulty: 'Hard', comingSoon: true,
     regions: ['Latin America'],
     languages: [LANG.es, LANG.pt, LANG.en],
     description: 'Truco is a trick-taking and bluffing game wildly popular across Brazil, Argentina, and Latin America. Its unique card rankings, verbal betting calls (Truco! Retruco! Vale Quatro!), and partnership signalling make it unlike any other card game.',
@@ -612,7 +879,7 @@ const asiaGames: Game[] = [
     tagline: 'Vietnam\'s Big Two — shed your cards before anyone else.',
     icon: '🇻🇳',
     players: '4 players', playerCount: '4',
-    difficulty: 'Medium', premium: false, comingSoon: true,
+    difficulty: 'Medium', comingSoon: true,
     regions: ['Asia'],
     languages: [LANG.vi, LANG.en, LANG['zh-CN'], LANG.id, LANG.tl],
     description: 'Tiến Lên ("moving up" in Vietnamese) is Vietnam\'s most popular card game and one of the most-played games across Southeast Asia. Like Big Two, players race to shed cards; the unique twist is that 2s are the highest single card and powerful "bombs" can beat any combination.',
@@ -644,7 +911,7 @@ const asiaGames: Game[] = [
     tagline: 'Match the flowers — say "Koi-Koi" to risk it all.',
     icon: '🌸',
     players: '2 players', playerCount: '2',
-    difficulty: 'Hard', premium: false, comingSoon: true,
+    difficulty: 'Hard', comingSoon: true,
     regions: ['Asia'],
     languages: [LANG.ja, LANG.ko, LANG['zh-TW'], LANG.en],
     description: 'Koi-Koi is played with the beautiful 48-card Hanafuda (flower cards) deck, where each of the 12 suits represents a month and a plant. Match cards from the table to build "yaku" (scoring combinations). Calling "Koi-Koi" lets you keep playing for more points — but risks your opponent going out first.',
@@ -675,7 +942,7 @@ const asiaGames: Game[] = [
     tagline: 'The 2 rules — race to empty your hand.',
     icon: '2️⃣',
     players: '2–4 players', playerCount: '2–4',
-    difficulty: 'Medium', premium: true,
+    difficulty: 'Medium',
     regions: ['Asia'],
     languages: [LANG['zh-TW'], LANG['zh-CN'], LANG.en, LANG.tl, LANG.vi, LANG.id, LANG.ko, LANG.ja],
     description: 'Big Two (大老二, Deuces) is hugely popular throughout East and Southeast Asia. Deuces are the highest cards, suits break ties, and you can play singles, pairs, triples, or powerful five-card combinations to stay ahead.',
@@ -699,6 +966,46 @@ const asiaGames: Game[] = [
       'Five-card hands can clear a round regardless of prior plays.',
       'Track suit counts; opponents without a high suit will struggle to beat your lead.',
     ],
+    playGuide: [
+      {
+        heading: 'Setting up your table',
+        points: [
+          'Big Two seats 2–4 players; with 4 players the whole deck is dealt, 13 cards each.',
+          'Remember the two rankings that make Big Two unique: card ranks run 3 (lowest) up to 2 (highest), and suits rank ♦ < ♣ < ♥ < ♠ for breaking ties.',
+          'The player holding the 3♦ opens the game and must include it in their first play.',
+        ],
+      },
+      {
+        heading: 'Legal combinations',
+        points: [
+          'You can play a single card, a pair (same rank), a triple (same rank), or a five-card poker hand.',
+          'Five-card hands rank, low to high: Straight < Flush < Full House < Four-of-a-Kind (+ kicker) < Straight Flush.',
+          'Within the same type, compare the key card: highest card in a straight, rank of the triple in a full house, and so on — suits break exact ties.',
+        ],
+      },
+      {
+        heading: 'Beating the current play',
+        points: [
+          'Each play must beat the previous one using the SAME shape: a pair over a pair, a single over a single, a five-card hand over a five-card hand.',
+          'Exception: Four-of-a-Kind and Straight Flush hands beat ANY lower five-card combination — they\'re the closest thing to a bomb.',
+          'Can\'t (or don\'t want to) beat it? Pass. Passing doesn\'t lock you out of later turns in the same round.',
+          'When everyone else passes in a row, the pile clears and the last player to play starts a completely fresh lead with anything they like.',
+        ],
+      },
+      {
+        heading: 'Ending a hand and penalties',
+        points: [
+          'First player to shed all 13 cards wins the hand; remaining players are penalized per card left.',
+          'Penalties escalate: 10–12 cards left counts double, and being caught with all 13 counts triple — never sit on a full hand hoping for perfect plays.',
+          'Watch the 2s: a single 2 can only be beaten by a four-of-a-kind or straight flush, so time yours for maximum damage.',
+        ],
+      },
+    ],
+    screenshots: [
+      { file: 'big-two/01-game-setup.png', title: 'Set up the table', caption: 'Two to four players — with four, the whole deck is dealt.' },
+      { file: 'big-two/02-deal.png',       title: 'The deal',         caption: '13 cards each; ranks run 3 low to 2 high, with suits ♦ ♣ ♥ ♠ breaking ties.' },
+      { file: 'big-two/03-gameplay.png',   title: 'Beat the play',    caption: 'Match the shape and go higher — or pass and wait for a fresh lead.' },
+    ],
   },
 ];
 
@@ -713,7 +1020,7 @@ const indiaGames: Game[] = [
     tagline: 'Win 7 tricks first — then defend in the second half.',
     icon: '🏛️',
     players: '4 players (2 teams)', playerCount: '4',
-    difficulty: 'Medium', premium: false, comingSoon: true,
+    difficulty: 'Medium', comingSoon: true,
     regions: ['India'],
     languages: [LANG.hi, LANG.ur, LANG.pa, LANG.en, LANG.mr, LANG.gu],
     description: 'Court Piece (Rang/Rung) is one of the most popular trick-taking games in India, Pakistan, and Iran. The team that wins the first 7 tricks "cuts" the court; now they must prevent their opponents from winning 7 consecutive tricks in the second phase.',
@@ -744,7 +1051,7 @@ const indiaGames: Game[] = [
     tagline: 'Capture all four 10s — or stop your opponents from doing it.',
     icon: '🔟',
     players: '4 players (2 teams)', playerCount: '4',
-    difficulty: 'Medium', premium: false, comingSoon: true,
+    difficulty: 'Medium', comingSoon: true,
     regions: ['India'],
     languages: [LANG.gu, LANG.mr, LANG.hi, LANG.en],
     description: 'Mendikot is the premier card game of Maharashtra and Gujarat, India. The goal is deceptively simple: capture all four 10s. Capturing the four 10s results in a Mendikot — a shutout victory worth double. Strategy revolves entirely around protecting and hunting the Tens.',
@@ -775,7 +1082,7 @@ const indiaGames: Game[] = [
     tagline: 'Bid up to 29 — win the most points to fulfill your contract.',
     icon: '🌴',
     players: '4 players (2 teams)', playerCount: '4',
-    difficulty: 'Hard', premium: false, comingSoon: true,
+    difficulty: 'Hard', comingSoon: true,
     regions: ['India'],
     languages: [LANG.ml, LANG.ta, LANG.hi, LANG.bn, LANG.en, LANG.te],
     description: 'The 29 Game is a celebrated trick-taking game from Kerala, South India, played widely across Bangladesh and Nepal. The name refers to the maximum 28 card points in the 32-card deck (plus 1 for last trick). Players bid to win that many points using only 8 cards each and a hidden trump.',
@@ -807,7 +1114,7 @@ const indiaGames: Game[] = [
     tagline: 'Capture matching cards from the table — sweeps score big.',
     icon: '🌾',
     players: '2–4 players', playerCount: '2–4',
-    difficulty: 'Medium', premium: false, comingSoon: true,
+    difficulty: 'Medium', comingSoon: true,
     regions: ['India'],
     languages: [LANG.hi, LANG.pa, LANG.en, LANG.ur],
     description: 'Seep is a capture card game popular across North India, particularly in Uttar Pradesh, Haryana, and Punjab. Play a card to the table and capture cards of equal value or combinations that sum to your card. A "Seep" (total sweep of the table) earns a precious bonus point.',
@@ -838,7 +1145,7 @@ const indiaGames: Game[] = [
     tagline: 'Form sequences and sets — a pure sequence is non-negotiable.',
     icon: '🃏',
     players: '2–6 players', playerCount: '2–6',
-    difficulty: 'Medium', premium: true,
+    difficulty: 'Medium',
     regions: ['India'],
     languages: [LANG.hi, LANG.bn, LANG.ta, LANG.te, LANG.kn, LANG.mr, LANG.gu, LANG.pa, LANG.ml, LANG.en],
     description: 'Indian Rummy (Paplu / 13-Card Rummy) is India\'s most popular card game. Each player receives 13 cards and must arrange them into valid sequences and sets. The golden rule: you must have at least one pure sequence before you can declare.',
@@ -861,6 +1168,49 @@ const indiaGames: Game[] = [
       'High cards (A, K, Q, J) are high-risk deadwood — discard early if unused.',
       'Jokers are most valuable in the middle of long sequences.',
     ],
+    playGuide: [
+      {
+        heading: 'Setting up your table',
+        points: [
+          'Indian Rummy plays 2–6 using two full decks plus printed jokers (108 cards). Each player receives 13 cards.',
+          'After the deal, one random card is revealed as the WILD JOKER — every card of that rank (in any suit) acts as a joker for the whole hand, alongside the printed jokers.',
+          'One card is flipped to start the discard pile; the rest form the face-down draw pile.',
+        ],
+      },
+      {
+        heading: 'What you\'re building',
+        points: [
+          'Your goal is to arrange all 13 cards into sequences and sets: at minimum two sequences, one of which must be PURE.',
+          'A PURE sequence is 3+ consecutive cards of the same suit with NO jokers (e.g., 5♥ 6♥ 7♥). Without one, your declaration is invalid no matter how good the rest is.',
+          'An impure sequence uses a wild or printed joker to fill a gap. A set is 3–4 cards of the same rank in different suits (jokers allowed).',
+          'Use the sort helper to group your hand by suit, then mark out which cards are heading into which meld.',
+        ],
+      },
+      {
+        heading: 'Each turn: draw, plan, discard',
+        points: [
+          'Draw one card — from the face-down pile (private) or the top of the discard pile (public, and everyone sees what you wanted).',
+          'Re-arrange, then discard exactly one card face-up to end your turn.',
+          'Discard high unattached cards (A, K, Q, J are 10 points each as deadwood) early, and never throw cards adjacent to what an opponent just picked up.',
+        ],
+      },
+      {
+        heading: 'Dropping and declaring',
+        points: [
+          'If your dealt hand is hopeless, you can FOLD (drop) for a fixed penalty — far cheaper than being caught with 60+ points of deadwood. A first-turn drop costs the least.',
+          'To finish, complete your 14th-card turn by discarding face-down to declare, then show your arranged melds.',
+          'A valid declaration (pure sequence + all cards melded) scores zero; opponents score their deadwood, up to the 80-point cap.',
+          'A WRONG declaration is the worst result in the game: an automatic 80-point penalty while opponents drop to zero. Double-check before you declare.',
+        ],
+      },
+    ],
+    screenshots: [
+      { file: 'indian-rummy/01-game-setup.png', title: 'Set up the table', caption: 'Two decks plus jokers, 13 cards each — 2 to 6 players.' },
+      { file: 'indian-rummy/02-deal.png',       title: 'The deal',         caption: 'A random card becomes the wild joker for the hand, alongside the printed jokers.' },
+      { file: 'indian-rummy/03-arrange.png',    title: 'Arrange your hand', caption: 'Sort by suit and build toward your pure sequence first — nothing counts without it.' },
+      { file: 'indian-rummy/04-gameplay.png',   title: 'Draw and discard', caption: 'Take from the pile or the discard, then throw one card — the app tracks both piles.' },
+      { file: 'indian-rummy/05-fold.png',       title: 'Fold when hopeless', caption: 'Drop early for a small fixed penalty instead of risking a big deadwood count.' },
+    ],
   },
   {
     slug: 'indian-jackass',
@@ -869,7 +1219,7 @@ const indiaGames: Game[] = [
     tagline: 'War with a twist — don\'t get stuck with the Jacks.',
     icon: '🎴',
     players: '2–4 players', playerCount: '2–4',
-    difficulty: 'Easy', premium: true,
+    difficulty: 'Easy',
     regions: ['India'],
     languages: [LANG.hi, LANG.en, LANG.mr, LANG.gu],
     description: 'Indian Jackass is a lively battle-style card game. Collect the most cards — but the four Jacks are cursed. Whoever holds the most Jacks at the end loses all their points for those Jacks, creating wild swings of fortune.',
@@ -890,6 +1240,45 @@ const indiaGames: Game[] = [
       'Wars are high-risk; you may gain lots of cards including extra Jacks.',
       'In the endgame, lose wars strategically if you\'re already holding Jacks.',
     ],
+    playGuide: [
+      {
+        heading: 'Setting up your table',
+        points: [
+          'Indian Jackass seats 2–4 players. The whole deck is dealt face-down into equal stacks — you never choose what to flip.',
+          'The twist over plain War: the four Jacks are cursed. Every Jack you\'re holding at the end costs you 13 points.',
+        ],
+      },
+      {
+        heading: 'Flipping and battles',
+        points: [
+          'All players flip their top card to the centre simultaneously — tap your stack when prompted.',
+          'Highest card wins the flip and takes every card played (Ace is high; suits rank ♠ > ♥ > ♦ > ♣ purely for tie-breaking where enabled).',
+          'Won cards go to the bottom of your stack — including any Jacks that were in the battle.',
+        ],
+      },
+      {
+        heading: 'Wars',
+        points: [
+          'When the top cards tie, the tied players go to war: 3 cards face-down, then 1 face-up. Highest face-up card takes EVERYTHING on the table.',
+          'Wars are the big swings — you can win a mountain of cards, but any Jacks buried in the war pile come with it.',
+          'A player who runs out of cards is out of the game.',
+        ],
+      },
+      {
+        heading: 'Scoring',
+        points: [
+          'The game ends when one player holds all the cards or the round limit is reached.',
+          'Count your cards, then subtract 13 for EACH Jack you hold. Highest net score wins — so the "winner" of the most cards isn\'t always the winner of the game.',
+          'Use the sort view to see what you\'re sitting on, and in the late game consider losing battles on purpose rather than sweeping piles that hide Jacks.',
+        ],
+      },
+    ],
+    screenshots: [
+      { file: 'indian-jackass/01-game-setup.png', title: 'Set up the table', caption: 'Two to four players; the whole deck splits into face-down stacks.' },
+      { file: 'indian-jackass/02-deal.png',       title: 'The deal',         caption: 'Flip together — highest card takes the pile.' },
+      { file: 'indian-jackass/03-sort-helper.png', title: 'Sort view',       caption: 'Keep track of what you hold — especially how many cursed Jacks.' },
+      { file: 'indian-jackass/04-gameplay.png',   title: 'Battles and wars', caption: 'Wars break ties, but beware what you win: each Jack costs 13 points at the end.' },
+    ],
   },
 ];
 
@@ -904,7 +1293,7 @@ const euGames: Game[] = [
     tagline: 'The ancestor of Bridge — follow suit and win tricks.',
     icon: '🎩',
     players: '4 players (2 teams)', playerCount: '4',
-    difficulty: 'Medium', premium: false, comingSoon: true,
+    difficulty: 'Medium', comingSoon: true,
     regions: ['EU', 'North America'],
     languages: [LANG.en, LANG.fr, LANG.de, LANG.nl, LANG.pl],
     description: 'Whist is the grand ancestor of Bridge and Spades, played in the drawing rooms of 18th-century England. No bidding, no trump announcement — just follow suit, use trump wisely, and try to win more tricks than your partnership bid.',
@@ -934,7 +1323,7 @@ const euGames: Game[] = [
     tagline: 'Attack, defend, or be the Fool.',
     icon: '🃏',
     players: '2–6 players', playerCount: '2–6',
-    difficulty: 'Medium', premium: false,
+    difficulty: 'Medium',
     regions: ['EU'],
     languages: [LANG.ru, LANG.uk, LANG.pl, LANG.bg, LANG.tr, LANG.en, LANG.de, LANG.fr],
     description: 'Durak (Дурак, "Fool") is Russia\'s most beloved card game and a staple across Eastern Europe. The last player stuck with cards is the Durak — the fool of the round.',
@@ -957,6 +1346,50 @@ const euGames: Game[] = [
       'Attack with ranks the defender has already played — they can\'t reuse them.',
       'Taking cards strategically can be worthwhile if you\'re nearly empty-handed.',
     ],
+    playGuide: [
+      {
+        heading: 'Setting up your table',
+        points: [
+          'Durak plays 2–6 with a 36-card deck (6s through Aces). Everyone gets 6 cards.',
+          'The bottom card of the draw pile is flipped and tucked underneath, visible all game — its suit is TRUMP for the whole hand.',
+          'The player holding the lowest trump attacks first; play then moves clockwise. There is no "winner" of a hand — only a loser, the Durak (Fool).',
+        ],
+      },
+      {
+        heading: 'Attacking',
+        points: [
+          'The attacker plays one card (or several of the same rank) face-up in front of the defender.',
+          'Once the defence starts, anyone may "pile on" extra attacking cards — but ONLY of ranks already on the table this bout, and never more cards than the defender can answer (max 6).',
+          'Attack with ranks the defender has already beaten this bout: they\'ve likely used up their answers for that rank.',
+        ],
+      },
+      {
+        heading: 'Defending',
+        points: [
+          'Beat each attacking card individually with a HIGHER card of the same suit, or with any trump. A higher trump beats a lower trump.',
+          'Beat everything and the whole bout is discarded face-down — permanently out of the game — and you become the next attacker.',
+          'Can\'t (or won\'t) beat a card? Take EVERYTHING on the table into your hand, and you lose your turn to attack — the attacker goes again against the next player.',
+          'Taking isn\'t always terrible: scooping a few useful trumps early can set up a strong endgame.',
+        ],
+      },
+      {
+        heading: 'Refilling and the endgame',
+        points: [
+          'After each bout, every player draws back up to 6 cards — attacker first, other attackers next, defender last — until the draw pile (including the trump card) is exhausted.',
+          'Once the pile is empty, the game turns razor-sharp: cards spent are gone forever, so count which trumps remain.',
+          'Players who empty their hands drop out safely one by one. The last player left holding cards is the Durak and deals the next round — the app tracks wins across rounds.',
+        ],
+      },
+    ],
+    screenshots: [
+      { file: 'durak/01-game-setup.png',  title: 'Set up the table', caption: 'Durak uses a 36-card deck, 6s through Aces — choose your opponents and deal.' },
+      { file: 'durak/02-before-deal.png', title: 'Before the deal',  caption: 'The table is set; the trump card is about to be revealed under the draw pile.' },
+      { file: 'durak/03-after-deal.png',  title: 'Six cards each',   caption: 'The flipped card under the draw pile fixes trump for the whole hand.' },
+      { file: 'durak/04-attack.png',      title: 'The attack',       caption: 'Attackers may only add ranks already on the table this bout.' },
+      { file: 'durak/05-defend.png',      title: 'The defence',      caption: 'Beat every card with a higher card of its suit or any trump — or take the lot.' },
+      { file: 'durak/06-endgame.png',     title: 'The endgame',      caption: 'With the draw pile empty, shed everything — the last player holding cards is the Fool.' },
+      { file: 'durak/07-result.png',      title: 'Round over',       caption: 'The summary names the Durak and tracks wins across rounds.' },
+    ],
   },
   {
     slug: 'scopa',
@@ -965,7 +1398,7 @@ const euGames: Game[] = [
     tagline: 'Sweep the table — Italy\'s card game of cunning captures.',
     icon: '🍕',
     players: '2–4 players', playerCount: '2–4',
-    difficulty: 'Medium', premium: false,
+    difficulty: 'Medium', comingSoon: true,
     regions: ['EU', 'Latin America'],
     languages: [LANG.it, LANG.es, LANG.pt, LANG.en],
     description: 'Scopa ("broom") is Italy\'s national card game. On each turn you play a card to the table, capturing cards of the same rank or combinations that sum to your card\'s value. Sweeping the entire table — a Scopa — earns a bonus point.',
@@ -995,7 +1428,7 @@ const euGames: Game[] = [
     tagline: 'France\'s national card game — bid, trump, and Coinché.',
     icon: '🥖',
     players: '4 players (2 teams)', playerCount: '4',
-    difficulty: 'Hard', premium: true,
+    difficulty: 'Hard',
     regions: ['EU'],
     languages: [LANG.fr, LANG.el, LANG.bg, LANG.ar, LANG.tr, LANG.en, LANG.de, LANG.nl],
     description: 'Belote is France\'s most beloved card game and a staple across much of Europe and the Middle East. Its defining features — the Jack and Nine becoming the two highest trumps, the Belote-Rebelote bonus, and the contract bidding system — give it a unique feel unlike any other trick-taker.',
@@ -1017,6 +1450,49 @@ const euGames: Game[] = [
       'The Nine of trump is the second strongest card — don\'t undervalue it.',
       'Bid 80 with a weak hand rather than let opponents play comfortably at 80.',
     ],
+    playGuide: [
+      {
+        heading: 'Setting up your table',
+        points: [
+          'Belote is 4 players in two partnerships using a 32-card deck (7 through Ace). First team to 501 points wins the match.',
+          'Eight cards are dealt to each player in a 3–2–3 pattern.',
+          'Before bidding, burn these two rankings into memory — they\'re what makes Belote Belote: in TRUMP, J (20) > 9 (14) > A (11) > 10 (10) > K (4) > Q (3) > 8 > 7; in the other suits, A (11) > 10 (10) > K (4) > Q (3) > J (2) > 9 > 8 > 7.',
+        ],
+      },
+      {
+        heading: 'Bidding a contract',
+        points: [
+          'Starting left of the dealer, each player either bids — a point value (80 minimum, rising in steps of 10) plus a trump suit — or passes.',
+          'Your bid is a promise: "my team will score at least this many of the 162 card points with this suit as trump."',
+          'Holding the trump Jack is worth roughly a bid of 80 by itself; Jack + 9 of the same suit is a monster.',
+          'Opponents confident you\'ll fail can call COINCHÉ (double the contract); your side can answer SURCOINCHÉ (quadruple). The highest bid sets the contract and play begins.',
+        ],
+      },
+      {
+        heading: 'Trick play',
+        points: [
+          'The player left of the dealer leads. You must follow the led suit if you can.',
+          'Void in the led suit? You must TRUMP if you can. And if a trump is already winning the trick, you must OVERTRUMP if able — Belote\'s follow rules are strict, and the app enforces them.',
+          'Exception: if your partner is currently winning the trick, you\'re free to discard instead of trumping.',
+          'Highest trump wins the trick, or the highest card of the led suit if no trump appears. The winner leads next.',
+        ],
+      },
+      {
+        heading: 'Belote-Rebelote and scoring',
+        points: [
+          'Hold both the King AND Queen of trump? Announce "Belote" when you play the first and "Rebelote" on the second — a guaranteed 20-point bonus that even counts toward a failed contract.',
+          'The last trick is worth 10 bonus points ("dix de der"), bringing each hand\'s total to 162.',
+          'Contract made: both teams keep the points they captured (plus declarations). Contract failed: the bidding team scores 0 and the defenders take all 162 plus declarations.',
+          'A coinché contract doubles the stakes, surcoinché quadruples. Hands repeat until a team passes 501.',
+        ],
+      },
+    ],
+    screenshots: [
+      { file: 'belote/01-game-setup.png', title: 'Set up the table', caption: 'Four players, two teams, one 32-card deck — first to 501.' },
+      { file: 'belote/02-deal.png',       title: 'The deal',         caption: 'Eight cards each, dealt 3–2–3.' },
+      { file: 'belote/03-bid.png',        title: 'Bid a contract',   caption: 'Bid 80+ naming your trump suit, pass, or double the enemy with Coinché.' },
+      { file: 'belote/04-gameplay.png',   title: 'Trick play',       caption: 'Trump J and 9 rule the table; declare Belote-Rebelote with the trump K and Q for +20.' },
+    ],
   },
   {
     slug: 'skat',
@@ -1025,7 +1501,7 @@ const euGames: Game[] = [
     tagline: 'Germany\'s greatest card game — bid, pick up the Skat, and declare.',
     icon: '🇩🇪',
     players: '3 players', playerCount: '3',
-    difficulty: 'Hard', premium: true,
+    difficulty: 'Hard', comingSoon: true,
     regions: ['EU'],
     languages: [LANG.de, LANG.nl, LANG.pl, LANG.en],
     description: 'Skat is Germany\'s national card game and one of the most intellectually demanding trick-takers in the world. One Declarer bids to play alone against two Defenders; picking up the Skat (two hidden cards) and declaring the game type is a chess-like challenge.',
@@ -1064,10 +1540,6 @@ export const games: Game[] = [
 
 /** Games that are fully released and playable now */
 export const availableGames  = games.filter(g => !g.comingSoon);
-/** Released games that require a subscription */
-export const premiumGames    = availableGames.filter(g =>  g.premium);
-/** Released games free to pick after trial */
-export const standardGames   = availableGames.filter(g => !g.premium);
 /** Games in development — shown in catalog but not yet playable */
 export const comingSoonGames  = games.filter(g =>  g.comingSoon);
 

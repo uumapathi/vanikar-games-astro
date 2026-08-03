@@ -1,0 +1,142 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+const shotModules = import.meta.glob<{ default: ImageMetadata }>('../assets/screenshots/app/*.png', { eager: true });
+const shot = (name: string) => shotModules[`../assets/screenshots/app/${name}.png`].default;
+
+/* Featured screens shown large, then the supporting tour */
+const featured = [
+  {
+    image: shot('home'),
+    title: 'Home',
+    caption: 'Jump into Practice, Online tables, Clubs, or Tournaments straight from the home screen.',
+  },
+  {
+    image: shot('offline-game-selection'),
+    title: 'Pick your game',
+    caption: 'Curated card rooms with large icons and clear player counts — your next game is one tap away.',
+  },
+  {
+    image: shot('settings-appearance'),
+    title: 'Make it yours',
+    caption: 'Table themes from Royal Felt to Midnight Indigo — dark and light, all in burnished gold.',
+  },
+];
+
+const tour = [
+  {
+    image: shot('slide-menu'),
+    title: 'Everything in reach',
+    caption: 'Profile, settings, and legal info in one slide-out menu — play as a guest or log in.',
+  },
+  {
+    image: shot('profile'),
+    title: 'Your profile',
+    caption: 'Pick an avatar and display name — that\'s how players see you in lobbies and rooms.',
+  },
+  {
+    image: shot('login'),
+    title: 'Sign in',
+    caption: 'Log in to sync your profile, stats, and subscription across devices.',
+  },
+  {
+    image: shot('register'),
+    title: 'Create an account',
+    caption: 'A quick registration unlocks online play, Clubs, and Tournaments.',
+  },
+  {
+    image: shot('settings'),
+    title: 'Settings',
+    caption: 'Tune the app to your table style — sound, themes, and gameplay options.',
+  },
+  {
+    image: shot('settings-animations'),
+    title: 'Animations',
+    caption: 'Set dealing and card-play animation speed — snappy or cinematic, your call.',
+  },
+];
+---
+<section class="showcase" id="app-tour">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">♠ Inside the App</div>
+      <h2 class="section-title">Take the Tour</h2>
+      <p class="section-subtitle">
+        Real screens from the app — a casino-quality table in your pocket.
+      </p>
+    </div>
+
+    <div class="showcase-featured">
+      {featured.map(s => (
+        <figure class="shot-card shot-card--featured">
+          <Image src={s.image} alt={`Card Games app — ${s.title}`} width={480} class="shot-img" />
+          <figcaption>
+            <strong>{s.title}</strong>
+            <span>{s.caption}</span>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+
+    <div class="showcase-tour">
+      {tour.map(s => (
+        <figure class="shot-card">
+          <Image src={s.image} alt={`Card Games app — ${s.title}`} width={360} class="shot-img" />
+          <figcaption>
+            <strong>{s.title}</strong>
+            <span>{s.caption}</span>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .showcase {
+    background: var(--bg-deep);
+    border-top: 1px solid var(--border);
+    padding: 5rem 0;
+  }
+
+  .showcase-featured {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    max-width: 980px;
+    margin: 0 auto 1.5rem;
+  }
+
+  .showcase-tour {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.25rem;
+    max-width: 980px;
+    margin: 0 auto;
+  }
+
+  .shot-card {
+    margin: 0;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: all var(--transition);
+  }
+  .shot-card--featured { border-color: var(--gold-border); }
+  .shot-card:hover {
+    border-color: var(--gold-border);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md), var(--glow-gold);
+  }
+  .shot-card :global(.shot-img) { display: block; width: 100%; height: auto; }
+  .shot-card figcaption { padding: .85rem 1rem 1rem; }
+  .shot-card figcaption strong {
+    display: block; font-size: .85rem; color: var(--text-primary);
+    font-family: 'Inter',sans-serif; margin-bottom: .25rem;
+  }
+  .shot-card figcaption span {
+    font-size: .78rem; color: var(--text-muted); line-height: 1.55;
+  }
+</style>
