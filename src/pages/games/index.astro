@@ -1,6 +1,13 @@
 ---
 import BaseLayout                    from '../../layouts/BaseLayout.astro';
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
 import { games, comingSoonGames, availableGames } from '../../data/games';
+
+const iconModules = import.meta.glob<{ default: ImageMetadata }>('../../assets/game-icons/*.{png,svg}', { eager: true });
+const gameIcon = (slug: string) =>
+  iconModules[`../../assets/game-icons/${slug}.png`]?.default ??
+  iconModules[`../../assets/game-icons/${slug}.svg`]?.default;
 
 const total    = games.length;
 const csCount  = comingSoonGames.length;
@@ -48,7 +55,11 @@ const avail    = availableGames.length;
         <div class="games-grid" id="premium-grid">
           {availableGames.map(game => (
             <a href={`/games/${game.slug}`} class="game-card game-card--premium">
-              <div class="game-card-icon">{game.icon}</div>
+              <div class="game-card-icon">
+                {gameIcon(game.slug)
+                  ? <Image src={gameIcon(game.slug)!} alt="" width={88} class="gi-img" />
+                  : game.icon}
+              </div>
               <div class="game-card-body">
                 <div class="game-card-header">
                   <h3 class="game-card-name">{game.name}</h3>
@@ -86,7 +97,11 @@ const avail    = availableGames.length;
         <div class="games-grid" id="coming-soon-grid">
           {comingSoonGames.map(game => (
             <a href={`/games/${game.slug}`} class="game-card game-card--soon">
-              <div class="game-card-icon soon-icon">{game.icon}</div>
+              <div class="game-card-icon soon-icon">
+                {gameIcon(game.slug)
+                  ? <Image src={gameIcon(game.slug)!} alt="" width={88} class="gi-img" />
+                  : game.icon}
+              </div>
               <div class="game-card-body">
                 <div class="game-card-header">
                   <h3 class="game-card-name">{game.name}</h3>
@@ -149,6 +164,7 @@ const avail    = availableGames.length;
   .game-card:hover { border-color: var(--gold-border); background: var(--bg-card-elevated); transform: translateY(-2px); box-shadow: var(--shadow-md), var(--glow-gold); }
 
   .game-card-icon { font-size: 1.9rem; flex-shrink: 0; width: 44px; text-align: center; margin-top: .1rem; }
+  .game-card-icon :global(.gi-img) { width: 44px; height: 44px; object-fit: contain; display: block; }
   .game-card-body { flex: 1; min-width: 0; }
   .game-card-header { display: flex; align-items: center; gap: .4rem; margin-bottom: .2rem; flex-wrap: wrap; }
   .game-card-name  { font-size: .9rem; font-weight: 700; font-family: 'Inter',sans-serif; color: var(--text-primary); }

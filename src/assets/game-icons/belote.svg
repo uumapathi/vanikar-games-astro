@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <circle cx="64" cy="64" r="60" fill="#EAF0FB"/>
+  <!-- crown: "belote" is declared with the King + Queen of trump -->
+  <path d="M38 80 L42 50 L54 66 L64 44 L74 66 L86 50 L90 80 Z"
+        fill="#F4D03F" stroke="#B7950B" stroke-width="2.5" stroke-linejoin="round"/>
+  <rect x="38" y="79" width="52" height="9" rx="2.5" fill="#D4AC0D"/>
+  <!-- jewels -->
+  <circle cx="54" cy="72" r="3" fill="#C0392B"/>
+  <circle cx="64" cy="70" r="3.4" fill="#2E86C1"/>
+  <circle cx="74" cy="72" r="3" fill="#27AE60"/>
+</svg>

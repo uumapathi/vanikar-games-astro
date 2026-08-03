@@ -11,6 +11,11 @@ export const getStaticPaths: GetStaticPaths = () =>
 const { slug } = Astro.params;
 const game = getGame(slug as string)!;
 
+const iconModules = import.meta.glob<{ default: ImageMetadata }>('../../assets/game-icons/*.{png,svg}', { eager: true });
+const gameIcon = (s: string) =>
+  iconModules[`../../assets/game-icons/${s}.png`]?.default ??
+  iconModules[`../../assets/game-icons/${s}.svg`]?.default;
+
 const shotModules = import.meta.glob<{ default: ImageMetadata }>('../../assets/screenshots/*/*.png', { eager: true });
 const shots = (game.screenshots ?? [])
   .map(s => {
@@ -50,7 +55,11 @@ const diffColor: Record<string, string> = {
   <section class="game-hero">
     <div class="container">
       <div class="game-hero-inner">
-        <div class="game-icon-lg">{game.icon}</div>
+        <div class="game-icon-lg">
+          {gameIcon(game.slug)
+            ? <Image src={gameIcon(game.slug)!} alt={`${game.name} icon`} width={192} class="gi-img" />
+            : game.icon}
+        </div>
         <div>
           <div class="game-badges">
             <span class="diff-badge" style={`background:${diffColor[game.difficulty]}22;color:${diffColor[game.difficulty]};border:1px solid ${diffColor[game.difficulty]}55`}>
@@ -201,7 +210,11 @@ const diffColor: Record<string, string> = {
       <div class="other-grid">
         {games.filter(g => g.slug !== game.slug).slice(0,4).map(g => (
           <a href={`/games/${g.slug}`} class="other-card">
-            <span class="other-icon">{g.icon}</span>
+            <span class="other-icon">
+              {gameIcon(g.slug)
+                ? <Image src={gameIcon(g.slug)!} alt="" width={56} class="gi-img" />
+                : g.icon}
+            </span>
             <span class="other-name">{g.name}</span>
             <span class="other-arrow">›</span>
           </a>
@@ -233,6 +246,7 @@ const diffColor: Record<string, string> = {
   }
   .game-hero-inner { display: flex; align-items: flex-start; gap: 1.5rem; margin-bottom: 1.25rem; flex-wrap: wrap; }
   .game-icon-lg   { font-size: 4rem; line-height: 1; }
+  .game-icon-lg :global(.gi-img) { width: 96px; height: 96px; object-fit: contain; display: block; }
   .game-badges    { display: flex; gap: .5rem; margin-bottom: .5rem; flex-wrap: wrap; }
 
   .diff-badge { display: inline-block; font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; padding: .2rem .6rem; border-radius: var(--radius-full); }
@@ -316,6 +330,7 @@ const diffColor: Record<string, string> = {
   }
   .other-card:hover { border-color: var(--gold-border); transform: translateY(-1px); }
   .other-icon  { font-size: 1.5rem; }
+  .other-icon :global(.gi-img) { width: 28px; height: 28px; object-fit: contain; display: block; }
   .other-name  { flex: 1; font-size: .875rem; font-weight: 600; color: var(--text-primary); }
   .other-arrow { color: var(--text-dim); transition: transform var(--transition); }
   .other-card:hover .other-arrow { transform: translateX(3px); color: var(--gold); }
