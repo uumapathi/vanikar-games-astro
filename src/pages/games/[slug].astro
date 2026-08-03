@@ -174,7 +174,15 @@ const diffColor: Record<string, string> = {
         <div class="shots-grid">
           {shots.map(s => (
             <figure class="shot-card">
-              <Image src={s.image} alt={`${game.name} — ${s.title}`} width={420} class="shot-img" />
+              <Image
+                src={s.image}
+                alt={`${game.name} — ${s.title}`}
+                width={640}
+                widths={[240, 420, 640]}
+                sizes="(max-width: 640px) 85vw, (max-width: 1100px) 44vw, 300px"
+                quality={70}
+                class="shot-img"
+              />
               <figcaption>
                 <strong>{s.title}</strong>
                 <span>{s.caption}</span>

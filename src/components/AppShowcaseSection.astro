@@ -70,7 +70,15 @@ const tour = [
     <div class="showcase-featured">
       {featured.map(s => (
         <figure class="shot-card shot-card--featured">
-          <Image src={s.image} alt={`Card Games app — ${s.title}`} width={480} class="shot-img" />
+          <Image
+            src={s.image}
+            alt={`Card Games app — ${s.title}`}
+            width={720}
+            widths={[280, 480, 720]}
+            sizes="(max-width: 640px) 90vw, (max-width: 980px) 45vw, 310px"
+            quality={70}
+            class="shot-img"
+          />
           <figcaption>
             <strong>{s.title}</strong>
             <span>{s.caption}</span>
@@ -82,7 +90,15 @@ const tour = [
     <div class="showcase-tour">
       {tour.map(s => (
         <figure class="shot-card">
-          <Image src={s.image} alt={`Card Games app — ${s.title}`} width={360} class="shot-img" />
+          <Image
+            src={s.image}
+            alt={`Card Games app — ${s.title}`}
+            width={600}
+            widths={[220, 400, 600]}
+            sizes="(max-width: 640px) 45vw, (max-width: 980px) 30vw, 240px"
+            quality={70}
+            class="shot-img"
+          />
           <figcaption>
             <strong>{s.title}</strong>
             <span>{s.caption}</span>

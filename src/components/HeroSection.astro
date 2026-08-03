@@ -66,10 +66,29 @@ const cs    = comingSoonGames.length;
         <div class="float-card float-card--2"><span>K</span>♥</div>
         <div class="float-card float-card--3"><span>Q</span>♦</div>
         <div class="phone phone--back">
-          <Image src={gamesShot} alt="" width={300} class="phone-img" />
+          <Image
+            src={gamesShot}
+            alt=""
+            width={500}
+            widths={[250, 500]}
+            sizes="250px"
+            quality={60}
+            loading="eager"
+            class="phone-img"
+          />
         </div>
         <div class="phone phone--front">
-          <Image src={homeShot} alt="Card Games app home screen" width={340} class="phone-img" />
+          <Image
+            src={homeShot}
+            alt="Card Games app home screen"
+            width={600}
+            widths={[300, 600]}
+            sizes="(max-width: 900px) 260px, 300px"
+            quality={70}
+            loading="eager"
+            fetchpriority="high"
+            class="phone-img"
+          />
         </div>
       </div>
     </div>
