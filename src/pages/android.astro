@@ -90,47 +90,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </div>
     </section>
 
-    <!-- Timeline -->
-    <section class="timeline-section">
-      <div class="container" style="text-align:center">
-        <h2 class="section-title">Development Roadmap</h2>
-        <div class="timeline">
-          <div class="tl-item tl-done">
-            <div class="tl-dot"></div>
-            <div class="tl-body">
-              <div class="tl-label">✓ Complete</div>
-              <div class="tl-title">Core Games Engine</div>
-              <p>All 17 base games implemented with offline AI.</p>
-            </div>
-          </div>
-          <div class="tl-item tl-active">
-            <div class="tl-dot"></div>
-            <div class="tl-body">
-              <div class="tl-label">In Progress</div>
-              <div class="tl-title">Online Multiplayer &amp; Matchmaking</div>
-              <p>Real-time servers, ranked matchmaking, private tables.</p>
-            </div>
-          </div>
-          <div class="tl-item">
-            <div class="tl-dot"></div>
-            <div class="tl-body">
-              <div class="tl-label">Coming Next</div>
-              <div class="tl-title">Social Features &amp; Google Play Launch</div>
-              <p>Voice chat, Discord, leaderboards, achievements — then Play Store submission.</p>
-            </div>
-          </div>
-          <div class="tl-item">
-            <div class="tl-dot"></div>
-            <div class="tl-body">
-              <div class="tl-label">Post-Launch</div>
-              <div class="tl-title">16 Coming-Soon Games</div>
-              <p>War, Canasta, Koi-Koi, Seep, Whist and many more — premium subscribers first.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <div class="store-footer-cta">
       <div class="container" style="text-align:center">
         <p>In the meantime, explore the full game catalog and pricing.</p>
@@ -240,21 +199,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   .sf-card h3 { font-size:1rem; font-weight:700; font-family:'Inter',sans-serif; margin-bottom:.4rem; color:var(--text-primary); }
   .sf-card p  { font-size:.85rem; color:var(--text-muted); line-height:1.6; }
 
-  .timeline-section { background:var(--bg-secondary); border-top:1px solid var(--border); padding:4rem 0; }
-  .timeline { display:flex; flex-direction:column; gap:0; max-width:600px; margin:2rem auto 0; }
-  .tl-item { display:flex; gap:1.25rem; position:relative; padding-bottom:2rem; }
-  .tl-item:last-child { padding-bottom:0; }
-  .tl-item::before { content:''; position:absolute; left:10px; top:22px; bottom:0; width:2px; background:var(--border); }
-  .tl-item:last-child::before { display:none; }
-  .tl-dot { width:22px; height:22px; border-radius:50%; border:2px solid var(--border); background:var(--bg-card); flex-shrink:0; margin-top:2px; }
-  .tl-done .tl-dot   { background:var(--gold); border-color:var(--gold); }
-  .tl-active .tl-dot { background:var(--platform-color); border-color:var(--platform-color); box-shadow:0 0 10px rgba(61,220,132,.4); }
-  .tl-body { flex:1; }
-  .tl-label { font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--text-dim); margin-bottom:.2rem; }
-  .tl-done .tl-label   { color:var(--gold); }
-  .tl-active .tl-label { color:var(--platform-color); }
-  .tl-title { font-size:.95rem; font-weight:700; font-family:'Inter',sans-serif; color:var(--text-primary); margin-bottom:.25rem; }
-  .tl-body p { font-size:.83rem; color:var(--text-muted); line-height:1.55; }
 
   .store-footer-cta { background:var(--bg-deep); border-top:1px solid var(--border); padding:3rem 0; }
   .store-footer-cta p { font-size:1rem; color:var(--text-muted); }

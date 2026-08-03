@@ -2,6 +2,25 @@
 import { availableGames, comingSoonGames } from '../data/games';
 const availCount = availableGames.length;
 const csCount    = comingSoonGames.length;
+
+/* One list, rendered in both cards — the trial IS premium, for 14 days */
+const features = [
+  { text: 'No ads — ever' },
+  { text: `All ${availCount} current games` },
+  { text: `Early access to ${csCount} coming soon games` },
+  { text: 'New games as released' },
+  { text: 'Online multiplayer & ranked play' },
+  { text: 'CPU / offline practice' },
+  { text: 'Hints & tips' },
+  { text: 'Clubs & Tournaments' },
+  { text: '🎙️ In-game voice chat',            social: true },
+  { text: '🟣 Discord integration',            social: true },
+  { text: '🏆 Global leaderboards',            social: true },
+  { text: '📊 Personal stats & analytics',     social: true },
+  { text: '🥇 Achievements & player profile',  social: true },
+  { text: '👥 Friend system & invites',        social: true },
+  { text: 'Priority support' },
+];
 ---
 <section class="pricing" id="pricing">
   <div class="container">
@@ -9,7 +28,8 @@ const csCount    = comingSoonGames.length;
       <div class="section-tag">♦ Simple, Fair Pricing</div>
       <h2 class="section-title">Start Free. Stay Free or Go Premium.</h2>
       <p class="section-subtitle">
-        Every game unlocked for 2 weeks. No credit card required.
+        The trial is the full premium experience — every game and feature unlocked for 2 weeks.
+        No credit card required. And no ads, in any version — free or premium.
       </p>
     </div>
 
@@ -21,16 +41,14 @@ const csCount    = comingSoonGames.length;
         <div class="price-icon">🎉</div>
         <div class="price-amount">Free</div>
         <div class="price-period">for 14 days</div>
-        <p class="price-desc">Everything unlocked. No credit card. Just download and play.</p>
+        <p class="price-desc">Everything in Premium, unlocked. Just download and play.</p>
         <ul class="price-features">
-          <li>✓ All {availCount} available games</li>
-          <li>✓ Online multiplayer</li>
-          <li>✓ CPU / offline practice</li>
-          <li>✓ Hints &amp; tips</li>
-          <li>✓ Clubs &amp; Tournaments</li>
-          <li>✓ No credit card needed</li>
+          {features.map(f => (
+            <li class={f.social ? 'feat-social' : ''}>{f.social ? f.text : `✓ ${f.text}`}</li>
+          ))}
         </ul>
         <a href="/#download" class="btn btn-primary price-btn">Start Free Trial</a>
+        <p class="price-fine">No credit card · No account required to play</p>
       </div>
 
       <!-- Free Forever -->
@@ -41,6 +59,7 @@ const csCount    = comingSoonGames.length;
         <div class="price-period">forever</div>
         <p class="price-desc">Pick any 5 games to keep — offline &amp; CPU play, no expiry.</p>
         <ul class="price-features">
+          <li>✓ No ads — ever</li>
           <li>✓ Choose any 5 games</li>
           <li>✓ Offline / CPU play</li>
           <li class="feat-no">✗ Online multiplayer</li>
@@ -49,30 +68,20 @@ const csCount    = comingSoonGames.length;
           <li class="feat-no">✗ Clubs &amp; Tournaments</li>
         </ul>
         <a href="/games" class="btn btn-secondary price-btn">See All Games</a>
+        <p class="price-fine">Upgrade to Premium any time to unlock every game and feature</p>
       </div>
 
       <!-- Premium -->
       <div class="price-card price-card--premium">
         <div class="price-badge price-badge--premium">Most Popular</div>
         <div class="price-icon">👑</div>
-        <div class="price-amount price-soon">Coming<br/>Soon</div>
-        <div class="price-period">pricing announced at launch</div>
+        <div class="price-amount price-soon">Premium</div>
+        <div class="price-period">Coming Soon — pricing announced at launch</div>
         <p class="price-desc">Everything, forever. New games for subscribers first.</p>
         <ul class="price-features">
-          <li>✓ All {availCount} current games</li>
-          <li>✓ Early access to {csCount} coming soon games</li>
-          <li>✓ New games as released</li>
-          <li>✓ Online multiplayer &amp; ranked play</li>
-          <li>✓ CPU / offline practice</li>
-          <li>✓ Hints &amp; tips</li>
-          <li>✓ Clubs &amp; Tournaments</li>
-          <li class="feat-social">🎙️ In-game voice chat</li>
-          <li class="feat-social">🟣 Discord integration</li>
-          <li class="feat-social">🏆 Global leaderboards</li>
-          <li class="feat-social">📊 Personal stats &amp; analytics</li>
-          <li class="feat-social">🥇 Achievements &amp; player profile</li>
-          <li class="feat-social">👥 Friend system &amp; invites</li>
-          <li>✓ Priority support</li>
+          {features.map(f => (
+            <li class={f.social ? 'feat-social' : ''}>{f.social ? f.text : `✓ ${f.text}`}</li>
+          ))}
         </ul>
         <a href="/#download" class="btn btn-primary price-btn">Get Premium</a>
         <p class="price-fine">Cancel anytime · Billed via App Store / Google Play</p>
@@ -94,7 +103,7 @@ const csCount    = comingSoonGames.length;
 
   .pricing-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 1.25rem; margin-bottom: 2rem;
     align-items: start;
   }
