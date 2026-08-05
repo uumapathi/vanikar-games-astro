@@ -6,16 +6,16 @@ const cs    = comingSoonGames.length;
 <section class="stats">
   <div class="container">
     <div class="stats-grid">
-      <div class="stat-item">
+      <a class="stat-item stat-link" href="/games#premium-group">
         <div class="stat-value">{avail}</div>
         <div class="stat-label">Card Games</div>
         <div class="stat-sub">Playable today</div>
-      </div>
-      <div class="stat-item stat-divider">
+      </a>
+      <a class="stat-item stat-divider stat-link" href="/games#coming-soon-group">
         <div class="stat-value">{cs}</div>
         <div class="stat-label">Coming Soon</div>
         <div class="stat-sub">In development now</div>
-      </div>
+      </a>
       <div class="stat-item stat-divider">
         <div class="stat-value">AI</div>
         <div class="stat-label">Smart Opponents</div>
@@ -48,6 +48,9 @@ const cs    = comingSoonGames.length;
   .stat-label   { font-size: .95rem; color: var(--text-secondary); font-weight: 500; }
   .stat-sub     { font-size: .75rem; color: var(--text-dim); margin-top: .3rem; }
   .stat-divider { border-left: 1px solid var(--border); }
+  .stat-link { display: block; text-decoration: none; transition: transform var(--transition); }
+  .stat-link:hover { transform: translateY(-3px); }
+  .stat-link:hover .stat-value { color: var(--gold); }
   @media (max-width: 900px) {
     .stats-grid { grid-template-columns: repeat(2,1fr); gap: .5rem; }
     .stat-item:nth-child(3) { border-left: none; }

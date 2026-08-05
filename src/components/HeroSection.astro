@@ -35,14 +35,14 @@ const cs    = comingSoonGames.length;
         </p>
 
         <div class="hero-stats">
-          <div class="hero-stat">
+          <a class="hero-stat hero-stat-link" href="/games#premium-group">
             <span class="hero-stat-value">{avail}</span>
             <span class="hero-stat-label">Games Live</span>
-          </div>
-          <div class="hero-stat">
+          </a>
+          <a class="hero-stat hero-stat-link" href="/games#coming-soon-group">
             <span class="hero-stat-value">{cs}</span>
             <span class="hero-stat-label">Coming Soon</span>
-          </div>
+          </a>
           <div class="hero-stat">
             <span class="hero-stat-value">LIVE</span>
             <span class="hero-stat-label">Tables</span>
@@ -156,6 +156,14 @@ const cs    = comingSoonGames.length;
     display: flex; flex-direction: column; align-items: center;
     background: var(--gold-subtle); border: 1px solid var(--gold-border);
     border-radius: var(--radius-md); padding: .75rem 1.5rem; min-width: 96px;
+  }
+  .hero-stat-link {
+    text-decoration: none;
+    transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+  }
+  .hero-stat-link:hover {
+    transform: translateY(-3px); border-color: var(--gold);
+    box-shadow: 0 4px 14px rgba(201,162,39,.25);
   }
   .hero-stat-value {
     font-family: 'Cinzel',serif; font-size: 1.6rem; font-weight: 700;

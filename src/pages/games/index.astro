@@ -70,12 +70,6 @@ const avail    = availableGames.length;
                   <span>👥 {game.playerCount}</span>
                   <span class="badge badge-premium badge-sm">Premium</span>
                 </div>
-                {game.languages.slice(0,3).map(l => (
-                  <span class="lang-chip" title={l.name}>{l.native}</span>
-                ))}
-                {game.languages.length > 3 && (
-                  <span class="lang-chip lang-chip--more">+{game.languages.length - 3}</span>
-                )}
               </div>
               <span class="game-card-arrow">›</span>
             </a>
@@ -177,9 +171,6 @@ const avail    = availableGames.length;
   .game-card-tagline { font-size: .8rem; color: var(--text-muted); line-height: 1.5; margin-bottom: .35rem; }
   .game-card-meta    { display: flex; align-items: center; gap: .4rem; font-size: .72rem; color: var(--text-dim); flex-wrap: wrap; margin-bottom: .3rem; }
 
-/* Language chips */
-  .lang-chip      { display: inline-block; font-size: .62rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: .05rem .35rem; color: var(--text-dim); margin-right: .2rem; margin-top: .15rem; }
-  .lang-chip--more{ color: var(--gold); border-color: var(--gold-border); }
 
   .game-card-arrow { color: var(--text-dim); font-size: 1.3rem; margin-left: auto; flex-shrink: 0; align-self: center; transition: transform var(--transition), color var(--transition); }
   .game-card:hover .game-card-arrow { transform: translateX(4px); color: var(--gold); }

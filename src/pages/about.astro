@@ -1,0 +1,150 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { games, availableGames, comingSoonGames } from '../data/games';
+---
+<BaseLayout
+  title="About Us – Card Games by Vanikar"
+  description={`Vanikar LLC is the studio behind Card Games by Vanikar — ${games.length} classic card games from around the world, built with 21+ years of software craftsmanship.`}
+>
+  <section class="legal-page about-page">
+    <div class="container-narrow">
+      <div class="legal-header">
+        <h1>About Vanikar LLC</h1>
+        <p class="legal-date">Merchants of Software Craftsmanship</p>
+      </div>
+
+      <div class="legal-content">
+
+        <!-- The name -->
+        <div class="name-card">
+          <div class="name-script">வணிகர்</div>
+          <div class="name-translit">Vaṇikar</div>
+          <div class="name-meaning">Tamil — "merchant · trader · one who creates value through exchange"</div>
+        </div>
+
+        <h2>An ancient word for a timeless craft</h2>
+        <p>
+          <strong>Vanikar</strong> comes from Tamil, one of the world's oldest living languages — and
+          our founders' native tongue. For millennia, Tamil vanikars sailed distant seas and built
+          trusted trade networks, renowned not just for what they sold, but for the integrity, skill,
+          and relationships behind every exchange.
+        </p>
+        <p>
+          We chose the name because we see software the same way: a fair exchange of value — deep
+          expertise and honest craftsmanship in return for your trust. Like the merchants of old,
+          we build things meant to travel far and last long.
+        </p>
+
+        <h2>Who we are</h2>
+        <p>
+          Vanikar LLC crafts software that solves real-world problems — from immersive games to
+          intelligent, AI-powered systems. Behind the studio is <strong>21+ years of professional
+          software engineering</strong> on mission-critical platforms for banking, defense &amp;
+          aerospace, and global retail — environments where software has to work the first time,
+          and every time after. That discipline, paired with hands-on generative-AI practice and
+          a craftsman's attention to quality, is what we bring to every table we build.
+        </p>
+
+        <div class="about-stats">
+          <div class="about-stat">
+            <span class="about-stat-value">21+</span>
+            <span class="about-stat-label">Years of engineering</span>
+          </div>
+          <div class="about-stat">
+            <span class="about-stat-value">{games.length}</span>
+            <span class="about-stat-label">Card games</span>
+          </div>
+          <div class="about-stat">
+            <span class="about-stat-value">{availableGames.length}</span>
+            <span class="about-stat-label">Playable today</span>
+          </div>
+          <div class="about-stat">
+            <span class="about-stat-value">{comingSoonGames.length}</span>
+            <span class="about-stat-label">In development</span>
+          </div>
+        </div>
+
+        <h2>What we're building here</h2>
+        <p>
+          <strong>Card Games by Vanikar</strong> is our love letter to the world's favourite card
+          games — {games.length} of them, drawn from traditions on every continent: quick classics
+          like High Card and Go Fish, deep strategy games like Cribbage, Belote, and Skat, and
+          beloved regional games like Indian Rummy, Truco, and Tiến Lên. Every game ships with a
+          detailed play guide, responsive AI opponents at multiple difficulty levels, and full
+          offline support — polished experiences that entertain, teach, and connect people.
+        </p>
+
+        <h2>How it works</h2>
+        <p>
+          The app is free to download, and every game is free during your 2-week trial — no account
+          or credit card needed to start playing. After the trial, keep any 5 games of your choice
+          free forever for CPU play, or go Premium to unlock everything: online multiplayer, private
+          tables with friends and family, and all future games and features as they arrive.
+        </p>
+        <p>
+          The app is currently in English, with more languages coming soon.
+        </p>
+
+        <h2>Get in touch</h2>
+        <p>
+          Have feedback, a bug report, or a favourite card game we should build next? We'd love to
+          hear from you at <a href="mailto:info@vanikar.com">info@vanikar.com</a> — or learn more
+          about the studio at <a href="https://vanikar.com" target="_blank" rel="noopener">vanikar.com</a>.
+        </p>
+
+        <p>
+          <a href="/games">Browse the games →</a><br/>
+          <a href="/pricing">See pricing →</a>
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .name-card {
+    text-align: center;
+    background: var(--bg-feature, rgba(255,255,255,.03));
+    border: 1px solid var(--gold-border, rgba(201,162,39,.35));
+    border-radius: var(--radius-lg, 14px);
+    padding: 2.25rem 1.5rem 1.75rem;
+    margin: 0 0 2.25rem;
+  }
+  .name-script {
+    font-size: clamp(2.4rem, 6vw, 3.4rem);
+    color: var(--gold-light, #e6c65c);
+    line-height: 1.2;
+  }
+  .name-translit {
+    font-family: 'Cinzel', serif;
+    font-size: 1.05rem; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--text-primary, #eee); margin-top: .5rem;
+  }
+  .name-meaning {
+    font-size: .85rem; color: var(--text-muted, #9aa);
+    margin-top: .45rem; font-style: italic;
+  }
+
+  .about-stats {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: .75rem; margin: 2rem 0 2.5rem;
+  }
+  .about-stat {
+    display: flex; flex-direction: column; align-items: center; text-align: center;
+    background: var(--gold-subtle, rgba(201,162,39,.07));
+    border: 1px solid var(--gold-border, rgba(201,162,39,.3));
+    border-radius: var(--radius-md, 10px);
+    padding: 1rem .5rem;
+  }
+  .about-stat-value {
+    font-family: 'Cinzel', serif; font-size: 1.6rem; font-weight: 700;
+    color: var(--gold-light, #e6c65c); line-height: 1;
+  }
+  .about-stat-label {
+    font-size: .68rem; color: var(--text-muted, #9aa);
+    text-transform: uppercase; letter-spacing: .1em; margin-top: .4rem;
+  }
+  @media (max-width: 560px) {
+    .about-stats { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>

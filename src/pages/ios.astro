@@ -1,9 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { games, comingSoonGames } from '../data/games';
 ---
 <BaseLayout
   title="Card Games by Vanikar — Coming Soon on iOS"
-  description="The Vanikar Card Games app is coming soon to the Apple App Store. 33 card games, online multiplayer, voice chat, leaderboards, Discord integration and more."
+  description={`The Vanikar Card Games app is coming soon to the Apple App Store. ${games.length} card games, online multiplayer, voice chat, leaderboards, Discord integration and more.`}
 >
   <div class="store-page store-page--ios">
 
@@ -58,8 +59,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <div class="sf-grid">
           <div class="sf-card">
             <span class="sf-icon">🃏</span>
-            <h3>33 Card Games</h3>
-            <p>From High Card to Skat — with 16 more games coming soon for subscribers first.</p>
+            <h3>{games.length} Card Games</h3>
+            <p>From High Card to Skat — with {comingSoonGames.length} more games coming soon for subscribers first.</p>
           </div>
           <div class="sf-card">
             <span class="sf-icon">🌐</span>

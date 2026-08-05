@@ -1,18 +1,33 @@
 ---
+/* Inner SVG markup per feature (24×24 viewBox, stroked) */
+const icons = {
+  globe:  '<circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/>',
+  cpu:    '<rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M15 2v2M15 20v2M2 15h2M2 9h2M20 15h2M20 9h2M9 2v2M9 20v2"/>',
+  users:  '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+  shield: '<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>',
+  trophy: '<path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>',
+  medal:  '<path d="M7.21 15 2.66 7.14a2 2 0 0 1 .13-2.2L4.4 2.8A2 2 0 0 1 6 2h12a2 2 0 0 1 1.6.8l1.6 2.14a2 2 0 0 1 .14 2.2L16.79 15"/><path d="M11 12 5.12 2.2"/><path d="m13 12 5.88-9.8"/><path d="M8 7h8"/><circle cx="12" cy="17" r="5"/><path d="M12 18v-2h-.5"/>',
+};
+
 const classic = [
-  { icon:'♠', cls:'icon-spade',   title:'Play Online',           desc:'Host multiplayer tables and challenge real opponents.' },
-  { icon:'♣', cls:'icon-clubs',   title:'Practice with CPU',     desc:'Sharpen strategy offline with responsive AI opponents.' },
-  { icon:'♦', cls:'icon-diamond', title:'Join Friends & Family', desc:'Enter a table code and jump into a private room.' },
-  { icon:'♣', cls:'icon-purple',  title:'Clubs',                 desc:'Create or join a club and climb the leaderboard.' },
-  { icon:'🏆',cls:'icon-trophy',  title:'Tournaments',           desc:"Compete in brackets, earn trophies, prove you're champion." },
+  { icon:icons.globe,  cls:'icon-spade',   title:'Play Online',           desc:'Host multiplayer tables and challenge real opponents.', premium:true,
+    points:['Live public tables around the clock — join any open seat.','Matchmaking pairs you with opponents at your level.','In-game chat and emotes keep the table social.','Free during your 2-week trial, then part of Premium.'] },
+  { icon:icons.cpu,    cls:'icon-clubs',   title:'Practice with CPU',     desc:'Sharpen strategy offline with responsive AI opponents.', free:true,
+    points:['Multiple AI difficulty levels, from casual to cutthroat.','Play fully offline — no connection needed.','All games free during your 2-week trial.','After the trial: keep 5 games of your choice free forever for CPU play — no subscription needed.'] },
+  { icon:icons.users,  cls:'icon-diamond', title:'Join Friends & Family', desc:'Enter a table code and jump into a private room.', premium:true,
+    points:['Create a private table and share the code.','Invite-only — no strangers at your table.','Pick the game and set your own house rules.','Free during your 2-week trial, then part of Premium.'] },
+  { icon:icons.shield, cls:'icon-purple',  title:'Clubs & Leagues',       desc:'Create or join a club and compete in weekly league standings.', soon:true,
+    points:['Create a club, recruit members, and play together.','Club chat and shared tables.','Weekly league standings — every member’s results count.','Rise through the divisions together.'] },
+  { icon:icons.trophy, cls:'icon-trophy',  title:'Tournaments',           desc:"Compete in brackets, earn trophies, prove you're champion.", soon:true,
+    points:['Bracket-style knockouts with live standings.','Earn trophies and badges for deep runs.','Scheduled events across the game library.'] },
 ];
 const multi = [
-  { icon:'♠', cls:'icon-spade',   title:'Ranked Matches',   desc:'Face opponents from around the world in competitive ranked play.' },
-  { icon:'♣', cls:'icon-clubs',   title:'Quick Match',      desc:'Jump into a live table instantly — no waiting, no setup.' },
-  { icon:'♦', cls:'icon-diamond', title:'Private Tables',   desc:'Invite only who you want and set your own house rules.' },
-  { icon:'♣', cls:'icon-purple',  title:'Club Leagues',     desc:'Your club competes together in weekly league standings.' },
-  { icon:'🏆',cls:'icon-trophy',  title:'Live Tournaments', desc:'Real-time bracket tournaments with live leaderboards and prizes.' },
+  { icon:icons.medal,  cls:'icon-spade',   title:'Quick & Ranked Matches', desc:'Jump into a live table instantly and climb the global leaderboard.', soon:true,
+    points:['One tap drops you into the next open seat — no lobby, no setup.','Global and regional leaderboards for every game.','Seasonal rankings that reset monthly.','Rating and win streaks tracked on your profile.'] },
 ];
+const all          = [...classic, ...multi];
+const availableNow = all.filter(f => !f.soon);
+const comingSoon   = all.filter(f =>  f.soon);
 ---
 
 <section class="features" id="features">
@@ -25,34 +40,70 @@ const multi = [
       </p>
     </div>
 
-    <div class="mode-tabs">
-      <button class="mode-tab mode-tab--active" data-mode="classic">Classic Play</button>
-      <button class="mode-tab" data-mode="multi">Multiplayer</button>
-    </div>
-
-    <!-- Both lists rendered in HTML; JS toggles visibility -->
-    <div class="features-list" id="classic-features">
-      {classic.map(f => (
+    <div class="group-label">Available Now</div>
+    <div class="features-list">
+      {availableNow.map(f => (
         <div class="feature-card">
-          <div class={`feature-icon ${f.cls}`}>{f.icon}</div>
-          <div class="feature-text">
-            <div class="feature-title">{f.title}</div>
-            <div class="feature-desc">{f.desc}</div>
+          <button class="feature-head" aria-expanded="false">
+            <div class={`feature-icon ${f.cls}`}>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                   stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                   stroke-linejoin="round" aria-hidden="true" set:html={f.icon} />
+            </div>
+            <div class="feature-text">
+              <div class="feature-title">
+                {f.title}
+                {f.premium && <span class="plan-chip plan-chip--premium">Premium</span>}
+                {f.free && <span class="plan-chip plan-chip--free">Free</span>}
+              </div>
+              <div class="feature-desc">{f.desc}</div>
+            </div>
+            <span class="feature-arrow">›</span>
+          </button>
+          <div class="feature-detail" hidden>
+            <ul class="feature-points">
+              {f.points.map(p => <li>{p}</li>)}
+            </ul>
+            {f.soon
+              ? <a class="feature-link" href="/pricing">Premium subscribers get access first →</a>
+              : f.premium
+                ? <a class="feature-link" href="/pricing">Included with Premium — try free for 2 weeks →</a>
+                : <a class="feature-link" href="#download">Get the app free →</a>}
           </div>
-          <span class="feature-arrow">›</span>
         </div>
       ))}
     </div>
 
-    <div class="features-list" id="multi-features" hidden>
-      {multi.map(f => (
+    <div class="group-label group-label--soon">Coming Soon</div>
+    <div class="features-list">
+      {comingSoon.map(f => (
         <div class="feature-card">
-          <div class={`feature-icon ${f.cls}`}>{f.icon}</div>
-          <div class="feature-text">
-            <div class="feature-title">{f.title}</div>
-            <div class="feature-desc">{f.desc}</div>
+          <button class="feature-head" aria-expanded="false">
+            <div class={`feature-icon ${f.cls}`}>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                   stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                   stroke-linejoin="round" aria-hidden="true" set:html={f.icon} />
+            </div>
+            <div class="feature-text">
+              <div class="feature-title">
+                {f.title}
+                {f.premium && <span class="plan-chip plan-chip--premium">Premium</span>}
+                {f.free && <span class="plan-chip plan-chip--free">Free</span>}
+              </div>
+              <div class="feature-desc">{f.desc}</div>
+            </div>
+            <span class="feature-arrow">›</span>
+          </button>
+          <div class="feature-detail" hidden>
+            <ul class="feature-points">
+              {f.points.map(p => <li>{p}</li>)}
+            </ul>
+            {f.soon
+              ? <a class="feature-link" href="/pricing">Premium subscribers get access first →</a>
+              : f.premium
+                ? <a class="feature-link" href="/pricing">Included with Premium — try free for 2 weeks →</a>
+                : <a class="feature-link" href="#download">Get the app free →</a>}
           </div>
-          <span class="feature-arrow">›</span>
         </div>
       ))}
     </div>
@@ -60,53 +111,80 @@ const multi = [
 </section>
 
 <script>
-  const tabs  = document.querySelectorAll<HTMLButtonElement>('.mode-tab');
-  const sets  = { classic: document.getElementById('classic-features')!, multi: document.getElementById('multi-features')! };
-
-  tabs.forEach(tab => tab.addEventListener('click', () => {
-    const mode = tab.dataset.mode as 'classic' | 'multi';
-    tabs.forEach(t => t.classList.toggle('mode-tab--active', t === tab));
-    sets.classic.hidden = mode !== 'classic';
-    sets.multi.hidden   = mode !== 'multi';
-  }));
+  document.querySelectorAll<HTMLButtonElement>('.feature-head').forEach(head => {
+    head.addEventListener('click', () => {
+      const card   = head.closest('.feature-card')!;
+      const detail = card.querySelector<HTMLElement>('.feature-detail')!;
+      const open   = card.classList.toggle('open');
+      head.setAttribute('aria-expanded', String(open));
+      detail.hidden = !open;
+    });
+  });
 </script>
 
 <style>
   .features { background: var(--bg-primary); }
-  .mode-tabs {
-    display: flex; justify-content: center; gap: .75rem;
-    margin-bottom: 2.5rem; flex-wrap: wrap;
-  }
-  .mode-tab {
-    padding: .55rem 1.75rem; border-radius: var(--radius-full);
-    font-size: .82rem; font-weight: 700; letter-spacing: .1em;
-    text-transform: uppercase; border: 1.5px solid var(--border);
-    background: transparent; color: var(--text-muted); transition: all var(--transition);
-  }
-  .mode-tab--active, .mode-tab:hover {
-    background: var(--gold); border-color: var(--gold); color: var(--bg-deep);
-    box-shadow: 0 3px 14px rgba(201,162,39,.35);
-  }
   .features-list {
     display: grid; gap: .9rem;
     max-width: 680px; margin: 0 auto;
   }
+  .group-label {
+    text-align: center; margin-bottom: 1.5rem;
+    font-size: .82rem; font-weight: 700; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--gold);
+  }
+  .group-label--soon { margin-top: 3rem; color: var(--text-muted); }
   .feature-card {
-    display: flex; align-items: center; gap: 1.25rem;
     background: var(--bg-feature); border: 1px solid var(--border);
-    border-radius: var(--radius-lg); padding: 1.2rem 1.4rem;
+    border-radius: var(--radius-lg);
     transition: all var(--transition);
   }
-  .feature-card:hover {
+  .feature-card:hover, .feature-card.open {
     border-color: var(--gold-border); background: var(--bg-card-elevated);
-    transform: translateX(5px); box-shadow: var(--shadow-md), var(--glow-gold);
+    box-shadow: var(--shadow-md), var(--glow-gold);
+  }
+  .feature-card:hover:not(.open) { transform: translateX(5px); }
+  .feature-head {
+    display: flex; align-items: center; gap: 1.25rem;
+    width: 100%; padding: 1.2rem 1.4rem;
+    background: none; border: none; text-align: left;
+    font: inherit; color: inherit; cursor: pointer;
+  }
+  .feature-detail { padding: 0 1.4rem 1.25rem; }
+  .feature-points {
+    margin: 0 0 .9rem; padding-left: 1.1rem;
+    display: grid; gap: .35rem; list-style: disc;
+  }
+  .feature-points li {
+    font-size: .85rem; color: var(--text-muted); line-height: 1.55;
+  }
+  .feature-points li::marker { color: var(--gold); }
+  .feature-link {
+    font-size: .85rem; font-weight: 600; color: var(--gold);
+    text-decoration: none;
+  }
+  .feature-link:hover { text-decoration: underline; }
+  .plan-chip {
+    display: inline-block; margin-left: .55rem; vertical-align: middle;
+    padding: .12rem .55rem; border-radius: var(--radius-full);
+    font-size: .6rem; font-weight: 700; letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+  .plan-chip--premium {
+    color: var(--gold); border: 1px solid rgba(201,162,39,.4);
+    background: rgba(201,162,39,.08);
+  }
+  .plan-chip--free {
+    color: #4cc98a; border: 1px solid rgba(76,201,138,.4);
+    background: rgba(76,201,138,.08);
   }
   .feature-icon {
     flex-shrink: 0; width: 52px; height: 52px;
     border-radius: var(--radius-md);
     display: flex; align-items: center; justify-content: center;
-    font-size: 1.35rem; line-height: 1;
+    color: var(--text-primary);
   }
+  .feature-icon svg { width: 24px; height: 24px; }
   .icon-spade   { background: var(--icon-spade);   border: 1px solid #333;    }
   .icon-clubs   { background: var(--icon-clubs);   border: 1px solid #1a6a3e; }
   .icon-diamond { background: var(--icon-diamond); border: 1px solid #6a1a2e; }
@@ -123,4 +201,5 @@ const multi = [
     transition: transform var(--transition), color var(--transition);
   }
   .feature-card:hover .feature-arrow { transform: translateX(5px); color: var(--gold); }
+  .feature-card.open .feature-arrow  { transform: rotate(90deg); color: var(--gold); }
 </style>

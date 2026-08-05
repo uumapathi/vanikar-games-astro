@@ -144,12 +144,6 @@ const diffColor: Record<string, string> = {
             <dd>
               <span class="tier-badge tier-premium">Premium</span>
             </dd>
-            <dt>Languages</dt>
-            <dd class="dd-langs">
-              {game.languages.map(l => (
-                <span class="lang-pill" title={l.name}>{l.native}</span>
-              ))}
-            </dd>
           </dl>
         </div>
 
@@ -310,8 +304,6 @@ const diffColor: Record<string, string> = {
   .fact-list       { display: grid; grid-template-columns: auto 1fr; gap: .5rem .75rem; font-size: .875rem; align-items: start; }
   .fact-list dt    { color: var(--text-dim); padding-top: .15rem; }
   .fact-list dd    { color: var(--text-primary); }
-  .dd-langs  { display: flex; flex-wrap: wrap; gap: .3rem; }
-  .lang-pill { font-size: .72rem; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: .15rem .5rem; color: var(--text-secondary); white-space: nowrap; }
 
   .tips-list       { list-style: none; padding: 0; }
   .tips-list li    { font-size: .875rem; color: var(--text-secondary); line-height: 1.65; padding: .5rem 0; border-bottom: 1px solid var(--border); }
