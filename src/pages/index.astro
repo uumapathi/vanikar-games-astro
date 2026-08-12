@@ -8,8 +8,36 @@ import AppShowcaseSection    from '../components/AppShowcaseSection.astro';
 import SocialFeaturesSection from '../components/SocialFeaturesSection.astro';
 import PricingSection        from '../components/PricingSection.astro';
 import DownloadSection       from '../components/DownloadSection.astro';
+import { games, availableGames } from '../data/games';
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Vanikar LLC',
+    url: 'https://vanikar.com',
+    logo: 'https://vanikar.games/icon-180.png',
+    sameAs: ['https://vanikar.games'],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'Card Games by Vanikar',
+    operatingSystem: 'iOS, Android',
+    applicationCategory: 'GameApplication',
+    applicationSubCategory: 'Card Game',
+    description: `Play ${availableGames.length} classic card games online or offline — Hearts, Spades, Gin Rummy, Cribbage, Big Two, Indian Rummy and more — against AI, friends, or online players. ${games.length - availableGames.length} more games in development.`,
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD', description: 'Free 2-week trial' },
+    publisher: { '@type': 'Organization', name: 'Vanikar LLC', url: 'https://vanikar.com' },
+  },
+];
 ---
 <BaseLayout>
+  <Fragment slot="head">
+    {jsonLd.map(schema => (
+      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    ))}
+  </Fragment>
   <HeroSection />
   <StatsSection />
   <GamesMarquee />
