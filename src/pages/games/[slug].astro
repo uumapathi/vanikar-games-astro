@@ -27,12 +27,86 @@ const shots = (game.screenshots ?? [])
 const diffColor: Record<string, string> = {
   Easy: '#2d6a2d', Medium: '#7a5a10', Hard: '#6a1a1a',
 };
+
+/* ── SEO ─────────────────────────────────────────────────────────── */
+const pageTitle = game.comingSoon
+  ? `${game.name} Card Game – Rules, How to Play & Strategy | Vanikar`
+  : `Play ${game.name} Online – Rules, Scoring & Strategy | Vanikar`;
+
+const pageDescription = game.comingSoon
+  ? `${game.name} is coming to Vanikar. Learn ${game.name} rules, scoring, and strategy now — and be ready to play against AI, friends, or online players at launch. ${game.players}.`
+  : `Play ${game.name} online with Vanikar — with friends at private tables, against real players, or vs smart AI. Learn ${game.name} rules, scoring, and strategy. ${game.players}.`;
+
+const faqs = game.comingSoon
+  ? [
+      { q: `How many players do you need for ${game.name}?`,
+        a: `${game.name} is played with ${game.playerCount} players. On Vanikar, empty seats can be filled with AI opponents so you can always start a game.` },
+      { q: `When is ${game.name} coming to Vanikar?`,
+        a: `${game.name} is in development now. Premium subscribers get access first when it launches — download the app to be ready on day one.` },
+      { q: `Will I be able to play ${game.name} against the computer?`,
+        a: `Yes. Like every Vanikar game, ${game.name} will support play against smart AI opponents with multiple difficulty levels, plus online multiplayer and private tables with friends.` },
+      { q: `Is ${game.name} free to play?`,
+        a: `The Vanikar Card Games app is free to download on iOS and Android, and every game is free to play for 2 weeks — no credit card required.` },
+    ]
+  : [
+      { q: `How many players do you need for ${game.name}?`,
+        a: `${game.name} is played with ${game.playerCount} players. On Vanikar, empty seats can be filled with AI opponents so you can always start a game.` },
+      { q: `Can I play ${game.name} against the computer?`,
+        a: `Yes — play ${game.name} against smart AI opponents with multiple difficulty levels. It's the perfect way to learn the game or sharpen your strategy.` },
+      { q: `Can I play ${game.name} online with friends?`,
+        a: `Yes. Create a private table in the Vanikar app and invite friends and family to play ${game.name} together online, wherever they are.` },
+      { q: `Can I play ${game.name} offline?`,
+        a: `Yes — ${game.name} supports offline play against computer opponents, so you can play without an internet connection.` },
+      { q: `Is ${game.name} free to play?`,
+        a: `Yes — download the Vanikar Card Games app on iOS or Android and play ${game.name} free for 2 weeks, no credit card required.` },
+    ];
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home',  item: 'https://vanikar.games/' },
+      { '@type': 'ListItem', position: 2, name: 'Games', item: 'https://vanikar.games/games/' },
+      { '@type': 'ListItem', position: 3, name: game.name, item: `https://vanikar.games/games/${game.slug}/` },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'VideoGame',
+    name: game.name,
+    ...(game.alternateNames?.length ? { alternateName: game.alternateNames } : {}),
+    description: game.description,
+    url: `https://vanikar.games/games/${game.slug}/`,
+    gamePlatform: ['iOS', 'Android'],
+    applicationCategory: 'Game',
+    genre: 'Card Game',
+    playMode: ['SinglePlayer', 'MultiPlayer'],
+    numberOfPlayers: { '@type': 'QuantitativeValue', name: game.playerCount },
+    publisher: { '@type': 'Organization', name: 'Vanikar LLC', url: 'https://vanikar.com' },
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD', description: 'Free 2-week trial' },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(f => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  },
+];
 ---
 
 <BaseLayout
-  title={`${game.name} – How to Play | Vanikar Card Games`}
-  description={game.description}
+  title={pageTitle}
+  description={pageDescription}
 >
+  <Fragment slot="head">
+    {jsonLd.map(schema => (
+      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    ))}
+  </Fragment>
   {game.comingSoon && (
     <div class="soon-banner" role="alert">
       <span class="soon-banner-icon">🚀</span>
@@ -67,7 +141,7 @@ const diffColor: Record<string, string> = {
             </span>
             <span class="tier-badge tier-premium">Premium</span>
           </div>
-          <h1 class="game-title">{game.name}</h1>
+          <h1 class="game-title">{game.comingSoon ? game.name : `Play ${game.name} Online`}</h1>
           <p class="game-tagline">{game.tagline}</p>
           <div class="game-meta">
             <span>👥 {game.players}</span>
@@ -87,20 +161,58 @@ const diffColor: Record<string, string> = {
       <!-- Main column -->
       <div class="game-main">
 
+        <div class="game-section ways-to-play">
+          <h2>🎮 Ways to Play {game.name}</h2>
+          <div class="ways-grid">
+            <div class="way-card">
+              <h3>Play {game.name} Online</h3>
+              <p>
+                {game.comingSoon
+                  ? `When ${game.name} launches, you'll join live online tables and play against real players from around the world in quick or ranked matches.`
+                  : `Join live online tables and play ${game.name} against real players from around the world — quick matches or ranked play, any time.`}
+              </p>
+            </div>
+            <div class="way-card">
+              <h3>Play {game.name} With Friends</h3>
+              <p>
+                {game.comingSoon
+                  ? `Private tables will let you invite friends and family to a ${game.name} game of your own — no strangers, just your crew.`
+                  : `Create a private table and invite friends and family to play ${game.name} together online — no strangers, just your crew.`}
+              </p>
+            </div>
+            <div class="way-card">
+              <h3>Play {game.name} Against the Computer</h3>
+              <p>
+                {game.comingSoon
+                  ? `Smart AI opponents with multiple difficulty levels will make it easy to learn ${game.name} and practice your strategy solo.`
+                  : `Practice ${game.name} against smart AI opponents with multiple difficulty levels — the perfect way to learn the game or test new strategies.`}
+              </p>
+            </div>
+            <div class="way-card">
+              <h3>Play {game.name} Offline</h3>
+              <p>
+                {game.comingSoon
+                  ? `${game.name} will support offline play against computer opponents, so you can play anywhere — no internet connection needed.`
+                  : `No connection? No problem. Play ${game.name} offline against computer opponents, anywhere you are.`}
+              </p>
+            </div>
+          </div>
+        </div>
+
         <div class="game-section">
           <h2>🎯 Objective</h2>
           <p>{game.objective}</p>
         </div>
 
         <div class="game-section">
-          <h2>🃏 Setup</h2>
+          <h2>🃏 {game.name} Setup &amp; Rules</h2>
           <ol class="styled-list">
             {game.setup.map(step => <li>{step}</li>)}
           </ol>
         </div>
 
         <div class="game-section">
-          <h2>▶ How to Play</h2>
+          <h2>▶ How to Play {game.name}</h2>
           <ol class="styled-list">
             {game.gameplay.map(step => <li>{step}</li>)}
           </ol>
@@ -121,8 +233,18 @@ const diffColor: Record<string, string> = {
         )}
 
         <div class="game-section">
-          <h2>📊 Scoring</h2>
+          <h2>📊 {game.name} Scoring</h2>
           <p>{game.scoring}</p>
+        </div>
+
+        <div class="game-section">
+          <h2>❓ {game.name} — Frequently Asked Questions</h2>
+          {faqs.map(f => (
+            <details class="faq-item">
+              <summary>{f.q}</summary>
+              <p>{f.a}</p>
+            </details>
+          ))}
         </div>
 
       </div>
@@ -148,7 +270,7 @@ const diffColor: Record<string, string> = {
         </div>
 
         <div class="sidebar-card">
-          <h3>💡 Strategy Tips</h3>
+          <h3>💡 {game.name} Strategy Tips</h3>
           <ul class="tips-list">
             {game.tips.map(tip => <li>{tip}</li>)}
           </ul>
@@ -267,6 +389,38 @@ const diffColor: Record<string, string> = {
 
   .styled-list { list-style: decimal; padding-left: 1.4rem; color: var(--text-secondary); line-height: 1.9; }
   .styled-list li { margin-bottom: .35rem; }
+
+  /* Ways to play */
+  .ways-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .85rem; }
+  .way-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius-md); padding: 1rem 1.1rem;
+  }
+  .way-card h3 {
+    font-size: .92rem; font-weight: 700; color: var(--gold-light);
+    font-family: 'Inter',sans-serif; margin-bottom: .4rem;
+  }
+  .way-card p { font-size: .85rem; color: var(--text-secondary); line-height: 1.65; }
+  @media (max-width: 640px) { .ways-grid { grid-template-columns: 1fr; } }
+
+  /* FAQ */
+  .faq-item {
+    border: 1px solid var(--border); border-radius: var(--radius-md);
+    background: var(--bg-card); margin-bottom: .6rem; overflow: hidden;
+  }
+  .faq-item summary {
+    cursor: pointer; padding: .85rem 1.1rem; font-size: .9rem; font-weight: 600;
+    color: var(--text-primary); font-family: 'Inter',sans-serif;
+    transition: color var(--transition); list-style: none; position: relative; padding-right: 2.2rem;
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary::after {
+    content: '+'; position: absolute; right: 1.1rem; top: 50%; translate: 0 -50%;
+    color: var(--gold); font-size: 1.1rem; transition: transform var(--transition);
+  }
+  .faq-item[open] summary::after { transform: rotate(45deg); }
+  .faq-item summary:hover { color: var(--gold-light); }
+  .faq-item p { padding: 0 1.1rem .95rem; font-size: .875rem; color: var(--text-secondary); line-height: 1.7; }
 
   /* Detailed guide */
   .guide-sub { margin-bottom: 1.75rem; }
