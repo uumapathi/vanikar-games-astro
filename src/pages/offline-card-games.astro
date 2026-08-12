@@ -1,0 +1,59 @@
+---
+import BaseLayout     from '../layouts/BaseLayout.astro';
+import FeatureLanding from '../components/FeatureLanding.astro';
+
+const faqs = [
+  { q: 'Can I really play without any internet connection?',
+    a: 'Yes. Offline games run entirely on your device against AI opponents — airplane mode, remote cabins, and subway tunnels are all fair game.' },
+  { q: 'Which card games work offline?',
+    a: 'Every available Vanikar game can be played offline against the computer, including Hearts, Spades, Gin Rummy, Cribbage, Big Two, Indian Rummy, Durak, and Belote.' },
+  { q: 'Do offline games use mobile data?',
+    a: 'No. Offline play uses no data at all — nothing to stream, nothing to sync until you choose to go back online.' },
+  { q: 'Is offline play the same game as online play?',
+    a: 'Yes — identical rules, scoring, and table experience. The only difference is your opponents are AI instead of live players.' },
+];
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://vanikar.games/' },
+      { '@type': 'ListItem', position: 2, name: 'Offline Card Games', item: 'https://vanikar.games/offline-card-games/' },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  },
+];
+---
+<BaseLayout
+  title="Offline Card Games – Play Without Internet | Vanikar"
+  description="Play offline card games without internet: Hearts, Spades, Gin Rummy, Cribbage, Big Two, Durak and more against AI opponents. No connection, no data — just cards."
+>
+  <Fragment slot="head">
+    {jsonLd.map(schema => (
+      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    ))}
+  </Fragment>
+
+  <FeatureLanding
+    h1="Offline Card Games — No Internet Needed"
+    intro="Flights, commutes, dead zones — your card table travels with you. Every Vanikar game plays fully offline against smart AI opponents, with no connection and no mobile data required."
+    sections={[
+      { heading: 'Truly offline, start to finish',
+        body: 'Offline games run entirely on your device. Launch the app in airplane mode, pick a game, and deal — no login walls, no loading spinners, no signal bars to watch.' },
+      { heading: 'Zero data usage',
+        body: 'Offline play consumes no mobile data whatsoever. Play a dozen hands of Cribbage on your commute without touching your data plan.' },
+      { heading: 'The full game, not a demo',
+        body: 'Offline mode is the complete experience: full rules, real scoring, every difficulty level. It’s the same table you play online, minus the crowd.' },
+      { heading: 'Pick up where you left off',
+        body: 'Your progress lives on your device, and when you’re back online your account syncs up — so offline sessions never feel like a detour.' },
+    ]}
+    faqs={faqs}
+    gamesHeading="Games you can play offline"
+    gamesSub="Every available game works without a connection — AI opponents included."
+  />
+</BaseLayout>

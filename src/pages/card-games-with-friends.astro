@@ -1,0 +1,59 @@
+---
+import BaseLayout     from '../layouts/BaseLayout.astro';
+import FeatureLanding from '../components/FeatureLanding.astro';
+
+const faqs = [
+  { q: 'How do I play card games with friends online?',
+    a: 'Create a private table in the Vanikar app, pick a game, and invite your friends. Only people you invite can join — no strangers at your table.' },
+  { q: 'Do my friends need the app to join my game?',
+    a: 'Yes — the Vanikar Card Games app is a free download on iOS and Android, and joining a friend’s private table takes just a couple of taps.' },
+  { q: 'Can we play even if we own different phones?',
+    a: 'Absolutely. Vanikar is cross-platform, so iPhone and Android friends can sit at the same table in the same game.' },
+  { q: 'What are the best card games to play with friends?',
+    a: 'Bluff and Big Two are riotous with a bigger group, Hearts and Spades are classics for four, and Gin Rummy or Cribbage are perfect for a one-on-one rivalry.' },
+];
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://vanikar.games/' },
+      { '@type': 'ListItem', position: 2, name: 'Card Games With Friends', item: 'https://vanikar.games/card-games-with-friends/' },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  },
+];
+---
+<BaseLayout
+  title="Card Games With Friends Online – Private Tables | Vanikar"
+  description="Play card games with friends online at private tables. Invite family and friends to Hearts, Spades, Bluff, Big Two, Gin Rummy and more — cross-platform on iOS and Android."
+>
+  <Fragment slot="head">
+    {jsonLd.map(schema => (
+      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    ))}
+  </Fragment>
+
+  <FeatureLanding
+    h1="Play Card Games With Friends Online"
+    intro="Game night doesn't need everyone in the same room. Set up a private table on Vanikar, invite your friends and family, and play your favorite classic card games together — across any distance, on any phone."
+    sections={[
+      { heading: 'Private tables, invite only',
+        body: 'Your table, your guest list. Private games are visible only to the people you invite, so family game night stays exactly that — no strangers, no interruptions.' },
+      { heading: 'Friends list and regular games',
+        body: 'Add friends once and starting a rematch takes seconds. See who’s online, invite them to your table, and keep long-running rivalries alive week after week.' },
+      { heading: 'Everyone can join, any device',
+        body: 'iPhone in one house, Android in another — it doesn’t matter. Vanikar is fully cross-platform, so the whole group plays together regardless of device.' },
+      { heading: 'Fill the gaps with AI',
+        body: 'Only three players for a four-hand game? Drop an AI opponent into the empty seat and deal. The game never has to wait for a full roster.' },
+    ]}
+    faqs={faqs}
+    gamesHeading="Games to play with friends"
+    gamesSub="Every game supports private tables — pick a favorite and send the invites."
+  />
+</BaseLayout>

@@ -1,0 +1,60 @@
+---
+import BaseLayout     from '../layouts/BaseLayout.astro';
+import FeatureLanding from '../components/FeatureLanding.astro';
+import { games } from '../data/games';
+
+const faqs = [
+  { q: 'What classic card games are in the Vanikar collection?',
+    a: 'Available now: Hearts, Spades, Gin Rummy, Cribbage, Big Two, Indian Rummy, Durak, Belote, High Card, and Bluff. Dozens more classics — Euchre, Canasta, Scopa, Skat, Truco, Tiến Lên — are in development.' },
+  { q: 'Why one app instead of separate apps per game?',
+    a: 'One download gives you the whole collection: one account, one friends list, one subscription. Learn a new game without installing anything new.' },
+  { q: 'Are these the traditional rules?',
+    a: 'Yes. Every game follows its traditional rules and scoring, with each game page on this site documenting exactly how setup, play, and scoring work.' },
+  { q: 'Are card games from different regions included?',
+    a: 'That’s the heart of the collection — North American classics like Spades and Cribbage, Russia’s Durak, France’s Belote, India’s Rummy, and many more world classics on the way.' },
+];
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://vanikar.games/' },
+      { '@type': 'ListItem', position: 2, name: 'Classic Card Games', item: 'https://vanikar.games/classic-card-games/' },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  },
+];
+---
+<BaseLayout
+  title="Classic Card Games Collection – All in One App | Vanikar"
+  description={`A classic card games collection in one app: ${games.length} games from around the world. Hearts, Spades, Gin Rummy, Cribbage, Durak, Belote, Indian Rummy and more — online, offline, or vs AI.`}
+>
+  <Fragment slot="head">
+    {jsonLd.map(schema => (
+      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    ))}
+  </Fragment>
+
+  <FeatureLanding
+    h1="A Classic Card Games Collection in One App"
+    intro={`Why install ten apps for ten games? Vanikar collects ${games.length} classic card games from around the world in a single app — traditional rules, one account, and every way to play: online, with friends, against AI, or offline.`}
+    sections={[
+      { heading: 'Classics from every region',
+        body: 'Hearts and Spades from North America, Durak from Russia, Belote from France, Indian Rummy and Bluff from South Asia, Big Two from East Asia — a genuine world tour of card tables.' },
+      { heading: 'Traditional rules, faithfully kept',
+        body: 'Each game plays by its time-honored rules and scoring. Grandma’s Cribbage board and your Spades night conventions are exactly where you left them.' },
+      { heading: 'One account for everything',
+        body: 'A single download covers the whole collection — one profile, one friends list, one set of stats. Discover a new favorite without hunting the app store.' },
+      { heading: 'A collection that keeps growing',
+        body: 'New classics ship regularly — Euchre, Canasta, Scopa, Skat, Truco, and more are in development, and premium subscribers get each new game first.' },
+    ]}
+    faqs={faqs}
+    gamesHeading="Classic games available today"
+    gamesSub="Traditional rules and scoring for every title — with rules guides on every game page."
+  />
+</BaseLayout>
