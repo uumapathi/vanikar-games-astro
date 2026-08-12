@@ -1,0 +1,54 @@
+---
+import BaseLayout            from '../../layouts/BaseLayout.astro';
+import HeroSection           from '../../components/HeroSection.astro';
+import WaysToPlaySection     from '../../components/WaysToPlaySection.astro';
+import StatsSection          from '../../components/StatsSection.astro';
+import GamesMarquee          from '../../components/GamesMarquee.astro';
+import FeaturesSection       from '../../components/FeaturesSection.astro';
+import AppShowcaseSection    from '../../components/AppShowcaseSection.astro';
+import SocialFeaturesSection from '../../components/SocialFeaturesSection.astro';
+import PricingSection        from '../../components/PricingSection.astro';
+import DownloadSection       from '../../components/DownloadSection.astro';
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Vanikar LLC',
+    url: 'https://vanikar.com',
+    logo: 'https://vanikar.games/icon-180.png',
+    sameAs: ['https://vanikar.games'],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'Card Games by Vanikar',
+    operatingSystem: 'iOS, Android',
+    applicationCategory: 'GameApplication',
+    applicationSubCategory: 'Card Game',
+    inLanguage: 'hi',
+    description: "Vanikar के साथ क्लासिक कार्ड गेम्स ऑनलाइन या ऑफलाइन खेलें। हार्ट्स, स्पेड्स, जिन रमी, क्रिबेज, बिग टू, इंडियन रमी और बहुत कुछ — AI, दोस्तों या ऑनलाइन खिलाड़ियों के खिलाफ।",
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD', description: "2 सप्ताह का मुफ़्त ट्रायल" },
+    publisher: { '@type': 'Organization', name: 'Vanikar LLC', url: 'https://vanikar.com' },
+  },
+];
+---
+<BaseLayout
+  title="ऑनलाइन कार्ड गेम्स – हार्ट्स, स्पेड्स, रमी और बहुत कुछ | Vanikar"
+  description="Vanikar के साथ क्लासिक कार्ड गेम्स ऑनलाइन या ऑफलाइन खेलें। हार्ट्स, स्पेड्स, जिन रमी, क्रिबेज, बिग टू, इंडियन रमी और बहुत कुछ — AI, दोस्तों या ऑनलाइन खिलाड़ियों के खिलाफ।"
+>
+  <Fragment slot="head">
+    {jsonLd.map(schema => (
+      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    ))}
+  </Fragment>
+  <HeroSection />
+  <WaysToPlaySection />
+  <StatsSection />
+  <GamesMarquee />
+  <FeaturesSection />
+  <AppShowcaseSection />
+  <SocialFeaturesSection />
+  <PricingSection />
+  <DownloadSection />
+</BaseLayout>

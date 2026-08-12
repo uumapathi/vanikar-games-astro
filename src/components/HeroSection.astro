@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import { availableGames, comingSoonGames } from '../data/games';
+import { getLocale, localizedHref } from '../i18n';
 
 const shots = import.meta.glob<{ default: ImageMetadata }>('../assets/screenshots/app/*.png', { eager: true });
 const homeShot  = shots['../assets/screenshots/app/home.png'].default;
@@ -9,6 +10,71 @@ const gamesShot = shots['../assets/screenshots/app/offline-game-selection.png'].
 
 const avail = availableGames.length;
 const cs    = comingSoonGames.length;
+
+const lang = getLocale(Astro.currentLocale);
+const href = (p: string) => localizedHref(p, lang);
+const copy = {
+  en: {
+    tagline:    'Classic card tables, beautifully reimagined.',
+    subtitle:   'Polished visuals, smart CPU opponents, and online tables for quick, confident play.',
+    gamesLive:  'Games Live',
+    comingSoon: 'Coming Soon',
+    live:       'LIVE',
+    tables:     'Tables',
+    download:   '⬇ Download Free',
+    browse:     'Browse the Games',
+  },
+  es: {
+    tagline:    'Mesas de cartas clásicas, bellamente reinventadas.',
+    subtitle:   'Gráficos pulidos, oponentes de IA inteligentes y mesas en línea para partidas rápidas y seguras.',
+    gamesLive:  'Juegos activos',
+    comingSoon: 'Próximamente',
+    live:       'EN VIVO',
+    tables:     'Mesas',
+    download:   '⬇ Descarga gratis',
+    browse:     'Explora los juegos',
+  },
+  pt: {
+    tagline:    'Mesas de cartas clássicas, lindamente reinventadas.',
+    subtitle:   'Visual caprichado, oponentes de IA inteligentes e mesas online para partidas rápidas e confiantes.',
+    gamesLive:  'Jogos disponíveis',
+    comingSoon: 'Em breve',
+    live:       'AO VIVO',
+    tables:     'Mesas',
+    download:   '⬇ Baixe grátis',
+    browse:     'Explore os jogos',
+  },
+  fr: {
+    tagline:    'Les tables de cartes classiques, magnifiquement réinventées.',
+    subtitle:   'Des graphismes soignés, des adversaires IA malins et des tables en ligne pour des parties rapides et sereines.',
+    gamesLive:  'Jeux disponibles',
+    comingSoon: 'Bientôt',
+    live:       'EN DIRECT',
+    tables:     'Tables',
+    download:   '⬇ Télécharger gratuitement',
+    browse:     'Parcourir les jeux',
+  },
+  de: {
+    tagline:    'Klassische Kartentische, wunderschön neu gedacht.',
+    subtitle:   'Edle Optik, clevere CPU-Gegner und Online-Tische für schnelle, souveräne Partien.',
+    gamesLive:  'Spiele live',
+    comingSoon: 'Demnächst',
+    live:       'LIVE',
+    tables:     'Tische',
+    download:   '⬇ Kostenlos laden',
+    browse:     'Spiele entdecken',
+  },
+  hi: {
+    tagline:    'क्लासिक ताश की मेज़ें, खूबसूरती से नए रूप में।',
+    subtitle:   'शानदार ग्राफ़िक्स, स्मार्ट CPU प्रतिद्वंद्वी और तेज़, भरोसेमंद खेल के लिए ऑनलाइन टेबल।',
+    gamesLive:  'लाइव गेम',
+    comingSoon: 'जल्द आ रहा है',
+    live:       'लाइव',
+    tables:     'टेबल',
+    download:   '⬇ मुफ़्त डाउनलोड करें',
+    browse:     'गेम देखें',
+  },
+}[lang];
 ---
 <section class="hero" id="home">
   <div class="hero-decorations" aria-hidden="true">
@@ -27,31 +93,28 @@ const cs    = comingSoonGames.length;
 
         <h1 class="hero-title">Card Games</h1>
 
-        <p class="hero-tagline">Classic card tables, beautifully reimagined.</p>
+        <p class="hero-tagline">{copy.tagline}</p>
 
-        <p class="hero-subtitle">
-          Polished visuals, smart CPU opponents, and online tables
-          for quick, confident play.
-        </p>
+        <p class="hero-subtitle">{copy.subtitle}</p>
 
         <div class="hero-stats">
-          <a class="hero-stat hero-stat-link" href="/games#premium-group">
+          <a class="hero-stat hero-stat-link" href={href('/games#premium-group')}>
             <span class="hero-stat-value">{avail}</span>
-            <span class="hero-stat-label">Games Live</span>
+            <span class="hero-stat-label">{copy.gamesLive}</span>
           </a>
-          <a class="hero-stat hero-stat-link" href="/games#coming-soon-group">
+          <a class="hero-stat hero-stat-link" href={href('/games#coming-soon-group')}>
             <span class="hero-stat-value">{cs}</span>
-            <span class="hero-stat-label">Coming Soon</span>
+            <span class="hero-stat-label">{copy.comingSoon}</span>
           </a>
           <div class="hero-stat">
-            <span class="hero-stat-value">LIVE</span>
-            <span class="hero-stat-label">Tables</span>
+            <span class="hero-stat-value">{copy.live}</span>
+            <span class="hero-stat-label">{copy.tables}</span>
           </div>
         </div>
 
         <div class="hero-actions">
-          <a href="#download" class="btn btn-primary">⬇ Download Free</a>
-          <a href="/games" class="btn btn-secondary">Browse the Games</a>
+          <a href="#download" class="btn btn-primary">{copy.download}</a>
+          <a href={href('/games')} class="btn btn-secondary">{copy.browse}</a>
         </div>
 
         <div class="hero-platforms">

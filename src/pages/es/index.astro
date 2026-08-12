@@ -1,0 +1,55 @@
+---
+import BaseLayout            from '../../layouts/BaseLayout.astro';
+import HeroSection           from '../../components/HeroSection.astro';
+import WaysToPlaySection     from '../../components/WaysToPlaySection.astro';
+import StatsSection          from '../../components/StatsSection.astro';
+import GamesMarquee          from '../../components/GamesMarquee.astro';
+import FeaturesSection       from '../../components/FeaturesSection.astro';
+import AppShowcaseSection    from '../../components/AppShowcaseSection.astro';
+import SocialFeaturesSection from '../../components/SocialFeaturesSection.astro';
+import PricingSection        from '../../components/PricingSection.astro';
+import DownloadSection       from '../../components/DownloadSection.astro';
+import { games, availableGames } from '../../data/games';
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Vanikar LLC',
+    url: 'https://vanikar.com',
+    logo: 'https://vanikar.games/icon-180.png',
+    sameAs: ['https://vanikar.games'],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'Card Games by Vanikar',
+    operatingSystem: 'iOS, Android',
+    applicationCategory: 'GameApplication',
+    applicationSubCategory: 'Card Game',
+    inLanguage: 'es',
+    description: `Juega ${availableGames.length} juegos de cartas clásicos en línea o sin conexión — Corazones, Espadas, Gin Rummy, Cribbage, Big Two, Rummy Indio y más — contra la IA, amigos o jugadores en línea. ${games.length - availableGames.length} juegos más en desarrollo.`,
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD', description: 'Prueba gratis de 2 semanas' },
+    publisher: { '@type': 'Organization', name: 'Vanikar LLC', url: 'https://vanikar.com' },
+  },
+];
+---
+<BaseLayout
+  title="Juegos de Cartas en Línea – Corazones, Espadas, Rummy y Más | Vanikar"
+  description="Juega juegos de cartas clásicos en línea o sin conexión con Vanikar. Disfruta Corazones, Espadas, Gin Rummy, Cribbage, Big Two, Rummy Indio y más contra la IA, amigos o jugadores en línea."
+>
+  <Fragment slot="head">
+    {jsonLd.map(schema => (
+      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    ))}
+  </Fragment>
+  <HeroSection />
+  <WaysToPlaySection />
+  <StatsSection />
+  <GamesMarquee />
+  <FeaturesSection />
+  <AppShowcaseSection />
+  <SocialFeaturesSection />
+  <PricingSection />
+  <DownloadSection />
+</BaseLayout>

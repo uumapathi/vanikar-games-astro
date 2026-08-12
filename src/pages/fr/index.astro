@@ -1,0 +1,54 @@
+---
+import BaseLayout            from '../../layouts/BaseLayout.astro';
+import HeroSection           from '../../components/HeroSection.astro';
+import WaysToPlaySection     from '../../components/WaysToPlaySection.astro';
+import StatsSection          from '../../components/StatsSection.astro';
+import GamesMarquee          from '../../components/GamesMarquee.astro';
+import FeaturesSection       from '../../components/FeaturesSection.astro';
+import AppShowcaseSection    from '../../components/AppShowcaseSection.astro';
+import SocialFeaturesSection from '../../components/SocialFeaturesSection.astro';
+import PricingSection        from '../../components/PricingSection.astro';
+import DownloadSection       from '../../components/DownloadSection.astro';
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Vanikar LLC',
+    url: 'https://vanikar.com',
+    logo: 'https://vanikar.games/icon-180.png',
+    sameAs: ['https://vanikar.games'],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'Card Games by Vanikar',
+    operatingSystem: 'iOS, Android',
+    applicationCategory: 'GameApplication',
+    applicationSubCategory: 'Card Game',
+    inLanguage: 'fr',
+    description: "Jouez à des jeux de cartes classiques en ligne ou hors ligne avec Vanikar. Cœurs, Belote, Gin-rami, Cribbage, Big Two, Rami indien et plus — contre l'IA, des amis ou des joueurs en ligne.",
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD', description: "Essai gratuit de 2 semaines" },
+    publisher: { '@type': 'Organization', name: 'Vanikar LLC', url: 'https://vanikar.com' },
+  },
+];
+---
+<BaseLayout
+  title="Jeux de Cartes en Ligne – Cœurs, Belote, Rami et Plus | Vanikar"
+  description="Jouez à des jeux de cartes classiques en ligne ou hors ligne avec Vanikar. Cœurs, Belote, Gin-rami, Cribbage, Big Two, Rami indien et plus — contre l'IA, des amis ou des joueurs en ligne."
+>
+  <Fragment slot="head">
+    {jsonLd.map(schema => (
+      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    ))}
+  </Fragment>
+  <HeroSection />
+  <WaysToPlaySection />
+  <StatsSection />
+  <GamesMarquee />
+  <FeaturesSection />
+  <AppShowcaseSection />
+  <SocialFeaturesSection />
+  <PricingSection />
+  <DownloadSection />
+</BaseLayout>

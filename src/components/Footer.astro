@@ -1,47 +1,49 @@
 ---
-const year = new Date().getFullYear();
+import { getLocale, useTranslations, localizedHref } from '../i18n';
+
+const year   = new Date().getFullYear();
+const locale = getLocale(Astro.currentLocale);
+const t      = useTranslations(locale);
+const href   = (p: string) => localizedHref(p, locale);
 ---
 <footer class="footer">
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
         <div class="footer-brand-text"><span>♛</span> Card Games by Vanikar</div>
-        <p class="footer-tagline">
-          Classic card tables, beautifully reimagined. Play online,
-          practice with AI, and compete in tournaments — all in one app.
-        </p>
+        <p class="footer-tagline">{t('footer.tagline')}</p>
       </div>
 
       <div class="footer-col">
-        <div class="footer-heading">Ways to Play</div>
+        <div class="footer-heading">{t('footer.waysToPlay')}</div>
         <ul class="footer-links">
-          <li><a href="/online-card-games">Online Card Games</a></li>
-          <li><a href="/multiplayer-card-games">Multiplayer Card Games</a></li>
-          <li><a href="/card-games-with-friends">Card Games with Friends</a></li>
-          <li><a href="/card-games-against-computer">Card Games vs Computer</a></li>
-          <li><a href="/offline-card-games">Offline Card Games</a></li>
-          <li><a href="/classic-card-games">Classic Card Games</a></li>
+          <li><a href={href('/online-card-games')}>{t('footer.online')}</a></li>
+          <li><a href={href('/multiplayer-card-games')}>{t('footer.multiplayer')}</a></li>
+          <li><a href={href('/card-games-with-friends')}>{t('footer.withFriends')}</a></li>
+          <li><a href={href('/card-games-against-computer')}>{t('footer.vsComputer')}</a></li>
+          <li><a href={href('/offline-card-games')}>{t('footer.offline')}</a></li>
+          <li><a href={href('/classic-card-games')}>{t('footer.classic')}</a></li>
         </ul>
       </div>
 
       <div class="footer-col">
-        <div class="footer-heading">Company</div>
+        <div class="footer-heading">{t('footer.company')}</div>
         <ul class="footer-links">
           <li><a href="https://vanikar.com" target="_blank" rel="noopener">Vanikar LLC</a></li>
-          <li><a href="/about">About Us</a></li>
-          <li><a href="/privacy">Privacy Policy</a></li>
-          <li><a href="/terms">Terms of Service</a></li>
-          <li><a href="mailto:info@vanikar.com">Support</a></li>
+          <li><a href={href('/about')}>{t('footer.about')}</a></li>
+          <li><a href={href('/privacy')}>{t('footer.privacy')}</a></li>
+          <li><a href={href('/terms')}>{t('footer.terms')}</a></li>
+          <li><a href="mailto:info@vanikar.com">{t('footer.support')}</a></li>
         </ul>
       </div>
     </div>
 
     <div class="footer-bottom">
-      <p class="footer-copy">&copy; {year} Vanikar LLC. All rights reserved.</p>
+      <p class="footer-copy">&copy; {year} Vanikar LLC. {t('footer.rights')}</p>
       <div class="footer-legal">
-        <a href="/terms">Terms</a>
-        <a href="/privacy">Privacy</a>
-        <a href="mailto:info@vanikar.com">Contact</a>
+        <a href={href('/terms')}>{t('nav.terms')}</a>
+        <a href={href('/privacy')}>{t('nav.privacy')}</a>
+        <a href="mailto:info@vanikar.com">{t('footer.contact')}</a>
       </div>
     </div>
   </div>

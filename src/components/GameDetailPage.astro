@@ -1,0 +1,854 @@
+---
+import BaseLayout  from '../layouts/BaseLayout.astro';
+import ScreenshotLightbox from './ScreenshotLightbox.astro';
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import { games, getGame } from '../data/games';
+import { localizeGame } from '../data/games.i18n';
+import { getLocale, localizedHref, localizePath } from '../i18n';
+
+interface Props { slug: string }
+const { slug } = Astro.props;
+
+const lang = getLocale(Astro.currentLocale);
+const href = (p: string) => localizedHref(p, lang);
+const game = localizeGame(getGame(slug)!, lang);
+
+const iconModules = import.meta.glob<{ default: ImageMetadata }>('../assets/game-icons/*.{png,svg}', { eager: true });
+const gameIcon = (s: string) =>
+  iconModules[`../assets/game-icons/${s}.png`]?.default ??
+  iconModules[`../assets/game-icons/${s}.svg`]?.default;
+
+const shotModules = import.meta.glob<{ default: ImageMetadata }>('../assets/screenshots/*/*.png', { eager: true });
+const shots = (game.screenshots ?? [])
+  .map(s => {
+    const mod = shotModules[`../assets/screenshots/${s.file}`];
+    return mod ? { ...s, image: mod.default } : null;
+  })
+  .filter((s): s is Exclude<typeof s, null> => s !== null);
+
+const diffColor: Record<string, string> = {
+  Easy: '#2d6a2d', Medium: '#7a5a10', Hard: '#6a1a1a',
+};
+const diffLabel: Record<string, string> = {
+  en: game.difficulty,
+  es: ({ Easy: 'Fácil', Medium: 'Media', Hard: 'Difícil' } as Record<string, string>)[game.difficulty],
+  pt: ({ Easy: 'Fácil', Medium: 'Média', Hard: 'Difícil' } as Record<string, string>)[game.difficulty],
+  fr: ({ Easy: 'Facile', Medium: 'Moyen', Hard: 'Difficile' } as Record<string, string>)[game.difficulty],
+  de: ({ Easy: 'Leicht', Medium: 'Mittel', Hard: 'Schwer' } as Record<string, string>)[game.difficulty],
+  hi: ({ Easy: 'आसान', Medium: 'मध्यम', Hard: 'कठिन' } as Record<string, string>)[game.difficulty],
+};
+
+const n = game.name;
+const soon = !!game.comingSoon;
+
+/* ── Localized chrome + SEO ──────────────────────────────────────── */
+const L = {
+  en: {
+    pageTitle: soon
+      ? `${n} Card Game – Rules, How to Play & Strategy | Vanikar`
+      : `Play ${n} Online – Rules, Scoring & Strategy | Vanikar`,
+    pageDescription: soon
+      ? `${n} is coming to Vanikar. Learn ${n} rules, scoring, and strategy now — and be ready to play against AI, friends, or online players at launch. ${game.players}.`
+      : `Play ${n} online with Vanikar — with friends at private tables, against real players, or vs smart AI. Learn ${n} rules, scoring, and strategy. ${game.players}.`,
+    heroTitle: soon ? n : `Play ${n} Online`,
+    heroDifficulty: `${game.difficulty} difficulty`,
+    soonBanner: 'This game is in development and not yet available to play. Premium subscribers will get access first when it launches.',
+    soonBannerTag: 'Coming Soon', soonBannerLink: 'Get Premium →',
+    backLink: '← All Games',
+    premium: 'Premium',
+    players: 'players', difficultyWord: 'difficulty',
+    breadcrumbHome: 'Home', breadcrumbGames: 'Games',
+    waysTitle: `🎮 Ways to Play ${n}`,
+    wayOnlineH: `Create a ${n} Table`,
+    wayOnlineP: soon
+      ? `When ${n} launches, you'll create your own table in seconds, get an invite code, and deal in exactly who you want.`
+      : `Create your own ${n} table in seconds — choose the seats, share the invite code, and fill empty spots with AI opponents.`,
+    wayFriendsH: `Join a ${n} Table by Invite`,
+    wayFriendsP: soon
+      ? `Joining will be as simple as entering a table code — one tap and you're seated at a friend's ${n} game.`
+      : `Enter a friend's invite code and take your seat at their ${n} table — no strangers, just your crew.`,
+    wayCpuH: `Play ${n} Against the Computer`,
+    wayCpuP: soon
+      ? `Smart AI opponents with multiple difficulty levels will make it easy to learn ${n} and practice your strategy solo.`
+      : `Practice ${n} against smart AI opponents with multiple difficulty levels — the perfect way to learn the game or test new strategies.`,
+    wayOfflineH: `Play ${n} Offline`,
+    wayOfflineP: soon
+      ? `${n} will support offline play against computer opponents, so you can play anywhere — no internet connection needed.`
+      : `No connection? No problem. Play ${n} offline against computer opponents, anywhere you are.`,
+    hObjective: '🎯 Objective', hSetup: `🃏 ${n} Setup & Rules`, hHowTo: `▶ How to Play ${n}`,
+    hGuide: '📖 Detailed Guide', hScoring: `📊 ${n} Scoring`, hFaq: `❓ ${n} — Frequently Asked Questions`,
+    quickFacts: 'Quick Facts', factPlayers: 'Players', factDifficulty: 'Difficulty', factTier: 'Tier',
+    tipsTitle: `💡 ${n} Strategy Tips`,
+    sidebarCta: `Play ${n} free for 2 weeks — no credit card needed.`,
+    ctaDownload: 'Download Free', ctaPricing: 'View Pricing',
+    shotsTitle: `📱 ${n} in the app`, shotsSub: 'A step-by-step look at a real game on the table.',
+    moreGames: 'More Games', viewAll: `View All ${games.length} Games`,
+    trialOffer: 'Free 2-week trial',
+    faqs: soon
+      ? [
+          { q: `How many players do you need for ${n}?`,
+            a: `${n} is played with ${game.playerCount} players. On Vanikar, empty seats can be filled with AI opponents so you can always start a game.` },
+          { q: `When is ${n} coming to Vanikar?`,
+            a: `${n} is in development now. Premium subscribers get access first when it launches — download the app to be ready on day one.` },
+          { q: `Will I be able to play ${n} against the computer?`,
+            a: `Yes. Like every Vanikar game, ${n} will support play against smart AI opponents with multiple difficulty levels, plus online multiplayer and private tables with friends.` },
+          { q: `Is ${n} free to play?`,
+            a: `The Vanikar Card Games app is free to download on iOS and Android, and every game is free to play for 2 weeks — no credit card required.` },
+        ]
+      : [
+          { q: `How many players do you need for ${n}?`,
+            a: `${n} is played with ${game.playerCount} players. On Vanikar, empty seats can be filled with AI opponents so you can always start a game.` },
+          { q: `Can I play ${n} against the computer?`,
+            a: `Yes — play ${n} against smart AI opponents with multiple difficulty levels. It's the perfect way to learn the game or sharpen your strategy.` },
+          { q: `Can I play ${n} online with friends?`,
+            a: `Yes. Create a private table in the Vanikar app and invite friends and family to play ${n} together online, wherever they are.` },
+          { q: `Can I play ${n} offline?`,
+            a: `Yes — ${n} supports offline play against computer opponents, so you can play without an internet connection.` },
+          { q: `Is ${n} free to play?`,
+            a: `Yes — download the Vanikar Card Games app on iOS or Android and play ${n} free for 2 weeks, no credit card required.` },
+        ],
+  },
+  es: {
+    pageTitle: soon
+      ? `${n} – Reglas, cómo jugar y estrategia | Vanikar`
+      : `Juega ${n} en línea – Reglas, puntuación y estrategia | Vanikar`,
+    pageDescription: soon
+      ? `${n} llegará pronto a Vanikar. Aprende ya las reglas, la puntuación y la estrategia de ${n} — y prepárate para jugar contra la IA, amigos o jugadores en línea desde el lanzamiento. ${game.players}.`
+      : `Juega ${n} en línea con Vanikar — con amigos en mesas privadas, contra jugadores reales o contra la IA. Aprende las reglas, la puntuación y la estrategia de ${n}. ${game.players}.`,
+    heroTitle: soon ? n : `Juega ${n} en línea`,
+    heroDifficulty: `Dificultad ${diffLabel.es.toLowerCase()}`,
+    soonBanner: 'Este juego está en desarrollo y aún no se puede jugar. Los suscriptores Premium accederán primero cuando se lance.',
+    soonBannerTag: 'Próximamente', soonBannerLink: 'Obtén Premium →',
+    backLink: '← Todos los juegos',
+    premium: 'Premium',
+    players: 'jugadores', difficultyWord: 'dificultad',
+    breadcrumbHome: 'Inicio', breadcrumbGames: 'Juegos',
+    waysTitle: `🎮 Formas de jugar ${n}`,
+    wayOnlineH: `Crea una mesa de ${n}`,
+    wayOnlineP: soon
+      ? `Cuando ${n} se lance, crearás tu propia mesa en segundos, con un código de invitación para repartir solo con quien tú quieras.`
+      : `Crea tu propia mesa de ${n} en segundos — elige los asientos, comparte el código de invitación y llena los lugares vacíos con IA.`,
+    wayFriendsH: `Únete a una mesa de ${n} por invitación`,
+    wayFriendsP: soon
+      ? `Unirse será tan simple como ingresar un código de mesa — un toque y estarás sentado en la partida de ${n} de tu amigo.`
+      : `Ingresa el código de invitación de un amigo y toma tu asiento en su mesa de ${n} — sin extraños, solo tu gente.`,
+    wayCpuH: `Juega ${n} contra la computadora`,
+    wayCpuP: soon
+      ? `Oponentes de IA con varios niveles de dificultad harán fácil aprender ${n} y practicar tu estrategia en solitario.`
+      : `Practica ${n} contra oponentes de IA con varios niveles de dificultad — la forma perfecta de aprender el juego o probar nuevas estrategias.`,
+    wayOfflineH: `Juega ${n} sin conexión`,
+    wayOfflineP: soon
+      ? `${n} admitirá el juego sin conexión contra la computadora, para que juegues donde sea — sin internet.`
+      : `¿Sin conexión? Sin problema. Juega ${n} sin conexión contra la computadora, estés donde estés.`,
+    hObjective: '🎯 Objetivo', hSetup: `🃏 Preparación y reglas de ${n}`, hHowTo: `▶ Cómo jugar ${n}`,
+    hGuide: '📖 Guía detallada', hScoring: `📊 Puntuación de ${n}`, hFaq: `❓ ${n} — Preguntas frecuentes`,
+    quickFacts: 'Datos rápidos', factPlayers: 'Jugadores', factDifficulty: 'Dificultad', factTier: 'Nivel',
+    tipsTitle: `💡 Consejos de estrategia para ${n}`,
+    sidebarCta: `Juega ${n} gratis por 2 semanas — sin tarjeta de crédito.`,
+    ctaDownload: 'Descarga gratis', ctaPricing: 'Ver precios',
+    shotsTitle: `📱 ${n} en la app`, shotsSub: 'Un recorrido paso a paso por una partida real en la mesa.',
+    moreGames: 'Más juegos', viewAll: `Ver los ${games.length} juegos`,
+    trialOffer: 'Prueba gratis de 2 semanas',
+    faqs: soon
+      ? [
+          { q: `¿Cuántos jugadores se necesitan para ${n}?`,
+            a: `${n} se juega con ${game.playerCount} jugadores. En Vanikar, los asientos vacíos se pueden llenar con oponentes de IA para que siempre puedas empezar una partida.` },
+          { q: `¿Cuándo llega ${n} a Vanikar?`,
+            a: `${n} está en desarrollo. Los suscriptores Premium acceden primero cuando se lance — descarga la app para estar listo desde el primer día.` },
+          { q: `¿Podré jugar ${n} contra la computadora?`,
+            a: `Sí. Como todos los juegos de Vanikar, ${n} admitirá el juego contra oponentes de IA con varios niveles de dificultad, además de multijugador en línea y mesas privadas con amigos.` },
+          { q: `¿${n} es gratis?`,
+            a: `La app Card Games de Vanikar es gratuita en iOS y Android, y todos los juegos son gratis durante 2 semanas — sin tarjeta de crédito.` },
+        ]
+      : [
+          { q: `¿Cuántos jugadores se necesitan para ${n}?`,
+            a: `${n} se juega con ${game.playerCount} jugadores. En Vanikar, los asientos vacíos se pueden llenar con oponentes de IA para que siempre puedas empezar una partida.` },
+          { q: `¿Puedo jugar ${n} contra la computadora?`,
+            a: `Sí — juega ${n} contra oponentes de IA con varios niveles de dificultad. Es la forma perfecta de aprender el juego o afinar tu estrategia.` },
+          { q: `¿Puedo jugar ${n} en línea con amigos?`,
+            a: `Sí. Crea una mesa privada en la app de Vanikar e invita a amigos y familia a jugar ${n} juntos en línea, estén donde estén.` },
+          { q: `¿Puedo jugar ${n} sin conexión?`,
+            a: `Sí — ${n} admite el juego sin conexión contra la computadora, así que puedes jugar sin internet.` },
+          { q: `¿${n} es gratis?`,
+            a: `Sí — descarga la app Card Games de Vanikar en iOS o Android y juega ${n} gratis por 2 semanas, sin tarjeta de crédito.` },
+        ],
+  },
+  pt: {
+    pageTitle: soon
+      ? `${n} – Regras, como jogar e estratégia | Vanikar`
+      : `Jogue ${n} online – Regras, pontuação e estratégia | Vanikar`,
+    pageDescription: soon
+      ? `${n} está chegando ao Vanikar. Aprenda agora as regras, a pontuação e a estratégia de ${n} — e esteja pronto para jogar contra a IA, amigos ou jogadores online no lançamento. ${game.players}.`
+      : `Jogue ${n} online com o Vanikar — com amigos em mesas privadas, contra jogadores reais ou contra a IA. Aprenda as regras, a pontuação e a estratégia de ${n}. ${game.players}.`,
+    heroTitle: soon ? n : `Jogue ${n} online`,
+    heroDifficulty: `Dificuldade ${diffLabel.pt.toLowerCase()}`,
+    soonBanner: 'Este jogo está em desenvolvimento e ainda não está disponível. Assinantes Premium terão acesso primeiro no lançamento.',
+    soonBannerTag: 'Em breve', soonBannerLink: 'Assine o Premium →',
+    backLink: '← Todos os jogos',
+    premium: 'Premium',
+    players: 'jogadores', difficultyWord: 'dificuldade',
+    breadcrumbHome: 'Início', breadcrumbGames: 'Jogos',
+    waysTitle: `🎮 Formas de jogar ${n}`,
+    wayOnlineH: `Crie uma mesa de ${n}`,
+    wayOnlineP: soon
+      ? `Quando ${n} for lançado, você criará sua própria mesa em segundos, com um código de convite para jogar só com quem quiser.`
+      : `Crie sua própria mesa de ${n} em segundos — escolha os assentos, compartilhe o código de convite e preencha os lugares vazios com IA.`,
+    wayFriendsH: `Entre em uma mesa de ${n} por convite`,
+    wayFriendsP: soon
+      ? `Entrar será tão simples quanto digitar um código de mesa — um toque e você está sentado na partida de ${n} do seu amigo.`
+      : `Digite o código de convite de um amigo e ocupe seu lugar na mesa de ${n} dele — sem estranhos, só a sua turma.`,
+    wayCpuH: `Jogue ${n} contra o computador`,
+    wayCpuP: soon
+      ? `Oponentes de IA inteligentes com vários níveis de dificuldade vão facilitar aprender ${n} e praticar sua estratégia sozinho.`
+      : `Pratique ${n} contra oponentes de IA inteligentes com vários níveis de dificuldade — a forma perfeita de aprender o jogo ou testar novas estratégias.`,
+    wayOfflineH: `Jogue ${n} offline`,
+    wayOfflineP: soon
+      ? `${n} terá modo offline contra o computador, para você jogar em qualquer lugar — sem internet.`
+      : `Sem conexão? Sem problema. Jogue ${n} offline contra o computador, onde você estiver.`,
+    hObjective: '🎯 Objetivo', hSetup: `🃏 Preparação e regras de ${n}`, hHowTo: `▶ Como jogar ${n}`,
+    hGuide: '📖 Guia detalhado', hScoring: `📊 Pontuação de ${n}`, hFaq: `❓ ${n} — Perguntas frequentes`,
+    quickFacts: 'Resumo rápido', factPlayers: 'Jogadores', factDifficulty: 'Dificuldade', factTier: 'Nível',
+    tipsTitle: `💡 Dicas de estratégia para ${n}`,
+    sidebarCta: `Jogue ${n} grátis por 2 semanas — sem cartão de crédito.`,
+    ctaDownload: 'Baixe grátis', ctaPricing: 'Ver preços',
+    shotsTitle: `📱 ${n} no app`, shotsSub: 'Um passo a passo de uma partida real na mesa.',
+    moreGames: 'Mais jogos', viewAll: `Ver todos os ${games.length} jogos`,
+    trialOffer: 'Teste grátis de 2 semanas',
+    faqs: soon
+      ? [
+          { q: `Quantos jogadores são necessários para ${n}?`,
+            a: `${n} é jogado com ${game.playerCount} jogadores. No Vanikar, assentos vazios podem ser preenchidos com oponentes de IA, então você sempre pode começar uma partida.` },
+          { q: `Quando ${n} chega ao Vanikar?`,
+            a: `${n} está em desenvolvimento. Assinantes Premium têm acesso primeiro no lançamento — baixe o app para estar pronto desde o primeiro dia.` },
+          { q: `Vou poder jogar ${n} contra o computador?`,
+            a: `Sim. Como todo jogo do Vanikar, ${n} terá partidas contra oponentes de IA inteligentes com vários níveis de dificuldade, além de multijogador online e mesas privadas com amigos.` },
+          { q: `${n} é grátis?`,
+            a: `O app Card Games do Vanikar é gratuito para baixar no iOS e Android, e todos os jogos são grátis por 2 semanas — sem cartão de crédito.` },
+        ]
+      : [
+          { q: `Quantos jogadores são necessários para ${n}?`,
+            a: `${n} é jogado com ${game.playerCount} jogadores. No Vanikar, assentos vazios podem ser preenchidos com oponentes de IA, então você sempre pode começar uma partida.` },
+          { q: `Posso jogar ${n} contra o computador?`,
+            a: `Sim — jogue ${n} contra oponentes de IA inteligentes com vários níveis de dificuldade. É a forma perfeita de aprender o jogo ou afiar sua estratégia.` },
+          { q: `Posso jogar ${n} online com amigos?`,
+            a: `Sim. Crie uma mesa privada no app do Vanikar e convide amigos e família para jogar ${n} juntos online, onde estiverem.` },
+          { q: `Posso jogar ${n} offline?`,
+            a: `Sim — ${n} tem modo offline contra o computador, então você pode jogar sem conexão com a internet.` },
+          { q: `${n} é grátis?`,
+            a: `Sim — baixe o app Card Games do Vanikar no iOS ou Android e jogue ${n} grátis por 2 semanas, sem cartão de crédito.` },
+        ],
+  },
+  fr: {
+    pageTitle: soon
+      ? `${n} – Règles, comment jouer et stratégie | Vanikar`
+      : `Jouez à ${n} en ligne – Règles, score et stratégie | Vanikar`,
+    pageDescription: soon
+      ? `${n} arrive bientôt sur Vanikar. Apprenez dès maintenant les règles, le score et la stratégie de ${n} — et soyez prêt à jouer contre l'IA, vos amis ou des joueurs en ligne dès le lancement. ${game.players}.`
+      : `Jouez à ${n} en ligne avec Vanikar — avec vos amis à des tables privées, contre de vrais joueurs ou contre l'IA. Apprenez les règles, le score et la stratégie de ${n}. ${game.players}.`,
+    heroTitle: soon ? n : `Jouez à ${n} en ligne`,
+    heroDifficulty: `Difficulté ${({ Easy: 'facile', Medium: 'moyenne', Hard: 'difficile' } as Record<string, string>)[game.difficulty]}`,
+    soonBanner: 'Ce jeu est en développement et pas encore jouable. Les abonnés Premium y accéderont en premier lors du lancement.',
+    soonBannerTag: 'Bientôt disponible', soonBannerLink: 'Passez Premium →',
+    backLink: '← Tous les jeux',
+    premium: 'Premium',
+    players: 'joueurs', difficultyWord: 'difficulté',
+    breadcrumbHome: 'Accueil', breadcrumbGames: 'Jeux',
+    waysTitle: `🎮 Façons de jouer à ${n}`,
+    wayOnlineH: `Créez une table de ${n}`,
+    wayOnlineP: soon
+      ? `Au lancement de ${n}, vous créerez votre propre table en quelques secondes, avec un code d'invitation pour ne jouer qu'avec qui vous voulez.`
+      : `Créez votre propre table de ${n} en quelques secondes — choisissez les places, partagez le code d'invitation et complétez les sièges vides avec l'IA.`,
+    wayFriendsH: `Rejoignez une table de ${n} sur invitation`,
+    wayFriendsP: soon
+      ? `Rejoindre sera aussi simple que saisir un code de table — un geste et vous êtes assis à la partie de ${n} d'un ami.`
+      : `Saisissez le code d'invitation d'un ami et prenez place à sa table de ${n} — pas d'inconnus, juste votre bande.`,
+    wayCpuH: `Jouez à ${n} contre l'ordinateur`,
+    wayCpuP: soon
+      ? `Des adversaires IA intelligents avec plusieurs niveaux de difficulté rendront l'apprentissage de ${n} et l'entraînement en solo faciles.`
+      : `Entraînez-vous à ${n} contre des adversaires IA intelligents avec plusieurs niveaux de difficulté — le moyen idéal d'apprendre le jeu ou de tester de nouvelles stratégies.`,
+    wayOfflineH: `Jouez à ${n} hors ligne`,
+    wayOfflineP: soon
+      ? `${n} prendra en charge le jeu hors ligne contre l'ordinateur, pour jouer partout — sans connexion internet.`
+      : `Pas de connexion ? Pas de problème. Jouez à ${n} hors ligne contre l'ordinateur, où que vous soyez.`,
+    hObjective: '🎯 Objectif', hSetup: `🃏 Mise en place et règles de ${n}`, hHowTo: `▶ Comment jouer à ${n}`,
+    hGuide: '📖 Guide détaillé', hScoring: `📊 Score de ${n}`, hFaq: `❓ ${n} — Questions fréquentes`,
+    quickFacts: 'En bref', factPlayers: 'Joueurs', factDifficulty: 'Difficulté', factTier: 'Formule',
+    tipsTitle: `💡 Conseils de stratégie pour ${n}`,
+    sidebarCta: `Jouez à ${n} gratuitement pendant 2 semaines — sans carte bancaire.`,
+    ctaDownload: 'Télécharger gratuitement', ctaPricing: 'Voir les tarifs',
+    shotsTitle: `📱 ${n} dans l'app`, shotsSub: 'Une partie réelle à la table, étape par étape.',
+    moreGames: 'Plus de jeux', viewAll: `Voir les ${games.length} jeux`,
+    trialOffer: 'Essai gratuit de 2 semaines',
+    faqs: soon
+      ? [
+          { q: `Combien de joueurs faut-il pour jouer à ${n} ?`,
+            a: `${n} se joue à ${game.playerCount} joueurs. Sur Vanikar, les sièges vides peuvent être occupés par des adversaires IA, pour toujours pouvoir lancer une partie.` },
+          { q: `Quand ${n} arrive-t-il sur Vanikar ?`,
+            a: `${n} est en développement. Les abonnés Premium y accèdent en premier lors du lancement — téléchargez l'app pour être prêt dès le premier jour.` },
+          { q: `Pourrai-je jouer à ${n} contre l'ordinateur ?`,
+            a: `Oui. Comme tous les jeux Vanikar, ${n} proposera des parties contre des adversaires IA intelligents avec plusieurs niveaux de difficulté, plus le multijoueur en ligne et des tables privées entre amis.` },
+          { q: `${n} est-il gratuit ?`,
+            a: `L'app Card Games de Vanikar est gratuite sur iOS et Android, et chaque jeu est gratuit pendant 2 semaines — sans carte bancaire.` },
+        ]
+      : [
+          { q: `Combien de joueurs faut-il pour jouer à ${n} ?`,
+            a: `${n} se joue à ${game.playerCount} joueurs. Sur Vanikar, les sièges vides peuvent être occupés par des adversaires IA, pour toujours pouvoir lancer une partie.` },
+          { q: `Puis-je jouer à ${n} contre l'ordinateur ?`,
+            a: `Oui — jouez à ${n} contre des adversaires IA intelligents avec plusieurs niveaux de difficulté. Le moyen idéal d'apprendre le jeu ou d'affiner votre stratégie.` },
+          { q: `Puis-je jouer à ${n} en ligne avec des amis ?`,
+            a: `Oui. Créez une table privée dans l'app Vanikar et invitez vos amis et votre famille à jouer à ${n} ensemble en ligne, où qu'ils soient.` },
+          { q: `Puis-je jouer à ${n} hors ligne ?`,
+            a: `Oui — ${n} prend en charge le jeu hors ligne contre l'ordinateur, pour jouer sans connexion internet.` },
+          { q: `${n} est-il gratuit ?`,
+            a: `Oui — téléchargez l'app Card Games de Vanikar sur iOS ou Android et jouez à ${n} gratuitement pendant 2 semaines, sans carte bancaire.` },
+        ],
+  },
+  de: {
+    pageTitle: soon
+      ? `${n} – Regeln, Spielanleitung & Strategie | Vanikar`
+      : `Spiele ${n} online – Regeln, Punkte & Strategie | Vanikar`,
+    pageDescription: soon
+      ? `${n} kommt bald zu Vanikar. Lerne jetzt Regeln, Punktewertung und Strategie von ${n} — und sei zum Start bereit, gegen KI, Freunde oder Online-Spieler zu spielen. ${game.players}.`
+      : `Spiele ${n} online mit Vanikar — mit Freunden an privaten Tischen, gegen echte Spieler oder gegen smarte KI. Lerne Regeln, Punktewertung und Strategie von ${n}. ${game.players}.`,
+    heroTitle: soon ? n : `Spiele ${n} online`,
+    heroDifficulty: `Schwierigkeit: ${diffLabel.de}`,
+    soonBanner: 'Dieses Spiel ist in Entwicklung und noch nicht spielbar. Premium-Abonnenten erhalten zum Start zuerst Zugang.',
+    soonBannerTag: 'Demnächst', soonBannerLink: 'Hol dir Premium →',
+    backLink: '← Alle Spiele',
+    premium: 'Premium',
+    players: 'Spieler', difficultyWord: 'Schwierigkeit',
+    breadcrumbHome: 'Start', breadcrumbGames: 'Spiele',
+    waysTitle: `🎮 So kannst du ${n} spielen`,
+    wayOnlineH: `Erstelle einen ${n}-Tisch`,
+    wayOnlineP: soon
+      ? `Wenn ${n} startet, erstellst du in Sekunden deinen eigenen Tisch — mit Einladungscode, damit nur mitspielt, wen du willst.`
+      : `Erstelle in Sekunden deinen eigenen ${n}-Tisch — wähle die Plätze, teile den Einladungscode und fülle leere Plätze mit KI-Gegnern.`,
+    wayFriendsH: `Tritt einem ${n}-Tisch per Einladung bei`,
+    wayFriendsP: soon
+      ? `Beitreten wird so einfach wie das Eingeben eines Tischcodes — ein Tipp und du sitzt am ${n}-Tisch deiner Freunde.`
+      : `Gib den Einladungscode eines Freundes ein und nimm an seinem ${n}-Tisch Platz — keine Fremden, nur deine Leute.`,
+    wayCpuH: `${n} gegen den Computer spielen`,
+    wayCpuP: soon
+      ? `Smarte KI-Gegner mit mehreren Schwierigkeitsgraden machen es leicht, ${n} zu lernen und deine Strategie solo zu üben.`
+      : `Übe ${n} gegen smarte KI-Gegner mit mehreren Schwierigkeitsgraden — perfekt, um das Spiel zu lernen oder neue Strategien zu testen.`,
+    wayOfflineH: `${n} offline spielen`,
+    wayOfflineP: soon
+      ? `${n} wird Offline-Spiel gegen Computergegner unterstützen — spiele überall, ganz ohne Internetverbindung.`
+      : `Keine Verbindung? Kein Problem. Spiele ${n} offline gegen Computergegner, wo immer du bist.`,
+    hObjective: '🎯 Ziel', hSetup: `🃏 ${n}: Aufbau & Regeln`, hHowTo: `▶ So spielst du ${n}`,
+    hGuide: '📖 Ausführliche Anleitung', hScoring: `📊 Punktewertung bei ${n}`, hFaq: `❓ ${n} — Häufige Fragen`,
+    quickFacts: 'Kurz & knapp', factPlayers: 'Spieler', factDifficulty: 'Schwierigkeit', factTier: 'Stufe',
+    tipsTitle: `💡 Strategie-Tipps für ${n}`,
+    sidebarCta: `Spiele ${n} 2 Wochen gratis — ohne Kreditkarte.`,
+    ctaDownload: 'Gratis herunterladen', ctaPricing: 'Preise ansehen',
+    shotsTitle: `📱 ${n} in der App`, shotsSub: 'Eine echte Partie am Tisch, Schritt für Schritt.',
+    moreGames: 'Weitere Spiele', viewAll: `Alle ${games.length} Spiele ansehen`,
+    trialOffer: '2 Wochen gratis testen',
+    faqs: soon
+      ? [
+          { q: `Wie viele Spieler braucht man für ${n}?`,
+            a: `${n} wird mit ${game.playerCount} Spielern gespielt. Auf Vanikar können leere Plätze mit KI-Gegnern besetzt werden, sodass du jederzeit eine Partie starten kannst.` },
+          { q: `Wann kommt ${n} zu Vanikar?`,
+            a: `${n} ist gerade in Entwicklung. Premium-Abonnenten erhalten zum Start zuerst Zugang — lade die App herunter, um ab Tag eins bereit zu sein.` },
+          { q: `Kann ich ${n} dann gegen den Computer spielen?`,
+            a: `Ja. Wie jedes Vanikar-Spiel wird ${n} Partien gegen smarte KI-Gegner mit mehreren Schwierigkeitsgraden unterstützen, dazu Online-Multiplayer und private Tische mit Freunden.` },
+          { q: `Ist ${n} kostenlos?`,
+            a: `Die Card Games App von Vanikar ist auf iOS und Android gratis, und jedes Spiel ist 2 Wochen lang kostenlos — ganz ohne Kreditkarte.` },
+        ]
+      : [
+          { q: `Wie viele Spieler braucht man für ${n}?`,
+            a: `${n} wird mit ${game.playerCount} Spielern gespielt. Auf Vanikar können leere Plätze mit KI-Gegnern besetzt werden, sodass du jederzeit eine Partie starten kannst.` },
+          { q: `Kann ich ${n} gegen den Computer spielen?`,
+            a: `Ja — spiele ${n} gegen smarte KI-Gegner mit mehreren Schwierigkeitsgraden. Perfekt, um das Spiel zu lernen oder deine Strategie zu schärfen.` },
+          { q: `Kann ich ${n} online mit Freunden spielen?`,
+            a: `Ja. Erstelle in der Vanikar-App einen privaten Tisch und lade Freunde und Familie ein, ${n} gemeinsam online zu spielen — egal, wo sie sind.` },
+          { q: `Kann ich ${n} offline spielen?`,
+            a: `Ja — ${n} unterstützt Offline-Spiel gegen Computergegner, du kannst also auch ohne Internetverbindung spielen.` },
+          { q: `Ist ${n} kostenlos?`,
+            a: `Ja — lade die Card Games App von Vanikar auf iOS oder Android herunter und spiele ${n} 2 Wochen gratis, ohne Kreditkarte.` },
+        ],
+  },
+  hi: {
+    pageTitle: soon
+      ? `${n} – नियम, खेलने का तरीका और रणनीति | Vanikar`
+      : `${n} ऑनलाइन खेलें – नियम, स्कोरिंग और रणनीति | Vanikar`,
+    pageDescription: soon
+      ? `${n} जल्द ही Vanikar पर आ रहा है। अभी ${n} के नियम, स्कोरिंग और रणनीति सीखें — और लॉन्च होते ही AI, दोस्तों या ऑनलाइन खिलाड़ियों के साथ खेलने के लिए तैयार रहें। ${game.players}।`
+      : `Vanikar के साथ ${n} ऑनलाइन खेलें — निजी टेबल पर दोस्तों के साथ, असली खिलाड़ियों के खिलाफ या स्मार्ट AI के खिलाफ। ${n} के नियम, स्कोरिंग और रणनीति सीखें। ${game.players}।`,
+    heroTitle: soon ? n : `${n} ऑनलाइन खेलें`,
+    heroDifficulty: `कठिनाई: ${diffLabel.hi}`,
+    soonBanner: 'यह गेम अभी विकास में है और खेलने के लिए उपलब्ध नहीं है। लॉन्च होने पर Premium सब्सक्राइबर्स को सबसे पहले एक्सेस मिलेगा।',
+    soonBannerTag: 'जल्द आ रहा है', soonBannerLink: 'Premium पाएँ →',
+    backLink: '← सभी गेम',
+    premium: 'Premium',
+    players: 'खिलाड़ी', difficultyWord: 'कठिनाई',
+    breadcrumbHome: 'होम', breadcrumbGames: 'गेम्स',
+    waysTitle: `🎮 ${n} खेलने के तरीके`,
+    wayOnlineH: `${n} की टेबल बनाएँ`,
+    wayOnlineP: soon
+      ? `जब ${n} लॉन्च होगा, आप सेकंडों में अपनी टेबल बनाएंगे — इनवाइट कोड के साथ, ताकि सिर्फ़ आपके चुने लोग ही खेलें।`
+      : `सेकंडों में अपनी ${n} टेबल बनाएँ — सीटें चुनें, इनवाइट कोड शेयर करें और खाली सीटें AI से भरें।`,
+    wayFriendsH: `इनवाइट से ${n} टेबल जॉइन करें`,
+    wayFriendsP: soon
+      ? `जॉइन करना टेबल कोड डालने जितना आसान होगा — एक टैप और आप दोस्त की ${n} बाज़ी में बैठे होंगे।`
+      : `दोस्त का इनवाइट कोड डालें और उसकी ${n} टेबल पर अपनी सीट लें — कोई अजनबी नहीं, सिर्फ़ अपने लोग।`,
+    wayCpuH: `कंप्यूटर के खिलाफ ${n} खेलें`,
+    wayCpuP: soon
+      ? `कई कठिनाई स्तरों वाले स्मार्ट AI प्रतिद्वंद्वी ${n} सीखना और अकेले रणनीति का अभ्यास करना आसान बना देंगे।`
+      : `कई कठिनाई स्तरों वाले स्मार्ट AI प्रतिद्वंद्वियों के खिलाफ ${n} का अभ्यास करें — गेम सीखने या नई रणनीतियाँ आज़माने का सबसे अच्छा तरीका।`,
+    wayOfflineH: `${n} ऑफ़लाइन खेलें`,
+    wayOfflineP: soon
+      ? `${n} में कंप्यूटर के खिलाफ ऑफ़लाइन खेलने की सुविधा होगी, ताकि आप कहीं भी खेल सकें — इंटरनेट की ज़रूरत नहीं।`
+      : `कनेक्शन नहीं है? कोई बात नहीं। कंप्यूटर के खिलाफ ${n} ऑफ़लाइन खेलें, आप जहाँ भी हों।`,
+    hObjective: '🎯 उद्देश्य', hSetup: `🃏 ${n} की तैयारी और नियम`, hHowTo: `▶ ${n} कैसे खेलें`,
+    hGuide: '📖 विस्तृत गाइड', hScoring: `📊 ${n} की स्कोरिंग`, hFaq: `❓ ${n} — अक्सर पूछे जाने वाले सवाल`,
+    quickFacts: 'एक नज़र में', factPlayers: 'खिलाड़ी', factDifficulty: 'कठिनाई', factTier: 'स्तर',
+    tipsTitle: `💡 ${n} के लिए रणनीति टिप्स`,
+    sidebarCta: `${n} 2 हफ़्ते मुफ़्त खेलें — क्रेडिट कार्ड की ज़रूरत नहीं।`,
+    ctaDownload: 'मुफ़्त डाउनलोड करें', ctaPricing: 'कीमतें देखें',
+    shotsTitle: `📱 ऐप में ${n}`, shotsSub: 'टेबल पर एक असली बाज़ी की कदम-दर-कदम झलक।',
+    moreGames: 'और गेम्स', viewAll: `सभी ${games.length} गेम देखें`,
+    trialOffer: '2 हफ़्ते का मुफ़्त ट्रायल',
+    faqs: soon
+      ? [
+          { q: `${n} खेलने के लिए कितने खिलाड़ी चाहिए?`,
+            a: `${n} ${game.playerCount} खिलाड़ियों के साथ खेला जाता है। Vanikar पर खाली सीटें AI प्रतिद्वंद्वियों से भरी जा सकती हैं, इसलिए आप हमेशा खेल शुरू कर सकते हैं।` },
+          { q: `${n} Vanikar पर कब आएगा?`,
+            a: `${n} अभी विकास में है। लॉन्च होने पर Premium सब्सक्राइबर्स को सबसे पहले एक्सेस मिलेगा — पहले दिन से तैयार रहने के लिए ऐप डाउनलोड करें।` },
+          { q: `क्या मैं ${n} कंप्यूटर के खिलाफ खेल पाऊँगा?`,
+            a: `हाँ। Vanikar के हर गेम की तरह, ${n} में कई कठिनाई स्तरों वाले स्मार्ट AI प्रतिद्वंद्वियों के खिलाफ खेलने की सुविधा होगी, साथ ही ऑनलाइन मल्टीप्लेयर और दोस्तों के साथ निजी टेबल भी।` },
+          { q: `क्या ${n} मुफ़्त है?`,
+            a: `Vanikar का Card Games ऐप iOS और Android पर मुफ़्त डाउनलोड होता है, और हर गेम 2 हफ़्ते मुफ़्त खेला जा सकता है — क्रेडिट कार्ड की ज़रूरत नहीं।` },
+        ]
+      : [
+          { q: `${n} खेलने के लिए कितने खिलाड़ी चाहिए?`,
+            a: `${n} ${game.playerCount} खिलाड़ियों के साथ खेला जाता है। Vanikar पर खाली सीटें AI प्रतिद्वंद्वियों से भरी जा सकती हैं, इसलिए आप हमेशा खेल शुरू कर सकते हैं।` },
+          { q: `क्या मैं ${n} कंप्यूटर के खिलाफ खेल सकता हूँ?`,
+            a: `हाँ — कई कठिनाई स्तरों वाले स्मार्ट AI प्रतिद्वंद्वियों के खिलाफ ${n} खेलें। गेम सीखने या रणनीति निखारने का यह सबसे अच्छा तरीका है।` },
+          { q: `क्या मैं दोस्तों के साथ ${n} ऑनलाइन खेल सकता हूँ?`,
+            a: `हाँ। Vanikar ऐप में निजी टेबल बनाएँ और दोस्तों-परिवार को कहीं से भी साथ में ऑनलाइन ${n} खेलने के लिए आमंत्रित करें।` },
+          { q: `क्या मैं ${n} ऑफ़लाइन खेल सकता हूँ?`,
+            a: `हाँ — ${n} में कंप्यूटर के खिलाफ ऑफ़लाइन खेलने की सुविधा है, इसलिए आप बिना इंटरनेट के भी खेल सकते हैं।` },
+          { q: `क्या ${n} मुफ़्त है?`,
+            a: `हाँ — iOS या Android पर Vanikar का Card Games ऐप डाउनलोड करें और ${n} 2 हफ़्ते मुफ़्त खेलें, क्रेडिट कार्ड की ज़रूरत नहीं।` },
+        ],
+  },
+}[lang];
+
+const faqs    = L.faqs;
+const pageUrl = `https://vanikar.games${localizePath(`/games/${game.slug}`, lang)}/`;
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: L.breadcrumbHome,  item: `https://vanikar.games${localizePath('/', lang)}` },
+      { '@type': 'ListItem', position: 2, name: L.breadcrumbGames, item: `https://vanikar.games${localizePath('/games', lang)}/` },
+      { '@type': 'ListItem', position: 3, name: game.name, item: pageUrl },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'VideoGame',
+    name: game.name,
+    ...(game.alternateNames?.length ? { alternateName: game.alternateNames } : {}),
+    description: game.description,
+    url: pageUrl,
+    inLanguage: lang,
+    gamePlatform: ['iOS', 'Android'],
+    applicationCategory: 'Game',
+    genre: 'Card Game',
+    playMode: ['SinglePlayer', 'MultiPlayer'],
+    numberOfPlayers: { '@type': 'QuantitativeValue', name: game.playerCount },
+    publisher: { '@type': 'Organization', name: 'Vanikar LLC', url: 'https://vanikar.com' },
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD', description: L.trialOffer },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(f => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  },
+];
+---
+
+<BaseLayout
+  title={L.pageTitle}
+  description={L.pageDescription}
+>
+  <Fragment slot="head">
+    {jsonLd.map(schema => (
+      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    ))}
+  </Fragment>
+  {game.comingSoon && (
+    <div class="soon-banner" role="alert">
+      <span class="soon-banner-icon">🚀</span>
+      <div>
+        <strong>{L.soonBannerTag}</strong> — {L.soonBanner}
+      </div>
+      <a href={href('/pricing')} class="soon-banner-link">{L.soonBannerLink}</a>
+    </div>
+  )}
+
+  <!-- Back link -->
+  <div class="back-bar">
+    <div class="container">
+      <a href={href('/games')} class="back-link">{L.backLink}</a>
+    </div>
+  </div>
+
+  <!-- Game hero -->
+  <section class="game-hero">
+    <div class="container">
+      <div class="game-hero-inner">
+        <div class="game-icon-lg">
+          {gameIcon(game.slug)
+            ? <Image src={gameIcon(game.slug)!} alt={`${game.name} icon`} width={192} class="gi-img" />
+            : game.icon}
+        </div>
+        <div>
+          <div class="game-badges">
+            <span class="diff-badge" style={`background:${diffColor[game.difficulty]}22;color:${diffColor[game.difficulty]};border:1px solid ${diffColor[game.difficulty]}55`}>
+              {diffLabel[lang]}
+            </span>
+            <span class="tier-badge tier-premium">{L.premium}</span>
+          </div>
+          <h1 class="game-title">{L.heroTitle}</h1>
+          <p class="game-tagline">{game.tagline}</p>
+          <div class="game-meta">
+            <span>👥 {game.players}</span>
+            <span class="meta-sep">·</span>
+            <span>{L.heroDifficulty}</span>
+          </div>
+        </div>
+      </div>
+      <p class="game-description">{game.description}</p>
+    </div>
+  </section>
+
+  <!-- Content -->
+  <section class="game-content">
+    <div class="container game-layout">
+
+      <!-- Main column -->
+      <div class="game-main">
+
+        <div class="game-section ways-to-play">
+          <h2>{L.waysTitle}</h2>
+          <div class="ways-grid">
+            <div class="way-card">
+              <h3>{L.wayOnlineH}</h3>
+              <p>{L.wayOnlineP}</p>
+            </div>
+            <div class="way-card">
+              <h3>{L.wayFriendsH}</h3>
+              <p>{L.wayFriendsP}</p>
+            </div>
+            <div class="way-card">
+              <h3>{L.wayCpuH}</h3>
+              <p>{L.wayCpuP}</p>
+            </div>
+            <div class="way-card">
+              <h3>{L.wayOfflineH}</h3>
+              <p>{L.wayOfflineP}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="game-section">
+          <h2>{L.hObjective}</h2>
+          <p>{game.objective}</p>
+        </div>
+
+        <div class="game-section">
+          <h2>{L.hSetup}</h2>
+          <ol class="styled-list">
+            {game.setup.map(step => <li>{step}</li>)}
+          </ol>
+        </div>
+
+        <div class="game-section">
+          <h2>{L.hHowTo}</h2>
+          <ol class="styled-list">
+            {game.gameplay.map(step => <li>{step}</li>)}
+          </ol>
+        </div>
+
+        {game.playGuide && (
+          <div class="game-section">
+            <h2>{L.hGuide}</h2>
+            {game.playGuide.map(sec => (
+              <div class="guide-sub">
+                <h3>{sec.heading}</h3>
+                <ul class="guide-list">
+                  {sec.points.map(p => <li>{p}</li>)}
+                </ul>
+              </div>
+            ))}
+          </div>
+        )}
+
+        <div class="game-section">
+          <h2>{L.hScoring}</h2>
+          <p>{game.scoring}</p>
+        </div>
+
+        <div class="game-section">
+          <h2>{L.hFaq}</h2>
+          {faqs.map(f => (
+            <details class="faq-item">
+              <summary>{f.q}</summary>
+              <p>{f.a}</p>
+            </details>
+          ))}
+        </div>
+
+      </div>
+
+      <!-- Sidebar -->
+      <aside class="game-sidebar">
+
+        <div class="sidebar-card">
+          <h3>{L.quickFacts}</h3>
+          <dl class="fact-list">
+            <dt>{L.factPlayers}</dt><dd>{game.playerCount}</dd>
+            <dt>{L.factDifficulty}</dt>
+            <dd>
+              <span class="diff-badge" style={`background:${diffColor[game.difficulty]}22;color:${diffColor[game.difficulty]};border:1px solid ${diffColor[game.difficulty]}55`}>
+                {diffLabel[lang]}
+              </span>
+            </dd>
+            <dt>{L.factTier}</dt>
+            <dd>
+              <span class="tier-badge tier-premium">{L.premium}</span>
+            </dd>
+          </dl>
+        </div>
+
+        <div class="sidebar-card">
+          <h3>{L.tipsTitle}</h3>
+          <ul class="tips-list">
+            {game.tips.map(tip => <li>{tip}</li>)}
+          </ul>
+        </div>
+
+        <div class="sidebar-card sidebar-cta">
+          <p>{L.sidebarCta}</p>
+          <a href={href('/#download')} class="btn btn-primary" style="width:100%;justify-content:center;margin-top:.75rem">
+            {L.ctaDownload}
+          </a>
+          <a href={href('/pricing')} class="btn btn-secondary" style="width:100%;justify-content:center;margin-top:.5rem">
+            {L.ctaPricing}
+          </a>
+        </div>
+
+      </aside>
+
+    </div>
+  </section>
+
+  {shots.length > 0 && (
+    <section class="shots-section">
+      <div class="container">
+        <h2 class="shots-title">{L.shotsTitle}</h2>
+        <p class="shots-sub">{L.shotsSub}</p>
+        <div class="shots-grid">
+          {shots.map((s, i) => (
+            <figure class="shot-card">
+              <button class="shot-zoom" data-idx={i} aria-label={`View ${s.title} screenshot full size`}>
+                <Image
+                  src={s.image}
+                  alt={`${game.name} — ${s.title}`}
+                  width={640}
+                  widths={[240, 420, 640]}
+                  sizes="(max-width: 640px) 85vw, (max-width: 1100px) 44vw, 300px"
+                  quality={70}
+                  class="shot-img"
+                />
+              </button>
+              <figcaption>
+                <strong>{s.title}</strong>
+                <span>{s.caption}</span>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+      <ScreenshotLightbox shots={shots} altPrefix={game.name} />
+    </section>
+  )}
+
+  <!-- Other games -->
+  <section class="other-games">
+    <div class="container">
+      <h2 class="other-title">{L.moreGames}</h2>
+      <div class="other-grid">
+        {games.filter(g => g.slug !== game.slug).slice(0,4).map(g => localizeGame(g, lang)).map(g => (
+          <a href={href(`/games/${g.slug}`)} class="other-card">
+            <span class="other-icon">
+              {gameIcon(g.slug)
+                ? <Image src={gameIcon(g.slug)!} alt="" width={56} class="gi-img" />
+                : g.icon}
+            </span>
+            <span class="other-name">{g.name}</span>
+            <span class="other-arrow">›</span>
+          </a>
+        ))}
+      </div>
+      <div style="text-align:center;margin-top:1.5rem">
+        <a href={href('/games')} class="btn btn-secondary">{L.viewAll}</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .soon-banner {
+    display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
+    background: rgba(120,80,200,.12); border-bottom: 2px solid rgba(180,144,245,.4);
+    padding: 1rem 1.5rem; font-size: .9rem; color: #c8aaff;
+  }
+  .soon-banner strong { color: #b490f5; }
+  .soon-banner-icon   { font-size: 1.4rem; flex-shrink: 0; }
+  .soon-banner-link   { margin-left: auto; font-size: .82rem; color: #b490f5; text-decoration: underline; white-space: nowrap; }
+  .back-bar  { background: var(--bg-deep); border-bottom: 1px solid var(--border); padding: .75rem 0; }
+  .back-link { font-size: .85rem; color: var(--text-muted); transition: color var(--transition); }
+  .back-link:hover { color: var(--gold-light); }
+
+  .game-hero {
+    background: linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-primary) 100%);
+    padding: 3rem 0 2.5rem; border-bottom: 1px solid var(--border);
+  }
+  .game-hero-inner { display: flex; align-items: flex-start; gap: 1.5rem; margin-bottom: 1.25rem; flex-wrap: wrap; }
+  .game-icon-lg   { font-size: 4rem; line-height: 1; }
+  .game-icon-lg :global(.gi-img) { width: 96px; height: 96px; object-fit: contain; display: block; }
+  .game-badges    { display: flex; gap: .5rem; margin-bottom: .5rem; flex-wrap: wrap; }
+
+  .diff-badge { display: inline-block; font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; padding: .2rem .6rem; border-radius: var(--radius-full); }
+  .tier-badge { display: inline-block; font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; padding: .2rem .6rem; border-radius: var(--radius-full); }
+  .tier-premium { background: rgba(201,162,39,.15); color: var(--gold); border: 1px solid var(--gold-border); }
+
+  .game-title   { font-size: clamp(1.8rem,4vw,2.8rem); margin-bottom: .35rem; }
+  .game-tagline { font-size: 1.05rem; color: var(--text-secondary); margin-bottom: .5rem; }
+  .game-meta    { display: flex; align-items: center; gap: .5rem; font-size: .85rem; color: var(--text-dim); }
+  .meta-sep     { color: var(--border); }
+  .game-description { font-size: 1rem; color: var(--text-muted); line-height: 1.8; max-width: 760px; }
+
+  .game-content { padding: 3rem 0 4rem; }
+  .game-layout  {
+    display: grid; grid-template-columns: 1fr 320px; gap: 3rem; align-items: start;
+  }
+  .game-section { margin-bottom: 2.5rem; }
+  .game-section h2 {
+    font-size: 1.15rem; color: var(--text-primary); margin-bottom: .85rem;
+    padding-bottom: .5rem; border-bottom: 1px solid var(--border);
+    font-family: 'Inter',sans-serif; font-weight: 700;
+  }
+  .game-section p  { color: var(--text-secondary); line-height: 1.8; }
+
+  .styled-list { list-style: decimal; padding-left: 1.4rem; color: var(--text-secondary); line-height: 1.9; }
+  .styled-list li { margin-bottom: .35rem; }
+
+  /* Ways to play */
+  .ways-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .85rem; }
+  .way-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius-md); padding: 1rem 1.1rem;
+  }
+  .way-card h3 {
+    font-size: .92rem; font-weight: 700; color: var(--gold-light);
+    font-family: 'Inter',sans-serif; margin-bottom: .4rem;
+  }
+  .way-card p { font-size: .85rem; color: var(--text-secondary); line-height: 1.65; }
+  @media (max-width: 640px) { .ways-grid { grid-template-columns: 1fr; } }
+
+  /* FAQ */
+  .faq-item {
+    border: 1px solid var(--border); border-radius: var(--radius-md);
+    background: var(--bg-card); margin-bottom: .6rem; overflow: hidden;
+  }
+  .faq-item summary {
+    cursor: pointer; padding: .85rem 1.1rem; font-size: .9rem; font-weight: 600;
+    color: var(--text-primary); font-family: 'Inter',sans-serif;
+    transition: color var(--transition); list-style: none; position: relative; padding-right: 2.2rem;
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary::after {
+    content: '+'; position: absolute; right: 1.1rem; top: 50%; translate: 0 -50%;
+    color: var(--gold); font-size: 1.1rem; transition: transform var(--transition);
+  }
+  .faq-item[open] summary::after { transform: rotate(45deg); }
+  .faq-item summary:hover { color: var(--gold-light); }
+  .faq-item p { padding: 0 1.1rem .95rem; font-size: .875rem; color: var(--text-secondary); line-height: 1.7; }
+
+  /* Detailed guide */
+  .guide-sub { margin-bottom: 1.75rem; }
+  .guide-sub h3 {
+    font-size: .95rem; font-weight: 700; color: var(--gold-light);
+    font-family: 'Inter',sans-serif; margin-bottom: .5rem;
+  }
+  .guide-list { list-style: disc; padding-left: 1.4rem; color: var(--text-secondary); line-height: 1.8; }
+  .guide-list li { margin-bottom: .4rem; }
+
+  /* Screenshots */
+  .shots-section { background: var(--bg-deep); border-top: 1px solid var(--border); padding: 3.5rem 0; }
+  .shots-title   { font-size: 1.4rem; margin-bottom: .35rem; }
+  .shots-sub     { font-size: .9rem; color: var(--text-muted); margin-bottom: 1.75rem; }
+  .shots-grid    {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 1.25rem;
+  }
+  .shot-card { margin: 0; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; transition: all var(--transition); }
+  .shot-card:hover { border-color: var(--gold-border); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+  .shot-card :global(.shot-img) { display: block; width: 100%; height: auto; }
+  .shot-zoom { display: block; width: 100%; padding: 0; margin: 0; background: none; border: none; cursor: zoom-in; }
+  .shot-card figcaption { padding: .85rem 1rem 1rem; }
+  .shot-card figcaption strong { display: block; font-size: .85rem; color: var(--text-primary); font-family: 'Inter',sans-serif; margin-bottom: .25rem; }
+  .shot-card figcaption span   { font-size: .78rem; color: var(--text-muted); line-height: 1.55; }
+
+  /* Sidebar */
+  .sidebar-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); padding: 1.25rem; margin-bottom: 1rem;
+  }
+  .sidebar-card h3 { font-size: .9rem; font-weight: 700; color: var(--text-primary); margin-bottom: .85rem; font-family: 'Inter',sans-serif; }
+  .sidebar-cta     { background: var(--gold-subtle); border-color: var(--gold-border); }
+  .sidebar-cta p   { font-size: .875rem; color: var(--text-secondary); }
+
+  .fact-list       { display: grid; grid-template-columns: auto 1fr; gap: .5rem .75rem; font-size: .875rem; align-items: start; }
+  .fact-list dt    { color: var(--text-dim); padding-top: .15rem; }
+  .fact-list dd    { color: var(--text-primary); }
+
+  .tips-list       { list-style: none; padding: 0; }
+  .tips-list li    { font-size: .875rem; color: var(--text-secondary); line-height: 1.65; padding: .5rem 0; border-bottom: 1px solid var(--border); }
+  .tips-list li:last-child { border-bottom: none; }
+  .tips-list li::before { content: '💡 '; }
+
+  /* Other games */
+  .other-games  { background: var(--bg-secondary); border-top: 1px solid var(--border); padding: 3rem 0; }
+  .other-title  { font-size: 1.2rem; margin-bottom: 1rem; }
+  .other-grid   { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px,1fr)); gap: .75rem; margin-bottom: 0; }
+  .other-card   {
+    display: flex; align-items: center; gap: .75rem;
+    background: var(--bg-feature); border: 1px solid var(--border);
+    border-radius: var(--radius-md); padding: .85rem 1rem;
+    transition: all var(--transition); text-decoration: none; color: inherit;
+  }
+  .other-card:hover { border-color: var(--gold-border); transform: translateY(-1px); }
+  .other-icon  { font-size: 1.5rem; }
+  .other-icon :global(.gi-img) { width: 28px; height: 28px; object-fit: contain; display: block; }
+  .other-name  { flex: 1; font-size: .875rem; font-weight: 600; color: var(--text-primary); }
+  .other-arrow { color: var(--text-dim); transition: transform var(--transition); }
+  .other-card:hover .other-arrow { transform: translateX(3px); color: var(--gold); }
+
+  @media (max-width: 900px) {
+    .game-layout { grid-template-columns: 1fr; }
+    .game-sidebar { order: -1; }
+  }
+</style>

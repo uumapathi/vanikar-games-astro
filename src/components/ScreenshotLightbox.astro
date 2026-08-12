@@ -1,0 +1,131 @@
+---
+/**
+ * Full-screen screenshot gallery. Pair with thumbnail buttons anywhere on the
+ * page: <button class="shot-zoom" data-idx={i}>…</button>. One instance per page.
+ */
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Shot { image: ImageMetadata; title: string; caption: string; }
+interface Props { shots: Shot[]; altPrefix?: string; }
+const { shots, altPrefix = '' } = Astro.props;
+---
+<div class="lightbox" id="shot-lightbox" role="dialog" aria-modal="true" aria-label="Screenshot gallery" hidden>
+  <button class="lb-close" aria-label="Close gallery">✕</button>
+  <button class="lb-nav lb-prev" aria-label="Previous screenshot">‹</button>
+  <div class="lb-stage">
+    {shots.map((s, i) => (
+      <figure class="lb-slide" data-idx={i}>
+        <Image
+          src={s.image}
+          alt={altPrefix ? `${altPrefix} — ${s.title}` : s.title}
+          width={1000}
+          quality={80}
+          loading="lazy"
+          class="lb-img"
+        />
+        <figcaption>
+          <strong>{s.title}</strong>
+          <span>{s.caption}</span>
+        </figcaption>
+      </figure>
+    ))}
+    <div class="lb-counter" aria-live="polite"></div>
+  </div>
+  <button class="lb-nav lb-next" aria-label="Next screenshot">›</button>
+</div>
+
+<script>
+  const lightbox = document.getElementById('shot-lightbox')!;
+  const slides   = [...lightbox.querySelectorAll<HTMLElement>('.lb-slide')];
+  const counter  = lightbox.querySelector<HTMLElement>('.lb-counter')!;
+  const closeBtn = lightbox.querySelector<HTMLButtonElement>('.lb-close')!;
+  let current = 0;
+
+  function show(i: number) {
+    current = (i + slides.length) % slides.length;
+    slides.forEach((s, j) => s.classList.toggle('lb-slide--active', j === current));
+    counter.textContent = `${current + 1} / ${slides.length}`;
+  }
+  function open(i: number) {
+    lightbox.hidden = false;
+    document.body.style.overflow = 'hidden';
+    show(i);
+    closeBtn.focus();
+  }
+  function close() {
+    lightbox.hidden = true;
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll<HTMLButtonElement>('.shot-zoom').forEach(btn => {
+    btn.addEventListener('click', () => open(Number(btn.dataset.idx)));
+  });
+  closeBtn.addEventListener('click', close);
+  lightbox.querySelector('.lb-prev')!.addEventListener('click', () => show(current - 1));
+  lightbox.querySelector('.lb-next')!.addEventListener('click', () => show(current + 1));
+  lightbox.addEventListener('click', e => {
+    if (e.target === lightbox) close();
+  });
+  document.addEventListener('keydown', e => {
+    if (lightbox.hidden) return;
+    if (e.key === 'Escape')     close();
+    if (e.key === 'ArrowLeft')  show(current - 1);
+    if (e.key === 'ArrowRight') show(current + 1);
+  });
+</script>
+
+<style>
+  .lightbox {
+    position: fixed; inset: 0; z-index: 1000;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(5, 12, 8, .92);
+    backdrop-filter: blur(6px);
+    padding: 2rem;
+  }
+  .lightbox[hidden] { display: none; }
+  .lb-stage { max-width: min(560px, 90vw); text-align: center; }
+  .lb-slide { display: none; margin: 0; }
+  .lb-slide--active { display: block; }
+  .lb-slide :global(.lb-img) {
+    display: block; width: auto; height: auto;
+    max-width: 100%; max-height: 72vh;
+    margin: 0 auto;
+    border: 1px solid var(--gold-border);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 12px 50px rgba(0,0,0,.6);
+  }
+  .lb-slide figcaption { margin-top: 1rem; }
+  .lb-slide figcaption strong {
+    display: block; font-size: .95rem; color: var(--text-primary);
+    font-family: 'Inter',sans-serif; margin-bottom: .25rem;
+  }
+  .lb-slide figcaption span {
+    font-size: .82rem; color: var(--text-muted); line-height: 1.55;
+  }
+  .lb-counter {
+    margin-top: .75rem; font-size: .75rem; letter-spacing: .15em;
+    color: var(--gold); font-weight: 700;
+  }
+  .lb-close, .lb-nav {
+    background: var(--bg-card); color: var(--text-primary);
+    border: 1px solid var(--border); border-radius: var(--radius-full);
+    cursor: pointer; line-height: 1;
+    transition: all var(--transition);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .lb-close:hover, .lb-nav:hover { border-color: var(--gold); color: var(--gold); }
+  .lb-close {
+    position: absolute; top: 1.25rem; right: 1.25rem;
+    width: 44px; height: 44px; font-size: 1.1rem;
+  }
+  .lb-nav {
+    width: 52px; height: 52px; font-size: 2rem;
+    flex-shrink: 0; margin: 0 1.25rem;
+  }
+  @media (max-width: 640px) {
+    .lightbox { padding: 1rem; }
+    .lb-nav { width: 42px; height: 42px; margin: 0 .4rem; }
+    .lb-slide :global(.lb-img) { max-height: 62vh; }
+  }
+</style>

@@ -1,16 +1,211 @@
 ---
 import { games } from '../data/games';
+import { getLocale, localizedHref } from '../i18n';
+
+const lang = getLocale(Astro.currentLocale);
+const href = (p: string) => localizedHref(p, lang);
+const copy = {
+  en: {
+    tag: '♣ Premium · Social & Community',
+    title: 'Play Together. Compete. Connect.',
+    subtitle: 'Premium subscribers unlock a full social layer on top of every game — from in-game voice chat to Discord-powered friend invites.',
+    premium: 'Premium',
+    comingSoon: 'Coming Soon',
+    discord: {
+      title: 'Discord Integration',
+      p: 'Link your Discord account and your game status automatically appears in your Discord profile. Send game invites directly to Discord friends, join servers dedicated to each card game, and get push notifications via Discord DM.',
+      points: ['🟣 Rich presence — live game status in your Discord profile','📨 One-click game invites to Discord contacts','🔔 Match alerts and friend activity via DM','🗄️ Official community servers per game'],
+    },
+    voice: {
+      title: 'In-Game Voice Chat',
+      p: 'Talk strategy with your partner in a two-vs-two match, trash-talk your opponent across the table in Bluff, or stay silent and keep them guessing. Crystal-clear audio, push-to-talk or open-mic, with per-player volume controls.',
+      points: ['🎙️ Push-to-talk or open-mic mode','🔇 Per-player mute & volume controls','🏠 Separate team channels in partnership games','🔒 Private tables include private voice rooms'],
+    },
+    boards: {
+      title: 'Leaderboards & Personal Stats',
+      p: 'Every game has its own ranking — see where you stand globally, regionally, and among friends. Your detailed stats dashboard tracks everything.',
+      points: ['🌍 Global, regional, and friends-only rankings per game','📈 Win/loss ratio, longest win streak, average game duration','📊 Favourite game, most-played opening, performance over time','🏅 Seasonal rankings that reset monthly'],
+    },
+    achievements: {
+      title: 'Achievements & Player Profile',
+      p: 'Over 150 achievements across all games. Unlock badges that display on your public profile. Earn XP to level up your Vanikar rank — from Novice Dealer to Grand Master.',
+      points: [`🥇 150+ achievements spanning all ${games.length} games`,'🎖️ Profile badges visible to opponents and friends','⭐ XP & level system: Novice → Expert → Grand Master','🔓 Exclusive avatar frames and card-back skins for high ranks'],
+    },
+    friends: {
+      title: 'Friend System',
+      desc: "Add friends by username, see who's online, and invite them to any table instantly.",
+      cta: 'Get Premium',
+    },
+  },
+  es: {
+    tag: '♣ Premium · Social y comunidad',
+    title: 'Jueguen juntos. Compitan. Conéctense.',
+    subtitle: 'Los suscriptores Premium desbloquean una capa social completa sobre cada juego — desde chat de voz en partida hasta invitaciones de amigos vía Discord.',
+    premium: 'Premium',
+    comingSoon: 'Próximamente',
+    discord: {
+      title: 'Integración con Discord',
+      p: 'Vincula tu cuenta de Discord y tu estado de juego aparece automáticamente en tu perfil. Envía invitaciones directamente a tus amigos de Discord, únete a servidores dedicados a cada juego y recibe notificaciones por DM.',
+      points: ['🟣 Presencia enriquecida — estado de juego en vivo en tu perfil de Discord','📨 Invitaciones a partidas con un clic a tus contactos de Discord','🔔 Alertas de partidas y actividad de amigos por DM','🗄️ Servidores oficiales de la comunidad por juego'],
+    },
+    voice: {
+      title: 'Chat de voz en partida',
+      p: 'Habla estrategia con tu pareja en un dos contra dos, provoca a tu rival al otro lado de la mesa en Bluff, o guarda silencio y déjalos adivinando. Audio nítido, pulsar-para-hablar o micrófono abierto, con volumen por jugador.',
+      points: ['🎙️ Modo pulsar-para-hablar o micrófono abierto','🔇 Silencio y volumen por jugador','🏠 Canales de equipo separados en juegos por parejas','🔒 Las mesas privadas incluyen salas de voz privadas'],
+    },
+    boards: {
+      title: 'Clasificaciones y estadísticas personales',
+      p: 'Cada juego tiene su propia clasificación — mira tu posición global, regional y entre amigos. Tu panel de estadísticas lo registra todo.',
+      points: ['🌍 Clasificaciones globales, regionales y de amigos por juego','📈 Proporción de victorias, mejor racha, duración media de partida','📊 Juego favorito, apertura más jugada, rendimiento en el tiempo','🏅 Temporadas que se reinician cada mes'],
+    },
+    achievements: {
+      title: 'Logros y perfil de jugador',
+      p: 'Más de 150 logros en todos los juegos. Desbloquea insignias que se muestran en tu perfil público. Gana XP para subir tu rango Vanikar — de Repartidor Novato a Gran Maestro.',
+      points: [`🥇 Más de 150 logros en los ${games.length} juegos`,'🎖️ Insignias de perfil visibles para rivales y amigos','⭐ Sistema de XP y niveles: Novato → Experto → Gran Maestro','🔓 Marcos de avatar y reversos de cartas exclusivos para rangos altos'],
+    },
+    friends: {
+      title: 'Sistema de amigos',
+      desc: 'Agrega amigos por nombre de usuario, mira quién está en línea e invítalos a cualquier mesa al instante.',
+      cta: 'Obtén Premium',
+    },
+  },
+  pt: {
+    tag: '♣ Premium · Social e comunidade',
+    title: 'Joguem juntos. Compitam. Conectem-se.',
+    subtitle: 'Assinantes Premium desbloqueiam uma camada social completa em cada jogo — do chat de voz em partida a convites de amigos via Discord.',
+    premium: 'Premium',
+    comingSoon: 'Em breve',
+    discord: {
+      title: 'Integração com Discord',
+      p: 'Vincule sua conta do Discord e seu status de jogo aparece automaticamente no seu perfil do Discord. Envie convites de partida diretamente aos amigos do Discord, entre em servidores dedicados a cada jogo de cartas e receba notificações por DM do Discord.',
+      points: ['🟣 Presença rica — status de jogo ao vivo no seu perfil do Discord','📨 Convites de partida com um clique para contatos do Discord','🔔 Alertas de partidas e atividade de amigos por DM','🗄️ Servidores oficiais da comunidade por jogo'],
+    },
+    voice: {
+      title: 'Chat de voz em partida',
+      p: 'Converse estratégia com seu parceiro numa partida de dois contra dois, provoque o adversário do outro lado da mesa no Bluff, ou fique em silêncio e deixe todos adivinhando. Áudio cristalino, apertar-para-falar ou microfone aberto, com controle de volume por jogador.',
+      points: ['🎙️ Modo apertar-para-falar ou microfone aberto','🔇 Mudo e volume por jogador','🏠 Canais de equipe separados em jogos de parceria','🔒 Mesas privadas incluem salas de voz privadas'],
+    },
+    boards: {
+      title: 'Rankings e estatísticas pessoais',
+      p: 'Cada jogo tem seu próprio ranking — veja sua posição global, regional e entre amigos. Seu painel de estatísticas detalhado registra tudo.',
+      points: ['🌍 Rankings globais, regionais e só de amigos por jogo','📈 Taxa de vitórias, maior sequência de vitórias, duração média das partidas','📊 Jogo favorito, abertura mais jogada, desempenho ao longo do tempo','🏅 Rankings sazonais que reiniciam todo mês'],
+    },
+    achievements: {
+      title: 'Conquistas e perfil de jogador',
+      p: 'Mais de 150 conquistas em todos os jogos. Desbloqueie insígnias exibidas no seu perfil público. Ganhe XP para subir seu rank Vanikar — de Carteador Novato a Grão-Mestre.',
+      points: [`🥇 Mais de 150 conquistas em todos os ${games.length} jogos`,'🎖️ Insígnias de perfil visíveis para adversários e amigos','⭐ Sistema de XP e níveis: Novato → Especialista → Grão-Mestre','🔓 Molduras de avatar e versos de cartas exclusivos para ranks altos'],
+    },
+    friends: {
+      title: 'Sistema de amigos',
+      desc: 'Adicione amigos pelo nome de usuário, veja quem está online e convide-os para qualquer mesa na hora.',
+      cta: 'Assine o Premium',
+    },
+  },
+  fr: {
+    tag: '♣ Premium · Social et communauté',
+    title: 'Jouez ensemble. Affrontez-vous. Restez connectés.',
+    subtitle: 'Les abonnés Premium débloquent une couche sociale complète sur chaque jeu — du chat vocal en partie aux invitations d’amis via Discord.',
+    premium: 'Premium',
+    comingSoon: 'Bientôt disponible',
+    discord: {
+      title: 'Intégration Discord',
+      p: 'Liez votre compte Discord et votre statut de jeu apparaît automatiquement sur votre profil Discord. Envoyez des invitations de partie directement à vos amis Discord, rejoignez des serveurs dédiés à chaque jeu de cartes et recevez des notifications par MP Discord.',
+      points: ['🟣 Rich presence — statut de jeu en direct sur votre profil Discord','📨 Invitations de partie en un clic à vos contacts Discord','🔔 Alertes de parties et activité des amis par MP','🗄️ Serveurs communautaires officiels pour chaque jeu'],
+    },
+    voice: {
+      title: 'Chat vocal en partie',
+      p: 'Parlez stratégie avec votre partenaire en deux contre deux, chambrez votre adversaire à travers la table au Bluff, ou restez silencieux et laissez-les deviner. Audio cristallin, appuyer-pour-parler ou micro ouvert, avec réglage du volume par joueur.',
+      points: ['🎙️ Mode appuyer-pour-parler ou micro ouvert','🔇 Sourdine et volume par joueur','🏠 Canaux d’équipe séparés dans les jeux en partenariat','🔒 Les tables privées incluent des salons vocaux privés'],
+    },
+    boards: {
+      title: 'Classements et statistiques personnelles',
+      p: 'Chaque jeu a son propre classement — voyez votre position mondiale, régionale et entre amis. Votre tableau de bord détaillé suit tout.',
+      points: ['🌍 Classements mondiaux, régionaux et entre amis par jeu','📈 Ratio victoires/défaites, meilleure série de victoires, durée moyenne des parties','📊 Jeu favori, ouverture la plus jouée, performance dans le temps','🏅 Classements saisonniers remis à zéro chaque mois'],
+    },
+    achievements: {
+      title: 'Succès et profil de joueur',
+      p: 'Plus de 150 succès dans tous les jeux. Débloquez des badges affichés sur votre profil public. Gagnez de l’XP pour faire monter votre rang Vanikar — de Donneur Novice à Grand Maître.',
+      points: [`🥇 Plus de 150 succès répartis sur les ${games.length} jeux`,'🎖️ Badges de profil visibles par vos adversaires et amis','⭐ Système d’XP et de niveaux : Novice → Expert → Grand Maître','🔓 Cadres d’avatar et dos de cartes exclusifs pour les hauts rangs'],
+    },
+    friends: {
+      title: 'Système d’amis',
+      desc: 'Ajoutez des amis par pseudo, voyez qui est en ligne et invitez-les à n’importe quelle table instantanément.',
+      cta: 'Passez à Premium',
+    },
+  },
+  de: {
+    tag: '♣ Premium · Social & Community',
+    title: 'Spielt zusammen. Messt euch. Bleibt verbunden.',
+    subtitle: 'Premium-Abonnenten schalten eine komplette Social-Ebene über jedem Spiel frei — vom Voice-Chat im Spiel bis zu Freundeseinladungen über Discord.',
+    premium: 'Premium',
+    comingSoon: 'Demnächst',
+    discord: {
+      title: 'Discord-Integration',
+      p: 'Verknüpfe dein Discord-Konto und dein Spielstatus erscheint automatisch in deinem Discord-Profil. Schicke Spieleinladungen direkt an Discord-Freunde, tritt Servern für jedes Kartenspiel bei und erhalte Push-Benachrichtigungen per Discord-DM.',
+      points: ['🟣 Rich Presence — Live-Spielstatus in deinem Discord-Profil','📨 Spieleinladungen mit einem Klick an Discord-Kontakte','🔔 Match-Benachrichtigungen und Freundesaktivität per DM','🗄️ Offizielle Community-Server für jedes Spiel'],
+    },
+    voice: {
+      title: 'Voice-Chat im Spiel',
+      p: 'Besprich die Strategie mit deinem Partner im Zwei-gegen-zwei-Match, stichle beim Bluff gegen deinen Gegner am Tisch oder bleib still und lass alle raten. Glasklarer Sound, Push-to-Talk oder offenes Mikro, mit Lautstärkeregelung pro Spieler.',
+      points: ['🎙️ Push-to-Talk oder offenes Mikro','🔇 Stummschalten & Lautstärke pro Spieler','🏠 Getrennte Team-Kanäle in Partnerspielen','🔒 Private Tische haben private Sprachräume'],
+    },
+    boards: {
+      title: 'Bestenlisten & persönliche Statistiken',
+      p: 'Jedes Spiel hat sein eigenes Ranking — sieh, wo du weltweit, regional und unter Freunden stehst. Dein detailliertes Statistik-Dashboard erfasst alles.',
+      points: ['🌍 Globale, regionale und Freunde-Rankings pro Spiel','📈 Sieg/Niederlage-Verhältnis, längste Siegesserie, durchschnittliche Spieldauer','📊 Lieblingsspiel, meistgespielte Eröffnung, Leistung im Zeitverlauf','🏅 Saison-Rankings mit monatlichem Reset'],
+    },
+    achievements: {
+      title: 'Erfolge & Spielerprofil',
+      p: 'Über 150 Erfolge in allen Spielen. Schalte Abzeichen frei, die auf deinem öffentlichen Profil erscheinen. Sammle XP und steig im Vanikar-Rang auf — vom Neuling-Geber bis zum Großmeister.',
+      points: [`🥇 150+ Erfolge in allen ${games.length} Spielen`,'🎖️ Profil-Abzeichen, sichtbar für Gegner und Freunde','⭐ XP- & Levelsystem: Neuling → Experte → Großmeister','🔓 Exklusive Avatar-Rahmen und Kartenrücken für hohe Ränge'],
+    },
+    friends: {
+      title: 'Freundesystem',
+      desc: 'Füge Freunde per Benutzername hinzu, sieh, wer online ist, und lade sie sofort an jeden Tisch ein.',
+      cta: 'Hol dir Premium',
+    },
+  },
+  hi: {
+    tag: '♣ Premium · सोशल और कम्युनिटी',
+    title: 'साथ खेलें। मुक़ाबला करें। जुड़ें।',
+    subtitle: 'Premium सब्सक्राइबर हर गेम पर एक पूरी सोशल परत अनलॉक करते हैं — इन-गेम वॉइस चैट से लेकर Discord के ज़रिए दोस्तों को निमंत्रण तक।',
+    premium: 'Premium',
+    comingSoon: 'जल्द आ रहा है',
+    discord: {
+      title: 'Discord इंटीग्रेशन',
+      p: 'अपना Discord अकाउंट लिंक करें और आपका गेम स्टेटस अपने आप आपकी Discord प्रोफ़ाइल में दिखेगा। Discord दोस्तों को सीधे गेम निमंत्रण भेजें, हर कार्ड गेम के लिए बने सर्वर जॉइन करें और Discord DM से पुश नोटिफ़िकेशन पाएँ।',
+      points: ['🟣 रिच प्रेज़ेंस — आपकी Discord प्रोफ़ाइल में लाइव गेम स्टेटस','📨 Discord संपर्कों को एक क्लिक में गेम निमंत्रण','🔔 DM से मैच अलर्ट और दोस्तों की गतिविधि','🗄️ हर गेम के लिए आधिकारिक कम्युनिटी सर्वर'],
+    },
+    voice: {
+      title: 'इन-गेम वॉइस चैट',
+      p: 'दो-बनाम-दो मैच में अपने साथी से रणनीति पर बात करें, Bluff में मेज़ के उस पार अपने प्रतिद्वंद्वी को छेड़ें, या चुप रहकर उन्हें अंदाज़ा लगाने दें। बिल्कुल साफ़ आवाज़, पुश-टू-टॉक या ओपन-माइक, हर खिलाड़ी के लिए अलग वॉल्यूम कंट्रोल के साथ।',
+      points: ['🎙️ पुश-टू-टॉक या ओपन-माइक मोड','🔇 हर खिलाड़ी के लिए म्यूट और वॉल्यूम कंट्रोल','🏠 पार्टनरशिप गेम्स में अलग टीम चैनल','🔒 प्राइवेट टेबल के साथ प्राइवेट वॉइस रूम'],
+    },
+    boards: {
+      title: 'लीडरबोर्ड और व्यक्तिगत आँकड़े',
+      p: 'हर गेम की अपनी रैंकिंग है — देखें कि आप दुनिया भर में, अपने क्षेत्र में और दोस्तों के बीच कहाँ खड़े हैं। आपका विस्तृत आँकड़ा डैशबोर्ड सब कुछ ट्रैक करता है।',
+      points: ['🌍 हर गेम के लिए ग्लोबल, क्षेत्रीय और सिर्फ़ दोस्तों की रैंकिंग','📈 जीत/हार अनुपात, सबसे लंबी जीत की लय, औसत गेम अवधि','📊 पसंदीदा गेम, सबसे ज़्यादा खेली गई शुरुआत, समय के साथ प्रदर्शन','🏅 सीज़नल रैंकिंग जो हर महीने रीसेट होती है'],
+    },
+    achievements: {
+      title: 'उपलब्धियाँ और खिलाड़ी प्रोफ़ाइल',
+      p: 'सभी गेम्स में 150 से ज़्यादा उपलब्धियाँ। ऐसे बैज अनलॉक करें जो आपकी सार्वजनिक प्रोफ़ाइल पर दिखते हैं। XP कमाकर अपनी Vanikar रैंक बढ़ाएँ — नौसिखिया डीलर से ग्रैंड मास्टर तक।',
+      points: [`🥇 सभी ${games.length} गेम्स में 150+ उपलब्धियाँ`,'🎖️ प्रोफ़ाइल बैज जो प्रतिद्वंद्वियों और दोस्तों को दिखते हैं','⭐ XP और लेवल सिस्टम: नौसिखिया → विशेषज्ञ → ग्रैंड मास्टर','🔓 ऊँची रैंक के लिए एक्सक्लूसिव अवतार फ़्रेम और कार्ड-बैक स्किन'],
+    },
+    friends: {
+      title: 'दोस्त सिस्टम',
+      desc: 'यूज़रनेम से दोस्त जोड़ें, देखें कौन ऑनलाइन है, और उन्हें तुरंत किसी भी टेबल पर आमंत्रित करें।',
+      cta: 'Premium लें',
+    },
+  },
+}[lang];
 ---
 <section class="social" id="social">
   <div class="container">
 
     <div class="section-header">
-      <div class="section-tag">♣ Premium · Social &amp; Community</div>
-      <h2 class="section-title">Play Together. Compete. Connect.</h2>
-      <p class="section-subtitle">
-        Premium subscribers unlock a full social layer on top of every game —
-        from in-game voice chat to Discord-powered friend invites.
-      </p>
+      <div class="section-tag">{copy.tag}</div>
+      <h2 class="section-title">{copy.title}</h2>
+      <p class="section-subtitle">{copy.subtitle}</p>
     </div>
 
     <!-- Feature rows -->
@@ -36,18 +231,11 @@ import { games } from '../data/games';
           </div>
         </div>
         <div class="sf-row-copy">
-          <div class="sf-row-badge premium-badge">Premium</div>
-          <h3>Discord Integration</h3>
-          <p>
-            Link your Discord account and your game status automatically appears in your
-            Discord profile. Send game invites directly to Discord friends, join servers
-            dedicated to each card game, and get push notifications via Discord DM.
-          </p>
+          <div class="sf-row-badge premium-badge">{copy.premium}</div>
+          <h3>{copy.discord.title}</h3>
+          <p>{copy.discord.p}</p>
           <ul class="sf-list">
-            <li>🟣 Rich presence — live game status in your Discord profile</li>
-            <li>📨 One-click game invites to Discord contacts</li>
-            <li>🔔 Match alerts and friend activity via DM</li>
-            <li>🗄️ Official community servers per game</li>
+            {copy.discord.points.map(p => <li>{p}</li>)}
           </ul>
         </div>
       </div>
@@ -55,18 +243,11 @@ import { games } from '../data/games';
       <!-- Voice Chat -->
       <div class="sf-row">
         <div class="sf-row-copy">
-          <div class="sf-row-badge premium-badge">Premium</div>
-          <h3>In-Game Voice Chat</h3>
-          <p>
-            Talk strategy with your partner in a two-vs-two match, trash-talk your opponent
-            across the table in Bluff, or stay silent and keep them guessing. Crystal-clear
-            audio, push-to-talk or open-mic, with per-player volume controls.
-          </p>
+          <div class="sf-row-badge premium-badge">{copy.premium}</div>
+          <h3>{copy.voice.title}</h3>
+          <p>{copy.voice.p}</p>
           <ul class="sf-list">
-            <li>🎙️ Push-to-talk or open-mic mode</li>
-            <li>🔇 Per-player mute &amp; volume controls</li>
-            <li>🏠 Separate team channels in partnership games</li>
-            <li>🔒 Private tables include private voice rooms</li>
+            {copy.voice.points.map(p => <li>{p}</li>)}
           </ul>
         </div>
         <div class="sf-row-visual voice-visual" aria-hidden="true">
@@ -120,17 +301,11 @@ import { games } from '../data/games';
           </div>
         </div>
         <div class="sf-row-copy">
-          <div class="sf-row-badge premium-badge">Premium</div>
-          <h3>Leaderboards &amp; Personal Stats</h3>
-          <p>
-            Every game has its own ranking — see where you stand globally, regionally,
-            and among friends. Your detailed stats dashboard tracks everything.
-          </p>
+          <div class="sf-row-badge premium-badge">{copy.premium}</div>
+          <h3>{copy.boards.title}</h3>
+          <p>{copy.boards.p}</p>
           <ul class="sf-list">
-            <li>🌍 Global, regional, and friends-only rankings per game</li>
-            <li>📈 Win/loss ratio, longest win streak, average game duration</li>
-            <li>📊 Favourite game, most-played opening, performance over time</li>
-            <li>🏅 Seasonal rankings that reset monthly</li>
+            {copy.boards.points.map(p => <li>{p}</li>)}
           </ul>
         </div>
       </div>
@@ -138,18 +313,14 @@ import { games } from '../data/games';
       <!-- Achievements -->
       <div class="sf-row">
         <div class="sf-row-copy">
-          <div class="sf-row-badge premium-badge">Premium</div>
-          <h3>Achievements &amp; Player Profile</h3>
-          <p>
-            Over 150 achievements across all games. Unlock badges that display on your
-            public profile. Earn XP to level up your Vanikar rank — from Novice Dealer
-            to Grand Master.
-          </p>
+          <div class="sf-badges">
+            <div class="sf-row-badge premium-badge">{copy.premium}</div>
+            <div class="sf-row-badge soon-badge">{copy.comingSoon}</div>
+          </div>
+          <h3>{copy.achievements.title}</h3>
+          <p>{copy.achievements.p}</p>
           <ul class="sf-list">
-            <li>🥇 150+ achievements spanning all {games.length} games</li>
-            <li>🎖️ Profile badges visible to opponents and friends</li>
-            <li>⭐ XP &amp; level system: Novice → Expert → Grand Master</li>
-            <li>🔓 Exclusive avatar frames and card-back skins for high ranks</li>
+            {copy.achievements.points.map(p => <li>{p}</li>)}
           </ul>
         </div>
         <div class="sf-row-visual ach-visual" aria-hidden="true">
@@ -179,10 +350,10 @@ import { games } from '../data/games';
       <div class="fb-inner">
         <span class="fb-icon">👥</span>
         <div>
-          <strong>Friend System</strong>
-          <span>Add friends by username, see who's online, and invite them to any table instantly.</span>
+          <strong>{copy.friends.title}</strong>
+          <span>{copy.friends.desc}</span>
         </div>
-        <a href="/pricing" class="btn btn-primary fb-cta">Get Premium</a>
+        <a href={href('/pricing')} class="btn btn-primary fb-cta">{copy.friends.cta}</a>
       </div>
     </div>
 
@@ -204,6 +375,12 @@ import { games } from '../data/games';
   .sf-row--alt .sf-row-visual { order: -1; }
 
   .sf-row-badge { display: inline-block; margin-bottom: .6rem; }
+  .sf-badges { display: flex; gap: .5rem; flex-wrap: wrap; }
+  .soon-badge {
+    background: rgba(120,80,200,.18); color: #b490f5; border: 1px solid rgba(180,144,245,.3);
+    border-radius: var(--radius-full); padding: .2rem .65rem;
+    font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .12em;
+  }
   .premium-badge {
     background: var(--gold-subtle); color: var(--gold); border: 1px solid var(--gold-border);
     border-radius: var(--radius-full); padding: .2rem .65rem;

@@ -1,0 +1,167 @@
+---
+import { getLocale, localizedHref } from '../i18n';
+
+const lang = getLocale(Astro.currentLocale);
+const href = (p: string) => localizedHref(p, lang);
+const copy = {
+  en: {
+    tag: '♣ Ways to Play',
+    ariaLabel: 'Ways to play',
+    soonLabel: 'Coming Soon',
+    ways: [
+      { icon: '🌐', title: 'Online Card Games',        desc: 'Live tables, real opponents',   href: '/online-card-games' },
+      { icon: '⚔️', title: 'Multiplayer Card Games',   desc: 'Quick and ranked matches',      href: '/multiplayer-card-games', soon: true },
+      { icon: '👥', title: 'Card Games with Friends',  desc: 'Private tables, invite-only',   href: '/card-games-with-friends' },
+      { icon: '🤖', title: 'Card Games vs Computer',   desc: 'Smart AI, every difficulty',    href: '/card-games-against-computer' },
+      { icon: '✈️', title: 'Offline Card Games',       desc: 'No connection needed',          href: '/offline-card-games' },
+      { icon: '♠',  title: 'Classic Card Games',       desc: 'Timeless favourites, polished', href: '/classic-card-games' },
+    ],
+  },
+  es: {
+    tag: '♣ Formas de jugar',
+    ariaLabel: 'Formas de jugar',
+    soonLabel: 'Próximamente',
+    ways: [
+      { icon: '🌐', title: 'Juegos de cartas en línea',       desc: 'Mesas en vivo, oponentes reales',   href: '/online-card-games' },
+      { icon: '⚔️', title: 'Juegos de cartas multijugador',   desc: 'Partidas rápidas y clasificatorias', href: '/multiplayer-card-games', soon: true },
+      { icon: '👥', title: 'Juegos de cartas con amigos',     desc: 'Mesas privadas, solo por invitación', href: '/card-games-with-friends' },
+      { icon: '🤖', title: 'Cartas contra la computadora',    desc: 'IA inteligente, todos los niveles', href: '/card-games-against-computer' },
+      { icon: '✈️', title: 'Juegos de cartas sin conexión',   desc: 'Sin necesidad de internet',         href: '/offline-card-games' },
+      { icon: '♠',  title: 'Juegos de cartas clásicos',       desc: 'Favoritos de siempre, pulidos',     href: '/classic-card-games' },
+    ],
+  },
+  pt: {
+    tag: '♣ Formas de jogar',
+    ariaLabel: 'Formas de jogar',
+    soonLabel: 'Em breve',
+    ways: [
+      { icon: '🌐', title: 'Jogos de cartas online',            desc: 'Mesas ao vivo, oponentes reais',      href: '/online-card-games' },
+      { icon: '⚔️', title: 'Jogos de cartas multijogador',      desc: 'Partidas rápidas e ranqueadas',       href: '/multiplayer-card-games', soon: true },
+      { icon: '👥', title: 'Jogos de cartas com amigos',        desc: 'Mesas privadas, só com convite',      href: '/card-games-with-friends' },
+      { icon: '🤖', title: 'Jogos de cartas contra o computador', desc: 'IA inteligente, todos os níveis',   href: '/card-games-against-computer' },
+      { icon: '✈️', title: 'Jogos de cartas offline',           desc: 'Sem precisar de internet',            href: '/offline-card-games' },
+      { icon: '♠',  title: 'Jogos de cartas clássicos',         desc: 'Favoritos de sempre, caprichados',    href: '/classic-card-games' },
+    ],
+  },
+  fr: {
+    tag: '♣ Façons de jouer',
+    ariaLabel: 'Façons de jouer',
+    soonLabel: 'Bientôt disponible',
+    ways: [
+      { icon: '🌐', title: 'Jeux de cartes en ligne',           desc: 'Tables en direct, vrais adversaires', href: '/online-card-games' },
+      { icon: '⚔️', title: 'Jeux de cartes multijoueur',        desc: 'Parties rapides et classées',         href: '/multiplayer-card-games', soon: true },
+      { icon: '👥', title: 'Jeux de cartes entre amis',         desc: 'Tables privées, sur invitation',      href: '/card-games-with-friends' },
+      { icon: '🤖', title: 'Jeux de cartes contre l’ordinateur', desc: 'IA maligne, tous les niveaux',       href: '/card-games-against-computer' },
+      { icon: '✈️', title: 'Jeux de cartes hors ligne',         desc: 'Aucune connexion requise',            href: '/offline-card-games' },
+      { icon: '♠',  title: 'Jeux de cartes classiques',         desc: 'Grands classiques, soignés',          href: '/classic-card-games' },
+    ],
+  },
+  de: {
+    tag: '♣ So kannst du spielen',
+    ariaLabel: 'Spielmöglichkeiten',
+    soonLabel: 'Demnächst',
+    ways: [
+      { icon: '🌐', title: 'Online-Kartenspiele',               desc: 'Live-Tische, echte Gegner',           href: '/online-card-games' },
+      { icon: '⚔️', title: 'Multiplayer-Kartenspiele',          desc: 'Schnelle und Ranglisten-Partien',     href: '/multiplayer-card-games', soon: true },
+      { icon: '👥', title: 'Kartenspiele mit Freunden',         desc: 'Private Tische, nur auf Einladung',   href: '/card-games-with-friends' },
+      { icon: '🤖', title: 'Kartenspiele gegen den Computer',   desc: 'Clevere KI, jeder Schwierigkeitsgrad', href: '/card-games-against-computer' },
+      { icon: '✈️', title: 'Offline-Kartenspiele',              desc: 'Keine Verbindung nötig',              href: '/offline-card-games' },
+      { icon: '♠',  title: 'Klassische Kartenspiele',           desc: 'Zeitlose Favoriten, fein poliert',    href: '/classic-card-games' },
+    ],
+  },
+  hi: {
+    tag: '♣ खेलने के तरीके',
+    ariaLabel: 'खेलने के तरीके',
+    soonLabel: 'जल्द आ रहा है',
+    ways: [
+      { icon: '🌐', title: 'ऑनलाइन ताश के गेम',                desc: 'लाइव टेबल, असली प्रतिद्वंद्वी',          href: '/online-card-games' },
+      { icon: '⚔️', title: 'मल्टीप्लेयर ताश के गेम',             desc: 'तेज़ और रैंक वाले मुकाबले',             href: '/multiplayer-card-games', soon: true },
+      { icon: '👥', title: 'दोस्तों के साथ ताश के गेम',           desc: 'प्राइवेट टेबल, सिर्फ़ निमंत्रण से',        href: '/card-games-with-friends' },
+      { icon: '🤖', title: 'कंप्यूटर के खिलाफ़ ताश के गेम',        desc: 'स्मार्ट AI, हर कठिनाई स्तर',            href: '/card-games-against-computer' },
+      { icon: '✈️', title: 'ऑफ़लाइन ताश के गेम',                desc: 'इंटरनेट की ज़रूरत नहीं',                href: '/offline-card-games' },
+      { icon: '♠',  title: 'क्लासिक ताश के गेम',                desc: 'सदाबहार पसंदीदा, निखरे हुए',            href: '/classic-card-games' },
+    ],
+  },
+}[lang];
+const ways = copy.ways;
+---
+<section class="ways" aria-label={copy.ariaLabel}>
+  <div class="container">
+    <div class="ways-header">
+      <span class="ways-tag">{copy.tag}</span>
+    </div>
+    <div class="ways-grid">
+      {ways.map(w => (
+        <a class="way-link" href={href(w.href)}>
+          <span class="way-icon">{w.icon}</span>
+          <span class="way-text">
+            <span class="way-title">
+              {w.title}
+              {w.soon && <span class="way-soon">{copy.soonLabel}</span>}
+            </span>
+            <span class="way-desc">{w.desc}</span>
+          </span>
+          <span class="way-arrow">›</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .ways {
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 2.25rem 0;
+  }
+  .ways-header { text-align: center; margin-bottom: 1.5rem; }
+  .ways-tag {
+    font-size: .8rem; font-weight: 700; letter-spacing: .18em;
+    text-transform: uppercase; color: var(--gold);
+  }
+  .ways-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: .9rem;
+  }
+  .way-link {
+    display: flex; align-items: center; gap: .9rem;
+    background: var(--bg-feature); border: 1px solid var(--gold-border);
+    border-radius: var(--radius-lg); padding: 1rem 1.15rem;
+    text-decoration: none;
+    transition: all var(--transition);
+  }
+  .way-link:hover {
+    border-color: var(--gold); background: var(--bg-card-elevated);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md), 0 4px 18px rgba(201,162,39,.22);
+  }
+  .way-icon {
+    flex-shrink: 0; width: 42px; height: 42px;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--gold-subtle); border: 1px solid var(--gold-border);
+    border-radius: var(--radius-md);
+    font-size: 1.15rem; line-height: 1;
+  }
+  .way-text  { display: flex; flex-direction: column; min-width: 0; }
+  .way-title {
+    font-size: .92rem; font-weight: 700; color: var(--text-primary);
+    line-height: 1.3;
+  }
+  .way-desc { font-size: .75rem; color: var(--text-muted); margin-top: .15rem; }
+  .way-soon {
+    display: inline-block; margin-left: .4rem; vertical-align: middle;
+    padding: .1rem .5rem; border-radius: var(--radius-full);
+    font-size: .58rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+    color: #b490f5; border: 1px solid rgba(180,144,245,.35);
+    background: rgba(120,80,200,.12);
+  }
+  .way-arrow {
+    margin-left: auto; color: var(--text-dim); font-size: 1.3rem;
+    transition: transform var(--transition), color var(--transition);
+  }
+  .way-link:hover .way-arrow { transform: translateX(4px); color: var(--gold); }
+
+  @media (max-width: 900px) { .ways-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .ways-grid { grid-template-columns: 1fr; } }
+</style>

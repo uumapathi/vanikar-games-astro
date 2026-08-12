@@ -1,98 +1,293 @@
 ---
 import { availableGames, comingSoonGames } from '../data/games';
+import { getLocale, localizedHref } from '../i18n';
 const availCount = availableGames.length;
 const csCount    = comingSoonGames.length;
 
+const lang = getLocale(Astro.currentLocale);
+const href = (p: string) => localizedHref(p, lang);
+
 /* One list, rendered in both cards — the trial IS premium, for 14 days */
-const features = [
-  { text: 'No ads — ever' },
-  { text: `All ${availCount} current games` },
-  { text: `Early access to ${csCount} coming soon games` },
-  { text: 'New games as released' },
-  { text: 'Online multiplayer & ranked play' },
-  { text: 'CPU / offline practice' },
-  { text: 'Hints & tips' },
-  { text: 'Clubs & Tournaments' },
-  { text: '🎙️ In-game voice chat',            social: true },
-  { text: '🟣 Discord integration',            social: true },
-  { text: '🏆 Global leaderboards',            social: true },
-  { text: '📊 Personal stats & analytics',     social: true },
-  { text: '🥇 Achievements & player profile',  social: true },
-  { text: '👥 Friend system & invites',        social: true },
-  { text: 'Priority support' },
-];
+const featuresByLang = {
+  en: [
+    { text: 'No ads — ever' },
+    { text: `All ${availCount} current games` },
+    { text: `Early access to ${csCount} coming soon games` },
+    { text: 'New games as released' },
+    { text: 'Online multiplayer & ranked play' },
+    { text: 'CPU / offline practice' },
+    { text: 'Hints & tips' },
+    { text: 'Clubs & Tournaments' },
+    { text: '🎙️ In-game voice chat',            social: true },
+    { text: '🟣 Discord integration',            social: true },
+    { text: '🏆 Global leaderboards',            social: true },
+    { text: '📊 Personal stats & analytics',     social: true },
+    { text: '🥇 Achievements & player profile',  social: true },
+    { text: '👥 Friend system & invites',        social: true },
+    { text: 'Priority support' },
+  ],
+  es: [
+    { text: 'Sin anuncios — nunca' },
+    { text: `Los ${availCount} juegos actuales` },
+    { text: `Acceso anticipado a ${csCount} juegos próximos` },
+    { text: 'Nuevos juegos al lanzarse' },
+    { text: 'Multijugador en línea y partidas clasificatorias' },
+    { text: 'Práctica contra la IA / sin conexión' },
+    { text: 'Pistas y consejos' },
+    { text: 'Clubes y Torneos' },
+    { text: '🎙️ Chat de voz en partida',            social: true },
+    { text: '🟣 Integración con Discord',            social: true },
+    { text: '🏆 Clasificaciones globales',           social: true },
+    { text: '📊 Estadísticas y análisis personales', social: true },
+    { text: '🥇 Logros y perfil de jugador',         social: true },
+    { text: '👥 Sistema de amigos e invitaciones',   social: true },
+    { text: 'Soporte prioritario' },
+  ],
+  pt: [
+    { text: 'Sem anúncios — nunca' },
+    { text: `Todos os ${availCount} jogos atuais` },
+    { text: `Acesso antecipado a ${csCount} jogos em breve` },
+    { text: 'Novos jogos assim que lançados' },
+    { text: 'Multijogador online e partidas ranqueadas' },
+    { text: 'Prática contra a CPU / offline' },
+    { text: 'Dicas e sugestões' },
+    { text: 'Clubes e Torneios' },
+    { text: '🎙️ Chat de voz em partida',              social: true },
+    { text: '🟣 Integração com Discord',               social: true },
+    { text: '🏆 Rankings globais',                     social: true },
+    { text: '📊 Estatísticas e análises pessoais',     social: true },
+    { text: '🥇 Conquistas e perfil de jogador',       social: true },
+    { text: '👥 Sistema de amigos e convites',         social: true },
+    { text: 'Suporte prioritário' },
+  ],
+  fr: [
+    { text: 'Aucune pub — jamais' },
+    { text: `Les ${availCount} jeux actuels` },
+    { text: `Accès anticipé à ${csCount} jeux à venir` },
+    { text: 'Nouveaux jeux dès leur sortie' },
+    { text: 'Multijoueur en ligne et parties classées' },
+    { text: 'Entraînement contre l’IA / hors ligne' },
+    { text: 'Indices et conseils' },
+    { text: 'Clubs et Tournois' },
+    { text: '🎙️ Chat vocal en partie',                    social: true },
+    { text: '🟣 Intégration Discord',                      social: true },
+    { text: '🏆 Classements mondiaux',                     social: true },
+    { text: '📊 Statistiques et analyses personnelles',    social: true },
+    { text: '🥇 Succès et profil de joueur',               social: true },
+    { text: '👥 Système d’amis et invitations',            social: true },
+    { text: 'Support prioritaire' },
+  ],
+  de: [
+    { text: 'Keine Werbung — niemals' },
+    { text: `Alle ${availCount} aktuellen Spiele` },
+    { text: `Früher Zugang zu ${csCount} kommenden Spielen` },
+    { text: 'Neue Spiele direkt zum Release' },
+    { text: 'Online-Multiplayer & Ranglistenspiele' },
+    { text: 'CPU-/Offline-Training' },
+    { text: 'Hinweise & Tipps' },
+    { text: 'Clubs & Turniere' },
+    { text: '🎙️ Voice-Chat im Spiel',                  social: true },
+    { text: '🟣 Discord-Integration',                   social: true },
+    { text: '🏆 Globale Bestenlisten',                  social: true },
+    { text: '📊 Persönliche Statistiken & Analysen',    social: true },
+    { text: '🥇 Erfolge & Spielerprofil',               social: true },
+    { text: '👥 Freundesystem & Einladungen',           social: true },
+    { text: 'Priorisierter Support' },
+  ],
+  hi: [
+    { text: 'कोई विज्ञापन नहीं — कभी नहीं' },
+    { text: `सभी ${availCount} मौजूदा गेम्स` },
+    { text: `${csCount} आने वाले गेम्स का अर्ली एक्सेस` },
+    { text: 'नए गेम्स रिलीज़ होते ही' },
+    { text: 'ऑनलाइन मल्टीप्लेयर और रैंक्ड प्ले' },
+    { text: 'CPU / ऑफ़लाइन अभ्यास' },
+    { text: 'हिंट और टिप्स' },
+    { text: 'क्लब और टूर्नामेंट' },
+    { text: '🎙️ इन-गेम वॉइस चैट',                       social: true },
+    { text: '🟣 Discord इंटीग्रेशन',                     social: true },
+    { text: '🏆 ग्लोबल लीडरबोर्ड',                       social: true },
+    { text: '📊 व्यक्तिगत आँकड़े और विश्लेषण',            social: true },
+    { text: '🥇 उपलब्धियाँ और खिलाड़ी प्रोफ़ाइल',          social: true },
+    { text: '👥 दोस्त सिस्टम और निमंत्रण',                social: true },
+    { text: 'प्राथमिकता सपोर्ट' },
+  ],
+};
+const features = featuresByLang[lang];
+
+const copy = {
+  en: {
+    tag: '♦ Simple, Fair Pricing', title: 'Start Free. Stay Free or Go Premium.',
+    subtitle: 'The trial is the full premium experience — every game and feature unlocked for 2 weeks. No credit card required. And no ads, in any version — free or premium.',
+    trialBadge: '2-Week Trial', free: 'Free', trialPeriod: 'for 14 days',
+    trialDesc: 'Everything in Premium, unlocked. Just download and play.',
+    trialCta: 'Start Free Trial', trialFine: 'No credit card · No account required to play',
+    freeBadge: 'After Trial', freePeriod: 'forever',
+    freeDesc: 'Pick any 5 games to keep — offline & CPU play, no expiry.',
+    freeItems: ['✓ No ads — ever','✓ Choose any 5 games','✓ Offline / CPU play'],
+    freeNoItems: ['✗ Online multiplayer','✗ Hints','✗ All other games','✗ Clubs & Tournaments'],
+    freeCta: 'See All Games', freeFine: 'Upgrade to Premium any time to unlock every game and feature',
+    premiumBadge: 'Most Popular', premiumName: 'Premium',
+    premiumPeriod: 'Coming Soon — pricing announced at launch',
+    premiumDesc: 'Everything, forever. New games for subscribers first.',
+    premiumCta: 'Get Premium', premiumFine: 'Cancel anytime · Billed via App Store / Google Play',
+    notePremium: 'premium games', notePick: '— pick any 5 to keep free after the trial, or subscribe for everything.',
+    noteSoon: 'coming soon', noteEarly: '— premium subscribers get early access.', noteAll: 'See all games →',
+  },
+  es: {
+    tag: '♦ Precios simples y justos', title: 'Empieza gratis. Sigue gratis o pasa a Premium.',
+    subtitle: 'La prueba es la experiencia premium completa — todos los juegos y funciones desbloqueados por 2 semanas. Sin tarjeta de crédito. Y sin anuncios, en ninguna versión — gratis o premium.',
+    trialBadge: 'Prueba de 2 semanas', free: 'Gratis', trialPeriod: 'por 14 días',
+    trialDesc: 'Todo lo de Premium, desbloqueado. Solo descarga y juega.',
+    trialCta: 'Comienza la prueba gratis', trialFine: 'Sin tarjeta de crédito · Sin cuenta para jugar',
+    freeBadge: 'Después de la prueba', freePeriod: 'para siempre',
+    freeDesc: 'Elige 5 juegos para conservar — modo IA y sin conexión, sin vencimiento.',
+    freeItems: ['✓ Sin anuncios — nunca','✓ Elige 5 juegos','✓ Juego sin conexión / contra la IA'],
+    freeNoItems: ['✗ Multijugador en línea','✗ Pistas','✗ Los demás juegos','✗ Clubes y Torneos'],
+    freeCta: 'Ver todos los juegos', freeFine: 'Pasa a Premium cuando quieras para desbloquear todos los juegos y funciones',
+    premiumBadge: 'El más popular', premiumName: 'Premium',
+    premiumPeriod: 'Próximamente — precio anunciado en el lanzamiento',
+    premiumDesc: 'Todo, para siempre. Los nuevos juegos llegan primero a los suscriptores.',
+    premiumCta: 'Obtén Premium', premiumFine: 'Cancela cuando quieras · Facturado vía App Store / Google Play',
+    notePremium: 'juegos premium', notePick: '— elige 5 para conservar gratis tras la prueba, o suscríbete para tenerlo todo.',
+    noteSoon: 'próximamente', noteEarly: '— los suscriptores premium acceden primero.', noteAll: 'Ver todos los juegos →',
+  },
+  pt: {
+    tag: '♦ Preços simples e justos', title: 'Comece grátis. Continue grátis ou vá de Premium.',
+    subtitle: 'O teste é a experiência premium completa — todos os jogos e recursos desbloqueados por 2 semanas. Sem cartão de crédito. E sem anúncios, em nenhuma versão — grátis ou premium.',
+    trialBadge: 'Teste de 2 semanas', free: 'Grátis', trialPeriod: 'por 14 dias',
+    trialDesc: 'Tudo do Premium, desbloqueado. É só baixar e jogar.',
+    trialCta: 'Começar o teste grátis', trialFine: 'Sem cartão de crédito · Sem conta para jogar',
+    freeBadge: 'Após o teste', freePeriod: 'para sempre',
+    freeDesc: 'Escolha 5 jogos para manter — modo offline e contra a CPU, sem prazo de validade.',
+    freeItems: ['✓ Sem anúncios — nunca','✓ Escolha 5 jogos','✓ Jogo offline / contra a CPU'],
+    freeNoItems: ['✗ Multijogador online','✗ Dicas','✗ Todos os outros jogos','✗ Clubes e Torneios'],
+    freeCta: 'Ver todos os jogos', freeFine: 'Passe para o Premium quando quiser para desbloquear todos os jogos e recursos',
+    premiumBadge: 'Mais popular', premiumName: 'Premium',
+    premiumPeriod: 'Em breve — preço anunciado no lançamento',
+    premiumDesc: 'Tudo, para sempre. Jogos novos primeiro para assinantes.',
+    premiumCta: 'Assine o Premium', premiumFine: 'Cancele quando quiser · Cobrado via App Store / Google Play',
+    notePremium: 'jogos premium', notePick: '— escolha 5 para manter grátis após o teste, ou assine para ter tudo.',
+    noteSoon: 'em breve', noteEarly: '— assinantes premium têm acesso antecipado.', noteAll: 'Ver todos os jogos →',
+  },
+  fr: {
+    tag: '♦ Des prix simples et justes', title: 'Commencez gratuitement. Restez gratuit ou passez à Premium.',
+    subtitle: 'L’essai, c’est l’expérience premium complète — tous les jeux et fonctionnalités débloqués pendant 2 semaines. Sans carte bancaire. Et sans pub, dans aucune version — gratuite ou premium.',
+    trialBadge: 'Essai de 2 semaines', free: 'Gratuit', trialPeriod: 'pendant 14 jours',
+    trialDesc: 'Tout Premium, débloqué. Téléchargez et jouez, c’est tout.',
+    trialCta: 'Commencer l’essai gratuit', trialFine: 'Sans carte bancaire · Aucun compte requis pour jouer',
+    freeBadge: 'Après l’essai', freePeriod: 'pour toujours',
+    freeDesc: 'Choisissez 5 jeux à garder — mode hors ligne et contre l’IA, sans expiration.',
+    freeItems: ['✓ Aucune pub — jamais','✓ Choisissez 5 jeux','✓ Jeu hors ligne / contre l’IA'],
+    freeNoItems: ['✗ Multijoueur en ligne','✗ Indices','✗ Tous les autres jeux','✗ Clubs et Tournois'],
+    freeCta: 'Voir tous les jeux', freeFine: 'Passez à Premium à tout moment pour débloquer tous les jeux et fonctionnalités',
+    premiumBadge: 'Le plus populaire', premiumName: 'Premium',
+    premiumPeriod: 'Bientôt disponible — tarif annoncé au lancement',
+    premiumDesc: 'Tout, pour toujours. Les nouveaux jeux arrivent d’abord chez les abonnés.',
+    premiumCta: 'Passez à Premium', premiumFine: 'Annulable à tout moment · Facturé via l’App Store / Google Play',
+    notePremium: 'jeux premium', notePick: '— choisissez-en 5 à garder gratuitement après l’essai, ou abonnez-vous pour tout avoir.',
+    noteSoon: 'bientôt disponibles', noteEarly: '— les abonnés premium y accèdent en avant-première.', noteAll: 'Voir tous les jeux →',
+  },
+  de: {
+    tag: '♦ Einfache, faire Preise', title: 'Starte kostenlos. Bleib kostenlos oder hol dir Premium.',
+    subtitle: 'Die Testphase ist das volle Premium-Erlebnis — jedes Spiel und jede Funktion für 2 Wochen freigeschaltet. Keine Kreditkarte nötig. Und keine Werbung, in keiner Version — kostenlos oder Premium.',
+    trialBadge: '2 Wochen testen', free: 'Kostenlos', trialPeriod: 'für 14 Tage',
+    trialDesc: 'Alles aus Premium, freigeschaltet. Einfach herunterladen und spielen.',
+    trialCta: 'Kostenlos testen', trialFine: 'Keine Kreditkarte · Kein Konto zum Spielen nötig',
+    freeBadge: 'Nach der Testphase', freePeriod: 'für immer',
+    freeDesc: 'Wähl 5 beliebige Spiele zum Behalten — Offline- & CPU-Modus, ohne Ablauf.',
+    freeItems: ['✓ Keine Werbung — niemals','✓ Wähl 5 beliebige Spiele','✓ Offline-/CPU-Modus'],
+    freeNoItems: ['✗ Online-Multiplayer','✗ Hinweise','✗ Alle anderen Spiele','✗ Clubs & Turniere'],
+    freeCta: 'Alle Spiele ansehen', freeFine: 'Wechsle jederzeit zu Premium und schalte jedes Spiel und jede Funktion frei',
+    premiumBadge: 'Am beliebtesten', premiumName: 'Premium',
+    premiumPeriod: 'Demnächst — Preis wird zum Launch bekannt gegeben',
+    premiumDesc: 'Alles, für immer. Neue Spiele zuerst für Abonnenten.',
+    premiumCta: 'Hol dir Premium', premiumFine: 'Jederzeit kündbar · Abrechnung über App Store / Google Play',
+    notePremium: 'Premium-Spiele', notePick: '— wähl 5 davon, die nach der Testphase kostenlos bleiben, oder abonniere für alles.',
+    noteSoon: 'demnächst', noteEarly: '— Premium-Abonnenten erhalten frühen Zugang.', noteAll: 'Alle Spiele ansehen →',
+  },
+  hi: {
+    tag: '♦ सरल, उचित क़ीमतें', title: 'मुफ़्त शुरू करें। मुफ़्त रहें या Premium लें।',
+    subtitle: 'ट्रायल पूरा प्रीमियम अनुभव है — हर गेम और फ़ीचर 2 हफ़्तों के लिए अनलॉक। क्रेडिट कार्ड की ज़रूरत नहीं। और कोई विज्ञापन नहीं, किसी भी वर्ज़न में — मुफ़्त हो या प्रीमियम।',
+    trialBadge: '2 हफ़्ते का ट्रायल', free: 'मुफ़्त', trialPeriod: '14 दिनों के लिए',
+    trialDesc: 'Premium का सब कुछ, अनलॉक। बस डाउनलोड करें और खेलें।',
+    trialCta: 'मुफ़्त ट्रायल शुरू करें', trialFine: 'क्रेडिट कार्ड नहीं · खेलने के लिए अकाउंट ज़रूरी नहीं',
+    freeBadge: 'ट्रायल के बाद', freePeriod: 'हमेशा के लिए',
+    freeDesc: 'कोई भी 5 गेम रखने के लिए चुनें — ऑफ़लाइन और CPU प्ले, कभी एक्सपायर नहीं।',
+    freeItems: ['✓ कोई विज्ञापन नहीं — कभी नहीं','✓ कोई भी 5 गेम चुनें','✓ ऑफ़लाइन / CPU प्ले'],
+    freeNoItems: ['✗ ऑनलाइन मल्टीप्लेयर','✗ हिंट','✗ बाक़ी सभी गेम्स','✗ क्लब और टूर्नामेंट'],
+    freeCta: 'सभी गेम्स देखें', freeFine: 'हर गेम और फ़ीचर अनलॉक करने के लिए कभी भी Premium में अपग्रेड करें',
+    premiumBadge: 'सबसे लोकप्रिय', premiumName: 'Premium',
+    premiumPeriod: 'जल्द आ रहा है — क़ीमत लॉन्च पर घोषित होगी',
+    premiumDesc: 'सब कुछ, हमेशा के लिए। नए गेम्स सबसे पहले सब्सक्राइबर्स को।',
+    premiumCta: 'Premium लें', premiumFine: 'कभी भी रद्द करें · App Store / Google Play से बिलिंग',
+    notePremium: 'प्रीमियम गेम्स', notePick: '— ट्रायल के बाद मुफ़्त रखने के लिए कोई भी 5 चुनें, या सब कुछ पाने के लिए सब्सक्राइब करें।',
+    noteSoon: 'जल्द आ रहे हैं', noteEarly: '— प्रीमियम सब्सक्राइबर्स को अर्ली एक्सेस मिलता है।', noteAll: 'सभी गेम्स देखें →',
+  },
+}[lang];
 ---
 <section class="pricing" id="pricing">
   <div class="container">
     <div class="section-header">
-      <div class="section-tag">♦ Simple, Fair Pricing</div>
-      <h2 class="section-title">Start Free. Stay Free or Go Premium.</h2>
-      <p class="section-subtitle">
-        The trial is the full premium experience — every game and feature unlocked for 2 weeks.
-        No credit card required. And no ads, in any version — free or premium.
-      </p>
+      <div class="section-tag">{copy.tag}</div>
+      <h2 class="section-title">{copy.title}</h2>
+      <p class="section-subtitle">{copy.subtitle}</p>
     </div>
 
     <div class="pricing-grid">
 
       <!-- Trial -->
       <div class="price-card price-card--trial">
-        <div class="price-badge">2-Week Trial</div>
+        <div class="price-badge">{copy.trialBadge}</div>
         <div class="price-icon">🎉</div>
-        <div class="price-amount">Free</div>
-        <div class="price-period">for 14 days</div>
-        <p class="price-desc">Everything in Premium, unlocked. Just download and play.</p>
+        <div class="price-amount">{copy.free}</div>
+        <div class="price-period">{copy.trialPeriod}</div>
+        <p class="price-desc">{copy.trialDesc}</p>
         <ul class="price-features">
           {features.map(f => (
             <li class={f.social ? 'feat-social' : ''}>{f.social ? f.text : `✓ ${f.text}`}</li>
           ))}
         </ul>
-        <a href="/#download" class="btn btn-primary price-btn">Start Free Trial</a>
-        <p class="price-fine">No credit card · No account required to play</p>
+        <a href={href('/#download')} class="btn btn-primary price-btn">{copy.trialCta}</a>
+        <p class="price-fine">{copy.trialFine}</p>
       </div>
 
       <!-- Free Forever -->
       <div class="price-card price-card--free">
-        <div class="price-badge price-badge--free">After Trial</div>
+        <div class="price-badge price-badge--free">{copy.freeBadge}</div>
         <div class="price-icon">♣</div>
-        <div class="price-amount">Free</div>
-        <div class="price-period">forever</div>
-        <p class="price-desc">Pick any 5 games to keep — offline &amp; CPU play, no expiry.</p>
+        <div class="price-amount">{copy.free}</div>
+        <div class="price-period">{copy.freePeriod}</div>
+        <p class="price-desc">{copy.freeDesc}</p>
         <ul class="price-features">
-          <li>✓ No ads — ever</li>
-          <li>✓ Choose any 5 games</li>
-          <li>✓ Offline / CPU play</li>
-          <li class="feat-no">✗ Online multiplayer</li>
-          <li class="feat-no">✗ Hints</li>
-          <li class="feat-no">✗ All other games</li>
-          <li class="feat-no">✗ Clubs &amp; Tournaments</li>
+          {copy.freeItems.map(t => <li>{t}</li>)}
+          {copy.freeNoItems.map(t => <li class="feat-no">{t}</li>)}
         </ul>
-        <a href="/games" class="btn btn-secondary price-btn">See All Games</a>
-        <p class="price-fine">Upgrade to Premium any time to unlock every game and feature</p>
+        <a href={href('/games')} class="btn btn-secondary price-btn">{copy.freeCta}</a>
+        <p class="price-fine">{copy.freeFine}</p>
       </div>
 
       <!-- Premium -->
       <div class="price-card price-card--premium">
-        <div class="price-badge price-badge--premium">Most Popular</div>
+        <div class="price-badge price-badge--premium">{copy.premiumBadge}</div>
         <div class="price-icon">👑</div>
-        <div class="price-amount price-soon">Premium</div>
-        <div class="price-period">Coming Soon — pricing announced at launch</div>
-        <p class="price-desc">Everything, forever. New games for subscribers first.</p>
+        <div class="price-amount price-soon">{copy.premiumName}</div>
+        <div class="price-period">{copy.premiumPeriod}</div>
+        <p class="price-desc">{copy.premiumDesc}</p>
         <ul class="price-features">
           {features.map(f => (
             <li class={f.social ? 'feat-social' : ''}>{f.social ? f.text : `✓ ${f.text}`}</li>
           ))}
         </ul>
-        <a href="/#download" class="btn btn-primary price-btn">Get Premium</a>
-        <p class="price-fine">Cancel anytime · Billed via App Store / Google Play</p>
+        <a href={href('/#download')} class="btn btn-primary price-btn">{copy.premiumCta}</a>
+        <p class="price-fine">{copy.premiumFine}</p>
       </div>
 
     </div>
 
     <p class="pricing-note">
-      <strong>{availCount} premium games</strong>: {availableGames.map(g => g.name).join(', ')} — pick any 5 to keep free after the trial, or subscribe for everything.<br/>
-      <strong>{csCount} coming soon</strong> — premium subscribers get early access.
-      &nbsp;<a href="/games">See all games →</a>
+      <strong>{availCount} {copy.notePremium}</strong>: {availableGames.map(g => g.name).join(', ')} {copy.notePick}<br/>
+      <strong>{csCount} {copy.noteSoon}</strong> {copy.noteEarly}
+      &nbsp;<a href={href('/games')}>{copy.noteAll}</a>
     </p>
   </div>
 </section>

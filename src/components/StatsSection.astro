@@ -1,30 +1,72 @@
 ---
 import { availableGames, comingSoonGames } from '../data/games';
+import { getLocale, localizedHref } from '../i18n';
 const avail = availableGames.length;
 const cs    = comingSoonGames.length;
+
+const lang = getLocale(Astro.currentLocale);
+const href = (p: string) => localizedHref(p, lang);
+const copy = {
+  en: {
+    games: 'Card Games',    gamesSub: 'Playable today',
+    soon:  'Coming Soon',   soonSub:  'In development now',
+    ai:    'Smart Opponents', aiSub:  'Multiple difficulty levels',
+    live:  'LIVE',          liveLabel: 'Online Tables', liveSub: 'Real players, real competition',
+  },
+  es: {
+    games: 'Juegos de cartas', gamesSub: 'Disponibles hoy',
+    soon:  'Próximamente',     soonSub:  'En desarrollo',
+    ai:    'Oponentes inteligentes', aiSub: 'Varios niveles de dificultad',
+    live:  'EN VIVO',          liveLabel: 'Mesas en línea', liveSub: 'Jugadores reales, competencia real',
+  },
+  pt: {
+    games: 'Jogos de cartas', gamesSub: 'Jogáveis hoje',
+    soon:  'Em breve',        soonSub:  'Em desenvolvimento',
+    ai:    'Oponentes inteligentes', aiSub: 'Vários níveis de dificuldade',
+    live:  'AO VIVO',         liveLabel: 'Mesas online', liveSub: 'Jogadores reais, competição real',
+  },
+  fr: {
+    games: 'Jeux de cartes',  gamesSub: 'Jouables dès aujourd’hui',
+    soon:  'Bientôt disponible', soonSub: 'En développement',
+    ai:    'Adversaires malins', aiSub: 'Plusieurs niveaux de difficulté',
+    live:  'EN DIRECT',       liveLabel: 'Tables en ligne', liveSub: 'Vrais joueurs, vraie compétition',
+  },
+  de: {
+    games: 'Kartenspiele',    gamesSub: 'Heute spielbar',
+    soon:  'Demnächst',       soonSub:  'Gerade in Entwicklung',
+    ai:    'Clevere Gegner',  aiSub: 'Mehrere Schwierigkeitsgrade',
+    live:  'LIVE',            liveLabel: 'Online-Tische', liveSub: 'Echte Spieler, echter Wettbewerb',
+  },
+  hi: {
+    games: 'ताश के गेम',       gamesSub: 'आज ही खेलें',
+    soon:  'जल्द आ रहा है',     soonSub:  'अभी विकास में',
+    ai:    'स्मार्ट प्रतिद्वंद्वी', aiSub: 'कई कठिनाई स्तर',
+    live:  'लाइव',            liveLabel: 'ऑनलाइन टेबल', liveSub: 'असली खिलाड़ी, असली मुकाबला',
+  },
+}[lang];
 ---
 <section class="stats">
   <div class="container">
     <div class="stats-grid">
-      <a class="stat-item stat-link" href="/games#premium-group">
+      <a class="stat-item stat-link" href={href('/games#premium-group')}>
         <div class="stat-value">{avail}</div>
-        <div class="stat-label">Card Games</div>
-        <div class="stat-sub">Playable today</div>
+        <div class="stat-label">{copy.games}</div>
+        <div class="stat-sub">{copy.gamesSub}</div>
       </a>
-      <a class="stat-item stat-divider stat-link" href="/games#coming-soon-group">
+      <a class="stat-item stat-divider stat-link" href={href('/games#coming-soon-group')}>
         <div class="stat-value">{cs}</div>
-        <div class="stat-label">Coming Soon</div>
-        <div class="stat-sub">In development now</div>
+        <div class="stat-label">{copy.soon}</div>
+        <div class="stat-sub">{copy.soonSub}</div>
       </a>
       <div class="stat-item stat-divider">
         <div class="stat-value">AI</div>
-        <div class="stat-label">Smart Opponents</div>
-        <div class="stat-sub">Multiple difficulty levels</div>
+        <div class="stat-label">{copy.ai}</div>
+        <div class="stat-sub">{copy.aiSub}</div>
       </div>
       <div class="stat-item stat-divider">
-        <div class="stat-value">LIVE</div>
-        <div class="stat-label">Online Tables</div>
-        <div class="stat-sub">Real players, real competition</div>
+        <div class="stat-value">{copy.live}</div>
+        <div class="stat-label">{copy.liveLabel}</div>
+        <div class="stat-sub">{copy.liveSub}</div>
       </div>
     </div>
   </div>

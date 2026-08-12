@@ -1,84 +1,135 @@
 ---
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
+import ScreenshotLightbox from './ScreenshotLightbox.astro';
+import { getLocale } from '../i18n';
 
 const shotModules = import.meta.glob<{ default: ImageMetadata }>('../assets/screenshots/app/*.png', { eager: true });
 const shot = (name: string) => shotModules[`../assets/screenshots/app/${name}.png`].default;
 
-/* Featured screens shown large, then the supporting tour */
-const featured = [
-  {
-    image: shot('home'),
-    title: 'Home',
-    caption: 'Jump into Practice, Online tables, Clubs, or Tournaments straight from the home screen.',
-  },
-  {
-    image: shot('offline-game-selection'),
-    title: 'Pick your game',
-    caption: 'Curated card rooms with large icons and clear player counts — your next game is one tap away.',
-  },
-  {
-    image: shot('settings-appearance'),
-    title: 'Make it yours',
-    caption: 'Table themes from Royal Felt to Midnight Indigo — dark and light, all in burnished gold.',
-  },
-];
+const lang = getLocale(Astro.currentLocale);
 
-const tour = [
-  {
-    image: shot('slide-menu'),
-    title: 'Everything in reach',
-    caption: 'Profile, settings, and legal info in one slide-out menu — play as a guest or log in.',
-  },
-  {
-    image: shot('profile'),
-    title: 'Your profile',
-    caption: 'Pick an avatar and display name — that\'s how players see you in lobbies and rooms.',
-  },
-  {
-    image: shot('login'),
-    title: 'Sign in',
-    caption: 'Log in to sync your profile, stats, and subscription across devices.',
-  },
-  {
-    image: shot('register'),
-    title: 'Create an account',
-    caption: 'A quick registration unlocks online play, Clubs, and Tournaments.',
-  },
-  {
-    image: shot('settings'),
-    title: 'Settings',
-    caption: 'Tune the app to your table style — sound, themes, and gameplay options.',
-  },
-  {
-    image: shot('settings-animations'),
-    title: 'Animations',
-    caption: 'Set dealing and card-play animation speed — snappy or cinematic, your call.',
-  },
-];
+/* Featured screens shown large, then the supporting tour */
+const featuredByLang = {
+  en: [
+    { image: shot('home'),                    title: 'Home',           caption: 'Jump into Practice, Online tables, Clubs, or Tournaments straight from the home screen.' },
+    { image: shot('offline-game-selection'),  title: 'Pick your game', caption: 'Curated card rooms with large icons and clear player counts — your next game is one tap away.' },
+    { image: shot('settings-appearance'),     title: 'Make it yours',  caption: 'Table themes from Royal Felt to Midnight Indigo — dark and light, all in burnished gold.' },
+  ],
+  es: [
+    { image: shot('home'),                    title: 'Inicio',         caption: 'Entra a Práctica, mesas en línea, Clubes o Torneos directo desde la pantalla principal.' },
+    { image: shot('offline-game-selection'),  title: 'Elige tu juego', caption: 'Salas de cartas seleccionadas con iconos grandes y número de jugadores claro — tu próxima partida está a un toque.' },
+    { image: shot('settings-appearance'),     title: 'Hazla tuya',     caption: 'Temas de mesa desde Fieltro Real hasta Índigo Medianoche — oscuros y claros, todos en oro bruñido.' },
+  ],
+  pt: [
+    { image: shot('home'),                    title: 'Início',            caption: 'Entre em Prática, mesas online, Clubes ou Torneios direto da tela inicial.' },
+    { image: shot('offline-game-selection'),  title: 'Escolha seu jogo',  caption: 'Salas de cartas selecionadas com ícones grandes e número de jogadores claro — seu próximo jogo está a um toque.' },
+    { image: shot('settings-appearance'),     title: 'Deixe do seu jeito', caption: 'Temas de mesa do Feltro Real ao Índigo Meia-Noite — escuros e claros, todos em dourado polido.' },
+  ],
+  fr: [
+    { image: shot('home'),                    title: 'Accueil',                caption: 'Accédez à l’entraînement, aux tables en ligne, aux Clubs ou aux Tournois directement depuis l’écran d’accueil.' },
+    { image: shot('offline-game-selection'),  title: 'Choisissez votre jeu',   caption: 'Des salons de cartes soignés avec grandes icônes et nombre de joueurs bien visible — votre prochaine partie est à un geste.' },
+    { image: shot('settings-appearance'),     title: 'Personnalisez-la',       caption: 'Des thèmes de table du Feutre Royal à l’Indigo de Minuit — sombres et clairs, tous en or bruni.' },
+  ],
+  de: [
+    { image: shot('home'),                    title: 'Startseite',        caption: 'Spring direkt vom Startbildschirm in Übungsspiele, Online-Tische, Clubs oder Turniere.' },
+    { image: shot('offline-game-selection'),  title: 'Wähl dein Spiel',   caption: 'Handverlesene Kartenräume mit großen Icons und klarer Spielerzahl — dein nächstes Spiel ist nur einen Tipp entfernt.' },
+    { image: shot('settings-appearance'),     title: 'Mach sie zu deiner', caption: 'Tischthemen von Königlichem Filz bis Mitternachtsindigo — dunkel und hell, alle in brüniertem Gold.' },
+  ],
+  hi: [
+    { image: shot('home'),                    title: 'होम',               caption: 'होम स्क्रीन से सीधे अभ्यास, ऑनलाइन टेबल, क्लब या टूर्नामेंट में उतरें।' },
+    { image: shot('offline-game-selection'),  title: 'अपना गेम चुनें',     caption: 'बड़े आइकन और साफ़ खिलाड़ी संख्या वाले चुनिंदा कार्ड रूम — आपका अगला गेम बस एक टैप दूर।' },
+    { image: shot('settings-appearance'),     title: 'इसे अपना बनाएँ',     caption: 'रॉयल फ़ेल्ट से मिडनाइट इंडिगो तक टेबल थीम — डार्क और लाइट, सब चमकते सुनहरे रंग में।' },
+  ],
+};
+const tourByLang = {
+  en: [
+    { image: shot('slide-menu'),          title: 'Everything in reach', caption: 'Profile, settings, and legal info in one slide-out menu — play as a guest or log in.' },
+    { image: shot('profile'),             title: 'Your profile',        caption: 'Pick an avatar and display name — that\'s how players see you in lobbies and rooms.' },
+    { image: shot('login'),               title: 'Sign in',             caption: 'Log in to sync your profile, stats, and subscription across devices.' },
+    { image: shot('register'),            title: 'Create an account',   caption: 'A quick registration unlocks online play, Clubs, and Tournaments.' },
+    { image: shot('settings'),            title: 'Settings',            caption: 'Tune the app to your table style — sound, themes, and gameplay options.' },
+    { image: shot('settings-animations'), title: 'Animations',          caption: 'Set dealing and card-play animation speed — snappy or cinematic, your call.' },
+  ],
+  es: [
+    { image: shot('slide-menu'),          title: 'Todo al alcance',     caption: 'Perfil, ajustes e información legal en un menú lateral — juega como invitado o inicia sesión.' },
+    { image: shot('profile'),             title: 'Tu perfil',           caption: 'Elige un avatar y un nombre — así te verán los jugadores en salas y mesas.' },
+    { image: shot('login'),               title: 'Inicia sesión',       caption: 'Inicia sesión para sincronizar tu perfil, estadísticas y suscripción entre dispositivos.' },
+    { image: shot('register'),            title: 'Crea una cuenta',     caption: 'Un registro rápido desbloquea el juego en línea, los Clubes y los Torneos.' },
+    { image: shot('settings'),            title: 'Ajustes',             caption: 'Adapta la app a tu estilo de mesa — sonido, temas y opciones de juego.' },
+    { image: shot('settings-animations'), title: 'Animaciones',         caption: 'Elige la velocidad de las animaciones de reparto y jugada — ágil o cinematográfica, tú decides.' },
+  ],
+  pt: [
+    { image: shot('slide-menu'),          title: 'Tudo ao alcance',     caption: 'Perfil, configurações e informações legais em um menu lateral — jogue como convidado ou faça login.' },
+    { image: shot('profile'),             title: 'Seu perfil',          caption: 'Escolha um avatar e um nome de exibição — é assim que os jogadores veem você em salas e lobbies.' },
+    { image: shot('login'),               title: 'Entrar',              caption: 'Faça login para sincronizar seu perfil, estatísticas e assinatura entre dispositivos.' },
+    { image: shot('register'),            title: 'Crie uma conta',      caption: 'Um cadastro rápido desbloqueia o jogo online, os Clubes e os Torneios.' },
+    { image: shot('settings'),            title: 'Configurações',       caption: 'Ajuste o app ao seu estilo de mesa — som, temas e opções de jogo.' },
+    { image: shot('settings-animations'), title: 'Animações',           caption: 'Defina a velocidade das animações de distribuição e jogada — ágil ou cinematográfica, você decide.' },
+  ],
+  fr: [
+    { image: shot('slide-menu'),          title: 'Tout à portée de main', caption: 'Profil, réglages et mentions légales dans un menu latéral — jouez en invité ou connectez-vous.' },
+    { image: shot('profile'),             title: 'Votre profil',          caption: 'Choisissez un avatar et un pseudo — c’est ainsi que les joueurs vous voient dans les salons et aux tables.' },
+    { image: shot('login'),               title: 'Connexion',             caption: 'Connectez-vous pour synchroniser votre profil, vos statistiques et votre abonnement entre appareils.' },
+    { image: shot('register'),            title: 'Créez un compte',       caption: 'Une inscription rapide débloque le jeu en ligne, les Clubs et les Tournois.' },
+    { image: shot('settings'),            title: 'Réglages',              caption: 'Adaptez l’app à votre style de table — son, thèmes et options de jeu.' },
+    { image: shot('settings-animations'), title: 'Animations',            caption: 'Réglez la vitesse des animations de distribution et de jeu — vive ou cinématique, à vous de choisir.' },
+  ],
+  de: [
+    { image: shot('slide-menu'),          title: 'Alles griffbereit',   caption: 'Profil, Einstellungen und rechtliche Infos in einem Ausklappmenü — spiel als Gast oder melde dich an.' },
+    { image: shot('profile'),             title: 'Dein Profil',         caption: 'Wähl einen Avatar und einen Anzeigenamen — so sehen dich andere Spieler in Lobbys und Räumen.' },
+    { image: shot('login'),               title: 'Anmelden',            caption: 'Melde dich an, um Profil, Statistiken und Abo geräteübergreifend zu synchronisieren.' },
+    { image: shot('register'),            title: 'Konto erstellen',     caption: 'Eine schnelle Registrierung schaltet Online-Spiele, Clubs und Turniere frei.' },
+    { image: shot('settings'),            title: 'Einstellungen',       caption: 'Stimm die App auf deinen Tischstil ab — Sound, Themes und Gameplay-Optionen.' },
+    { image: shot('settings-animations'), title: 'Animationen',         caption: 'Stell die Geschwindigkeit der Geber- und Kartenanimationen ein — flott oder filmreif, du entscheidest.' },
+  ],
+  hi: [
+    { image: shot('slide-menu'),          title: 'सब कुछ पहुँच में',     caption: 'प्रोफ़ाइल, सेटिंग्स और क़ानूनी जानकारी एक स्लाइड-आउट मेन्यू में — मेहमान के तौर पर खेलें या लॉगिन करें।' },
+    { image: shot('profile'),             title: 'आपकी प्रोफ़ाइल',       caption: 'अवतार और डिस्प्ले नाम चुनें — लॉबी और रूम में खिलाड़ी आपको ऐसे ही देखेंगे।' },
+    { image: shot('login'),               title: 'साइन इन करें',         caption: 'अपनी प्रोफ़ाइल, आँकड़े और सब्सक्रिप्शन सभी डिवाइस पर सिंक करने के लिए लॉगिन करें।' },
+    { image: shot('register'),            title: 'खाता बनाएँ',           caption: 'एक झटपट रजिस्ट्रेशन से ऑनलाइन खेल, क्लब और टूर्नामेंट खुल जाते हैं।' },
+    { image: shot('settings'),            title: 'सेटिंग्स',             caption: 'ऐप को अपने टेबल स्टाइल के हिसाब से ढालें — साउंड, थीम और गेमप्ले विकल्प।' },
+    { image: shot('settings-animations'), title: 'एनिमेशन',             caption: 'कार्ड बाँटने और चाल की एनिमेशन गति चुनें — फुर्तीली या सिनेमाई, आपकी मर्ज़ी।' },
+  ],
+};
+
+const sectionCopy = {
+  en: { tag: '♠ Inside the App', title: 'Take the Tour', subtitle: 'Real screens from the app — a casino-quality table in your pocket.' },
+  es: { tag: '♠ Dentro de la app', title: 'Haz el recorrido', subtitle: 'Pantallas reales de la app — una mesa de calidad casino en tu bolsillo.' },
+  pt: { tag: '♠ Por dentro do app', title: 'Faça o tour', subtitle: 'Telas reais do app — uma mesa com qualidade de cassino no seu bolso.' },
+  fr: { tag: '♠ Au cœur de l’app', title: 'Faites le tour', subtitle: 'De vrais écrans de l’app — une table digne d’un casino dans votre poche.' },
+  de: { tag: '♠ Ein Blick in die App', title: 'Mach die Tour', subtitle: 'Echte Screens aus der App — ein Tisch in Casino-Qualität für deine Hosentasche.' },
+  hi: { tag: '♠ ऐप के अंदर', title: 'टूर कीजिए', subtitle: 'ऐप की असली स्क्रीनें — कसीनो-स्तर की टेबल आपकी जेब में।' },
+}[lang];
+
+const featured = featuredByLang[lang];
+const tour     = tourByLang[lang];
+
+/* Combined list drives the lightbox gallery; index order matches page order */
+const allShots = [...featured, ...tour];
 ---
 <section class="showcase" id="app-tour">
   <div class="container">
     <div class="section-header">
-      <div class="section-tag">♠ Inside the App</div>
-      <h2 class="section-title">Take the Tour</h2>
-      <p class="section-subtitle">
-        Real screens from the app — a casino-quality table in your pocket.
-      </p>
+      <div class="section-tag">{sectionCopy.tag}</div>
+      <h2 class="section-title">{sectionCopy.title}</h2>
+      <p class="section-subtitle">{sectionCopy.subtitle}</p>
     </div>
 
     <div class="showcase-featured">
-      {featured.map(s => (
+      {featured.map((s, i) => (
         <figure class="shot-card shot-card--featured">
-          <Image
-            src={s.image}
-            alt={`Card Games app — ${s.title}`}
-            width={720}
-            widths={[280, 480, 720]}
-            sizes="(max-width: 640px) 90vw, (max-width: 980px) 45vw, 310px"
-            quality={70}
-            class="shot-img"
-          />
+          <button class="shot-zoom" data-idx={i} aria-label={`View ${s.title} screenshot full size`}>
+            <Image
+              src={s.image}
+              alt={`Card Games app — ${s.title}`}
+              width={720}
+              widths={[280, 480, 720]}
+              sizes="(max-width: 640px) 90vw, (max-width: 980px) 45vw, 310px"
+              quality={70}
+              class="shot-img"
+            />
+          </button>
           <figcaption>
             <strong>{s.title}</strong>
             <span>{s.caption}</span>
@@ -88,17 +139,19 @@ const tour = [
     </div>
 
     <div class="showcase-tour">
-      {tour.map(s => (
+      {tour.map((s, i) => (
         <figure class="shot-card">
-          <Image
-            src={s.image}
-            alt={`Card Games app — ${s.title}`}
-            width={600}
-            widths={[220, 400, 600]}
-            sizes="(max-width: 640px) 45vw, (max-width: 980px) 30vw, 240px"
-            quality={70}
-            class="shot-img"
-          />
+          <button class="shot-zoom" data-idx={featured.length + i} aria-label={`View ${s.title} screenshot full size`}>
+            <Image
+              src={s.image}
+              alt={`Card Games app — ${s.title}`}
+              width={600}
+              widths={[220, 400, 600]}
+              sizes="(max-width: 640px) 45vw, (max-width: 980px) 30vw, 240px"
+              quality={70}
+              class="shot-img"
+            />
+          </button>
           <figcaption>
             <strong>{s.title}</strong>
             <span>{s.caption}</span>
@@ -107,6 +160,8 @@ const tour = [
       ))}
     </div>
   </div>
+
+  <ScreenshotLightbox shots={allShots} altPrefix="Card Games app" />
 </section>
 
 <style>
@@ -154,5 +209,10 @@ const tour = [
   }
   .shot-card figcaption span {
     font-size: .78rem; color: var(--text-muted); line-height: 1.55;
+  }
+
+  .shot-zoom {
+    display: block; width: 100%; padding: 0; margin: 0;
+    background: none; border: none; cursor: zoom-in;
   }
 </style>

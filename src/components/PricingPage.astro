@@ -1,0 +1,250 @@
+---
+import BaseLayout     from '../layouts/BaseLayout.astro';
+import PricingSection from './PricingSection.astro';
+import { availableGames } from '../data/games';
+import { localizeGame } from '../data/games.i18n';
+import { getLocale, localizedHref } from '../i18n';
+
+const lang = getLocale(Astro.currentLocale);
+const href = (p: string) => localizedHref(p, lang);
+const gameNames = availableGames.map(g => localizeGame(g, lang).name).join(', ');
+
+const L = {
+  en: {
+    title: 'Pricing – Card Games by Vanikar',
+    description: '2-week free trial with all games. Keep any 5 games free forever, or go premium to unlock everything including online play and all future games. Pricing coming soon.',
+    tag: '♦ Pricing', h1: 'Simple, Honest Pricing',
+    lead: 'Start with a full 2-week free trial. No credit card. No obligations. Choose your path after — free forever or premium.',
+    faqTitle: 'Frequently Asked Questions',
+    faqs: [
+      { q: 'What happens after the 2-week trial?',
+        a: 'You can pick any 5 games to keep for free — permanently, with no expiry. Free play is offline (CPU) only. If you want online multiplayer, hints, or the full catalog, you can subscribe — pricing will be announced at launch.' },
+      { q: 'Which games are included?',
+        a: `Premium games (${availableGames.length}): ${gameNames}.` },
+      { q: 'Do I need a credit card for the trial?',
+        a: 'No. Just download the app and play. The trial starts automatically when you first open the app. Payment is only needed if you choose to subscribe after the trial.' },
+      { q: 'How does billing work?',
+        a: "Subscriptions are managed and billed by the Apple App Store (iOS) or Google Play (Android). You can cancel at any time from your device's subscription settings — no contacting us required." },
+      { q: "What's included in the premium subscription?",
+        a: 'All 11 current games (online + offline), hints, Clubs, Tournaments, priority support — and every new game we release, available to subscribers first.' },
+      { q: 'Can I change my 5 free games later?',
+        a: 'Yes. You can swap your free game selection once every 30 days via Settings → My Games in the app.' },
+      { q: 'Will there be monthly and yearly options?',
+        a: 'Yes — we plan to offer both monthly and yearly billing, with a discount for the annual plan. Exact pricing will be announced when the app launches.' },
+      { q: 'What happens to my progress if I cancel?',
+        a: "Your game history, club membership, and statistics are saved. You'll drop back to the free tier (your 5 chosen games, offline). If you resubscribe, everything is restored." },
+    ],
+    ctaTitle: 'Ready to deal?',
+    ctaSub: 'Download free. 11 games unlocked. 14 days. No card needed.',
+    ctaDownload: 'Download Free', ctaBrowse: 'Browse Games',
+  },
+  es: {
+    title: 'Precios – Card Games by Vanikar',
+    description: 'Prueba gratis de 2 semanas con todos los juegos. Conserva 5 juegos gratis para siempre, o pasa a premium para desbloquear todo, incluido el juego en línea y todos los juegos futuros. Precios próximamente.',
+    tag: '♦ Precios', h1: 'Precios simples y honestos',
+    lead: 'Empieza con una prueba gratis completa de 2 semanas. Sin tarjeta de crédito. Sin compromisos. Después eliges tu camino — gratis para siempre o premium.',
+    faqTitle: 'Preguntas frecuentes',
+    faqs: [
+      { q: '¿Qué pasa después de la prueba de 2 semanas?',
+        a: 'Puedes elegir 5 juegos para conservar gratis — de forma permanente, sin vencimiento. El juego gratuito es solo sin conexión (contra la IA). Si quieres multijugador en línea, pistas o el catálogo completo, puedes suscribirte — el precio se anunciará en el lanzamiento.' },
+      { q: '¿Qué juegos están incluidos?',
+        a: `Juegos premium (${availableGames.length}): ${gameNames}.` },
+      { q: '¿Necesito tarjeta de crédito para la prueba?',
+        a: 'No. Solo descarga la app y juega. La prueba comienza automáticamente al abrir la app por primera vez. Solo se requiere pago si decides suscribirte después de la prueba.' },
+      { q: '¿Cómo funciona la facturación?',
+        a: 'Las suscripciones se gestionan y facturan a través del App Store de Apple (iOS) o Google Play (Android). Puedes cancelar en cualquier momento desde los ajustes de suscripción de tu dispositivo — sin necesidad de contactarnos.' },
+      { q: '¿Qué incluye la suscripción premium?',
+        a: 'Los 11 juegos actuales (en línea y sin conexión), pistas, Clubes, Torneos, soporte prioritario — y cada nuevo juego que lancemos, disponible primero para los suscriptores.' },
+      { q: '¿Puedo cambiar mis 5 juegos gratis más adelante?',
+        a: 'Sí. Puedes cambiar tu selección de juegos gratis una vez cada 30 días en Ajustes → Mis Juegos dentro de la app.' },
+      { q: '¿Habrá opciones mensuales y anuales?',
+        a: 'Sí — planeamos ofrecer facturación mensual y anual, con descuento en el plan anual. El precio exacto se anunciará cuando la app se lance.' },
+      { q: '¿Qué pasa con mi progreso si cancelo?',
+        a: 'Tu historial de partidas, tu membresía de club y tus estadísticas se conservan. Volverás al nivel gratuito (tus 5 juegos elegidos, sin conexión). Si te vuelves a suscribir, todo se restaura.' },
+    ],
+    ctaTitle: '¿Listo para repartir?',
+    ctaSub: 'Descarga gratis. 11 juegos desbloqueados. 14 días. Sin tarjeta.',
+    ctaDownload: 'Descarga gratis', ctaBrowse: 'Explorar juegos',
+  },
+  pt: {
+    title: 'Preços – Card Games by Vanikar',
+    description: 'Teste grátis de 2 semanas com todos os jogos. Fique com 5 jogos grátis para sempre, ou assine o premium para desbloquear tudo, incluindo o jogo online e todos os jogos futuros. Preços em breve.',
+    tag: '♦ Preços', h1: 'Preços simples e honestos',
+    lead: 'Comece com um teste grátis completo de 2 semanas. Sem cartão de crédito. Sem compromisso. Depois escolha seu caminho — grátis para sempre ou premium.',
+    faqTitle: 'Perguntas frequentes',
+    faqs: [
+      { q: 'O que acontece depois do teste de 2 semanas?',
+        a: 'Você pode escolher 5 jogos para manter grátis — permanentemente, sem prazo de validade. O jogo grátis é apenas offline (contra a IA). Se quiser multijogador online, dicas ou o catálogo completo, você pode assinar — os preços serão anunciados no lançamento.' },
+      { q: 'Quais jogos estão incluídos?',
+        a: `Jogos premium (${availableGames.length}): ${gameNames}.` },
+      { q: 'Preciso de cartão de crédito para o teste?',
+        a: 'Não. Basta baixar o app e jogar. O teste começa automaticamente na primeira vez que você abre o app. O pagamento só é necessário se você decidir assinar depois do teste.' },
+      { q: 'Como funciona a cobrança?',
+        a: 'As assinaturas são gerenciadas e cobradas pela App Store da Apple (iOS) ou pelo Google Play (Android). Você pode cancelar a qualquer momento nas configurações de assinatura do seu dispositivo — sem precisar entrar em contato conosco.' },
+      { q: 'O que está incluído na assinatura premium?',
+        a: 'Todos os 11 jogos atuais (online e offline), dicas, Clubes, Torneios, suporte prioritário — e cada novo jogo que lançarmos, disponível primeiro para os assinantes.' },
+      { q: 'Posso trocar meus 5 jogos grátis depois?',
+        a: 'Sim. Você pode trocar sua seleção de jogos grátis uma vez a cada 30 dias em Configurações → Meus Jogos no app.' },
+      { q: 'Haverá opções mensais e anuais?',
+        a: 'Sim — planejamos oferecer cobrança mensal e anual, com desconto no plano anual. Os preços exatos serão anunciados no lançamento do app.' },
+      { q: 'O que acontece com meu progresso se eu cancelar?',
+        a: 'Seu histórico de partidas, sua participação em clubes e suas estatísticas ficam salvos. Você volta ao nível gratuito (seus 5 jogos escolhidos, offline). Se você assinar novamente, tudo é restaurado.' },
+    ],
+    ctaTitle: 'Pronto para dar as cartas?',
+    ctaSub: 'Baixe grátis. 11 jogos desbloqueados. 14 dias. Sem cartão.',
+    ctaDownload: 'Baixe grátis', ctaBrowse: 'Ver jogos',
+  },
+  fr: {
+    title: 'Tarifs – Card Games by Vanikar',
+    description: 'Essai gratuit de 2 semaines avec tous les jeux. Gardez 5 jeux gratuits pour toujours, ou passez au premium pour tout débloquer, y compris le jeu en ligne et tous les jeux à venir. Tarifs bientôt disponibles.',
+    tag: '♦ Tarifs', h1: 'Des tarifs simples et honnêtes',
+    lead: 'Commencez par un essai gratuit complet de 2 semaines. Sans carte bancaire. Sans engagement. Choisissez ensuite votre voie — gratuit pour toujours ou premium.',
+    faqTitle: 'Questions fréquentes',
+    faqs: [
+      { q: "Que se passe-t-il après l'essai de 2 semaines ?",
+        a: "Vous pouvez choisir 5 jeux à garder gratuitement — de façon permanente, sans expiration. Le jeu gratuit est uniquement hors ligne (contre l'IA). Si vous voulez le multijoueur en ligne, les indices ou le catalogue complet, vous pouvez vous abonner — les tarifs seront annoncés au lancement." },
+      { q: 'Quels jeux sont inclus ?',
+        a: `Jeux premium (${availableGames.length}) : ${gameNames}.` },
+      { q: "Ai-je besoin d'une carte bancaire pour l'essai ?",
+        a: "Non. Il suffit de télécharger l'app et de jouer. L'essai démarre automatiquement à la première ouverture de l'app. Le paiement n'est nécessaire que si vous choisissez de vous abonner après l'essai." },
+      { q: 'Comment fonctionne la facturation ?',
+        a: "Les abonnements sont gérés et facturés par l'App Store d'Apple (iOS) ou Google Play (Android). Vous pouvez annuler à tout moment depuis les réglages d'abonnement de votre appareil — sans avoir à nous contacter." },
+      { q: "Que comprend l'abonnement premium ?",
+        a: "Les 11 jeux actuels (en ligne et hors ligne), les indices, les Clubs, les Tournois, le support prioritaire — et chaque nouveau jeu que nous sortons, disponible d'abord pour les abonnés." },
+      { q: 'Puis-je changer mes 5 jeux gratuits plus tard ?',
+        a: "Oui. Vous pouvez modifier votre sélection de jeux gratuits une fois tous les 30 jours via Réglages → Mes Jeux dans l'app." },
+      { q: 'Y aura-t-il des formules mensuelles et annuelles ?',
+        a: "Oui — nous prévoyons de proposer une facturation mensuelle et annuelle, avec une réduction pour la formule annuelle. Les tarifs exacts seront annoncés au lancement de l'app." },
+      { q: "Qu'advient-il de ma progression si j'annule ?",
+        a: "Votre historique de parties, votre adhésion aux clubs et vos statistiques sont conservés. Vous repasserez à l'offre gratuite (vos 5 jeux choisis, hors ligne). Si vous vous réabonnez, tout est restauré." },
+    ],
+    ctaTitle: 'Prêt à distribuer ?',
+    ctaSub: 'Téléchargement gratuit. 11 jeux débloqués. 14 jours. Sans carte.',
+    ctaDownload: 'Télécharger gratuitement', ctaBrowse: 'Parcourir les jeux',
+  },
+  de: {
+    title: 'Preise – Card Games by Vanikar',
+    description: '2 Wochen kostenlos testen mit allen Spielen. Behalte 5 Spiele für immer kostenlos, oder hol dir Premium und schalte alles frei, inklusive Online-Spiel und aller zukünftigen Spiele. Preise demnächst.',
+    tag: '♦ Preise', h1: 'Einfache, ehrliche Preise',
+    lead: 'Starte mit einer vollen 2-wöchigen kostenlosen Testphase. Keine Kreditkarte. Keine Verpflichtungen. Danach wählst du deinen Weg — für immer kostenlos oder Premium.',
+    faqTitle: 'Häufig gestellte Fragen',
+    faqs: [
+      { q: 'Was passiert nach der 2-wöchigen Testphase?',
+        a: 'Du kannst dir 5 beliebige Spiele aussuchen und kostenlos behalten — dauerhaft, ohne Ablaufdatum. Kostenloses Spielen ist nur offline (gegen die KI) möglich. Wenn du Online-Multiplayer, Hinweise oder den kompletten Katalog willst, kannst du ein Abo abschließen — die Preise werden zum Launch bekannt gegeben.' },
+      { q: 'Welche Spiele sind enthalten?',
+        a: `Premium-Spiele (${availableGames.length}): ${gameNames}.` },
+      { q: 'Brauche ich eine Kreditkarte für die Testphase?',
+        a: 'Nein. Lade einfach die App herunter und spiel los. Die Testphase startet automatisch, wenn du die App zum ersten Mal öffnest. Bezahlt wird nur, wenn du dich nach der Testphase für ein Abo entscheidest.' },
+      { q: 'Wie funktioniert die Abrechnung?',
+        a: 'Abos werden über den Apple App Store (iOS) oder Google Play (Android) verwaltet und abgerechnet. Du kannst jederzeit in den Abo-Einstellungen deines Geräts kündigen — ohne uns kontaktieren zu müssen.' },
+      { q: 'Was ist im Premium-Abo enthalten?',
+        a: 'Alle 11 aktuellen Spiele (online und offline), Hinweise, Clubs, Turniere, bevorzugter Support — und jedes neue Spiel, das wir veröffentlichen, zuerst für Abonnenten verfügbar.' },
+      { q: 'Kann ich meine 5 kostenlosen Spiele später ändern?',
+        a: 'Ja. Du kannst deine kostenlose Spielauswahl alle 30 Tage einmal ändern, unter Einstellungen → Meine Spiele in der App.' },
+      { q: 'Wird es Monats- und Jahresoptionen geben?',
+        a: 'Ja — wir planen sowohl monatliche als auch jährliche Abrechnung, mit Rabatt beim Jahresplan. Die genauen Preise werden zum Launch der App bekannt gegeben.' },
+      { q: 'Was passiert mit meinem Fortschritt, wenn ich kündige?',
+        a: 'Dein Spielverlauf, deine Club-Mitgliedschaft und deine Statistiken bleiben gespeichert. Du wechselst zurück auf die kostenlose Stufe (deine 5 gewählten Spiele, offline). Wenn du wieder abonnierst, wird alles wiederhergestellt.' },
+    ],
+    ctaTitle: 'Bereit zum Geben?',
+    ctaSub: 'Kostenlos herunterladen. 11 Spiele freigeschaltet. 14 Tage. Keine Karte nötig.',
+    ctaDownload: 'Kostenlos herunterladen', ctaBrowse: 'Spiele entdecken',
+  },
+  hi: {
+    title: 'कीमतें – Card Games by Vanikar',
+    description: 'सभी खेलों के साथ 2 सप्ताह का मुफ़्त ट्रायल। कोई भी 5 खेल हमेशा के लिए मुफ़्त रखें, या Premium लेकर सब कुछ अनलॉक करें — ऑनलाइन खेल और आने वाले सभी खेल शामिल। कीमतें जल्द आ रही हैं।',
+    tag: '♦ कीमतें', h1: 'सरल, ईमानदार कीमतें',
+    lead: 'पूरे 2 सप्ताह के मुफ़्त ट्रायल से शुरुआत करें। कोई क्रेडिट कार्ड नहीं। कोई बाध्यता नहीं। बाद में अपना रास्ता चुनें — हमेशा के लिए मुफ़्त या Premium।',
+    faqTitle: 'अक्सर पूछे जाने वाले सवाल',
+    faqs: [
+      { q: '2 सप्ताह के ट्रायल के बाद क्या होता है?',
+        a: 'आप कोई भी 5 खेल मुफ़्त रखने के लिए चुन सकते हैं — स्थायी रूप से, बिना किसी समय-सीमा के। मुफ़्त खेल केवल ऑफ़लाइन (कंप्यूटर के विरुद्ध) है। अगर आप ऑनलाइन मल्टीप्लेयर, संकेत या पूरा कैटलॉग चाहते हैं, तो सदस्यता ले सकते हैं — कीमतों की घोषणा लॉन्च पर की जाएगी।' },
+      { q: 'कौन से खेल शामिल हैं?',
+        a: `Premium खेल (${availableGames.length}): ${gameNames}.` },
+      { q: 'क्या ट्रायल के लिए क्रेडिट कार्ड चाहिए?',
+        a: 'नहीं। बस ऐप डाउनलोड करें और खेलें। ऐप पहली बार खोलते ही ट्रायल अपने आप शुरू हो जाता है। भुगतान की ज़रूरत तभी है जब आप ट्रायल के बाद सदस्यता लेना चुनें।' },
+      { q: 'बिलिंग कैसे काम करती है?',
+        a: 'सदस्यताएँ Apple App Store (iOS) या Google Play (Android) द्वारा प्रबंधित और बिल की जाती हैं। आप अपने डिवाइस की सदस्यता सेटिंग्स से कभी भी रद्द कर सकते हैं — हमसे संपर्क करने की ज़रूरत नहीं।' },
+      { q: 'Premium सदस्यता में क्या-क्या शामिल है?',
+        a: 'सभी 11 मौजूदा खेल (ऑनलाइन और ऑफ़लाइन), संकेत, क्लब, टूर्नामेंट, प्राथमिकता सहायता — और हमारा हर नया खेल, जो सबसे पहले सदस्यों को मिलता है।' },
+      { q: 'क्या मैं अपने 5 मुफ़्त खेल बाद में बदल सकता/सकती हूँ?',
+        a: 'हाँ। आप ऐप में सेटिंग्स → मेरे खेल के ज़रिए हर 30 दिन में एक बार अपनी मुफ़्त खेलों की सूची बदल सकते हैं।' },
+      { q: 'क्या मासिक और वार्षिक विकल्प होंगे?',
+        a: 'हाँ — हम मासिक और वार्षिक दोनों बिलिंग देने की योजना बना रहे हैं, वार्षिक योजना पर छूट के साथ। सटीक कीमतों की घोषणा ऐप के लॉन्च पर की जाएगी।' },
+      { q: 'अगर मैं रद्द कर दूँ तो मेरी प्रगति का क्या होगा?',
+        a: 'आपका गेम इतिहास, क्लब सदस्यता और आँकड़े सुरक्षित रहते हैं। आप मुफ़्त स्तर पर लौट आएँगे (आपके चुने हुए 5 खेल, ऑफ़लाइन)। दोबारा सदस्यता लेने पर सब कुछ बहाल हो जाता है।' },
+    ],
+    ctaTitle: 'पत्ते बाँटने के लिए तैयार?',
+    ctaSub: 'मुफ़्त डाउनलोड करें। 11 खेल अनलॉक। 14 दिन। कार्ड की ज़रूरत नहीं।',
+    ctaDownload: 'मुफ़्त डाउनलोड करें', ctaBrowse: 'खेल देखें',
+  },
+}[lang];
+---
+<BaseLayout
+  title={L.title}
+  description={L.description}
+>
+  <!-- Header -->
+  <section class="pricing-header">
+    <div class="container" style="text-align:center">
+      <div class="section-tag">{L.tag}</div>
+      <h1>{L.h1}</h1>
+      <p class="pricing-lead">{L.lead}</p>
+    </div>
+  </section>
+
+  <PricingSection />
+
+  <!-- FAQ -->
+  <section class="faq">
+    <div class="container">
+      <h2 class="faq-title">{L.faqTitle}</h2>
+      <div class="faq-grid">
+        {L.faqs.map(f => (
+          <div class="faq-item">
+            <h3>{f.q}</h3>
+            <p>{f.a}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Bottom CTA -->
+  <section class="bottom-cta">
+    <div class="container" style="text-align:center">
+      <h2>{L.ctaTitle}</h2>
+      <p class="cta-sub">{L.ctaSub}</p>
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:1.75rem">
+        <a href={href('/#download')} class="btn btn-primary">{L.ctaDownload}</a>
+        <a href={href('/games')}     class="btn btn-secondary">{L.ctaBrowse}</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .pricing-header {
+    background: linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-primary) 100%);
+    padding: 4rem 0 3rem; border-bottom: 1px solid var(--border);
+  }
+  .pricing-header h1 { font-size: clamp(2rem,5vw,3rem); margin-bottom: .75rem; }
+  .pricing-lead { font-size: 1.05rem; color: var(--text-muted); max-width: 560px; margin: 0 auto; line-height: 1.7; }
+
+  .faq { padding: 4rem 0; background: var(--bg-primary); border-top: 1px solid var(--border); }
+  .faq-title { font-size: 1.6rem; margin-bottom: 2rem; text-align: center; }
+  .faq-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(320px,1fr));
+    gap: 1.25rem;
+  }
+  .faq-item {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); padding: 1.5rem;
+  }
+  .faq-item h3 { font-size: .95rem; font-weight: 700; color: var(--gold-light); margin-bottom: .6rem; font-family: 'Inter',sans-serif; }
+  .faq-item p  { font-size: .875rem; color: var(--text-secondary); line-height: 1.75; }
+
+  .bottom-cta { background: var(--bg-deep); border-top: 1px solid var(--border); padding: 4rem 0; }
+  .bottom-cta h2 { font-size: 2rem; margin-bottom: .5rem; }
+  .cta-sub    { font-size: 1rem; color: var(--text-muted); }
+</style>

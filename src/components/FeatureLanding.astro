@@ -6,6 +6,8 @@ import { availableGames, comingSoonGames } from '../data/games';
 interface Section {
   heading: string;
   body:    string;
+  /** Feature not yet live — renders a Coming Soon badge next to the heading */
+  soon?:   boolean;
 }
 
 interface Faq {
@@ -55,7 +57,10 @@ const csNames = comingSoonGames.slice(0, 8).map(g => g.name).join(', ');
     <div class="fl-sections">
       {sections.map(s => (
         <div class="fl-section">
-          <h2>{s.heading}</h2>
+          <h2>
+            {s.heading}
+            {s.soon && <span class="fl-soon-badge">Coming Soon</span>}
+          </h2>
           <p>{s.body}</p>
         </div>
       ))}
@@ -136,6 +141,13 @@ const csNames = comingSoonGames.slice(0, 8).map(g => g.name).join(', ');
     font-family: 'Inter',sans-serif; margin-bottom: .6rem;
   }
   .fl-section p { font-size: .9rem; color: var(--text-secondary); line-height: 1.75; }
+  .fl-soon-badge {
+    display: inline-block; margin-left: .5rem; vertical-align: middle;
+    padding: .12rem .55rem; border-radius: var(--radius-full);
+    font-size: .6rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+    color: #b490f5; border: 1px solid rgba(180,144,245,.35);
+    background: rgba(120,80,200,.12);
+  }
   @media (max-width: 720px) { .fl-sections { grid-template-columns: 1fr; } }
 
   .fl-games { padding: 3rem 0; }

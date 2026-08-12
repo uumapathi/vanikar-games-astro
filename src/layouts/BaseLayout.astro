@@ -1,6 +1,7 @@
 ---
 import NavMenu from '../components/NavMenu.astro';
 import Footer  from '../components/Footer.astro';
+import { getLocale, localizePath, unlocalizePath, isTranslated, LOCALES } from '../i18n';
 import '../styles/global.css';
 
 interface Props {
@@ -15,10 +16,15 @@ const {
   gaId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID,
 } = Astro.props;
 
+const locale       = getLocale(Astro.currentLocale);
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const basePath     = unlocalizePath(Astro.url.pathname);
+const alternates   = isTranslated(basePath)
+  ? LOCALES.map(l => ({ lang: l, href: new URL(localizePath(basePath, l), Astro.site) }))
+  : [];
 ---
 <!doctype html>
-<html lang="en">
+<html lang={locale}>
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -26,6 +32,12 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   <title>{title}</title>
   <meta name="description" content={description} />
   <link rel="canonical" href={canonicalURL} />
+  {alternates.map(a => (
+    <link rel="alternate" hreflang={a.lang} href={a.href} />
+  ))}
+  {alternates.length > 0 && (
+    <link rel="alternate" hreflang="x-default" href={new URL(basePath, Astro.site)} />
+  )}
   <meta property="og:title"       content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:type"        content="website" />

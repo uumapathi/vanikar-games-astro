@@ -2,7 +2,11 @@
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import { availableGames, comingSoonGames } from '../data/games';
+import { getLocale, localizedHref } from '../i18n';
 const ordered = [...availableGames, ...comingSoonGames];
+const lang     = getLocale(Astro.currentLocale);
+const soonText = { en: 'Soon', es: 'Pronto', pt: 'Em breve', fr: 'Bientôt', de: 'Bald', hi: 'जल्द' }[lang];
+const href     = (p: string) => localizedHref(p, lang);
 
 const iconModules = import.meta.glob<{ default: ImageMetadata }>('../assets/game-icons/*.{png,svg}', { eager: true });
 const gameIcon = (slug: string) =>
@@ -14,14 +18,14 @@ const gameIcon = (slug: string) =>
     {[0, 1].map(copy => (
       <div class="marquee-group" aria-hidden={copy === 1 ? 'true' : undefined}>
         {ordered.map(g => (
-          <a href={`/games/${g.slug}`} class="marquee-chip" tabindex={copy === 1 ? -1 : undefined}>
+          <a href={href(`/games/${g.slug}`)} class="marquee-chip" tabindex={copy === 1 ? -1 : undefined}>
             <span class="chip-icon">
               {gameIcon(g.slug)
                 ? <Image src={gameIcon(g.slug)!} alt="" width={40} class="gi-img" />
                 : g.icon}
             </span>
             {g.name}
-            {g.comingSoon && <span class="chip-soon">Soon</span>}
+            {g.comingSoon && <span class="chip-soon">{soonText}</span>}
           </a>
         ))}
       </div>

@@ -1,0 +1,260 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { games, availableGames, comingSoonGames } from '../data/games';
+import { getLocale, localizedHref } from '../i18n';
+
+const lang = getLocale(Astro.currentLocale);
+const href = (p: string) => localizedHref(p, lang);
+
+const L = {
+  en: {
+    title: 'About Us – Card Games by Vanikar',
+    description: `Vanikar LLC is the studio behind Card Games by Vanikar — ${games.length} classic card games from around the world, built with 21+ years of software craftsmanship.`,
+    h1: 'About Vanikar LLC',
+    subtitle: 'Merchants of Software Craftsmanship',
+    nameMeaning: 'Tamil — "merchant · trader · one who creates value through exchange"',
+    h2Name: 'An ancient word for a timeless craft',
+    pName1: "Vanikar comes from Tamil, one of the world's oldest living languages — and our founders' native tongue. For millennia, Tamil vanikars sailed distant seas and built trusted trade networks, renowned not just for what they sold, but for the integrity, skill, and relationships behind every exchange.",
+    pName2: 'We chose the name because we see software the same way: a fair exchange of value — deep expertise and honest craftsmanship in return for your trust. Like the merchants of old, we build things meant to travel far and last long.',
+    h2Who: 'Who we are',
+    pWho: 'Vanikar LLC crafts software that solves real-world problems — from immersive games to intelligent, AI-powered systems. Behind the studio is 21+ years of professional software engineering on mission-critical platforms for banking, defense & aerospace, and global retail — environments where software has to work the first time, and every time after. That discipline, paired with hands-on generative-AI practice and a craftsman\'s attention to quality, is what we bring to every table we build.',
+    statYears: 'Years of engineering', statGames: 'Card games', statLive: 'Playable today', statDev: 'In development',
+    h2Building: "What we're building here",
+    pBuilding: `Card Games by Vanikar is our love letter to the world's favourite card games — ${games.length} of them, drawn from traditions on every continent: quick classics like High Card and Go Fish, deep strategy games like Cribbage, Belote, and Skat, and beloved regional games like Indian Rummy, Truco, and Tiến Lên. Every game ships with a detailed play guide, responsive AI opponents at multiple difficulty levels, and full offline support — polished experiences that entertain, teach, and connect people.`,
+    h2How: 'How it works',
+    pHow: 'The app is free to download, and every game is free during your 2-week trial — no account or credit card needed to start playing. After the trial, keep any 5 games of your choice free forever for CPU play, or go Premium to unlock everything: online multiplayer, private tables with friends and family, and all future games and features as they arrive.',
+    pLang: 'The app is currently in English, with more languages coming soon.',
+    h2Touch: 'Get in touch',
+    pTouchPre: "Have feedback, a bug report, or a favourite card game we should build next? We'd love to hear from you at",
+    pTouchMid: '— or learn more about the studio at',
+    linkGames: 'Browse the games →', linkPricing: 'See pricing →',
+  },
+  es: {
+    title: 'Quiénes somos – Card Games by Vanikar',
+    description: `Vanikar LLC es el estudio detrás de Card Games by Vanikar — ${games.length} juegos de cartas clásicos de todo el mundo, construidos con más de 21 años de artesanía de software.`,
+    h1: 'Acerca de Vanikar LLC',
+    subtitle: 'Mercaderes de la artesanía del software',
+    nameMeaning: 'Tamil — "mercader · comerciante · quien crea valor a través del intercambio"',
+    h2Name: 'Una palabra antigua para un oficio eterno',
+    pName1: 'Vanikar proviene del tamil, una de las lenguas vivas más antiguas del mundo — y la lengua materna de nuestros fundadores. Durante milenios, los vanikars tamiles navegaron mares lejanos y construyeron redes de comercio de confianza, reconocidos no solo por lo que vendían, sino por la integridad, la destreza y las relaciones detrás de cada intercambio.',
+    pName2: 'Elegimos el nombre porque vemos el software de la misma manera: un intercambio justo de valor — experiencia profunda y artesanía honesta a cambio de tu confianza. Como los mercaderes de antaño, construimos cosas hechas para viajar lejos y durar mucho.',
+    h2Who: 'Quiénes somos',
+    pWho: 'Vanikar LLC crea software que resuelve problemas reales — desde juegos inmersivos hasta sistemas inteligentes impulsados por IA. Detrás del estudio hay más de 21 años de ingeniería de software profesional en plataformas de misión crítica para banca, defensa y aeroespacial, y comercio minorista global — entornos donde el software tiene que funcionar a la primera, y todas las veces después. Esa disciplina, junto con la práctica directa de IA generativa y una atención artesanal a la calidad, es lo que traemos a cada mesa que construimos.',
+    statYears: 'Años de ingeniería', statGames: 'Juegos de cartas', statLive: 'Disponibles hoy', statDev: 'En desarrollo',
+    h2Building: 'Qué estamos construyendo',
+    pBuilding: `Card Games by Vanikar es nuestra carta de amor a los juegos de cartas favoritos del mundo — ${games.length} de ellos, tomados de tradiciones de todos los continentes: clásicos rápidos como Carta Alta y Go Fish, juegos de estrategia profunda como Cribbage, Belote y Skat, y juegos regionales muy queridos como el Rummy Indio, el Truco y el Tiến Lên. Cada juego incluye una guía detallada, oponentes de IA con varios niveles de dificultad y soporte completo sin conexión — experiencias pulidas que entretienen, enseñan y conectan a las personas.`,
+    h2How: 'Cómo funciona',
+    pHow: 'La app es gratuita, y todos los juegos son gratis durante tu prueba de 2 semanas — sin cuenta ni tarjeta de crédito para empezar a jugar. Después de la prueba, conserva 5 juegos a tu elección gratis para siempre en modo IA, o pasa a Premium para desbloquear todo: multijugador en línea, mesas privadas con amigos y familia, y todos los juegos y funciones futuros.',
+    pLang: 'La app está actualmente en inglés, con más idiomas próximamente.',
+    h2Touch: 'Contáctanos',
+    pTouchPre: '¿Tienes comentarios, un reporte de error o un juego de cartas favorito que deberíamos construir? Nos encantaría saber de ti en',
+    pTouchMid: '— o conoce más sobre el estudio en',
+    linkGames: 'Explora los juegos →', linkPricing: 'Ver precios →',
+  },
+  pt: {
+    title: 'Sobre nós – Card Games by Vanikar',
+    description: `A Vanikar LLC é o estúdio por trás de Card Games by Vanikar — ${games.length} jogos de cartas clássicos do mundo todo, construídos com mais de 21 anos de artesanato de software.`,
+    h1: 'Sobre a Vanikar LLC',
+    subtitle: 'Mercadores do artesanato de software',
+    nameMeaning: 'Tâmil — "mercador · comerciante · quem cria valor por meio da troca"',
+    h2Name: 'Uma palavra antiga para um ofício eterno',
+    pName1: 'Vanikar vem do tâmil, uma das línguas vivas mais antigas do mundo — e a língua materna dos nossos fundadores. Por milênios, os vanikars tâmeis navegaram mares distantes e construíram redes de comércio confiáveis, reconhecidos não só pelo que vendiam, mas pela integridade, pela habilidade e pelas relações por trás de cada troca.',
+    pName2: 'Escolhemos o nome porque vemos o software da mesma forma: uma troca justa de valor — profunda experiência e artesanato honesto em troca da sua confiança. Como os mercadores de antigamente, construímos coisas feitas para viajar longe e durar muito.',
+    h2Who: 'Quem somos',
+    pWho: 'A Vanikar LLC cria software que resolve problemas do mundo real — de jogos imersivos a sistemas inteligentes impulsionados por IA. Por trás do estúdio há mais de 21 anos de engenharia de software profissional em plataformas de missão crítica para bancos, defesa e aeroespacial, e varejo global — ambientes onde o software tem que funcionar de primeira, e todas as vezes depois. Essa disciplina, aliada à prática direta de IA generativa e a uma atenção artesanal à qualidade, é o que trazemos a cada mesa que construímos.',
+    statYears: 'Anos de engenharia', statGames: 'Jogos de cartas', statLive: 'Jogáveis hoje', statDev: 'Em desenvolvimento',
+    h2Building: 'O que estamos construindo aqui',
+    pBuilding: `Card Games by Vanikar é nossa carta de amor aos jogos de cartas favoritos do mundo — ${games.length} deles, vindos de tradições de todos os continentes: clássicos rápidos como Carta Maior e Go Fish, jogos de estratégia profunda como Cribbage, Belote e Skat, e queridos jogos regionais como o Rummy Indiano, o Truco e o Tiến Lên. Cada jogo vem com um guia de jogo detalhado, oponentes de IA responsivos em vários níveis de dificuldade e suporte offline completo — experiências polidas que divertem, ensinam e conectam pessoas.`,
+    h2How: 'Como funciona',
+    pHow: 'O app é gratuito para baixar, e todos os jogos são grátis durante seu teste de 2 semanas — sem conta nem cartão de crédito para começar a jogar. Depois do teste, fique com 5 jogos à sua escolha grátis para sempre no modo contra a IA, ou assine o Premium para desbloquear tudo: multijogador online, mesas privadas com amigos e família, e todos os jogos e recursos futuros assim que chegarem.',
+    pLang: 'O app está atualmente em inglês, com mais idiomas em breve.',
+    h2Touch: 'Fale conosco',
+    pTouchPre: 'Tem feedback, um relato de bug ou um jogo de cartas favorito que deveríamos criar? Adoraríamos ouvir você em',
+    pTouchMid: '— ou saiba mais sobre o estúdio em',
+    linkGames: 'Ver os jogos →', linkPricing: 'Ver preços →',
+  },
+  fr: {
+    title: 'À propos – Card Games by Vanikar',
+    description: `Vanikar LLC est le studio derrière Card Games by Vanikar — ${games.length} jeux de cartes classiques du monde entier, construits avec plus de 21 ans d'artisanat logiciel.`,
+    h1: 'À propos de Vanikar LLC',
+    subtitle: "Marchands d'artisanat logiciel",
+    nameMeaning: 'Tamoul — « marchand · commerçant · celui qui crée de la valeur par l\'échange »',
+    h2Name: 'Un mot ancien pour un savoir-faire intemporel',
+    pName1: "Vanikar vient du tamoul, l'une des plus anciennes langues vivantes du monde — et la langue maternelle de nos fondateurs. Pendant des millénaires, les vanikars tamouls ont navigué sur des mers lointaines et bâti des réseaux de commerce de confiance, réputés non seulement pour ce qu'ils vendaient, mais pour l'intégrité, le savoir-faire et les relations derrière chaque échange.",
+    pName2: "Nous avons choisi ce nom parce que nous voyons le logiciel de la même façon : un échange de valeur équitable — une expertise profonde et un artisanat honnête en échange de votre confiance. Comme les marchands d'autrefois, nous construisons des choses faites pour voyager loin et durer longtemps.",
+    h2Who: 'Qui nous sommes',
+    pWho: "Vanikar LLC conçoit des logiciels qui résolvent des problèmes concrets — des jeux immersifs aux systèmes intelligents propulsés par l'IA. Derrière le studio, il y a plus de 21 ans d'ingénierie logicielle professionnelle sur des plateformes critiques pour la banque, la défense et l'aérospatiale, et le commerce mondial — des environnements où le logiciel doit fonctionner du premier coup, et à chaque fois ensuite. Cette discipline, alliée à une pratique concrète de l'IA générative et à une attention artisanale à la qualité, est ce que nous apportons à chaque table que nous construisons.",
+    statYears: "Années d'ingénierie", statGames: 'Jeux de cartes', statLive: "Jouables aujourd'hui", statDev: 'En développement',
+    h2Building: 'Ce que nous construisons ici',
+    pBuilding: `Card Games by Vanikar est notre lettre d'amour aux jeux de cartes préférés du monde — ${games.length} au total, issus de traditions de tous les continents : des classiques rapides comme la Carte Haute et Go Fish, des jeux de stratégie profonds comme le Cribbage, la Belote et le Skat, et des jeux régionaux adorés comme le Rami indien, le Truco et le Tiến Lên. Chaque jeu est livré avec un guide de jeu détaillé, des adversaires IA réactifs à plusieurs niveaux de difficulté et un mode hors ligne complet — des expériences soignées qui divertissent, enseignent et rapprochent les gens.`,
+    h2How: 'Comment ça marche',
+    pHow: "L'app est gratuite à télécharger, et tous les jeux sont gratuits pendant votre essai de 2 semaines — pas besoin de compte ni de carte bancaire pour commencer à jouer. Après l'essai, gardez 5 jeux de votre choix gratuits pour toujours en mode contre l'IA, ou passez au Premium pour tout débloquer : multijoueur en ligne, tables privées avec vos amis et votre famille, et tous les jeux et fonctionnalités à venir dès leur sortie.",
+    pLang: "L'app est actuellement en anglais, d'autres langues arrivent bientôt.",
+    h2Touch: 'Contactez-nous',
+    pTouchPre: 'Un retour, un bug à signaler, ou un jeu de cartes préféré que nous devrions créer ? Nous serions ravis de vous lire à',
+    pTouchMid: '— ou découvrez le studio sur',
+    linkGames: 'Parcourir les jeux →', linkPricing: 'Voir les tarifs →',
+  },
+  de: {
+    title: 'Über uns – Card Games by Vanikar',
+    description: `Vanikar LLC ist das Studio hinter Card Games by Vanikar — ${games.length} klassische Kartenspiele aus aller Welt, gebaut mit über 21 Jahren Software-Handwerkskunst.`,
+    h1: 'Über Vanikar LLC',
+    subtitle: 'Händler der Software-Handwerkskunst',
+    nameMeaning: 'Tamil — "Händler · Kaufmann · jemand, der durch Austausch Wert schafft"',
+    h2Name: 'Ein altes Wort für ein zeitloses Handwerk',
+    pName1: 'Vanikar stammt aus dem Tamilischen, einer der ältesten lebenden Sprachen der Welt — und der Muttersprache unserer Gründer. Über Jahrtausende segelten tamilische Vanikars über ferne Meere und bauten vertrauensvolle Handelsnetzwerke auf, berühmt nicht nur für das, was sie verkauften, sondern für die Integrität, das Können und die Beziehungen hinter jedem Austausch.',
+    pName2: 'Wir haben den Namen gewählt, weil wir Software genauso sehen: als fairen Austausch von Wert — tiefe Expertise und ehrliche Handwerkskunst im Tausch gegen dein Vertrauen. Wie die Händler von einst bauen wir Dinge, die weit reisen und lange halten sollen.',
+    h2Who: 'Wer wir sind',
+    pWho: 'Vanikar LLC entwickelt Software, die echte Probleme löst — von immersiven Spielen bis zu intelligenten, KI-gestützten Systemen. Hinter dem Studio stehen über 21 Jahre professionelle Softwareentwicklung auf geschäftskritischen Plattformen für Banken, Verteidigung und Luft- und Raumfahrt sowie den globalen Handel — Umgebungen, in denen Software beim ersten Mal funktionieren muss, und jedes Mal danach. Diese Disziplin, gepaart mit praktischer Erfahrung mit generativer KI und handwerklicher Liebe zur Qualität, bringen wir an jeden Tisch, den wir bauen.',
+    statYears: 'Jahre Engineering', statGames: 'Kartenspiele', statLive: 'Heute spielbar', statDev: 'In Entwicklung',
+    h2Building: 'Was wir hier bauen',
+    pBuilding: `Card Games by Vanikar ist unser Liebesbrief an die beliebtesten Kartenspiele der Welt — ${games.length} davon, aus Traditionen aller Kontinente: schnelle Klassiker wie High Card und Go Fish, tiefe Strategiespiele wie Cribbage, Belote und Skat, und beliebte regionale Spiele wie Indisches Rommé, Truco und Tiến Lên. Jedes Spiel kommt mit einer ausführlichen Spielanleitung, reaktionsschnellen KI-Gegnern in mehreren Schwierigkeitsgraden und vollem Offline-Support — ausgefeilte Erlebnisse, die unterhalten, lehren und Menschen verbinden.`,
+    h2How: 'So funktioniert es',
+    pHow: 'Die App ist kostenlos zum Herunterladen, und jedes Spiel ist während deiner 2-wöchigen Testphase gratis — kein Konto und keine Kreditkarte nötig, um loszuspielen. Nach der Testphase behältst du 5 Spiele deiner Wahl für immer kostenlos im KI-Modus, oder du holst dir Premium und schaltest alles frei: Online-Multiplayer, private Tische mit Freunden und Familie sowie alle zukünftigen Spiele und Funktionen, sobald sie erscheinen.',
+    pLang: 'Die App ist derzeit auf Englisch, weitere Sprachen folgen demnächst.',
+    h2Touch: 'Kontakt',
+    pTouchPre: 'Du hast Feedback, einen Bug gefunden oder ein Lieblingskartenspiel, das wir als Nächstes bauen sollten? Wir freuen uns, von dir zu hören unter',
+    pTouchMid: '— oder erfahre mehr über das Studio auf',
+    linkGames: 'Spiele entdecken →', linkPricing: 'Preise ansehen →',
+  },
+  hi: {
+    title: 'हमारे बारे में – Card Games by Vanikar',
+    description: `Vanikar LLC वह स्टूडियो है जो Card Games by Vanikar के पीछे है — दुनिया भर के ${games.length} क्लासिक ताश के खेल, 21+ वर्षों की सॉफ़्टवेयर कारीगरी से बने।`,
+    h1: 'Vanikar LLC के बारे में',
+    subtitle: 'सॉफ़्टवेयर कारीगरी के व्यापारी',
+    nameMeaning: 'तमिल — "व्यापारी · सौदागर · जो विनिमय से मूल्य रचता है"',
+    h2Name: 'एक कालातीत हुनर के लिए एक प्राचीन शब्द',
+    pName1: 'Vanikar तमिल से आया है, जो दुनिया की सबसे पुरानी जीवित भाषाओं में से एक है — और हमारे संस्थापकों की मातृभाषा। सहस्राब्दियों तक तमिल वणिकों ने दूर के समुद्र पार किए और भरोसेमंद व्यापार नेटवर्क बनाए — वे सिर्फ़ अपने माल के लिए नहीं, बल्कि हर सौदे के पीछे की ईमानदारी, कौशल और रिश्तों के लिए प्रसिद्ध थे।',
+    pName2: 'हमने यह नाम इसलिए चुना क्योंकि हम सॉफ़्टवेयर को भी इसी तरह देखते हैं: मूल्य का एक निष्पक्ष विनिमय — आपके भरोसे के बदले गहरी विशेषज्ञता और ईमानदार कारीगरी। पुराने ज़माने के व्यापारियों की तरह, हम ऐसी चीज़ें बनाते हैं जो दूर तक जाएँ और लंबे समय तक टिकें।',
+    h2Who: 'हम कौन हैं',
+    pWho: 'Vanikar LLC ऐसा सॉफ़्टवेयर बनाती है जो असल दुनिया की समस्याएँ हल करता है — इमर्सिव खेलों से लेकर AI-संचालित बुद्धिमान सिस्टम तक। स्टूडियो के पीछे बैंकिंग, रक्षा और एयरोस्पेस, और वैश्विक रिटेल के मिशन-क्रिटिकल प्लेटफ़ॉर्म पर 21+ वर्षों की पेशेवर सॉफ़्टवेयर इंजीनियरिंग है — ऐसे माहौल जहाँ सॉफ़्टवेयर को पहली बार में काम करना होता है, और उसके बाद हर बार। यही अनुशासन, जनरेटिव AI के व्यावहारिक अनुभव और गुणवत्ता पर कारीगर जैसे ध्यान के साथ, हम अपनी बनाई हर मेज़ पर लाते हैं।',
+    statYears: 'वर्षों की इंजीनियरिंग', statGames: 'ताश के खेल', statLive: 'आज खेलने योग्य', statDev: 'विकास में',
+    h2Building: 'हम यहाँ क्या बना रहे हैं',
+    pBuilding: `Card Games by Vanikar दुनिया के पसंदीदा ताश के खेलों के नाम हमारा प्रेम-पत्र है — ${games.length} खेल, हर महाद्वीप की परंपराओं से: High Card और Go Fish जैसे झटपट क्लासिक, Cribbage, Belote और Skat जैसे गहरी रणनीति वाले खेल, और Indian Rummy, Truco और Tiến Lên जैसे प्यारे क्षेत्रीय खेल। हर खेल के साथ मिलती है विस्तृत खेल गाइड, कई कठिनाई स्तरों वाले फुर्तीले AI प्रतिद्वंद्वी और पूरा ऑफ़लाइन सपोर्ट — निखरे हुए अनुभव जो मनोरंजन करते हैं, सिखाते हैं और लोगों को जोड़ते हैं।`,
+    h2How: 'यह कैसे काम करता है',
+    pHow: 'ऐप डाउनलोड करना मुफ़्त है, और आपके 2-सप्ताह के ट्रायल के दौरान हर खेल मुफ़्त है — खेलना शुरू करने के लिए न खाते की ज़रूरत, न क्रेडिट कार्ड की। ट्रायल के बाद, अपनी पसंद के कोई 5 खेल हमेशा के लिए मुफ़्त रखें (कंप्यूटर के विरुद्ध खेलने के लिए), या Premium लेकर सब कुछ अनलॉक करें: ऑनलाइन मल्टीप्लेयर, दोस्तों और परिवार के साथ निजी मेज़ें, और आने वाले सभी खेल और फ़ीचर जैसे-जैसे वे आएँ।',
+    pLang: 'ऐप फ़िलहाल अंग्रेज़ी में है, और भाषाएँ जल्द आ रही हैं।',
+    h2Touch: 'संपर्क करें',
+    pTouchPre: 'कोई सुझाव, बग रिपोर्ट, या कोई पसंदीदा ताश का खेल जो हमें अगली बार बनाना चाहिए? हमें आपसे सुनकर खुशी होगी:',
+    pTouchMid: '— या स्टूडियो के बारे में और जानें:',
+    linkGames: 'खेल देखें →', linkPricing: 'कीमतें देखें →',
+  },
+}[lang];
+---
+<BaseLayout
+  title={L.title}
+  description={L.description}
+>
+  <section class="legal-page about-page">
+    <div class="container-narrow">
+      <div class="legal-header">
+        <h1>{L.h1}</h1>
+        <p class="legal-date">{L.subtitle}</p>
+      </div>
+
+      <div class="legal-content">
+
+        <!-- The name -->
+        <div class="name-card">
+          <div class="name-script">வணிகர்</div>
+          <div class="name-translit">Vaṇikar</div>
+          <div class="name-meaning">{L.nameMeaning}</div>
+        </div>
+
+        <h2>{L.h2Name}</h2>
+        <p>{L.pName1}</p>
+        <p>{L.pName2}</p>
+
+        <h2>{L.h2Who}</h2>
+        <p>{L.pWho}</p>
+
+        <div class="about-stats">
+          <div class="about-stat">
+            <span class="about-stat-value">21+</span>
+            <span class="about-stat-label">{L.statYears}</span>
+          </div>
+          <div class="about-stat">
+            <span class="about-stat-value">{games.length}</span>
+            <span class="about-stat-label">{L.statGames}</span>
+          </div>
+          <div class="about-stat">
+            <span class="about-stat-value">{availableGames.length}</span>
+            <span class="about-stat-label">{L.statLive}</span>
+          </div>
+          <div class="about-stat">
+            <span class="about-stat-value">{comingSoonGames.length}</span>
+            <span class="about-stat-label">{L.statDev}</span>
+          </div>
+        </div>
+
+        <h2>{L.h2Building}</h2>
+        <p>{L.pBuilding}</p>
+
+        <h2>{L.h2How}</h2>
+        <p>{L.pHow}</p>
+        <p>{L.pLang}</p>
+
+        <h2>{L.h2Touch}</h2>
+        <p>
+          {L.pTouchPre}
+          <a href="mailto:info@vanikar.com">info@vanikar.com</a>
+          {L.pTouchMid}
+          <a href="https://vanikar.com" target="_blank" rel="noopener">vanikar.com</a>.
+        </p>
+
+        <p>
+          <a href={href('/games')}>{L.linkGames}</a><br/>
+          <a href={href('/pricing')}>{L.linkPricing}</a>
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .name-card {
+    text-align: center;
+    background: var(--bg-feature, rgba(255,255,255,.03));
+    border: 1px solid var(--gold-border, rgba(201,162,39,.35));
+    border-radius: var(--radius-lg, 14px);
+    padding: 2.25rem 1.5rem 1.75rem;
+    margin: 0 0 2.25rem;
+  }
+  .name-script {
+    font-size: clamp(2.4rem, 6vw, 3.4rem);
+    color: var(--gold-light, #e6c65c);
+    line-height: 1.2;
+  }
+  .name-translit {
+    font-family: 'Cinzel', serif;
+    font-size: 1.05rem; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--text-primary, #eee); margin-top: .5rem;
+  }
+  .name-meaning {
+    font-size: .85rem; color: var(--text-muted, #9aa);
+    margin-top: .45rem; font-style: italic;
+  }
+
+  .about-stats {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: .75rem; margin: 2rem 0 2.5rem;
+  }
+  .about-stat {
+    display: flex; flex-direction: column; align-items: center; text-align: center;
+    background: var(--gold-subtle, rgba(201,162,39,.07));
+    border: 1px solid var(--gold-border, rgba(201,162,39,.3));
+    border-radius: var(--radius-md, 10px);
+    padding: 1rem .5rem;
+  }
+  .about-stat-value {
+    font-family: 'Cinzel', serif; font-size: 1.6rem; font-weight: 700;
+    color: var(--gold-light, #e6c65c); line-height: 1;
+  }
+  .about-stat-label {
+    font-size: .68rem; color: var(--text-muted, #9aa);
+    text-transform: uppercase; letter-spacing: .1em; margin-top: .4rem;
+  }
+  @media (max-width: 560px) {
+    .about-stats { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>

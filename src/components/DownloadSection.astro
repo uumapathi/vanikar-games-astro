@@ -1,36 +1,75 @@
 ---
+import { getLocale, localizedHref } from '../i18n';
+
+const lang = getLocale(Astro.currentLocale);
+const href = (p: string) => localizedHref(p, lang);
+const copy = {
+  en: {
+    tag: '♠ Available Now', title: 'Deal Yourself In',
+    subtitle: 'Free to download on iOS and Android. No account required to start playing — just pick a game and go.',
+    iosLabel: 'Download on the', playLabel: 'Get it on', soon: 'Soon',
+    note: 'Free to play  ·  iOS 16+  ·  Android 9+  ·  In English — more languages coming soon',
+  },
+  es: {
+    tag: '♠ Disponible ahora', title: 'Reparte y juega',
+    subtitle: 'Descarga gratis en iOS y Android. No necesitas cuenta para empezar a jugar — elige un juego y listo.',
+    iosLabel: 'Descárgala en el', playLabel: 'Disponible en', soon: 'Pronto',
+    note: 'Gratis  ·  iOS 16+  ·  Android 9+  ·  En inglés — más idiomas próximamente',
+  },
+  pt: {
+    tag: '♠ Disponível agora', title: 'Entre na jogada',
+    subtitle: 'Baixe grátis no iOS e no Android. Não precisa de conta para começar a jogar — é só escolher um jogo e partir para a mesa.',
+    iosLabel: 'Baixar na', playLabel: 'Disponível no', soon: 'Em breve',
+    note: 'Grátis para jogar  ·  iOS 16+  ·  Android 9+  ·  Em inglês — mais idiomas em breve',
+  },
+  fr: {
+    tag: '♠ Disponible dès maintenant', title: 'À vous de jouer',
+    subtitle: 'Téléchargement gratuit sur iOS et Android. Aucun compte requis pour commencer — choisissez un jeu et lancez-vous.',
+    iosLabel: 'Télécharger dans l’', playLabel: 'Disponible sur', soon: 'Bientôt',
+    note: 'Gratuit  ·  iOS 16+  ·  Android 9+  ·  En anglais — d’autres langues arrivent bientôt',
+  },
+  de: {
+    tag: '♠ Jetzt verfügbar', title: 'Misch dich ein',
+    subtitle: 'Kostenlos für iOS und Android. Kein Konto nötig, um loszulegen — wähl einfach ein Spiel und spiel los.',
+    iosLabel: 'Laden im', playLabel: 'Jetzt bei', soon: 'Bald',
+    note: 'Kostenlos spielbar  ·  iOS 16+  ·  Android 9+  ·  Auf Englisch — weitere Sprachen folgen bald',
+  },
+  hi: {
+    tag: '♠ अभी उपलब्ध', title: 'खेल में शामिल हों',
+    subtitle: 'iOS और Android पर मुफ़्त डाउनलोड करें। खेलना शुरू करने के लिए अकाउंट की ज़रूरत नहीं — बस एक गेम चुनें और खेलना शुरू करें।',
+    iosLabel: 'डाउनलोड करें', playLabel: 'उपलब्ध है', soon: 'जल्द',
+    note: 'खेलने के लिए मुफ़्त  ·  iOS 16+  ·  Android 9+  ·  अंग्रेज़ी में — और भाषाएँ जल्द आ रही हैं',
+  },
+}[lang];
 ---
 <section class="download" id="download">
   <div class="container">
     <div class="section-header">
-      <div class="section-tag">♠ Available Now</div>
-      <h2 class="section-title">Deal Yourself In</h2>
-      <p class="section-subtitle">
-        Free to download on iOS and Android. No account required
-        to start playing — just pick a game and go.
-      </p>
+      <div class="section-tag">{copy.tag}</div>
+      <h2 class="section-title">{copy.title}</h2>
+      <p class="section-subtitle">{copy.subtitle}</p>
     </div>
 
     <div class="store-buttons">
-      <a href="/ios" class="btn-store" aria-label="Download on the App Store">
+      <a href={href('/ios')} class="btn-store" aria-label="Download on the App Store">
         <span class="btn-store-icon">&#xF8FF;</span>
         <div class="btn-store-text">
-          <span class="btn-store-label">Download on the</span>
+          <span class="btn-store-label">{copy.iosLabel}</span>
           <span class="btn-store-name">App Store</span>
         </div>
-        <span class="store-soon-pip">Soon</span>
+        <span class="store-soon-pip">{copy.soon}</span>
       </a>
-      <a href="/android" class="btn-store" aria-label="Get it on Google Play">
+      <a href={href('/android')} class="btn-store" aria-label="Get it on Google Play">
         <span class="btn-store-icon">▶</span>
         <div class="btn-store-text">
-          <span class="btn-store-label">Get it on</span>
+          <span class="btn-store-label">{copy.playLabel}</span>
           <span class="btn-store-name">Google Play</span>
         </div>
-        <span class="store-soon-pip">Soon</span>
+        <span class="store-soon-pip">{copy.soon}</span>
       </a>
     </div>
 
-    <p class="download-note">Free to play &nbsp;&middot;&nbsp; iOS 16+ &nbsp;&middot;&nbsp; Android 9+ &nbsp;&middot;&nbsp; In English — more languages coming soon</p>
+    <p class="download-note">{copy.note}</p>
   </div>
 </section>
 

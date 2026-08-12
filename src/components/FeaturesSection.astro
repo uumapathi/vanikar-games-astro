@@ -1,31 +1,164 @@
 ---
+import { getLocale, localizedHref } from '../i18n';
+
 /* Inner SVG markup per feature (24×24 viewBox, stroked) */
 const icons = {
-  globe:  '<circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/>',
+  create: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M12 8v8"/><path d="M8 12h8"/>',
+  join:   '<path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><path d="m10 17 5-5-5-5"/><path d="M15 12H3"/>',
   cpu:    '<rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M15 2v2M15 20v2M2 15h2M2 9h2M20 15h2M20 9h2M9 2v2M9 20v2"/>',
-  users:  '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
   shield: '<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>',
   trophy: '<path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>',
   medal:  '<path d="M7.21 15 2.66 7.14a2 2 0 0 1 .13-2.2L4.4 2.8A2 2 0 0 1 6 2h12a2 2 0 0 1 1.6.8l1.6 2.14a2 2 0 0 1 .14 2.2L16.79 15"/><path d="M11 12 5.12 2.2"/><path d="m13 12 5.88-9.8"/><path d="M8 7h8"/><circle cx="12" cy="17" r="5"/><path d="M12 18v-2h-.5"/>',
 };
 
-const classic = [
-  { icon:icons.globe,  cls:'icon-spade',   title:'Play Online',           desc:'Host multiplayer tables and challenge real opponents.', premium:true,
-    points:['Live public tables around the clock — join any open seat.','Matchmaking pairs you with opponents at your level.','In-game chat and emotes keep the table social.','Free during your 2-week trial, then part of Premium.'] },
-  { icon:icons.cpu,    cls:'icon-clubs',   title:'Practice with CPU',     desc:'Sharpen strategy offline with responsive AI opponents.', free:true,
-    points:['Multiple AI difficulty levels, from casual to cutthroat.','Play fully offline — no connection needed.','All games free during your 2-week trial.','After the trial: keep 5 games of your choice free forever for CPU play — no subscription needed.'] },
-  { icon:icons.users,  cls:'icon-diamond', title:'Join Friends & Family', desc:'Enter a table code and jump into a private room.', premium:true,
-    points:['Create a private table and share the code.','Invite-only — no strangers at your table.','Pick the game and set your own house rules.','Free during your 2-week trial, then part of Premium.'] },
-  { icon:icons.shield, cls:'icon-purple',  title:'Clubs & Leagues',       desc:'Create or join a club and compete in weekly league standings.', soon:true,
-    points:['Create a club, recruit members, and play together.','Club chat and shared tables.','Weekly league standings — every member’s results count.','Rise through the divisions together.'] },
-  { icon:icons.trophy, cls:'icon-trophy',  title:'Tournaments',           desc:"Compete in brackets, earn trophies, prove you're champion.", soon:true,
-    points:['Bracket-style knockouts with live standings.','Earn trophies and badges for deep runs.','Scheduled events across the game library.'] },
-];
-const multi = [
-  { icon:icons.medal,  cls:'icon-spade',   title:'Quick & Ranked Matches', desc:'Jump into a live table instantly and climb the global leaderboard.', soon:true,
-    points:['One tap drops you into the next open seat — no lobby, no setup.','Global and regional leaderboards for every game.','Seasonal rankings that reset monthly.','Rating and win streaks tracked on your profile.'] },
-];
-const all          = [...classic, ...multi];
+const lang = getLocale(Astro.currentLocale);
+const href = (p: string) => localizedHref(p, lang);
+
+const itemsByLang = {
+  en: [
+    { icon:icons.create, cls:'icon-spade',   title:'Create a Table',        desc:'Host your own table and deal in players from anywhere.', premium:true,
+      points:['Set up a table in seconds and get a shareable invite code.','Choose the game, the seats, and your house rules.','Fill empty seats with AI so the game always starts.','Free during your 2-week trial, then part of Premium.'] },
+    { icon:icons.cpu,    cls:'icon-clubs',   title:'Practice with CPU',     desc:'Sharpen strategy offline with responsive AI opponents.', free:true,
+      points:['Multiple AI difficulty levels, from casual to cutthroat.','Play fully offline — no connection needed.','All games free during your 2-week trial.','After the trial: keep 5 games of your choice free forever for CPU play — no subscription needed.'] },
+    { icon:icons.join,   cls:'icon-diamond', title:'Join a Table by Invite', desc:'Enter an invite code and take your seat in a private room.', premium:true,
+      points:["Enter a friend's code and you're at the table in seconds.",'Invite-only — no strangers at your table.','Play with friends and family wherever they are.','Free during your 2-week trial, then part of Premium.'] },
+    { icon:icons.shield, cls:'icon-purple',  title:'Clubs & Leagues',       desc:'Create or join a club and compete in weekly league standings.', soon:true,
+      points:['Create a club, recruit members, and play together.','Club chat and shared tables.','Weekly league standings — every member’s results count.','Rise through the divisions together.'] },
+    { icon:icons.trophy, cls:'icon-trophy',  title:'Tournaments',           desc:"Compete in brackets, earn trophies, prove you're champion.", soon:true,
+      points:['Bracket-style knockouts with live standings.','Earn trophies and badges for deep runs.','Scheduled events across the game library.'] },
+    { icon:icons.medal,  cls:'icon-spade',   title:'Quick & Ranked Matches', desc:'Jump into a live table instantly and climb the global leaderboard.', soon:true,
+      points:['One tap drops you into the next open seat — no lobby, no setup.','Global and regional leaderboards for every game.','Seasonal rankings that reset monthly.','Rating and win streaks tracked on your profile.'] },
+  ],
+  es: [
+    { icon:icons.create, cls:'icon-spade',   title:'Crea una mesa',           desc:'Organiza tu propia mesa y reparte con jugadores desde donde sea.', premium:true,
+      points:['Crea una mesa en segundos y obtén un código de invitación para compartir.','Elige el juego, los asientos y tus reglas de la casa.','Llena los asientos vacíos con IA para que la partida siempre empiece.','Gratis durante tu prueba de 2 semanas; después, parte de Premium.'] },
+    { icon:icons.cpu,    cls:'icon-clubs',   title:'Practica contra la IA',   desc:'Afina tu estrategia sin conexión contra oponentes de IA.', free:true,
+      points:['Varios niveles de dificultad, de casual a implacable.','Juega totalmente sin conexión — no necesitas internet.','Todos los juegos gratis durante tu prueba de 2 semanas.','Tras la prueba: conserva 5 juegos a tu elección gratis para siempre en modo IA — sin suscripción.'] },
+    { icon:icons.join,   cls:'icon-diamond', title:'Únete a una mesa por invitación', desc:'Ingresa un código de invitación y toma tu asiento en una sala privada.', premium:true,
+      points:['Ingresa el código de un amigo y estarás en la mesa en segundos.','Solo por invitación — sin extraños en tu mesa.','Juega con amigos y familia estén donde estén.','Gratis durante tu prueba de 2 semanas; después, parte de Premium.'] },
+    { icon:icons.shield, cls:'icon-purple',  title:'Clubes y ligas',          desc:'Crea o únete a un club y compite en ligas semanales.', soon:true,
+      points:['Crea un club, recluta miembros y jueguen juntos.','Chat de club y mesas compartidas.','Clasificación semanal de liga — cuentan los resultados de cada miembro.','Asciendan juntos de división.'] },
+    { icon:icons.trophy, cls:'icon-trophy',  title:'Torneos',                 desc:'Compite en llaves, gana trofeos y demuestra que eres campeón.', soon:true,
+      points:['Eliminatorias tipo llave con posiciones en vivo.','Gana trofeos e insignias por llegar lejos.','Eventos programados en toda la biblioteca de juegos.'] },
+    { icon:icons.medal,  cls:'icon-spade',   title:'Partidas rápidas y clasificatorias', desc:'Entra a una mesa en vivo al instante y sube en la clasificación global.', soon:true,
+      points:['Un toque te lleva al siguiente asiento libre — sin lobby, sin preparación.','Clasificaciones globales y regionales para cada juego.','Temporadas que se reinician cada mes.','Puntuación y rachas de victorias registradas en tu perfil.'] },
+  ],
+  pt: [
+    { icon:icons.create, cls:'icon-spade',   title:'Crie uma mesa',           desc:'Monte sua própria mesa e reparta as cartas com jogadores de qualquer lugar.', premium:true,
+      points:['Crie uma mesa em segundos e receba um código de convite para compartilhar.','Escolha o jogo, os assentos e suas regras da casa.','Preencha os assentos vazios com IA para a partida sempre começar.','Grátis durante seu teste de 2 semanas; depois, parte do Premium.'] },
+    { icon:icons.cpu,    cls:'icon-clubs',   title:'Pratique contra a CPU',   desc:'Aprimore sua estratégia offline contra oponentes de IA ágeis.', free:true,
+      points:['Vários níveis de dificuldade de IA, do casual ao implacável.','Jogue totalmente offline — sem precisar de conexão.','Todos os jogos grátis durante seu teste de 2 semanas.','Após o teste: mantenha 5 jogos à sua escolha grátis para sempre no modo CPU — sem assinatura.'] },
+    { icon:icons.join,   cls:'icon-diamond', title:'Entre em uma mesa por convite', desc:'Digite um código de convite e ocupe seu lugar em uma sala privada.', premium:true,
+      points:['Digite o código de um amigo e você estará na mesa em segundos.','Somente por convite — sem estranhos na sua mesa.','Jogue com amigos e família onde quer que estejam.','Grátis durante seu teste de 2 semanas; depois, parte do Premium.'] },
+    { icon:icons.shield, cls:'icon-purple',  title:'Clubes e ligas',          desc:'Crie ou entre em um clube e dispute a classificação semanal da liga.', soon:true,
+      points:['Crie um clube, recrute membros e joguem juntos.','Chat do clube e mesas compartilhadas.','Classificação semanal da liga — os resultados de cada membro contam.','Subam de divisão juntos.'] },
+    { icon:icons.trophy, cls:'icon-trophy',  title:'Torneios',                desc:'Dispute chaves, ganhe troféus e prove que você é campeão.', soon:true,
+      points:['Eliminatórias em chaves com classificação ao vivo.','Ganhe troféus e emblemas por campanhas longas.','Eventos programados em toda a biblioteca de jogos.'] },
+    { icon:icons.medal,  cls:'icon-spade',   title:'Partidas rápidas e ranqueadas', desc:'Entre em uma mesa ao vivo na hora e suba no ranking global.', soon:true,
+      points:['Um toque coloca você no próximo assento livre — sem lobby, sem preparação.','Rankings globais e regionais para cada jogo.','Temporadas que reiniciam todo mês.','Pontuação e sequências de vitórias registradas no seu perfil.'] },
+  ],
+  fr: [
+    { icon:icons.create, cls:'icon-spade',   title:'Créez une table',         desc:'Ouvrez votre propre table et distribuez les cartes à des joueurs où qu’ils soient.', premium:true,
+      points:['Créez une table en quelques secondes et recevez un code d’invitation à partager.','Choisissez le jeu, les places et vos règles maison.','Complétez les places vides avec l’IA pour que la partie démarre toujours.','Gratuit pendant votre essai de 2 semaines, puis inclus dans Premium.'] },
+    { icon:icons.cpu,    cls:'icon-clubs',   title:'Entraînez-vous contre l’IA', desc:'Affûtez votre stratégie hors ligne face à des adversaires IA réactifs.', free:true,
+      points:['Plusieurs niveaux de difficulté d’IA, du décontracté à l’impitoyable.','Jouez entièrement hors ligne — aucune connexion requise.','Tous les jeux gratuits pendant votre essai de 2 semaines.','Après l’essai : gardez 5 jeux de votre choix gratuits à vie en mode IA — sans abonnement.'] },
+    { icon:icons.join,   cls:'icon-diamond', title:'Rejoignez une table sur invitation', desc:'Saisissez un code d’invitation et prenez place dans un salon privé.', premium:true,
+      points:['Saisissez le code d’un ami et vous êtes à table en quelques secondes.','Sur invitation uniquement — pas d’inconnus à votre table.','Jouez avec vos amis et votre famille, où qu’ils soient.','Gratuit pendant votre essai de 2 semaines, puis inclus dans Premium.'] },
+    { icon:icons.shield, cls:'icon-purple',  title:'Clubs et ligues',         desc:'Créez ou rejoignez un club et disputez le classement hebdomadaire de la ligue.', soon:true,
+      points:['Créez un club, recrutez des membres et jouez ensemble.','Chat de club et tables partagées.','Classement de ligue hebdomadaire — les résultats de chaque membre comptent.','Grimpez les divisions ensemble.'] },
+    { icon:icons.trophy, cls:'icon-trophy',  title:'Tournois',                desc:'Affrontez-vous en tableaux, gagnez des trophées et prouvez que vous êtes champion.', soon:true,
+      points:['Éliminations directes en tableaux avec classement en direct.','Gagnez trophées et badges pour vos beaux parcours.','Des événements programmés dans toute la bibliothèque de jeux.'] },
+    { icon:icons.medal,  cls:'icon-spade',   title:'Parties rapides et classées', desc:'Rejoignez une table en direct instantanément et grimpez au classement mondial.', soon:true,
+      points:['Un seul geste vous place au prochain siège libre — pas de lobby, pas de préparation.','Classements mondiaux et régionaux pour chaque jeu.','Des saisons classées qui se réinitialisent chaque mois.','Score et séries de victoires suivis sur votre profil.'] },
+  ],
+  de: [
+    { icon:icons.create, cls:'icon-spade',   title:'Erstelle einen Tisch',    desc:'Eröffne deinen eigenen Tisch und teile Karten an Spieler von überall aus.', premium:true,
+      points:['Erstelle in Sekunden einen Tisch und erhalte einen teilbaren Einladungscode.','Wähle Spiel, Plätze und deine Hausregeln.','Fülle leere Plätze mit KI, damit die Partie immer startet.','Kostenlos während deiner 2-wöchigen Testphase, danach Teil von Premium.'] },
+    { icon:icons.cpu,    cls:'icon-clubs',   title:'Gegen die KI üben',       desc:'Schärfe deine Strategie offline gegen reaktionsschnelle KI-Gegner.', free:true,
+      points:['Mehrere KI-Schwierigkeitsgrade, von locker bis gnadenlos.','Spiele komplett offline — keine Verbindung nötig.','Alle Spiele kostenlos während deiner 2-wöchigen Testphase.','Nach der Testphase: Behalte 5 Spiele deiner Wahl für immer kostenlos im KI-Modus — ganz ohne Abo.'] },
+    { icon:icons.join,   cls:'icon-diamond', title:'Tritt per Einladung bei', desc:'Gib einen Einladungscode ein und nimm an einem privaten Tisch Platz.', premium:true,
+      points:['Gib den Code eines Freundes ein und du sitzt in Sekunden am Tisch.','Nur auf Einladung — keine Fremden an deinem Tisch.','Spiel mit Freunden und Familie, egal wo sie sind.','Kostenlos während deiner 2-wöchigen Testphase, danach Teil von Premium.'] },
+    { icon:icons.shield, cls:'icon-purple',  title:'Clubs & Ligen',           desc:'Gründe einen Club oder tritt einem bei und kämpfe um die wöchentliche Ligawertung.', soon:true,
+      points:['Gründe einen Club, wirb Mitglieder an und spielt zusammen.','Club-Chat und gemeinsame Tische.','Wöchentliche Ligawertung — die Ergebnisse jedes Mitglieds zählen.','Steigt gemeinsam durch die Divisionen auf.'] },
+    { icon:icons.trophy, cls:'icon-trophy',  title:'Turniere',                desc:'Tritt in Turnierbäumen an, hol dir Trophäen und beweise, dass du Champion bist.', soon:true,
+      points:['K.-o.-Runden im Turnierbaum mit Live-Tabellen.','Verdiene Trophäen und Abzeichen für weite Turnierläufe.','Geplante Events quer durch die Spielebibliothek.'] },
+    { icon:icons.medal,  cls:'icon-spade',   title:'Schnelle & gewertete Matches', desc:'Spring sofort an einen Live-Tisch und klettere die globale Rangliste hoch.', soon:true,
+      points:['Ein Tipp bringt dich zum nächsten freien Platz — keine Lobby, kein Setup.','Globale und regionale Ranglisten für jedes Spiel.','Saisonwertungen, die monatlich zurückgesetzt werden.','Wertung und Siegesserien werden in deinem Profil festgehalten.'] },
+  ],
+  hi: [
+    { icon:icons.create, cls:'icon-spade',   title:'टेबल बनाएँ',              desc:'अपनी खुद की टेबल होस्ट करें और कहीं से भी खिलाड़ियों को शामिल करें।', premium:true,
+      points:['सेकंडों में टेबल बनाएँ और शेयर करने योग्य इनवाइट कोड पाएँ।','गेम, सीटें और घर के नियम खुद चुनें।','खाली सीटें AI से भरें ताकि खेल हमेशा शुरू हो सके।','2 हफ़्ते के ट्रायल में मुफ़्त, उसके बाद Premium का हिस्सा।'] },
+    { icon:icons.cpu,    cls:'icon-clubs',   title:'CPU के साथ अभ्यास करें',   desc:'तेज़-तर्रार AI खिलाड़ियों के साथ ऑफ़लाइन रणनीति निखारें।', free:true,
+      points:['कैज़ुअल से लेकर कड़े मुक़ाबले तक, कई AI कठिनाई स्तर।','पूरी तरह ऑफ़लाइन खेलें — इंटरनेट की ज़रूरत नहीं।','2 हफ़्ते के ट्रायल में सभी गेम मुफ़्त।','ट्रायल के बाद: अपनी पसंद के 5 गेम CPU मोड में हमेशा के लिए मुफ़्त रखें — कोई सब्सक्रिप्शन नहीं।'] },
+    { icon:icons.join,   cls:'icon-diamond', title:'इनवाइट से टेबल जॉइन करें', desc:'इनवाइट कोड डालें और प्राइवेट रूम में अपनी सीट लें।', premium:true,
+      points:['दोस्त का कोड डालें और सेकंडों में टेबल पर पहुँच जाएँ।','सिर्फ़ आमंत्रण से — आपकी टेबल पर कोई अजनबी नहीं।','दोस्तों और परिवार के साथ खेलें, चाहे वे कहीं भी हों।','2 हफ़्ते के ट्रायल में मुफ़्त, उसके बाद Premium का हिस्सा।'] },
+    { icon:icons.shield, cls:'icon-purple',  title:'क्लब और लीग',             desc:'क्लब बनाएँ या उसमें शामिल हों और साप्ताहिक लीग स्टैंडिंग में मुक़ाबला करें।', soon:true,
+      points:['क्लब बनाएँ, सदस्य जोड़ें और साथ खेलें।','क्लब चैट और साझा टेबल।','साप्ताहिक लीग स्टैंडिंग — हर सदस्य के नतीजे गिने जाते हैं।','साथ मिलकर डिवीज़नों में ऊपर चढ़ें।'] },
+    { icon:icons.trophy, cls:'icon-trophy',  title:'टूर्नामेंट',               desc:'ब्रैकेट में मुक़ाबला करें, ट्रॉफ़ियाँ जीतें और साबित करें कि चैंपियन आप हैं।', soon:true,
+      points:['लाइव स्टैंडिंग के साथ ब्रैकेट-स्टाइल नॉकआउट।','आगे तक पहुँचने पर ट्रॉफ़ियाँ और बैज पाएँ।','पूरी गेम लाइब्रेरी में तयशुदा इवेंट।'] },
+    { icon:icons.medal,  cls:'icon-spade',   title:'क्विक और रैंक्ड मैच',      desc:'तुरंत लाइव टेबल में उतरें और ग्लोबल लीडरबोर्ड पर चढ़ें।', soon:true,
+      points:['एक टैप में अगली खाली सीट आपकी — न लॉबी, न सेटअप।','हर गेम के लिए ग्लोबल और क्षेत्रीय लीडरबोर्ड।','सीज़नल रैंकिंग जो हर महीने रीसेट होती है।','रेटिंग और जीत की लय आपकी प्रोफ़ाइल पर दर्ज।'] },
+  ],
+};
+
+const copy = {
+  en: {
+    tag: '♣ How do you want to play?', title: 'Pick Your Game Mode',
+    subtitle: "Jump into solo practice, go live in multiplayer, or join a friend's table.",
+    availableNow: 'Available Now', comingSoon: 'Coming Soon',
+    chipPremium: 'Premium', chipFree: 'Free',
+    linkSoon: 'Premium subscribers get access first →',
+    linkPremium: 'Included with Premium — try free for 2 weeks →',
+    linkFree: 'Get the app free →',
+  },
+  es: {
+    tag: '♣ ¿Cómo quieres jugar?', title: 'Elige tu modo de juego',
+    subtitle: 'Practica en solitario, juega en vivo en multijugador o únete a la mesa de un amigo.',
+    availableNow: 'Disponible ahora', comingSoon: 'Próximamente',
+    chipPremium: 'Premium', chipFree: 'Gratis',
+    linkSoon: 'Los suscriptores Premium acceden primero →',
+    linkPremium: 'Incluido con Premium — pruébalo gratis por 2 semanas →',
+    linkFree: 'Descarga la app gratis →',
+  },
+  pt: {
+    tag: '♣ Como você quer jogar?', title: 'Escolha seu modo de jogo',
+    subtitle: 'Pratique sozinho, jogue ao vivo no multijogador ou entre na mesa de um amigo.',
+    availableNow: 'Disponível agora', comingSoon: 'Em breve',
+    chipPremium: 'Premium', chipFree: 'Grátis',
+    linkSoon: 'Assinantes Premium têm acesso primeiro →',
+    linkPremium: 'Incluído no Premium — teste grátis por 2 semanas →',
+    linkFree: 'Baixe o app grátis →',
+  },
+  fr: {
+    tag: '♣ Comment voulez-vous jouer ?', title: 'Choisissez votre mode de jeu',
+    subtitle: 'Entraînez-vous en solo, jouez en direct en multijoueur ou rejoignez la table d’un ami.',
+    availableNow: 'Disponible maintenant', comingSoon: 'Bientôt disponible',
+    chipPremium: 'Premium', chipFree: 'Gratuit',
+    linkSoon: 'Les abonnés Premium y accèdent en premier →',
+    linkPremium: 'Inclus avec Premium — essai gratuit de 2 semaines →',
+    linkFree: 'Téléchargez l’app gratuitement →',
+  },
+  de: {
+    tag: '♣ Wie willst du spielen?', title: 'Wähl deinen Spielmodus',
+    subtitle: 'Übe solo, spiel live im Multiplayer oder setz dich an den Tisch eines Freundes.',
+    availableNow: 'Jetzt verfügbar', comingSoon: 'Demnächst',
+    chipPremium: 'Premium', chipFree: 'Kostenlos',
+    linkSoon: 'Premium-Abonnenten erhalten zuerst Zugang →',
+    linkPremium: 'In Premium enthalten — 2 Wochen gratis testen →',
+    linkFree: 'Hol dir die App kostenlos →',
+  },
+  hi: {
+    tag: '♣ आप कैसे खेलना चाहते हैं?', title: 'अपना गेम मोड चुनें',
+    subtitle: 'अकेले अभ्यास करें, मल्टीप्लेयर में लाइव खेलें या किसी दोस्त की टेबल से जुड़ें।',
+    availableNow: 'अभी उपलब्ध', comingSoon: 'जल्द आ रहा है',
+    chipPremium: 'Premium', chipFree: 'मुफ़्त',
+    linkSoon: 'Premium सब्सक्राइबर्स को सबसे पहले एक्सेस →',
+    linkPremium: 'Premium में शामिल — 2 हफ़्ते मुफ़्त आज़माएँ →',
+    linkFree: 'ऐप मुफ़्त पाएँ →',
+  },
+}[lang];
+
+const all          = itemsByLang[lang];
 const availableNow = all.filter(f => !f.soon);
 const comingSoon   = all.filter(f =>  f.soon);
 ---
@@ -33,14 +166,12 @@ const comingSoon   = all.filter(f =>  f.soon);
 <section class="features" id="features">
   <div class="container">
     <div class="section-header">
-      <div class="section-tag">♣ How do you want to play?</div>
-      <h2 class="section-title">Pick Your Game Mode</h2>
-      <p class="section-subtitle">
-        Jump into solo practice, go live in multiplayer, or join a friend's table.
-      </p>
+      <div class="section-tag">{copy.tag}</div>
+      <h2 class="section-title">{copy.title}</h2>
+      <p class="section-subtitle">{copy.subtitle}</p>
     </div>
 
-    <div class="group-label">Available Now</div>
+    <div class="group-label">{copy.availableNow}</div>
     <div class="features-list">
       {availableNow.map(f => (
         <div class="feature-card">
@@ -53,8 +184,8 @@ const comingSoon   = all.filter(f =>  f.soon);
             <div class="feature-text">
               <div class="feature-title">
                 {f.title}
-                {f.premium && <span class="plan-chip plan-chip--premium">Premium</span>}
-                {f.free && <span class="plan-chip plan-chip--free">Free</span>}
+                {f.premium && <span class="plan-chip plan-chip--premium">{copy.chipPremium}</span>}
+                {f.free && <span class="plan-chip plan-chip--free">{copy.chipFree}</span>}
               </div>
               <div class="feature-desc">{f.desc}</div>
             </div>
@@ -65,16 +196,16 @@ const comingSoon   = all.filter(f =>  f.soon);
               {f.points.map(p => <li>{p}</li>)}
             </ul>
             {f.soon
-              ? <a class="feature-link" href="/pricing">Premium subscribers get access first →</a>
+              ? <a class="feature-link" href={href('/pricing')}>{copy.linkSoon}</a>
               : f.premium
-                ? <a class="feature-link" href="/pricing">Included with Premium — try free for 2 weeks →</a>
-                : <a class="feature-link" href="#download">Get the app free →</a>}
+                ? <a class="feature-link" href={href('/pricing')}>{copy.linkPremium}</a>
+                : <a class="feature-link" href="#download">{copy.linkFree}</a>}
           </div>
         </div>
       ))}
     </div>
 
-    <div class="group-label group-label--soon">Coming Soon</div>
+    <div class="group-label group-label--soon">{copy.comingSoon}</div>
     <div class="features-list">
       {comingSoon.map(f => (
         <div class="feature-card">
@@ -87,8 +218,8 @@ const comingSoon   = all.filter(f =>  f.soon);
             <div class="feature-text">
               <div class="feature-title">
                 {f.title}
-                {f.premium && <span class="plan-chip plan-chip--premium">Premium</span>}
-                {f.free && <span class="plan-chip plan-chip--free">Free</span>}
+                {f.premium && <span class="plan-chip plan-chip--premium">{copy.chipPremium}</span>}
+                {f.free && <span class="plan-chip plan-chip--free">{copy.chipFree}</span>}
               </div>
               <div class="feature-desc">{f.desc}</div>
             </div>
@@ -99,10 +230,10 @@ const comingSoon   = all.filter(f =>  f.soon);
               {f.points.map(p => <li>{p}</li>)}
             </ul>
             {f.soon
-              ? <a class="feature-link" href="/pricing">Premium subscribers get access first →</a>
+              ? <a class="feature-link" href={href('/pricing')}>{copy.linkSoon}</a>
               : f.premium
-                ? <a class="feature-link" href="/pricing">Included with Premium — try free for 2 weeks →</a>
-                : <a class="feature-link" href="#download">Get the app free →</a>}
+                ? <a class="feature-link" href={href('/pricing')}>{copy.linkPremium}</a>
+                : <a class="feature-link" href="#download">{copy.linkFree}</a>}
           </div>
         </div>
       ))}
