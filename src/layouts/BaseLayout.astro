@@ -10,10 +10,12 @@ interface Props {
 }
 
 const {
-  title       = 'Card Games by Vanikar – Classic Card Tables, Beautifully Reimagined',
-  description = 'Play 11 classic card games online or offline, with 22 more in development. Challenge real opponents, practice with smart AI, join private tables, build clubs, and compete in live tournaments.',
+  title       = 'Online Card Games – Hearts, Spades, Rummy & More | Vanikar',
+  description = 'Play classic card games online or offline with Vanikar. Enjoy Hearts, Spades, Gin Rummy, Cribbage, Big Two, Indian Rummy and more against AI, friends or online players.',
   gaId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID,
 } = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 <!doctype html>
 <html lang="en">
@@ -23,10 +25,14 @@ const {
   <meta name="theme-color" content="#0d1a0d" />
   <title>{title}</title>
   <meta name="description" content={description} />
+  <link rel="canonical" href={canonicalURL} />
   <meta property="og:title"       content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:type"        content="website" />
+  <meta property="og:url"         content={canonicalURL} />
+  <meta property="og:site_name"   content="Vanikar Card Games" />
   <meta name="twitter:card"       content="summary_large_image" />
+  <slot name="head" />
 
   {gaId && (
       <>
