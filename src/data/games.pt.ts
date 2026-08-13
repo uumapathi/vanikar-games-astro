@@ -32,7 +32,7 @@ export const gamesPt: Record<string, GameOverlay> = {
   '29-game':        { name: 'Jogo 29',        tagline: 'Aposte até 29 — faça mais pontos para cumprir o contrato.' },
   'seep':           { name: 'Seep',           tagline: 'Capture cartas iguais da mesa — as varridas valem muitos pontos.' },
   'indian-rummy':   { name: 'Rummy Indiano',  tagline: 'Forme sequências e trincas — a sequência pura é inegociável.' },
-  'indian-jackass': { name: 'Indian Jackass', tagline: 'Guerra com uma pegada — não fique preso com os Valetes.' },
+  'indian-jackass': { name: 'Indian Jackass', tagline: 'Descarte todas as cartas — quem ficar com cartas por último perde.' },
   'whist':          { name: 'Whist',          tagline: 'O ancestral do Bridge — siga o naipe e vença as vazas.' },
   'durak':          { name: 'Durak',          tagline: 'Ataque, defenda ou seja o Bobo.' },
   'scopa':          { name: 'Scopa',          tagline: 'Varra a mesa — o jogo de cartas italiano das capturas astutas.' },
