@@ -1,0 +1,10 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.vanikar.cardgames",
+    "sha256_cert_fingerprints": [
+      "95:BF:03:B3:7B:44:F6:AF:C5:F7:F1:89:5C:73:6C:03:DD:14:91:00:70:14:61:F7:17:C5:DE:3B:12:28:10:AF"
+    ]
+  }
+}]

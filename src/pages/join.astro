@@ -1,0 +1,83 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="Join a table — Card Games by Vanikar"
+  description="You've been invited to a Vanikar Card Games table. Open the app and enter the table code to join your friends."
+>
+  <!-- One-off invite URLs: keep them out of search results. -->
+  <meta slot="head" name="robots" content="noindex" />
+
+  <div class="join-page">
+    <div class="container">
+      <a href="/" class="back-link">← Back to Vanikar Games</a>
+
+      <div class="join-card">
+        <h1>You've been invited to a table 🎉</h1>
+
+        <p class="join-label">Table code</p>
+        <p id="join-code" class="join-code" title="Tap to copy">…</p>
+        <p id="copy-hint" class="join-hint">Tap the code to copy it.</p>
+
+        <div class="join-steps">
+          <p>Already have the app? This link should have opened it. Otherwise:</p>
+          <ol>
+            <li>Open <strong>Card Games</strong></li>
+            <li>Tap <strong>Join Friends and Family → Join by code</strong></li>
+            <li>Enter the code above</li>
+          </ol>
+        </div>
+
+        <div class="join-stores">
+          <a class="store-btn" href="/android">▶ Get it on Android</a>
+          <a class="store-btn" href="/ios"> Get it on iOS</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script is:inline>
+    const codeEl = document.getElementById('join-code');
+    const hintEl = document.getElementById('copy-hint');
+    const code   = (new URLSearchParams(location.search).get('code') || '').trim().toUpperCase();
+
+    if (code) {
+      codeEl.textContent = code;
+      codeEl.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(code);
+          hintEl.textContent = 'Copied!';
+        } catch { /* clipboard unavailable (http / old browser) — hint stays as-is */ }
+      });
+    } else {
+      codeEl.textContent = '—';
+      hintEl.textContent = 'This invite link is missing its table code. Ask your friend to resend it.';
+    }
+  </script>
+
+  <style>
+    .join-page { padding: 4rem 0 6rem; min-height: 60vh; }
+    .back-link { display: inline-block; margin-bottom: 2rem; opacity: .8; }
+    .join-card {
+      max-width: 560px; margin: 0 auto; text-align: center;
+      padding: 2.5rem 2rem; border-radius: 20px;
+      background: rgba(255, 255, 255, .04);
+      border: 1px solid rgba(255, 255, 255, .1);
+    }
+    .join-card h1 { font-size: 1.6rem; margin-bottom: 2rem; }
+    .join-label { text-transform: uppercase; letter-spacing: .1em; font-size: .8rem; opacity: .7; }
+    .join-code {
+      font-size: 2.6rem; font-weight: 800; letter-spacing: .18em;
+      margin: .3rem 0 .2rem; cursor: pointer; user-select: all;
+    }
+    .join-hint { font-size: .8rem; opacity: .6; margin-bottom: 2rem; }
+    .join-steps { text-align: left; display: inline-block; margin-bottom: 2rem; font-size: .95rem; }
+    .join-steps ol { margin: .5rem 0 0 1.2rem; }
+    .join-steps li { margin: .3rem 0; }
+    .join-stores { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .store-btn {
+      padding: .8rem 1.4rem; border-radius: 12px; font-weight: 600;
+      border: 1px solid rgba(255, 255, 255, .25);
+    }
+  </style>
+</BaseLayout>

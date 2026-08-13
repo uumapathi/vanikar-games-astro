@@ -5,6 +5,8 @@ export default defineConfig({
   site: 'https://vanikar.games',
   integrations: [
     sitemap({
+      // /join is a one-off invite landing page (noindex) — keep it out of the sitemap.
+      filter: page => !page.includes('/join'),
       i18n: {
         defaultLocale: 'en',
         locales: { en: 'en', es: 'es', pt: 'pt', fr: 'fr', de: 'de', hi: 'hi' },

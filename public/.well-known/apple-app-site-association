@@ -1,0 +1,4 @@
+{ "applinks": { "details": [{
+    "appIDs": ["TEAMID.com.vanikar.cardgames"],
+    "components": [{ "/": "/join*" }]
+}]}}
