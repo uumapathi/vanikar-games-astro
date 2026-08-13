@@ -17,6 +17,13 @@ export interface Screenshot {
   caption: string;
 }
 
+/** A how-to-play YouTube video embedded on the game page */
+export interface GameVideo {
+  youtubeId: string;
+  /** Optional start offset in seconds */
+  start?:    number;
+}
+
 export interface Game {
   slug:           string;
   name:           string;
@@ -42,6 +49,8 @@ export interface Game {
   playGuide?:     PlayGuideSection[];
   /** In-app screenshots shown on the game page */
   screenshots?:   Screenshot[];
+  /** How-to-play YouTube video embedded on the game page */
+  video?:         GameVideo;
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -146,6 +155,7 @@ const universalGames: Game[] = [
   {
     slug: 'bluff',
     name: 'Bluff',
+    video: { youtubeId: 'DS2vSffV1co' },
     alternateNames: ['Cheat', 'BS', 'I Doubt It', 'Liar'],
     tagline: 'Lie, challenge, and get rid of your cards.',
     icon: '🎭',
@@ -397,6 +407,7 @@ const northAmericaGames: Game[] = [
   {
     slug: 'hearts',
     name: 'Hearts',
+    video: { youtubeId: '3Pj7y_vOs7Q' },
     tagline: 'Avoid the hearts — and beware the Queen of Spades.',
     icon: '♥',
     players: '4 players', playerCount: '4',
@@ -468,6 +479,7 @@ const northAmericaGames: Game[] = [
   {
     slug: 'spades',
     name: 'Spades',
+    video: { youtubeId: '6pVvbbpbrlk' },
     tagline: 'Bid smart. Spades are always trump.',
     icon: '♠',
     players: '4 players (2 teams)', playerCount: '4',
@@ -539,6 +551,7 @@ const northAmericaGames: Game[] = [
   {
     slug: 'gin-rummy',
     name: 'Gin Rummy',
+    video: { youtubeId: 'Uy063oI9Gkk' },
     tagline: 'Knock before they do.',
     icon: '🍸',
     players: '2 players', playerCount: '2',
@@ -639,6 +652,7 @@ const northAmericaGames: Game[] = [
   {
     slug: 'cribbage',
     name: 'Cribbage',
+    video: { youtubeId: 'bzRHjdS2VAE' },
     tagline: 'Peg your way to 121 — every combination counts.',
     icon: '📌',
     players: '2 players', playerCount: '2',
@@ -937,6 +951,7 @@ const asiaGames: Game[] = [
   },
   {
     slug: 'big-two',
+    video: { youtubeId: 'U28DKiVQpVM', start: 25 },
     name: 'Big Two',
     alternateNames: ['大老二', 'Deuces', 'Cho Dai Di', 'Pusoy Dos (Philippines)'],
     tagline: 'The 2 rules — race to empty your hand.',
@@ -1140,6 +1155,7 @@ const indiaGames: Game[] = [
   },
   {
     slug: 'indian-rummy',
+    video: { youtubeId: 'M_9aW1ZGgS4' },
     name: 'Indian Rummy',
     alternateNames: ['Paplu', '13-Card Rummy', 'Rummy (India)'],
     tagline: 'Form sequences and sets — a pure sequence is non-negotiable.',
@@ -1318,6 +1334,7 @@ const euGames: Game[] = [
   },
   {
     slug: 'durak',
+    video: { youtubeId: '3JagmUmUJOc', start: 145 },
     name: 'Durak',
     alternateNames: ['Дурак', 'Fool'],
     tagline: 'Attack, defend, or be the Fool.',
@@ -1423,6 +1440,7 @@ const euGames: Game[] = [
   },
   {
     slug: 'belote',
+    video: { youtubeId: 'xWzdW8JkDFA' },
     name: 'Belote',
     alternateNames: ['Belot', 'Bleot', 'Baloot (Arabic)'],
     tagline: 'France\'s national card game — bid, trump, and Coinché.',

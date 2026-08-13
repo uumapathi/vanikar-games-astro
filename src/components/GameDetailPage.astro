@@ -439,6 +439,19 @@ const L = {
 const faqs    = L.faqs;
 const pageUrl = `https://vanikar.games${localizePath(`/games/${game.slug}`, lang)}/`;
 
+/* ── How-to-play video embed ─────────────────────────────────────── */
+const videoHeading = {
+  en: `🎬 Watch: How to Play ${n}`,
+  es: `🎬 Vídeo: cómo jugar ${n}`,
+  pt: `🎬 Vídeo: como jogar ${n}`,
+  fr: `🎬 Vidéo : comment jouer à ${n}`,
+  de: `🎬 Video: So spielst du ${n}`,
+  hi: `🎬 वीडियो: ${n} कैसे खेलें`,
+}[lang];
+const videoSrc = game.video
+  ? `https://www.youtube-nocookie.com/embed/${game.video.youtubeId}${game.video.start ? `?start=${game.video.start}` : ''}`
+  : null;
+
 const jsonLd = [
   {
     '@context': 'https://schema.org',
@@ -579,6 +592,22 @@ const jsonLd = [
             {game.gameplay.map(step => <li>{step}</li>)}
           </ol>
         </div>
+
+        {videoSrc && (
+          <div class="game-section">
+            <h2>{videoHeading}</h2>
+            <div class="video-frame">
+              <iframe
+                src={videoSrc}
+                title={videoHeading}
+                loading="lazy"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen
+              ></iframe>
+            </div>
+          </div>
+        )}
 
         {game.playGuide && (
           <div class="game-section">
@@ -745,6 +774,16 @@ const jsonLd = [
     display: grid; grid-template-columns: 1fr 320px; gap: 3rem; align-items: start;
   }
   .game-section { margin-bottom: 2.5rem; }
+
+  /* Video embed */
+  .video-frame {
+    position: relative; aspect-ratio: 16 / 9;
+    border-radius: var(--radius-lg); overflow: hidden;
+    border: 1px solid var(--border); background: #000;
+  }
+  .video-frame iframe {
+    position: absolute; inset: 0; width: 100%; height: 100%; border: 0;
+  }
   .game-section h2 {
     font-size: 1.15rem; color: var(--text-primary); margin-bottom: .85rem;
     padding-bottom: .5rem; border-bottom: 1px solid var(--border);
