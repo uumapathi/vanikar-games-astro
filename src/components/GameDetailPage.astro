@@ -451,6 +451,14 @@ const videoHeading = {
 const videoSrc = game.video
   ? `https://www.youtube-nocookie.com/embed/${game.video.youtubeId}${game.video.start ? `?start=${game.video.start}` : ''}`
   : null;
+const videoDisclaimer = {
+  en: 'This video is embedded from YouTube and remains the intellectual property of its respective creator and/or rights holder. Vanikar LLC claims no ownership of, or rights in, the video content, and no affiliation with or endorsement by its creator is implied. The video is displayed via YouTube’s public embed feature in accordance with the YouTube Terms of Service and the agreements between YouTube and the content uploader.',
+  es: 'Este vídeo se muestra desde YouTube y sigue siendo propiedad intelectual de su creador o titular de derechos correspondiente. Vanikar LLC no reclama ninguna titularidad ni derecho sobre este contenido, y no se implica afiliación alguna con su creador ni respaldo por su parte. El vídeo se reproduce mediante la función pública de inserción de YouTube, de conformidad con las Condiciones del Servicio de YouTube y los acuerdos entre YouTube y quien subió el contenido.',
+  pt: 'Este vídeo é exibido a partir do YouTube e permanece propriedade intelectual do respectivo criador e/ou detentor dos direitos. A Vanikar LLC não reivindica qualquer titularidade ou direito sobre este conteúdo, e não se implica qualquer afiliação com o criador nem endosso da parte dele. O vídeo é reproduzido por meio do recurso público de incorporação do YouTube, em conformidade com os Termos de Serviço do YouTube e os acordos entre o YouTube e quem enviou o conteúdo.',
+  fr: 'Cette vidéo est diffusée depuis YouTube et demeure la propriété intellectuelle de son créateur ou de l’ayant droit concerné. Vanikar LLC ne revendique aucun droit sur ce contenu, et aucune affiliation avec son créateur ni aucun parrainage de sa part ne saurait en être déduit. La vidéo est affichée au moyen de la fonction d’intégration publique de YouTube, conformément aux Conditions d’utilisation de YouTube et aux accords conclus entre YouTube et le déposant du contenu.',
+  de: 'Dieses Video wird von YouTube eingebunden und verbleibt geistiges Eigentum des jeweiligen Urhebers bzw. Rechteinhabers. Vanikar LLC beansprucht keinerlei Eigentum oder Rechte an diesem Inhalt; eine Verbindung zum Urheber oder dessen Befürwortung wird nicht impliziert. Die Anzeige erfolgt über die öffentliche Einbettungsfunktion von YouTube im Einklang mit den Nutzungsbedingungen von YouTube und den Vereinbarungen zwischen YouTube und dem Uploader.',
+  hi: 'यह वीडियो YouTube से एम्बेड किया गया है और इसकी बौद्धिक संपदा संबंधित निर्माता और/या अधिकार धारक की ही रहती है। Vanikar LLC इस वीडियो सामग्री पर किसी स्वामित्व या अधिकार का दावा नहीं करता, और निर्माता से किसी संबद्धता या समर्थन का कोई निहितार्थ नहीं है। यह वीडियो YouTube की सार्वजनिक एम्बेड सुविधा के माध्यम से, YouTube की सेवा शर्तों तथा YouTube और सामग्री अपलोडर के बीच के अनुबंधों के अनुसार प्रदर्शित किया गया है।',
+}[lang];
 
 const jsonLd = [
   {
@@ -606,6 +614,7 @@ const jsonLd = [
                 allowfullscreen
               ></iframe>
             </div>
+            <p class="video-disclaimer">{videoDisclaimer}</p>
           </div>
         )}
 
@@ -783,6 +792,10 @@ const jsonLd = [
   }
   .video-frame iframe {
     position: absolute; inset: 0; width: 100%; height: 100%; border: 0;
+  }
+  .video-disclaimer {
+    margin-top: .65rem; font-size: .72rem !important; color: var(--text-dim) !important;
+    line-height: 1.6 !important; font-style: italic;
   }
   .game-section h2 {
     font-size: 1.15rem; color: var(--text-primary); margin-bottom: .85rem;
