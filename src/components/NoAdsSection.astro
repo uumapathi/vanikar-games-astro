@@ -1,0 +1,98 @@
+---
+import { getLocale } from '../i18n';
+
+const lang = getLocale(Astro.currentLocale);
+const copy = {
+  en: {
+    tag:    '♥ Our Promise',
+    title:  'No Ads. None. Ever.',
+    lead:   'No banners. No video interruptions. No "watch an ad to continue." Not in the trial, not in the free tier, not in premium — the table is always yours.',
+    note:   'I built Card Games because I\'m a player first. I know first-hand how it feels when a hand of cards keeps getting interrupted by ads — by the third one, the whole reason you sat down to play is gone. What\'s at stake in a card game is simple: relaxing and having fun. Nothing is allowed to get between you and that. Not now, not after launch, not ever.',
+    signed: '— Pat, creator of Card Games',
+  },
+  es: {
+    tag:    '♥ Nuestra promesa',
+    title:  'Sin anuncios. Ninguno. Nunca.',
+    lead:   'Sin banners. Sin vídeos que interrumpen. Sin "mira un anuncio para continuar". Ni en la prueba, ni en el plan gratuito, ni en premium: la mesa siempre es tuya.',
+    note:   'Creé Card Games porque antes que nada soy jugador. Sé de primera mano lo que se siente cuando una partida se interrumpe una y otra vez con anuncios: al tercero, la razón por la que te sentaste a jugar ya desapareció. Lo que está en juego en una partida de cartas es simple: relajarse y divertirse. Nada puede interponerse entre tú y eso. Ni ahora, ni después del lanzamiento, nunca.',
+    signed: '— Pat, creador de Card Games',
+  },
+  pt: {
+    tag:    '♥ Nossa promessa',
+    title:  'Sem anúncios. Nenhum. Nunca.',
+    lead:   'Sem banners. Sem vídeos interrompendo. Sem "assista a um anúncio para continuar". Nem no teste, nem no plano gratuito, nem no premium — a mesa é sempre sua.',
+    note:   'Criei o Card Games porque sou jogador antes de tudo. Sei bem como é ter uma partida interrompida por anúncios o tempo todo — no terceiro, o motivo de você ter sentado para jogar já foi embora. O que está em jogo numa partida de cartas é simples: relaxar e se divertir. Nada pode ficar entre você e isso. Nem agora, nem depois do lançamento, nunca.',
+    signed: '— Pat, criador do Card Games',
+  },
+  fr: {
+    tag:    '♥ Notre promesse',
+    title:  'Pas de pub. Aucune. Jamais.',
+    lead:   'Pas de bannières. Pas de vidéos qui coupent la partie. Pas de « regardez une pub pour continuer ». Ni pendant l\'essai, ni dans la version gratuite, ni en premium — la table est toujours à vous.',
+    note:   'J\'ai créé Card Games parce que je suis d\'abord un joueur. Je sais d\'expérience ce que c\'est qu\'une partie sans cesse interrompue par la publicité : à la troisième coupure, la raison même de s\'être mis à jouer a disparu. L\'enjeu d\'une partie de cartes est simple : se détendre et s\'amuser. Rien ne doit s\'interposer entre vous et cela. Ni maintenant, ni après le lancement, jamais.',
+    signed: '— Pat, créateur de Card Games',
+  },
+  de: {
+    tag:    '♥ Unser Versprechen',
+    title:  'Keine Werbung. Keine. Niemals.',
+    lead:   'Keine Banner. Keine Video-Unterbrechungen. Kein „Sieh dir eine Werbung an, um weiterzuspielen“. Nicht in der Testphase, nicht im Gratis-Tarif, nicht in Premium — der Tisch gehört immer dir.',
+    note:   'Ich habe Card Games gebaut, weil ich zuerst Spieler bin. Ich weiß aus eigener Erfahrung, wie es ist, wenn eine Partie ständig von Werbung unterbrochen wird — spätestens bei der dritten ist der Grund, warum man sich zum Spielen hingesetzt hat, dahin. Worum es bei einem Kartenspiel geht, ist einfach: entspannen und Spaß haben. Nichts darf sich zwischen dich und den Tisch stellen. Nicht jetzt, nicht nach dem Launch, niemals.',
+    signed: '— Pat, Entwickler von Card Games',
+  },
+  hi: {
+    tag:    '♥ हमारा वादा',
+    title:  'कोई विज्ञापन नहीं। बिल्कुल नहीं। कभी नहीं।',
+    lead:   'न बैनर, न बीच में वीडियो, न "आगे खेलने के लिए विज्ञापन देखें"। न ट्रायल में, न मुफ़्त प्लान में, न प्रीमियम में — मेज़ हमेशा आपकी है।',
+    note:   'मैंने Card Games इसलिए बनाया क्योंकि मैं सबसे पहले एक खिलाड़ी हूँ। मैंने खुद देखा है कि जब खेल बार-बार विज्ञापनों से टूटता है तो कैसा लगता है — तीसरे विज्ञापन तक आते-आते खेलने बैठने की वजह ही खत्म हो जाती है। ताश के खेल में दांव पर बस यही होता है: आराम और मज़ा। आपके और मेज़ के बीच कुछ नहीं आएगा। न अभी, न लॉन्च के बाद, कभी नहीं।',
+    signed: '— पैट, Card Games के निर्माता',
+  },
+}[lang];
+---
+<section class="noads" id="no-ads">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">{copy.tag}</div>
+      <h2 class="section-title">{copy.title}</h2>
+      <p class="section-subtitle">{copy.lead}</p>
+    </div>
+
+    <figure class="noads-note">
+      <blockquote>{copy.note}</blockquote>
+      <figcaption>{copy.signed}</figcaption>
+    </figure>
+  </div>
+</section>
+
+<style>
+  .noads {
+    background:
+      radial-gradient(ellipse at 50% 0%, rgba(201,162,39,.06) 0%, transparent 60%),
+      var(--bg-deep);
+    border-top: 1px solid var(--border);
+    padding: 4.5rem 0;
+  }
+
+  .noads-note {
+    max-width: 680px;
+    margin: 2.25rem auto 0;
+    background: var(--bg-card);
+    border: 1px solid var(--gold-border);
+    border-left: 4px solid var(--gold);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem 2rem;
+    box-shadow: var(--shadow-md);
+  }
+  .noads-note blockquote {
+    font-size: .975rem;
+    color: var(--text-secondary);
+    line-height: 1.85;
+    font-style: italic;
+  }
+  .noads-note figcaption {
+    margin-top: 1rem;
+    font-size: .85rem;
+    font-weight: 600;
+    color: var(--gold-light);
+    font-style: normal;
+    text-align: right;
+  }
+</style>

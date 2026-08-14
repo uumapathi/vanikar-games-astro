@@ -23,6 +23,7 @@ const copy = {
     tables:     'Tables',
     download:   '⬇ Download Free',
     browse:     'Browse the Games',
+    noAds:      '100% ad-free — always',
   },
   es: {
     tagline:    'Mesas de cartas clásicas, bellamente reinventadas.',
@@ -33,6 +34,7 @@ const copy = {
     tables:     'Mesas',
     download:   '⬇ Descarga gratis',
     browse:     'Explora los juegos',
+    noAds:      '100% sin anuncios — siempre',
   },
   pt: {
     tagline:    'Mesas de cartas clássicas, lindamente reinventadas.',
@@ -43,6 +45,7 @@ const copy = {
     tables:     'Mesas',
     download:   '⬇ Baixe grátis',
     browse:     'Explore os jogos',
+    noAds:      '100% sem anúncios — sempre',
   },
   fr: {
     tagline:    'Les tables de cartes classiques, magnifiquement réinventées.',
@@ -53,6 +56,7 @@ const copy = {
     tables:     'Tables',
     download:   '⬇ Télécharger gratuitement',
     browse:     'Parcourir les jeux',
+    noAds:      '100 % sans publicité — toujours',
   },
   de: {
     tagline:    'Klassische Kartentische, wunderschön neu gedacht.',
@@ -63,6 +67,7 @@ const copy = {
     tables:     'Tische',
     download:   '⬇ Kostenlos laden',
     browse:     'Spiele entdecken',
+    noAds:      '100 % werbefrei — immer',
   },
   hi: {
     tagline:    'क्लासिक ताश की मेज़ें, खूबसूरती से नए रूप में।',
@@ -73,6 +78,7 @@ const copy = {
     tables:     'टेबल',
     download:   '⬇ मुफ़्त डाउनलोड करें',
     browse:     'गेम देखें',
+    noAds:      '100% विज्ञापन-मुक्त — हमेशा',
   },
 }[lang];
 ---
@@ -121,6 +127,8 @@ const copy = {
           <span class="platform-badge">iOS</span>
           <span>&middot;</span>
           <span class="platform-badge">Android</span>
+          <span>&middot;</span>
+          <a class="noads-pill" href="#no-ads">🚫 {copy.noAds}</a>
         </div>
       </div>
 
@@ -245,6 +253,13 @@ const copy = {
     background: var(--bg-card); border: 1px solid var(--border);
     border-radius: var(--radius-sm); padding: .2rem .6rem; font-weight: 500;
   }
+  .noads-pill {
+    background: var(--gold-subtle); border: 1px solid var(--gold-border);
+    border-radius: var(--radius-full); padding: .2rem .7rem;
+    font-weight: 700; color: var(--gold-light); text-decoration: none;
+    transition: all var(--transition);
+  }
+  .noads-pill:hover { background: var(--gold); color: var(--bg-deep); }
 
   /* Phone composition */
   .hero-visual {
