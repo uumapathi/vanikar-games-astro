@@ -11,37 +11,43 @@ const copy = {
     games: 'Card Games',    gamesSub: 'Playable today',
     soon:  'Coming Soon',   soonSub:  'In development now',
     ai:    'Smart Opponents', aiSub:  'Multiple difficulty levels',
-    live:  'LIVE',          liveLabel: 'Online Tables', liveSub: 'Real players, real competition',
+    tables: 'Friends & Family Tables', tablesSub: 'Private online tables, anytime',
+    voice: 'Voice Chat', statsLb: 'Stats & Leaderboards', tourn: 'Tournaments', clubs: 'Clubs', soonPip: 'Soon',
   },
   es: {
     games: 'Juegos de cartas', gamesSub: 'Disponibles hoy',
     soon:  'Próximamente',     soonSub:  'En desarrollo',
     ai:    'Oponentes inteligentes', aiSub: 'Varios niveles de dificultad',
-    live:  'EN VIVO',          liveLabel: 'Mesas en línea', liveSub: 'Jugadores reales, competencia real',
+    tables: 'Mesas con amigos y familia', tablesSub: 'Mesas en línea privadas, a cualquier hora',
+    voice: 'Chat de voz', statsLb: 'Estadísticas y clasificaciones', tourn: 'Torneos', clubs: 'Clubes', soonPip: 'Pronto',
   },
   pt: {
     games: 'Jogos de cartas', gamesSub: 'Jogáveis hoje',
     soon:  'Em breve',        soonSub:  'Em desenvolvimento',
     ai:    'Oponentes inteligentes', aiSub: 'Vários níveis de dificuldade',
-    live:  'AO VIVO',         liveLabel: 'Mesas online', liveSub: 'Jogadores reais, competição real',
+    tables: 'Mesas com amigos e família', tablesSub: 'Mesas online privadas, a qualquer hora',
+    voice: 'Chat de voz', statsLb: 'Estatísticas e rankings', tourn: 'Torneios', clubs: 'Clubes', soonPip: 'Em breve',
   },
   fr: {
     games: 'Jeux de cartes',  gamesSub: 'Jouables dès aujourd’hui',
     soon:  'Bientôt disponible', soonSub: 'En développement',
     ai:    'Adversaires malins', aiSub: 'Plusieurs niveaux de difficulté',
-    live:  'EN DIRECT',       liveLabel: 'Tables en ligne', liveSub: 'Vrais joueurs, vraie compétition',
+    tables: 'Tables entre amis et en famille', tablesSub: 'Tables en ligne privées, à toute heure',
+    voice: 'Chat vocal', statsLb: 'Stats et classements', tourn: 'Tournois', clubs: 'Clubs', soonPip: 'Bientôt',
   },
   de: {
     games: 'Kartenspiele',    gamesSub: 'Heute spielbar',
     soon:  'Demnächst',       soonSub:  'Gerade in Entwicklung',
     ai:    'Clevere Gegner',  aiSub: 'Mehrere Schwierigkeitsgrade',
-    live:  'LIVE',            liveLabel: 'Online-Tische', liveSub: 'Echte Spieler, echter Wettbewerb',
+    tables: 'Tische mit Freunden & Familie', tablesSub: 'Private Online-Tische, jederzeit',
+    voice: 'Sprachchat', statsLb: 'Statistiken & Ranglisten', tourn: 'Turniere', clubs: 'Clubs', soonPip: 'Bald',
   },
   hi: {
     games: 'ताश के गेम',       gamesSub: 'आज ही खेलें',
     soon:  'जल्द आ रहा है',     soonSub:  'अभी विकास में',
     ai:    'स्मार्ट प्रतिद्वंद्वी', aiSub: 'कई कठिनाई स्तर',
-    live:  'लाइव',            liveLabel: 'ऑनलाइन टेबल', liveSub: 'असली खिलाड़ी, असली मुकाबला',
+    tables: 'दोस्तों और परिवार के साथ टेबल', tablesSub: 'निजी ऑनलाइन टेबल, कभी भी',
+    voice: 'वॉइस चैट', statsLb: 'आँकड़े और लीडरबोर्ड', tourn: 'टूर्नामेंट', clubs: 'क्लब', soonPip: 'जल्द',
   },
 }[lang];
 ---
@@ -64,10 +70,18 @@ const copy = {
         <div class="stat-sub">{copy.aiSub}</div>
       </div>
       <div class="stat-item stat-divider">
-        <div class="stat-value">{copy.live}</div>
-        <div class="stat-label">{copy.liveLabel}</div>
-        <div class="stat-sub">{copy.liveSub}</div>
+        <div class="stat-value">24/7</div>
+        <div class="stat-label">{copy.tables}</div>
+        <div class="stat-sub">{copy.tablesSub}</div>
       </div>
+    </div>
+
+    <div class="stats-features">
+      <a class="feat-chip" href="#voice-chat">🎙️ {copy.voice}</a>
+      <a class="feat-chip" href="#leaderboards">📊 {copy.statsLb}</a>
+      <a class="feat-chip" href="#features">🏆 {copy.tourn} <em>{copy.soonPip}</em></a>
+      <a class="feat-chip" href="#features">♣ {copy.clubs} <em>{copy.soonPip}</em></a>
+      <a class="feat-chip" href={href('/pricing#faq')}>❓ FAQ</a>
     </div>
   </div>
 </section>
@@ -76,7 +90,7 @@ const copy = {
   .stats {
     background: var(--bg-secondary);
     border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
-    padding: 3rem 0;
+    padding: 3rem 0 2.5rem;
   }
   .stats-grid {
     display: grid; grid-template-columns: repeat(4,1fr);
@@ -93,6 +107,28 @@ const copy = {
   .stat-link { display: block; text-decoration: none; transition: transform var(--transition); }
   .stat-link:hover { transform: translateY(-3px); }
   .stat-link:hover .stat-value { color: var(--gold); }
+
+  .stats-features {
+    display: flex; flex-wrap: wrap; justify-content: center;
+    gap: .6rem; margin-top: 1.75rem;
+  }
+  .feat-chip {
+    display: inline-flex; align-items: center; gap: .4rem;
+    background: var(--gold-subtle); border: 1px solid var(--gold-border);
+    border-radius: var(--radius-full); padding: .35rem .95rem;
+    font-size: .8rem; font-weight: 600; color: var(--text-secondary);
+    white-space: nowrap; text-decoration: none;
+    transition: all var(--transition);
+  }
+  .feat-chip:hover { border-color: var(--gold); color: var(--gold-light); transform: translateY(-1px); }
+  .feat-chip em {
+    font-style: normal; font-size: .58rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .06em;
+    background: rgba(120,80,200,.18); color: #b490f5;
+    border: 1px solid rgba(180,144,245,.3);
+    border-radius: var(--radius-full); padding: .06rem .4rem;
+  }
+
   @media (max-width: 900px) {
     .stats-grid { grid-template-columns: repeat(2,1fr); gap: .5rem; }
     .stat-item:nth-child(3) { border-left: none; }

@@ -94,6 +94,7 @@ export const ui = {
     'footer.terms':        'Terms of Service',
     'footer.support':      'Support',
     'footer.rights':       'All rights reserved.',
+    'footer.trademarks':   'Apple, the Apple logo, and App Store are trademarks of Apple Inc. Google Play and the Google Play logo are trademarks of Google LLC. Discord is a trademark of Discord Inc. All other product names, logos, brands, and imagery are the property of their respective owners and are used for identification purposes only; their use does not imply affiliation or endorsement. Vanikar LLC claims no ownership of any third-party trademarks or imagery.',
     'footer.contact':      'Contact',
   },
   es: {
@@ -119,6 +120,7 @@ export const ui = {
     'footer.terms':        'Términos de servicio',
     'footer.support':      'Soporte',
     'footer.rights':       'Todos los derechos reservados.',
+    'footer.trademarks':   'Apple, el logotipo de Apple y App Store son marcas comerciales de Apple Inc. Google Play y el logotipo de Google Play son marcas comerciales de Google LLC. Discord es una marca comercial de Discord Inc. Todos los demás nombres de productos, logotipos, marcas e imágenes pertenecen a sus respectivos propietarios y se usan solo con fines de identificación; su uso no implica afiliación ni respaldo. Vanikar LLC no reclama la propiedad de ninguna marca o imagen de terceros.',
     'footer.contact':      'Contacto',
   },
   pt: {
@@ -144,6 +146,7 @@ export const ui = {
     'footer.terms':        'Termos de Serviço',
     'footer.support':      'Suporte',
     'footer.rights':       'Todos os direitos reservados.',
+    'footer.trademarks':   'Apple, o logotipo da Apple e App Store são marcas registradas da Apple Inc. Google Play e o logotipo do Google Play são marcas registradas da Google LLC. Discord é uma marca registrada da Discord Inc. Todos os demais nomes de produtos, logotipos, marcas e imagens pertencem aos seus respectivos proprietários e são usados apenas para fins de identificação; seu uso não implica afiliação nem endosso. A Vanikar LLC não reivindica a propriedade de nenhuma marca ou imagem de terceiros.',
     'footer.contact':      'Contato',
   },
   fr: {
@@ -169,6 +172,7 @@ export const ui = {
     'footer.terms':        'Conditions d’utilisation',
     'footer.support':      'Assistance',
     'footer.rights':       'Tous droits réservés.',
+    'footer.trademarks':   'Apple, le logo Apple et App Store sont des marques d’Apple Inc. Google Play et le logo Google Play sont des marques de Google LLC. Discord est une marque de Discord Inc. Tous les autres noms de produits, logos, marques et visuels appartiennent à leurs propriétaires respectifs et ne sont utilisés qu’à des fins d’identification ; leur usage n’implique aucune affiliation ni approbation. Vanikar LLC ne revendique aucun droit sur les marques ou visuels de tiers.',
     'footer.contact':      'Contact',
   },
   de: {
@@ -194,6 +198,7 @@ export const ui = {
     'footer.terms':        'Nutzungsbedingungen',
     'footer.support':      'Support',
     'footer.rights':       'Alle Rechte vorbehalten.',
+    'footer.trademarks':   'Apple, das Apple-Logo und App Store sind Marken von Apple Inc. Google Play und das Google-Play-Logo sind Marken von Google LLC. Discord ist eine Marke von Discord Inc. Alle weiteren Produktnamen, Logos, Marken und Bilder sind Eigentum ihrer jeweiligen Inhaber und dienen nur der Identifikation; ihre Verwendung bedeutet keine Zugehörigkeit oder Befürwortung. Vanikar LLC erhebt keinerlei Anspruch auf Marken oder Bilder Dritter.',
     'footer.contact':      'Kontakt',
   },
   hi: {
@@ -219,6 +224,7 @@ export const ui = {
     'footer.terms':        'सेवा की शर्तें',
     'footer.support':      'सहायता',
     'footer.rights':       'सर्वाधिकार सुरक्षित।',
+    'footer.trademarks':   'Apple, Apple लोगो और App Store, Apple Inc. के ट्रेडमार्क हैं। Google Play और Google Play लोगो, Google LLC के ट्रेडमार्क हैं। Discord, Discord Inc. का ट्रेडमार्क है। अन्य सभी उत्पाद नाम, लोगो, ब्रांड और चित्र अपने-अपने स्वामियों की संपत्ति हैं और केवल पहचान के लिए उपयोग किए गए हैं; इनके उपयोग का अर्थ कोई संबद्धता या समर्थन नहीं है। Vanikar LLC किसी तीसरे पक्ष के ट्रेडमार्क या चित्रों पर कोई अधिकार नहीं जताता।',
     'footer.contact':      'संपर्क',
   },
 } as const;

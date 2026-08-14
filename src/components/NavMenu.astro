@@ -20,7 +20,7 @@ const switchTarget = (l: (typeof LOCALES)[number]) =>
 <nav class="navbar">
   <div class="navbar-inner">
     <a href={href('/')} class="navbar-brand">
-      <span class="brand-icon">♛</span>
+      <img class="brand-icon" src="/favicon-32.png" srcset="/favicon-32.png 1x, /icon-180.png 2x" width="28" height="28" alt="" />
       <span>CARD GAMES</span>
     </a>
 
@@ -142,7 +142,7 @@ const switchTarget = (l: (typeof LOCALES)[number]) =>
     font-family: 'Cinzel', serif; font-weight: 700; font-size: 1.15rem;
     letter-spacing: .12em; color: var(--gold-light);
   }
-  .brand-icon { font-size: 1.3rem; }
+  .brand-icon { width: 28px; height: 28px; border-radius: 7px; display: block; }
   .navbar-nav { display: flex; align-items: center; gap: .15rem; }
   .nav-link {
     padding: .45rem .85rem; border-radius: var(--radius-sm);

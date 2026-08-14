@@ -1,5 +1,7 @@
 ---
+import { Image } from 'astro:assets';
 import { getLocale, localizedHref } from '../i18n';
+import appicon from '../assets/appicon.png';
 
 const lang = getLocale(Astro.currentLocale);
 const href = (p: string) => localizedHref(p, lang);
@@ -46,13 +48,22 @@ const copy = {
   <div class="container">
     <div class="section-header">
       <div class="section-tag">{copy.tag}</div>
+      <Image
+        src={appicon}
+        alt="Card Games app icon"
+        width={200}
+        widths={[100, 200]}
+        sizes="100px"
+        quality={80}
+        class="app-icon"
+      />
       <h2 class="section-title">{copy.title}</h2>
       <p class="section-subtitle">{copy.subtitle}</p>
     </div>
 
     <div class="store-buttons">
       <a href={href('/ios')} class="btn-store" aria-label="Download on the App Store">
-        <span class="btn-store-icon">&#xF8FF;</span>
+        <img class="btn-store-appicon" src="/favicon-32.png" srcset="/favicon-32.png 1x, /icon-180.png 2x" width="36" height="36" alt="" />
         <div class="btn-store-text">
           <span class="btn-store-label">{copy.iosLabel}</span>
           <span class="btn-store-name">App Store</span>
@@ -60,7 +71,7 @@ const copy = {
         <span class="store-soon-pip">{copy.soon}</span>
       </a>
       <a href={href('/android')} class="btn-store" aria-label="Get it on Google Play">
-        <span class="btn-store-icon">▶</span>
+        <img class="btn-store-appicon" src="/favicon-32.png" srcset="/favicon-32.png 1x, /icon-180.png 2x" width="36" height="36" alt="" />
         <div class="btn-store-text">
           <span class="btn-store-label">{copy.playLabel}</span>
           <span class="btn-store-name">Google Play</span>
@@ -81,10 +92,16 @@ const copy = {
     text-align: center;
     border-top: 1px solid var(--border);
   }
+  .download :global(.app-icon) {
+    width: 100px; height: 100px; border-radius: 22px;
+    margin: 1.25rem auto .5rem; display: block;
+    box-shadow: 0 12px 32px rgba(0,0,0,.5), 0 0 24px rgba(201,162,39,.15);
+  }
   .store-buttons {
     display: flex; justify-content: center; gap: 1rem;
     flex-wrap: wrap; margin-top: 2.5rem;
   }
+  .btn-store-appicon { width: 36px; height: 36px; border-radius: 9px; flex-shrink: 0; }
   .download-note { margin-top: 1.5rem; font-size: .8rem; color: var(--text-dim); }
   .store-soon-pip {
     margin-left: .4rem; font-size: .62rem; font-weight: 700; text-transform: uppercase;

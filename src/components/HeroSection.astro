@@ -19,66 +19,96 @@ const copy = {
     subtitle:   'Polished visuals, smart CPU opponents, and online tables for quick, confident play.',
     gamesLive:  'Games Live',
     comingSoon: 'Coming Soon',
-    live:       'LIVE',
-    tables:     'Tables',
+    tables:     'Friends & Family Tables',
     download:   '⬇ Download Free',
     browse:     'Browse the Games',
     noAds:      '100% ad-free — always',
+    pricing:    'Simple, honest pricing',
+    voice:      'Voice Chat',
+    statsLb:    'Stats & Leaderboards',
+    tourn:      'Tournaments',
+    clubs:      'Clubs',
+    soon:       'Soon',
   },
   es: {
     tagline:    'Mesas de cartas clásicas, bellamente reinventadas.',
     subtitle:   'Gráficos pulidos, oponentes de IA inteligentes y mesas en línea para partidas rápidas y seguras.',
     gamesLive:  'Juegos activos',
     comingSoon: 'Próximamente',
-    live:       'EN VIVO',
-    tables:     'Mesas',
+    tables:     'Mesas con amigos y familia',
     download:   '⬇ Descarga gratis',
     browse:     'Explora los juegos',
     noAds:      '100% sin anuncios — siempre',
+    pricing:    'Precios simples y honestos',
+    voice:      'Chat de voz',
+    statsLb:    'Estadísticas y clasificaciones',
+    tourn:      'Torneos',
+    clubs:      'Clubes',
+    soon:       'Pronto',
   },
   pt: {
     tagline:    'Mesas de cartas clássicas, lindamente reinventadas.',
     subtitle:   'Visual caprichado, oponentes de IA inteligentes e mesas online para partidas rápidas e confiantes.',
     gamesLive:  'Jogos disponíveis',
     comingSoon: 'Em breve',
-    live:       'AO VIVO',
-    tables:     'Mesas',
+    tables:     'Mesas com amigos e família',
     download:   '⬇ Baixe grátis',
     browse:     'Explore os jogos',
     noAds:      '100% sem anúncios — sempre',
+    pricing:    'Preços simples e honestos',
+    voice:      'Chat de voz',
+    statsLb:    'Estatísticas e rankings',
+    tourn:      'Torneios',
+    clubs:      'Clubes',
+    soon:       'Em breve',
   },
   fr: {
     tagline:    'Les tables de cartes classiques, magnifiquement réinventées.',
     subtitle:   'Des graphismes soignés, des adversaires IA malins et des tables en ligne pour des parties rapides et sereines.',
     gamesLive:  'Jeux disponibles',
     comingSoon: 'Bientôt',
-    live:       'EN DIRECT',
-    tables:     'Tables',
+    tables:     'Tables entre amis et en famille',
     download:   '⬇ Télécharger gratuitement',
     browse:     'Parcourir les jeux',
     noAds:      '100 % sans publicité — toujours',
+    pricing:    'Des prix simples et honnêtes',
+    voice:      'Chat vocal',
+    statsLb:    'Stats et classements',
+    tourn:      'Tournois',
+    clubs:      'Clubs',
+    soon:       'Bientôt',
   },
   de: {
     tagline:    'Klassische Kartentische, wunderschön neu gedacht.',
     subtitle:   'Edle Optik, clevere CPU-Gegner und Online-Tische für schnelle, souveräne Partien.',
     gamesLive:  'Spiele live',
     comingSoon: 'Demnächst',
-    live:       'LIVE',
-    tables:     'Tische',
+    tables:     'Tische mit Freunden & Familie',
     download:   '⬇ Kostenlos laden',
     browse:     'Spiele entdecken',
     noAds:      '100 % werbefrei — immer',
+    pricing:    'Einfache, ehrliche Preise',
+    voice:      'Sprachchat',
+    statsLb:    'Statistiken & Ranglisten',
+    tourn:      'Turniere',
+    clubs:      'Clubs',
+    soon:       'Bald',
   },
   hi: {
     tagline:    'क्लासिक ताश की मेज़ें, खूबसूरती से नए रूप में।',
     subtitle:   'शानदार ग्राफ़िक्स, स्मार्ट CPU प्रतिद्वंद्वी और तेज़, भरोसेमंद खेल के लिए ऑनलाइन टेबल।',
     gamesLive:  'लाइव गेम',
     comingSoon: 'जल्द आ रहा है',
-    live:       'लाइव',
-    tables:     'टेबल',
+    tables:     'दोस्तों और परिवार के साथ टेबल',
     download:   '⬇ मुफ़्त डाउनलोड करें',
     browse:     'गेम देखें',
     noAds:      '100% विज्ञापन-मुक्त — हमेशा',
+    pricing:    'सरल, ईमानदार कीमतें',
+    voice:      'वॉइस चैट',
+    statsLb:    'आँकड़े और लीडरबोर्ड',
+    tourn:      'टूर्नामेंट',
+    clubs:      'क्लब',
+    soon:       'जल्द',
   },
 }[lang];
 ---
@@ -105,6 +135,7 @@ const copy = {
 
         <div class="hero-noads">
           <a class="noads-pill" href="#no-ads">🚫 {copy.noAds}</a>
+          <a class="noads-pill" href="#pricing">♦ {copy.pricing}</a>
         </div>
 
         <div class="hero-stats">
@@ -117,9 +148,17 @@ const copy = {
             <span class="hero-stat-label">{copy.comingSoon}</span>
           </a>
           <div class="hero-stat">
-            <span class="hero-stat-value">{copy.live}</span>
+            <span class="hero-stat-value">24/7</span>
             <span class="hero-stat-label">{copy.tables}</span>
           </div>
+        </div>
+
+        <div class="hero-features">
+          <a class="feat-chip" href="#voice-chat">🎙️ {copy.voice}</a>
+          <a class="feat-chip" href="#leaderboards">📊 {copy.statsLb}</a>
+          <a class="feat-chip" href="#features">🏆 {copy.tourn} <em>{copy.soon}</em></a>
+          <a class="feat-chip" href="#features">♣ {copy.clubs} <em>{copy.soon}</em></a>
+          <a class="feat-chip" href={href('/pricing#faq')}>❓ FAQ</a>
         </div>
 
         <div class="hero-actions">
@@ -128,9 +167,9 @@ const copy = {
         </div>
 
         <div class="hero-platforms">
-          <span class="platform-badge">iOS</span>
+          <a class="platform-badge" href="/ios">iOS</a>
           <span>&middot;</span>
-          <span class="platform-badge">Android</span>
+          <a class="platform-badge" href="/android">Android</a>
         </div>
       </div>
 
@@ -223,7 +262,24 @@ const copy = {
   }
   .hero-stats {
     display: flex; gap: 1rem;
-    margin-bottom: 2.25rem; flex-wrap: wrap;
+    margin-bottom: 1rem; flex-wrap: wrap;
+  }
+  .hero-features { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 2rem; }
+  .feat-chip {
+    display: inline-flex; align-items: center; gap: .4rem;
+    background: var(--gold-subtle); border: 1px solid var(--gold-border);
+    border-radius: var(--radius-full); padding: .32rem .85rem;
+    font-size: .78rem; font-weight: 600; color: var(--text-secondary);
+    white-space: nowrap; text-decoration: none;
+    transition: all var(--transition);
+  }
+  .feat-chip:hover { border-color: var(--gold); color: var(--gold-light); transform: translateY(-1px); }
+  .feat-chip em {
+    font-style: normal; font-size: .58rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .06em;
+    background: rgba(120,80,200,.18); color: #b490f5;
+    border: 1px solid rgba(180,144,245,.3);
+    border-radius: var(--radius-full); padding: .06rem .4rem;
   }
   .hero-stat {
     display: flex; flex-direction: column; align-items: center;
@@ -254,8 +310,10 @@ const copy = {
   .platform-badge {
     background: var(--bg-card); border: 1px solid var(--border);
     border-radius: var(--radius-sm); padding: .2rem .6rem; font-weight: 500;
+    color: inherit; text-decoration: none; transition: all var(--transition);
   }
-  .hero-noads { margin: -1rem 0 1.75rem; }
+  a.platform-badge:hover { border-color: var(--gold-border); color: var(--gold-light); }
+  .hero-noads { display: flex; flex-wrap: wrap; gap: .5rem; margin: -1rem 0 1.75rem; }
   .noads-pill {
     display: inline-block;
     background: var(--gold-subtle); border: 1px solid var(--gold-border);
@@ -320,13 +378,25 @@ const copy = {
     .hero-grid { grid-template-columns: 1fr; gap: 2.5rem; }
     .hero-content { text-align: center; margin: 0 auto; }
     .hero-subtitle { margin-left: auto; margin-right: auto; }
-    .hero-stats, .hero-actions, .hero-platforms { justify-content: center; }
+    .hero-noads, .hero-stats, .hero-features, .hero-actions, .hero-platforms { justify-content: center; }
     .hero-visual { min-height: 0; }
     .phone--front { width: min(260px, 78%); }
     .phone--back  { display: none; }
     .float-card   { display: none; }
   }
   @media (max-width: 767px) {
-    .hero-actions { flex-direction: column; align-items: center; }
+    /* compress the hero so tiles, chips, and both CTAs fit the first viewport */
+    .hero-badge    { margin-bottom: .9rem; padding: .3rem .9rem; }
+    .hero-title    { font-size: 2.4rem; margin-bottom: .6rem; }
+    .hero-tagline  { font-size: 1rem; margin-bottom: .5rem; }
+    .hero-subtitle { font-size: .88rem; margin-bottom: 1.4rem; line-height: 1.6; }
+    .hero-noads    { margin: -.4rem 0 1.2rem; }
+    .hero-stats    { gap: .6rem; margin-bottom: .75rem; }
+    .hero-stat     { padding: .5rem 1rem; min-width: 80px; }
+    .hero-stat-value { font-size: 1.25rem; }
+    .hero-features { margin-bottom: 1.4rem; }
+    /* keep both CTAs on one row so they stay in the first viewport */
+    .hero-actions { gap: .6rem; margin-bottom: 1.25rem; }
+    .hero-actions .btn { padding: .8rem 1.1rem; font-size: .85rem; }
   }
 </style>

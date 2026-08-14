@@ -241,7 +241,7 @@ const copy = {
       </div>
 
       <!-- Voice Chat -->
-      <div class="sf-row">
+      <div class="sf-row" id="voice-chat">
         <div class="sf-row-copy">
           <div class="sf-row-badge premium-badge">{copy.premium}</div>
           <h3>{copy.voice.title}</h3>
@@ -282,7 +282,7 @@ const copy = {
       </div>
 
       <!-- Leaderboards + Stats (side by side cards) -->
-      <div class="sf-row sf-row--alt">
+      <div class="sf-row sf-row--alt" id="leaderboards">
         <div class="sf-row-visual lb-visual" aria-hidden="true">
           <div class="lb-card">
             <div class="lb-header">🏆 Global · Spades</div>
@@ -381,6 +381,7 @@ const copy = {
     border-radius: var(--radius-full); padding: .2rem .65rem;
     font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .12em;
   }
+  .sf-row[id] { scroll-margin-top: 90px; }
   .premium-badge {
     background: var(--gold-subtle); color: var(--gold); border: 1px solid var(--gold-border);
     border-radius: var(--radius-full); padding: .2rem .65rem;
