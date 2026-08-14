@@ -3,6 +3,8 @@ import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import { availableGames, comingSoonGames } from '../data/games';
 import { getLocale, localizedHref } from '../i18n';
+import appicon     from '../assets/appicon.png';
+import vanikarLogo from '../assets/vanikar-logo.png';
 
 const shots = import.meta.glob<{ default: ImageMetadata }>('../assets/screenshots/app/*.png', { eager: true });
 const homeShot  = shots['../assets/screenshots/app/home.png'].default;
@@ -16,12 +18,13 @@ const href = (p: string) => localizedHref(p, lang);
 const copy = {
   en: {
     tagline:    'Classic card tables, beautifully reimagined.',
-    subtitle:   'Polished visuals, smart CPU opponents, and online tables for quick, confident play.',
+    subtitle:   'Kick back and play — casual tables with friends, family, or smart AI.',
     gamesLive:  'Games Live',
     comingSoon: 'Coming Soon',
     tables:     'Friends & Family Tables',
     download:   '⬇ Download Free',
     browse:     'Browse the Games',
+    by:         'by',
     noAds:      '100% ad-free — always',
     pricing:    'Simple, honest pricing',
     voice:      'Voice Chat',
@@ -32,12 +35,13 @@ const copy = {
   },
   es: {
     tagline:    'Mesas de cartas clásicas, bellamente reinventadas.',
-    subtitle:   'Gráficos pulidos, oponentes de IA inteligentes y mesas en línea para partidas rápidas y seguras.',
+    subtitle:   'Relájate y juega: mesas casuales con amigos, familia o la IA.',
     gamesLive:  'Juegos activos',
     comingSoon: 'Próximamente',
     tables:     'Mesas con amigos y familia',
     download:   '⬇ Descarga gratis',
     browse:     'Explora los juegos',
+    by:         'de',
     noAds:      '100% sin anuncios — siempre',
     pricing:    'Precios simples y honestos',
     voice:      'Chat de voz',
@@ -48,12 +52,13 @@ const copy = {
   },
   pt: {
     tagline:    'Mesas de cartas clássicas, lindamente reinventadas.',
-    subtitle:   'Visual caprichado, oponentes de IA inteligentes e mesas online para partidas rápidas e confiantes.',
+    subtitle:   'Relaxe e jogue — mesas casuais com amigos, família ou a IA.',
     gamesLive:  'Jogos disponíveis',
     comingSoon: 'Em breve',
     tables:     'Mesas com amigos e família',
     download:   '⬇ Baixe grátis',
     browse:     'Explore os jogos',
+    by:         'de',
     noAds:      '100% sem anúncios — sempre',
     pricing:    'Preços simples e honestos',
     voice:      'Chat de voz',
@@ -64,12 +69,13 @@ const copy = {
   },
   fr: {
     tagline:    'Les tables de cartes classiques, magnifiquement réinventées.',
-    subtitle:   'Des graphismes soignés, des adversaires IA malins et des tables en ligne pour des parties rapides et sereines.',
+    subtitle:   'Détendez-vous : des parties conviviales en famille, entre amis ou contre l’IA.',
     gamesLive:  'Jeux disponibles',
     comingSoon: 'Bientôt',
     tables:     'Tables entre amis et en famille',
     download:   '⬇ Télécharger gratuitement',
     browse:     'Parcourir les jeux',
+    by:         'par',
     noAds:      '100 % sans publicité — toujours',
     pricing:    'Des prix simples et honnêtes',
     voice:      'Chat vocal',
@@ -80,12 +86,13 @@ const copy = {
   },
   de: {
     tagline:    'Klassische Kartentische, wunderschön neu gedacht.',
-    subtitle:   'Edle Optik, clevere CPU-Gegner und Online-Tische für schnelle, souveräne Partien.',
+    subtitle:   'Zurücklehnen und spielen — gemütliche Runden mit Freunden, Familie oder der KI.',
     gamesLive:  'Spiele live',
     comingSoon: 'Demnächst',
     tables:     'Tische mit Freunden & Familie',
     download:   '⬇ Kostenlos laden',
     browse:     'Spiele entdecken',
+    by:         'von',
     noAds:      '100 % werbefrei — immer',
     pricing:    'Einfache, ehrliche Preise',
     voice:      'Sprachchat',
@@ -96,12 +103,13 @@ const copy = {
   },
   hi: {
     tagline:    'क्लासिक ताश की मेज़ें, खूबसूरती से नए रूप में।',
-    subtitle:   'शानदार ग्राफ़िक्स, स्मार्ट CPU प्रतिद्वंद्वी और तेज़, भरोसेमंद खेल के लिए ऑनलाइन टेबल।',
+    subtitle:   'आराम से खेलें — दोस्तों, परिवार या स्मार्ट AI के साथ मज़ेदार बाज़ियाँ।',
     gamesLive:  'लाइव गेम',
     comingSoon: 'जल्द आ रहा है',
     tables:     'दोस्तों और परिवार के साथ टेबल',
     download:   '⬇ मुफ़्त डाउनलोड करें',
     browse:     'गेम देखें',
+    by:         'द्वारा',
     noAds:      '100% विज्ञापन-मुक्त — हमेशा',
     pricing:    'सरल, ईमानदार कीमतें',
     voice:      'वॉइस चैट',
@@ -123,11 +131,27 @@ const copy = {
   <div class="container">
     <div class="hero-grid">
       <div class="hero-content">
-        <div class="hero-badge">
-          <span>♛</span> Vanikar LLC
+        <div class="hero-title-row">
+          <Image
+            src={appicon}
+            alt=""
+            width={144}
+            widths={[72, 144]}
+            sizes="72px"
+            quality={80}
+            loading="eager"
+            class="hero-appicon"
+          />
+          <h1 class="hero-title">Card Games</h1>
         </div>
 
-        <h1 class="hero-title">Card Games</h1>
+        <div class="hero-byline">
+          <span class="by-text">{copy.by}</span>
+          <a class="vanikar-pill" href="https://vanikar.com" target="_blank" rel="noopener">
+            <Image src={vanikarLogo} alt="Vanikar LLC logo" width={54} quality={85} loading="eager" class="vanikar-logo" />
+            <span>Vanikar LLC</span>
+          </a>
+        </div>
 
         <p class="hero-tagline">{copy.tagline}</p>
 
@@ -239,12 +263,28 @@ const copy = {
   }
   .hero-content { position: relative; max-width: 620px; padding: 0 1.5rem; }
 
-  .hero-badge {
+  .hero-title-row { display: flex; align-items: center; gap: 1rem; margin-bottom: .4rem; }
+  .hero-title-row :global(.hero-appicon) {
+    width: 72px; height: 72px; border-radius: 16px; flex-shrink: 0;
+    box-shadow: 0 10px 26px rgba(0,0,0,.5), 0 0 20px rgba(201,162,39,.15);
+  }
+  .hero-byline {
+    display: flex; align-items: center; gap: .55rem;
+    margin-bottom: 1.1rem;
+  }
+  .by-text { font-size: .85rem; color: var(--text-muted); }
+  .vanikar-pill {
     display: inline-flex; align-items: center; gap: .5rem;
     background: var(--gold-subtle); border: 1px solid var(--gold-border);
-    border-radius: var(--radius-full); padding: .4rem 1.1rem;
-    font-size: .78rem; font-weight: 700; letter-spacing: .18em;
-    text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem;
+    border-radius: var(--radius-full); padding: .3rem .9rem;
+    font-size: .78rem; font-weight: 700; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--gold); text-decoration: none;
+    transition: all var(--transition);
+  }
+  .vanikar-pill:hover { background: var(--gold); color: var(--bg-deep); }
+  .vanikar-pill :global(.vanikar-logo) {
+    width: 27px; height: 20px; object-fit: contain;
+    background: #fff; border-radius: 5px; padding: 1px;
   }
   .hero-title {
     font-size: clamp(3rem,7vw,5rem); font-weight: 900;
@@ -378,7 +418,7 @@ const copy = {
     .hero-grid { grid-template-columns: 1fr; gap: 2.5rem; }
     .hero-content { text-align: center; margin: 0 auto; }
     .hero-subtitle { margin-left: auto; margin-right: auto; }
-    .hero-noads, .hero-stats, .hero-features, .hero-actions, .hero-platforms { justify-content: center; }
+    .hero-title-row, .hero-byline, .hero-noads, .hero-stats, .hero-features, .hero-actions, .hero-platforms { justify-content: center; }
     .hero-visual { min-height: 0; }
     .phone--front { width: min(260px, 78%); }
     .phone--back  { display: none; }
@@ -386,8 +426,10 @@ const copy = {
   }
   @media (max-width: 767px) {
     /* compress the hero so tiles, chips, and both CTAs fit the first viewport */
-    .hero-badge    { margin-bottom: .9rem; padding: .3rem .9rem; }
-    .hero-title    { font-size: 2.4rem; margin-bottom: .6rem; }
+    .hero-title-row { gap: .6rem; margin-bottom: .35rem; }
+    .hero-title-row :global(.hero-appicon) { width: 42px; height: 42px; border-radius: 10px; }
+    .hero-byline   { margin-bottom: .9rem; }
+    .hero-title    { font-size: 1.95rem; margin-bottom: 0; white-space: nowrap; }
     .hero-tagline  { font-size: 1rem; margin-bottom: .5rem; }
     .hero-subtitle { font-size: .88rem; margin-bottom: 1.4rem; line-height: 1.6; }
     .hero-noads    { margin: -.4rem 0 1.2rem; }
