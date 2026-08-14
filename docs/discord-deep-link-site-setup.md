@@ -31,6 +31,24 @@ App identifiers:
 
 ---
 
+## ✅ Live-host findings (verified against production)
+
+The live host turned out to be **Appwrite Sites** (`swoole-http-server`, `X-Appwrite-Deployment-Id`
+headers) — *neither* IIS nor Azure SWA, so the two config fixes below are dormant until the host
+changes. Deploy happens automatically on push to `master`. Verified live:
+
+- `assetlinks.json` → **200, `application/json`, 0 redirects** — Google's validator returns the
+  statement, and `adb shell pm get-app-links com.vanikar.cardgames` reports **`vanikar.games:
+  verified`** on a real device. Android App Links are fully working end-to-end.
+- `apple-app-site-association` → 200, 0 redirects, but `application/octet-stream` (Appwrite
+  ignores our header configs). Apple's CDN is lenient about this in practice; revisit if iOS
+  verification fails once a real Team ID is in the file.
+- **`/join` 301-redirects to `/join/` and the `Location` header DROPS the query string** — a
+  browser following the bare URL loses the code. The app never sees the redirect (the OS
+  intercepts the URL before any HTTP), but the browser fallback breaks. **Canonical invite URL
+  is therefore `https://vanikar.games/join/?code=XXXXXXXX` (trailing slash)** — use that in the
+  bot. It serves 200 directly and still matches the app's `/join` path prefix.
+
 ## ⚠️ Before you start: which host is live?
 
 The repo contains **both** `public/web.config` (IIS) and `public/staticwebapp.config.json`
@@ -215,7 +233,7 @@ https://vanikar.games/join?code=TEST1234
       (`95:BF:03:…:10:AF`, from `%LOCALAPPDATA%\Xamarin\Mono for Android\debug.keystore` — the
       keystore MAUI actually signs with; there is no `~/.android/debug.keystore` on this machine).
       **Add the release / Play App Signing fingerprint before a store release.**
-- [x] `public/.well-known/apple-app-site-association` (no extension) — created, but still says
+- [x] `public/.well-known/apple-app-site-association` (no extension) — created with real Team ID `4VJD69LHBS` (was placeholder; fixed
       `TEAMID`: **replace with the real Apple Team ID** (no iOS signing was configured to read it from)
 - [x] `web.config`: `<mimeMap fileExtension="." mimeType="application/json" />`
 - [x] `staticwebapp.config.json`: `/.well-known/*` excluded from navigationFallback, plus a

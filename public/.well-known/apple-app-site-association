@@ -1,4 +1,4 @@
 { "applinks": { "details": [{
-    "appIDs": ["TEAMID.com.vanikar.cardgames"],
+    "appIDs": ["4VJD69LHBS.com.vanikar.cardgames"],
     "components": [{ "/": "/join*" }]
 }]}}
