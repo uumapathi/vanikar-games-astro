@@ -23,3 +23,15 @@ export function localizeGame(game: Game, locale: Locale): Game {
   const overlay = overlays[locale]?.[game.slug];
   return overlay ? { ...game, ...overlay } : game;
 }
+
+/**
+ * True when a game's page is fully readable in the given locale.
+ * English is always complete; other locales count as complete only when the
+ * overlay carries the full body content (description onward), not just
+ * name/tagline. Incomplete locale pages are noindexed until translated.
+ */
+export function isGameFullyLocalized(slug: string, locale: Locale): boolean {
+  if (locale === 'en') return true;
+  const overlay = overlays[locale]?.[slug];
+  return !!overlay?.description;
+}

@@ -8,12 +8,15 @@ interface Props {
   title?:       string;
   description?: string;
   gaId?:       string;
+  /** Keep this page out of search results (e.g. untranslated locale pages) */
+  noindex?:    boolean;
 }
 
 const {
   title       = 'Online Card Games – Hearts, Spades, Rummy & More | Vanikar',
   description = 'Play classic card games online or offline with Vanikar. Enjoy Hearts, Spades, Gin Rummy, Cribbage, Big Two, Indian Rummy and more against AI, friends or online players.',
   gaId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID,
+  noindex = false,
 } = Astro.props;
 
 const locale       = getLocale(Astro.currentLocale);
@@ -31,6 +34,7 @@ const alternates   = isTranslated(basePath)
   <meta name="theme-color" content="#0d1a0d" />
   <title>{title}</title>
   <meta name="description" content={description} />
+  {noindex && <meta name="robots" content="noindex" />}
   <link rel="canonical" href={canonicalURL} />
   {alternates.map(a => (
     <link rel="alternate" hreflang={a.lang} href={a.href} />

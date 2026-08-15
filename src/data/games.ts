@@ -24,6 +24,12 @@ export interface GameVideo {
   start?:    number;
 }
 
+/** A game-specific FAQ entry appended to the generated FAQ list */
+export interface GameFaq {
+  q: string;
+  a: string;
+}
+
 export interface Game {
   slug:           string;
   name:           string;
@@ -51,6 +57,12 @@ export interface Game {
   screenshots?:   Screenshot[];
   /** How-to-play YouTube video embedded on the game page */
   video?:         GameVideo;
+  /** Per-game SEO overrides, applied on the English page only */
+  seo?:           { title?: string; h1?: string };
+  /** Slugs of closely related games, shown in the Related Games section */
+  relatedGames?:  string[];
+  /** Game-specific FAQs appended to the generated FAQ list (English pages) */
+  extraFaqs?:     GameFaq[];
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -60,6 +72,7 @@ const universalGames: Game[] = [
   {
     slug: 'high-card',
     name: 'High Card',
+    relatedGames: ['war', 'snap', 'bluff', 'old-maid'],
     tagline: 'The simplest card game — highest card wins.',
     icon: '🂡',
     players: '2–4 players', playerCount: '2–4',
@@ -156,6 +169,7 @@ const universalGames: Game[] = [
     slug: 'bluff',
     name: 'Bluff',
     video: { youtubeId: 'DS2vSffV1co' },
+    relatedGames: ['president', 'big-two', 'indian-jackass', 'snap'],
     alternateNames: ['Cheat', 'BS', 'I Doubt It', 'Liar'],
     tagline: 'Lie, challenge, and get rid of your cards.',
     icon: '🎭',
@@ -408,6 +422,15 @@ const northAmericaGames: Game[] = [
     slug: 'hearts',
     name: 'Hearts',
     video: { youtubeId: '3Pj7y_vOs7Q' },
+    relatedGames: ['spades', 'whist', 'euchre', 'president'],
+    extraFaqs: [
+      { q: 'What is the Queen of Spades worth in Hearts?',
+        a: 'The Queen of Spades (Q♠) is worth 13 penalty points — as much as all thirteen hearts combined. Avoiding her, or forcing her onto an opponent, is the heart of the game.' },
+      { q: 'What does shooting the moon mean in Hearts?',
+        a: 'Shooting the moon means deliberately capturing ALL 13 hearts and the Queen of Spades in one hand. Instead of taking 26 penalty points, you score zero and every other player takes 26.' },
+      { q: 'Can Hearts be played with two players?',
+        a: 'Traditional Hearts is a strict four-player game. On Vanikar you can play with fewer humans by filling the remaining seats with AI opponents — two friends plus two AI players works great.' },
+    ],
     tagline: 'Avoid the hearts — and beware the Queen of Spades.',
     icon: '♥',
     players: '4 players', playerCount: '4',
@@ -480,6 +503,7 @@ const northAmericaGames: Game[] = [
     slug: 'spades',
     name: 'Spades',
     video: { youtubeId: '6pVvbbpbrlk' },
+    relatedGames: ['hearts', 'whist', 'euchre', 'belote'],
     tagline: 'Bid smart. Spades are always trump.',
     icon: '♠',
     players: '4 players (2 teams)', playerCount: '4',
@@ -552,6 +576,7 @@ const northAmericaGames: Game[] = [
     slug: 'gin-rummy',
     name: 'Gin Rummy',
     video: { youtubeId: 'Uy063oI9Gkk' },
+    relatedGames: ['indian-rummy', 'canasta', 'buraco', 'chinchon'],
     tagline: 'Knock before they do.',
     icon: '🍸',
     players: '2 players', playerCount: '2',
@@ -653,6 +678,7 @@ const northAmericaGames: Game[] = [
     slug: 'cribbage',
     name: 'Cribbage',
     video: { youtubeId: 'bzRHjdS2VAE' },
+    relatedGames: ['gin-rummy', 'whist', 'hearts', 'euchre'],
     tagline: 'Peg your way to 121 — every combination counts.',
     icon: '📌',
     players: '2 players', playerCount: '2',
@@ -952,6 +978,7 @@ const asiaGames: Game[] = [
   {
     slug: 'big-two',
     video: { youtubeId: 'U28DKiVQpVM', start: 25 },
+    relatedGames: ['tien-len', 'president', 'sevens', 'indian-jackass'],
     name: 'Big Two',
     alternateNames: ['大老二', 'Deuces', 'Cho Dai Di', 'Pusoy Dos (Philippines)'],
     tagline: 'The 2 rules — race to empty your hand.',
@@ -1156,6 +1183,7 @@ const indiaGames: Game[] = [
   {
     slug: 'indian-rummy',
     video: { youtubeId: 'M_9aW1ZGgS4' },
+    relatedGames: ['gin-rummy', 'canasta', 'buraco'],
     name: 'Indian Rummy',
     alternateNames: ['Paplu', '13-Card Rummy', 'Rummy (India)'],
     tagline: 'Form sequences and sets — a pure sequence is non-negotiable.',
@@ -1238,6 +1266,11 @@ const indiaGames: Game[] = [
     difficulty: 'Easy',
     regions: ['India'],
     languages: [LANG.hi, LANG.en, LANG.mr, LANG.gu],
+    seo: {
+      title: 'Indian Jackass Card Game – Rules, How to Play & Strategy | Vanikar',
+      h1:    'How to Play Indian Jackass',
+    },
+    relatedGames: ['president', 'big-two', 'sevens', 'bluff'],
     description: 'Indian Jackass is a trick-based shedding game with no winner — only a loser. Follow suit while you can, dump your cards, and don\'t be the last player holding any. Each round\'s loser starts the next round with a penalty card, and rounds continue until the table decides to stop.',
     objective: 'Empty your hand. The last player still holding cards is the round\'s Jackass — the loser.',
     setup: [
@@ -1292,6 +1325,32 @@ const indiaGames: Game[] = [
           'Rounds continue until any player requests a stop; the session ends after the current round. Rearrange your hand any time — it never affects play.',
         ],
       },
+      {
+        heading: 'An example round',
+        points: [
+          'Four players — Asha, Bela, Chetan, Deep. Asha holds the A♠ and leads the 7♥; Bela follows with the 10♥ and Chetan with the Q♥. Deep has no hearts and drops the 5♣ — the trick ends instantly, and Chetan (highest heart) picks up all four cards and leads next.',
+          'Later, Chetan leads the 9♠; everyone follows suit — 2♠, K♠, 4♠. All four cards leave the game for good, and the K♠ player leads the next trick.',
+          'Endgame, two players left: Chetan holds two cards, Deep five. Chetan leads the 4♦ and Deep follows with the 8♦ — both followed suit, so the cards are removed and Deep leads. Deep leads the 3♣; Chetan has no clubs and drops his last card, the 9♥, off-suit — Deep\'s 3♣ is the only club, so Deep takes the pile back. Chetan is out of cards, Deep is the last player holding any: Deep is the round\'s Jackass.',
+        ],
+      },
+      {
+        heading: 'Common table variations',
+        points: [
+          'Player count changes the deal: with 4 players the full 52-card deck goes out evenly; with 2–3 players some cards sit out the round; with 5–6 players hands come out slightly smaller than 13.',
+          'The penalty ladder is the signature Vanikar rule: consecutive losses stack A♠, A♣, A♦, A♥, K♠, K♣ … into the loser\'s next hand, and escaping a streak passes your penalty cards to the new loser one per round.',
+          'Session length is up to the table — play a single round for a quick loser, or keep the rounds rolling and let the app\'s round-by-round loser log tell the story of the evening.',
+        ],
+      },
+    ],
+    extraFaqs: [
+      { q: 'What is Indian Jackass?',
+        a: 'Indian Jackass is a trick-based shedding card game played at Indian family card tables. There is no winner — players race to empty their hands, and the last player still holding cards is the round\'s "Jackass." It uses a standard 52-card deck and seats 2–6 players.' },
+      { q: 'Is there a winner in Indian Jackass?',
+        a: 'No — each round produces only a loser. Everyone else escapes by emptying their hand first. That structure makes it a lighthearted party game: the fun is in avoiding the title, not chasing a score.' },
+      { q: 'What are the penalty cards in Indian Jackass?',
+        a: 'The round\'s loser starts the next round with a penalty card guaranteed in their hand — the Ace of Spades on a first loss, then A♣, A♦, A♥, K♠ and so on for each consecutive loss. Lose repeatedly and the penalties stack up.' },
+      { q: 'How does a round of Indian Jackass end?',
+        a: 'Players drop out as they play their last card. When only one player still holds cards, the round ends immediately and that player loses — even if they are down to a single card.' },
     ],
     screenshots: [
       { file: 'indian-jackass/01-game-setup.png', title: 'Set up the table', caption: 'Two to six players — add AI opponents and pick their difficulty.' },
@@ -1339,6 +1398,7 @@ const euGames: Game[] = [
   {
     slug: 'durak',
     video: { youtubeId: '3JagmUmUJOc', start: 145 },
+    relatedGames: ['president', 'big-two', 'bluff', 'war'],
     name: 'Durak',
     alternateNames: ['Дурак', 'Fool'],
     tagline: 'Attack, defend, or be the Fool.',
@@ -1445,6 +1505,7 @@ const euGames: Game[] = [
   {
     slug: 'belote',
     video: { youtubeId: 'xWzdW8JkDFA' },
+    relatedGames: ['skat', 'euchre', 'whist', 'spades'],
     name: 'Belote',
     alternateNames: ['Belot', 'Bleot', 'Baloot (Arabic)'],
     tagline: 'France\'s national card game — bid, trump, and Coinché.',
