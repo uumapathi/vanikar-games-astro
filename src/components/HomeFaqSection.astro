@@ -1,0 +1,178 @@
+---
+import { games, availableGames } from '../data/games';
+import { getLocale } from '../i18n';
+
+const lang  = getLocale(Astro.currentLocale);
+const avail = availableGames.length;
+const total = games.length;
+
+const copy = {
+  en: {
+    tag: '♠ Questions', title: 'Frequently Asked Questions',
+    faqs: [
+      { q: 'What card games are available on Vanikar?',
+        a: `${avail} games are ready to play — Hearts, Spades, Gin Rummy, Cribbage, Big Two, Indian Rummy, Indian Jackass, Durak, Belote, Bluff, and High Card — with ${total - avail} more classics in development.` },
+      { q: 'Can I play Vanikar card games offline?',
+        a: 'Yes. Every game works fully offline against AI opponents — no internet connection or mobile data needed.' },
+      { q: 'Can I play against the computer?',
+        a: 'Yes — every game includes smart AI opponents with multiple difficulty levels, so you can learn at your own pace or chase a real challenge.' },
+      { q: 'Can I play with friends?',
+        a: 'Yes. Create a private table, share the invite, and play with friends and family across iOS and Android — AI players can fill any empty seats.' },
+      { q: 'Does Vanikar contain ads?',
+        a: 'No. Vanikar is 100% ad-free — no banners, no video ads, no interruptions, ever.' },
+      { q: 'Is Vanikar free to play?',
+        a: 'The app is free to download, and every game is unlocked free for 2 weeks — no credit card required. After the trial, keep playing free or go premium for everything.' },
+      { q: 'Is Vanikar available on iPhone and Android?',
+        a: 'The app is launching soon on both iOS (16+) and Android (9+). Visit the iOS or Android page and leave your email to be notified on day one.' },
+    ],
+  },
+  es: {
+    tag: '♠ Preguntas', title: 'Preguntas frecuentes',
+    faqs: [
+      { q: '¿Qué juegos de cartas hay en Vanikar?',
+        a: `${avail} juegos listos para jugar — Corazones, Espadas, Gin Rummy, Cribbage, Big Two, Rummy Indio, Indian Jackass, Durak, Belote, Bluff y Carta Alta — con ${total - avail} clásicos más en desarrollo.` },
+      { q: '¿Puedo jugar sin conexión?',
+        a: 'Sí. Todos los juegos funcionan completamente sin conexión contra la IA — sin internet ni datos móviles.' },
+      { q: '¿Puedo jugar contra la computadora?',
+        a: 'Sí — todos los juegos incluyen oponentes de IA inteligentes con varios niveles de dificultad, para aprender a tu ritmo o buscar un desafío real.' },
+      { q: '¿Puedo jugar con amigos?',
+        a: 'Sí. Crea una mesa privada, comparte la invitación y juega con amigos y familia en iOS y Android — la IA puede ocupar los asientos vacíos.' },
+      { q: '¿Vanikar tiene anuncios?',
+        a: 'No. Vanikar es 100% libre de anuncios — sin banners, sin vídeos publicitarios, sin interrupciones, nunca.' },
+      { q: '¿Vanikar es gratis?',
+        a: 'La app es gratuita y todos los juegos están desbloqueados gratis durante 2 semanas — sin tarjeta de crédito. Después, sigue jugando gratis o pasa a premium.' },
+      { q: '¿Está disponible en iPhone y Android?',
+        a: 'La app llegará muy pronto a iOS (16+) y Android (9+). Visita la página de iOS o Android y deja tu correo para enterarte el primer día.' },
+    ],
+  },
+  pt: {
+    tag: '♠ Perguntas', title: 'Perguntas frequentes',
+    faqs: [
+      { q: 'Quais jogos de cartas existem no Vanikar?',
+        a: `${avail} jogos prontos para jogar — Copas, Espadas, Gin Rummy, Cribbage, Big Two, Rummy Indiano, Indian Jackass, Durak, Belote, Bluff e Carta Alta — com mais ${total - avail} clássicos em desenvolvimento.` },
+      { q: 'Posso jogar offline?',
+        a: 'Sim. Todos os jogos funcionam totalmente offline contra a IA — sem internet nem dados móveis.' },
+      { q: 'Posso jogar contra o computador?',
+        a: 'Sim — todos os jogos incluem oponentes de IA inteligentes com vários níveis de dificuldade, para aprender no seu ritmo ou buscar um desafio de verdade.' },
+      { q: 'Posso jogar com amigos?',
+        a: 'Sim. Crie uma mesa privada, compartilhe o convite e jogue com amigos e família no iOS e Android — a IA pode ocupar os assentos vazios.' },
+      { q: 'O Vanikar tem anúncios?',
+        a: 'Não. O Vanikar é 100% livre de anúncios — sem banners, sem vídeos publicitários, sem interrupções, nunca.' },
+      { q: 'O Vanikar é grátis?',
+        a: 'O app é gratuito e todos os jogos ficam desbloqueados grátis por 2 semanas — sem cartão de crédito. Depois, continue jogando grátis ou assine o premium.' },
+      { q: 'Está disponível para iPhone e Android?',
+        a: 'O app chega em breve ao iOS (16+) e ao Android (9+). Visite a página do iOS ou do Android e deixe seu e-mail para saber no primeiro dia.' },
+    ],
+  },
+  fr: {
+    tag: '♠ Questions', title: 'Questions fréquentes',
+    faqs: [
+      { q: 'Quels jeux de cartes propose Vanikar ?',
+        a: `${avail} jeux prêts à jouer — Hearts, Spades, Gin Rummy, Cribbage, Big Two, Rami indien, Indian Jackass, Durak, Belote, Bluff et Carte Haute — et ${total - avail} autres classiques en développement.` },
+      { q: 'Puis-je jouer hors ligne ?',
+        a: 'Oui. Tous les jeux fonctionnent entièrement hors ligne contre l’IA — sans connexion internet ni données mobiles.' },
+      { q: 'Puis-je jouer contre l’ordinateur ?',
+        a: 'Oui — chaque jeu inclut des adversaires IA malins avec plusieurs niveaux de difficulté, pour apprendre à votre rythme ou relever un vrai défi.' },
+      { q: 'Puis-je jouer entre amis ?',
+        a: 'Oui. Créez une table privée, partagez l’invitation et jouez en famille ou entre amis sur iOS et Android — l’IA peut occuper les sièges vides.' },
+      { q: 'Vanikar contient-il des publicités ?',
+        a: 'Non. Vanikar est 100 % sans publicité — pas de bannières, pas de vidéos, aucune interruption, jamais.' },
+      { q: 'Vanikar est-il gratuit ?',
+        a: 'L’app est gratuite et tous les jeux sont débloqués gratuitement pendant 2 semaines — sans carte bancaire. Ensuite, continuez gratuitement ou passez au premium.' },
+      { q: 'Disponible sur iPhone et Android ?',
+        a: 'L’app arrive bientôt sur iOS (16+) et Android (9+). Rendez-vous sur la page iOS ou Android et laissez votre e-mail pour être averti dès le lancement.' },
+    ],
+  },
+  de: {
+    tag: '♠ Fragen', title: 'Häufige Fragen',
+    faqs: [
+      { q: 'Welche Kartenspiele gibt es bei Vanikar?',
+        a: `${avail} Spiele sind spielbereit — Hearts, Spades, Gin Rummy, Cribbage, Big Two, Indisches Rommé, Indian Jackass, Durak, Belote, Bluff und High Card — plus ${total - avail} weitere Klassiker in Entwicklung.` },
+      { q: 'Kann ich offline spielen?',
+        a: 'Ja. Jedes Spiel funktioniert komplett offline gegen KI-Gegner — ganz ohne Internetverbindung oder mobile Daten.' },
+      { q: 'Kann ich gegen den Computer spielen?',
+        a: 'Ja — jedes Spiel bietet clevere KI-Gegner mit mehreren Schwierigkeitsgraden. Lerne in deinem Tempo oder such dir eine echte Herausforderung.' },
+      { q: 'Kann ich mit Freunden spielen?',
+        a: 'Ja. Erstelle einen privaten Tisch, teile die Einladung und spiele mit Freunden und Familie auf iOS und Android — leere Plätze füllt die KI.' },
+      { q: 'Enthält Vanikar Werbung?',
+        a: 'Nein. Vanikar ist 100 % werbefrei — keine Banner, keine Videowerbung, keine Unterbrechungen. Nie.' },
+      { q: 'Ist Vanikar kostenlos?',
+        a: 'Die App ist gratis, und alle Spiele sind 2 Wochen lang kostenlos freigeschaltet — ohne Kreditkarte. Danach kostenlos weiterspielen oder Premium holen.' },
+      { q: 'Gibt es Vanikar für iPhone und Android?',
+        a: 'Die App erscheint bald für iOS (16+) und Android (9+). Besuche die iOS- oder Android-Seite und hinterlasse deine E-Mail, um am ersten Tag dabei zu sein.' },
+    ],
+  },
+  hi: {
+    tag: '♠ सवाल', title: 'अक्सर पूछे जाने वाले सवाल',
+    faqs: [
+      { q: 'Vanikar पर कौन-कौन से ताश के गेम हैं?',
+        a: `${avail} गेम खेलने के लिए तैयार हैं — हार्ट्स, स्पेड्स, जिन रमी, क्रिबेज, बिग टू, इंडियन रमी, इंडियन जैकऐस, दुराक, बेलोट, ब्लफ़ और हाई कार्ड — और ${total - avail} क्लासिक गेम विकास में हैं।` },
+      { q: 'क्या मैं ऑफ़लाइन खेल सकता हूँ?',
+        a: 'हाँ। हर गेम AI के खिलाफ पूरी तरह ऑफ़लाइन चलता है — न इंटरनेट चाहिए, न मोबाइल डेटा।' },
+      { q: 'क्या मैं कंप्यूटर के खिलाफ खेल सकता हूँ?',
+        a: 'हाँ — हर गेम में कई कठिनाई स्तरों वाले स्मार्ट AI प्रतिद्वंद्वी हैं। अपनी रफ़्तार से सीखें या असली चुनौती लें।' },
+      { q: 'क्या मैं दोस्तों के साथ खेल सकता हूँ?',
+        a: 'हाँ। निजी टेबल बनाएँ, आमंत्रण भेजें और iOS व Android पर दोस्तों-परिवार के साथ खेलें — खाली सीटें AI भर सकती है।' },
+      { q: 'क्या Vanikar में विज्ञापन हैं?',
+        a: 'नहीं। Vanikar 100% विज्ञापन-मुक्त है — न बैनर, न वीडियो विज्ञापन, न कोई रुकावट। कभी नहीं।' },
+      { q: 'क्या Vanikar मुफ़्त है?',
+        a: 'ऐप मुफ़्त है और सभी गेम 2 हफ़्ते के लिए मुफ़्त खुले रहते हैं — क्रेडिट कार्ड की ज़रूरत नहीं। उसके बाद मुफ़्त खेलते रहें या प्रीमियम लें।' },
+      { q: 'क्या Vanikar iPhone और Android पर उपलब्ध है?',
+        a: 'ऐप जल्द ही iOS (16+) और Android (9+) पर आ रहा है। iOS या Android पेज पर जाकर अपना ईमेल छोड़ें — लॉन्च के दिन सबसे पहले जानें।' },
+    ],
+  },
+}[lang];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: copy.faqs.map(f => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+---
+<section class="home-faq" id="faq">
+  <div class="container">
+    <div class="section-tag">{copy.tag}</div>
+    <h2 class="faq-title">{copy.title}</h2>
+    <div class="faq-list">
+      {copy.faqs.map(f => (
+        <details class="faq-item">
+          <summary>{f.q}</summary>
+          <p>{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+</section>
+
+<style>
+  .home-faq {
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border);
+    padding: 4rem 0;
+  }
+  .faq-title { font-size: 1.6rem; margin: .5rem 0 1.5rem; }
+  .faq-list  { max-width: 860px; }
+  .faq-item {
+    border: 1px solid var(--border); border-radius: var(--radius-md);
+    background: var(--bg-card); margin-bottom: .6rem; overflow: hidden;
+  }
+  .faq-item summary {
+    cursor: pointer; padding: .9rem 1.15rem; font-size: .92rem; font-weight: 600;
+    color: var(--text-primary); font-family: 'Inter',sans-serif;
+    list-style: none; position: relative; padding-right: 2.2rem;
+    transition: color var(--transition);
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary::after {
+    content: '+'; position: absolute; right: 1.1rem; top: 50%; translate: 0 -50%;
+    color: var(--gold); font-size: 1.1rem; transition: transform var(--transition);
+  }
+  .faq-item[open] summary::after { transform: rotate(45deg); }
+  .faq-item summary:hover { color: var(--gold-light); }
+  .faq-item p { padding: 0 1.15rem 1rem; font-size: .88rem; color: var(--text-secondary); line-height: 1.7; }
+</style>
