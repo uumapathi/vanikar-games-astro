@@ -4,7 +4,7 @@ import FeatureLanding from '../components/FeatureLanding.astro';
 
 const faqs = [
   { q: 'How many players can join a multiplayer game?',
-    a: 'It depends on the game — Gin Rummy and Cribbage are head-to-head duels, Hearts and Spades seat four, and games like Bluff take up to eight players at one table.' },
+    a: 'It depends on the game — Gin Rummy and Cribbage are head-to-head duels, Hearts and Spades seat four, and games like Bluff and Big Two take up to six players at one table.' },
   { q: 'Can I mix human and AI players at one table?',
     a: 'Yes. Any empty seat at your table can be filled with an AI opponent, so a game never has to wait for a full lobby.' },
   { q: 'Are there team-based multiplayer card games?',
@@ -31,7 +31,7 @@ const jsonLd = [
 ---
 <BaseLayout
   title="Multiplayer Card Games – Play Live With Real Players | Vanikar"
-  description="Multiplayer card games at live tables: Hearts, Spades, Big Two, Bluff, Durak, Belote and more. Play 2–8 player games with real people, friends, or AI filling the empty seats."
+  description="Multiplayer card games at live tables: Hearts, Spades, Big Two, Bluff, Durak, Belote and more. Play 2–6 player games with real people, friends, or AI filling the empty seats."
 >
   <Fragment slot="head">
     {jsonLd.map(schema => (
@@ -41,7 +41,7 @@ const jsonLd = [
 
   <FeatureLanding
     h1="Multiplayer Card Games"
-    intro="From two-player duels like Gin Rummy and Cribbage to eight-player chaos in Bluff, Vanikar's multiplayer card games seat real people at every table — with matchmaking, partnerships, and cross-platform play built in."
+    intro="From two-player duels like Gin Rummy and Cribbage to six-player chaos in Bluff, Vanikar's multiplayer card games seat real people at every table — with matchmaking, partnerships, and cross-platform play built in."
     sections={[
       { heading: 'Tables for every group size',
         body: 'Head-to-head, four-hand, or a full table of eight — each game supports its traditional player count, and matchmaking fills the seats with real opponents at your skill level.' },

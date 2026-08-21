@@ -455,6 +455,16 @@ const otherTitle = related.length
 /* Untranslated locale pages stay out of search until fully localized */
 const noindex = !isGameFullyLocalized(game.slug, lang);
 
+/* Launch-notification signup (same Google Form as the download section) */
+const N = {
+  en: { title: '🔔 Get notified at launch', btn: 'Notify Me', sending: 'Sending…', confirm: "✓ You're on the list — we'll email you at launch!" },
+  es: { title: '🔔 Recibe aviso en el lanzamiento', btn: 'Avisarme', sending: 'Enviando…', confirm: '✓ Estás en la lista — te escribiremos en el lanzamiento.' },
+  pt: { title: '🔔 Seja avisado no lançamento', btn: 'Avise-me', sending: 'Enviando…', confirm: '✓ Você está na lista — enviaremos um e-mail no lançamento.' },
+  fr: { title: '🔔 Soyez averti au lancement', btn: 'Me prévenir', sending: 'Envoi…', confirm: '✓ Vous êtes sur la liste — nous vous écrirons au lancement.' },
+  de: { title: '🔔 Zum Start benachrichtigt werden', btn: 'Benachrichtigen', sending: 'Wird gesendet…', confirm: '✓ Du stehst auf der Liste — wir melden uns zum Start.' },
+  hi: { title: '🔔 लॉन्च पर सूचना पाएँ', btn: 'सूचित करें', sending: 'भेजा जा रहा है…', confirm: '✓ आप सूची में हैं — लॉन्च पर हम ईमेल करेंगे!' },
+}[lang];
+
 /* ── How-to-play video embed ─────────────────────────────────────── */
 const videoHeading = {
   en: `🎬 Watch: How to Play ${n}`,
@@ -701,6 +711,17 @@ const jsonLd = [
           <a href={href('/pricing')} class="btn btn-secondary" style="width:100%;justify-content:center;margin-top:.5rem">
             {L.ctaPricing}
           </a>
+
+          <div class="notify-block">
+            <p class="notify-title">{N.title}</p>
+            <form class="notify-form" id="notify-form-game" novalidate>
+              <input type="email" id="notify-email-game" placeholder="your@email.com"
+                     required class="notify-input" aria-label="Email address" />
+              <button type="button" class="btn btn-primary notify-btn"
+                      id="notify-btn-game" data-sending={N.sending}>{N.btn}</button>
+            </form>
+            <p class="notify-fine" id="notify-confirm-game" hidden>{N.confirm}</p>
+          </div>
         </div>
 
       </aside>
@@ -762,6 +783,49 @@ const jsonLd = [
     </div>
   </section>
 </BaseLayout>
+
+<script>
+  // ─── Google Forms config (same form as the /ios, /android, and homepage signups) ───
+  const GF_FORM_ID     = '1FAIpQLSeEtXUBBZXTR602ygQLThvrW1MTFbmky5ZaMa3caILWr9S4nQ';
+  const GF_EMAIL_ENTRY = 'entry.302574150';
+  const GF_PLATFORM    = 'GamePage';
+  // ───────────────────────────────────────────────────────────────────────────
+
+  const btn     = document.getElementById('notify-btn-game')!;
+  const input   = document.getElementById('notify-email-game') as HTMLInputElement;
+  const form    = document.getElementById('notify-form-game')!;
+  const confirm = document.getElementById('notify-confirm-game')!;
+
+  btn.addEventListener('click', async () => {
+    if (!input.checkValidity() || !input.value) {
+      input.reportValidity();
+      return;
+    }
+
+    btn.textContent = btn.dataset.sending ?? 'Sending…';
+    btn.setAttribute('disabled', 'true');
+
+    try {
+      await fetch(
+        `https://docs.google.com/forms/d/e/${GF_FORM_ID}/formResponse`,
+        {
+          method:  'POST',
+          mode:    'no-cors',           // Google Forms doesn't allow CORS; response is opaque
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body:    new URLSearchParams({
+            [GF_EMAIL_ENTRY]:   input.value,
+            'entry.platform':   GF_PLATFORM,   // ignored if field doesn't exist — harmless
+          }).toString(),
+        }
+      );
+    } catch {
+      // no-cors always throws on response reading — submission still goes through
+    }
+
+    form.style.display = 'none';
+    confirm.hidden     = false;
+  });
+</script>
 
 <style>
   .soon-banner {
@@ -888,6 +952,21 @@ const jsonLd = [
   }
   .sidebar-card h3 { font-size: .9rem; font-weight: 700; color: var(--text-primary); margin-bottom: .85rem; font-family: 'Inter',sans-serif; }
   .sidebar-cta     { background: var(--gold-subtle); border-color: var(--gold-border); }
+
+  /* Launch notification signup */
+  .notify-block { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--gold-border); }
+  .notify-title { font-size: .82rem; font-weight: 600; color: var(--text-secondary); margin-bottom: .6rem; }
+  .notify-form  { display: flex; flex-direction: column; gap: .5rem; }
+  .notify-input {
+    width: 100%;
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius-md); padding: .6rem .9rem;
+    font-size: .875rem; color: var(--text-primary);
+    transition: border-color var(--transition);
+  }
+  .notify-input:focus { outline: none; border-color: var(--gold); }
+  .notify-btn  { width: 100%; justify-content: center; }
+  .notify-fine { font-size: .8rem; color: #7acc7a; margin-top: .6rem; }
   .sidebar-cta p   { font-size: .875rem; color: var(--text-secondary); }
 
   .fact-list       { display: grid; grid-template-columns: auto 1fr; gap: .5rem .75rem; font-size: .875rem; align-items: start; }
