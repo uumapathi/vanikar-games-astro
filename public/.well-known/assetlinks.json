@@ -4,6 +4,8 @@
     "namespace": "android_app",
     "package_name": "com.vanikar.cardgames",
     "sha256_cert_fingerprints": [
+      "B8:FF:49:3C:4D:F0:EE:ED:C1:FC:60:37:E6:B5:41:1B:F4:1D:12:F1:74:9C:B4:86:0B:A9:EA:DF:8D:24:5B:3F",
+      "AF:BA:D5:E1:99:9F:AF:B5:82:5E:70:F4:9C:6E:EB:E5:C1:0E:D6:CD:A1:7E:AD:27:C5:4A:A0:67:20:0F:83:E6",
       "95:BF:03:B3:7B:44:F6:AF:C5:F7:F1:89:5C:73:6C:03:DD:14:91:00:70:14:61:F7:17:C5:DE:3B:12:28:10:AF"
     ]
   }

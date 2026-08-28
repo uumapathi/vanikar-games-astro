@@ -229,12 +229,14 @@ https://vanikar.games/join?code=TEST1234
 
 - [ ] Confirm live host: IIS (`web.config`) or Azure SWA (`staticwebapp.config.json`) — or both
       *(both configs fixed, so either works)*
-- [x] `public/.well-known/assetlinks.json` — contains the real **debug** fingerprint
-      (`95:BF:03:…:10:AF`, from `%LOCALAPPDATA%\Xamarin\Mono for Android\debug.keystore` — the
-      keystore MAUI actually signs with; there is no `~/.android/debug.keystore` on this machine).
-      **Add the release / Play App Signing fingerprint before a store release.**
-- [x] `public/.well-known/apple-app-site-association` (no extension) — created with real Team ID `4VJD69LHBS` (was placeholder; fixed
-      `TEAMID`: **replace with the real Apple Team ID** (no iOS signing was configured to read it from)
+- [x] `public/.well-known/assetlinks.json` — contains all three fingerprints:
+      **Play App Signing** (`B8:FF:49:…:5B:3F`, from Play Console → *Setup → App signing*),
+      **upload key** (`AF:BA:D5:…:83:E6`), and **debug** (`95:BF:03:…:10:AF`, from
+      `%LOCALAPPDATA%\Xamarin\Mono for Android\debug.keystore` — the keystore MAUI actually
+      signs with; there is no `~/.android/debug.keystore` on this machine). Debug is kept so
+      local Debug builds still deep-link during QA.
+- [x] `public/.well-known/apple-app-site-association` (no extension) — created, with the real
+      Apple Team ID `4VJD69LHBS` in place of the original `TEAMID` placeholder
 - [x] `web.config`: `<mimeMap fileExtension="." mimeType="application/json" />`
 - [x] `staticwebapp.config.json`: `/.well-known/*` excluded from navigationFallback, plus a
       route forcing `Content-Type: application/json` on the AASA
@@ -250,10 +252,11 @@ https://vanikar.games/join?code=TEST1234
 
 ## Needed from the app side
 
-These are blockers for filling in the files — chase them before deploying:
+Both former blockers are now resolved and baked into the files:
 
-1. **Android SHA-256 fingerprints** — debug and release (release = Play App Signing key if used)
-2. **Apple Team ID**
+1. ~~**Android SHA-256 fingerprints**~~ — done: Play App Signing, upload, and debug keys are
+   all listed in `assetlinks.json`
+2. ~~**Apple Team ID**~~ — done: `4VJD69LHBS`
 
 The rest of the work (Android `IntentFilter`, iOS entitlement, in-app link handling) happens in
 the `CardGame.Engines` repo — see `docs/discord-deep-link-setup.md` there. Site and app changes
