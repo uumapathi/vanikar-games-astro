@@ -40,9 +40,17 @@ changes. Deploy happens automatically on push to `master`. Verified live:
 - `assetlinks.json` → **200, `application/json`, 0 redirects** — Google's validator returns the
   statement, and `adb shell pm get-app-links com.vanikar.cardgames` reports **`vanikar.games:
   verified`** on a real device. Android App Links are fully working end-to-end.
-- `apple-app-site-association` → 200, 0 redirects, but `application/octet-stream` (Appwrite
-  ignores our header configs). Apple's CDN is lenient about this in practice; revisit if iOS
-  verification fails once a real Team ID is in the file.
+- `apple-app-site-association` → 200, 0 redirects, but **`application/octet-stream`**. Appwrite
+  Sites derives Content-Type from the file extension and has **no custom-header feature** for
+  static sites, so both `web.config` and `staticwebapp.config.json` are dormant here (each is
+  correct and verified: local IIS serves the file as `application/json`). Apple documents
+  `application/json` as a requirement, but **Apple has already ingested this file as-is** —
+  `curl https://app-site-association.cdn-apple.com/a/v1/vanikar.games` returns the statement
+  with HTTP 200, which is the path App Store / TestFlight builds use, so Universal Links are
+  not blocked today. The only ways to serve the correct header on Appwrite are converting the
+  site to the SSR adapter (whole site moves to the Node runtime) or fronting the domain with a
+  proxy such as Cloudflare that can rewrite the header. Left as-is deliberately; re-check the
+  Apple CDN URL if iOS verification ever fails.
 - **`/join` 301-redirects to `/join/` and the `Location` header DROPS the query string** — a
   browser following the bare URL loses the code. The app never sees the redirect (the OS
   intercepts the URL before any HTTP), but the browser fallback breaks. **Canonical invite URL
