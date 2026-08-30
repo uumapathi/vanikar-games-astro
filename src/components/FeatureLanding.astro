@@ -74,7 +74,7 @@ const csNames = comingSoonGames.slice(0, 8).map(g => g.name).join(', ');
     <p class="fl-games-sub">{gamesSub}</p>
     <div class="fl-grid">
       {availableGames.map(game => (
-        <a href={`/games/${game.slug}`} class="fl-card">
+        <a href={`/games/${game.slug}/`} class="fl-card">
           <span class="fl-icon">
             {gameIcon(game.slug)
               ? <Image src={gameIcon(game.slug)!} alt="" width={56} class="gi-img" />

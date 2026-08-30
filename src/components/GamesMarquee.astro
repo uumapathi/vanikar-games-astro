@@ -18,7 +18,7 @@ const gameIcon = (slug: string) =>
     {[0, 1].map(copy => (
       <div class="marquee-group" aria-hidden={copy === 1 ? 'true' : undefined}>
         {ordered.map(g => (
-          <a href={href(`/games/${g.slug}`)} class="marquee-chip" tabindex={copy === 1 ? -1 : undefined}>
+          <a href={href(`/games/${g.slug}/`)} class="marquee-chip" tabindex={copy === 1 ? -1 : undefined}>
             <span class="chip-icon">
               {gameIcon(g.slug)
                 ? <Image src={gameIcon(g.slug)!} alt="" width={40} class="gi-img" />

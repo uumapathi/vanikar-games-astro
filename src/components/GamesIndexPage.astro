@@ -152,7 +152,7 @@ const L = {
 
         <div class="games-grid" id="premium-grid">
           {availL.map(game => (
-            <a href={href(`/games/${game.slug}`)} class="game-card game-card--premium">
+            <a href={href(`/games/${game.slug}/`)} class="game-card game-card--premium">
               <div class="game-card-icon">
                 {gameIcon(game.slug)
                   ? <Image src={gameIcon(game.slug)!} alt="" width={88} class="gi-img" />
@@ -186,7 +186,7 @@ const L = {
 
         <div class="games-grid" id="coming-soon-grid">
           {soonL.map(game => (
-            <a href={href(`/games/${game.slug}`)} class="game-card game-card--soon">
+            <a href={href(`/games/${game.slug}/`)} class="game-card game-card--soon">
               <div class="game-card-icon soon-icon">
                 {gameIcon(game.slug)
                   ? <Image src={gameIcon(game.slug)!} alt="" width={88} class="gi-img" />
