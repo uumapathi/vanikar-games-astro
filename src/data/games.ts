@@ -1865,10 +1865,10 @@ const indiaGames: Game[] = [
     slug: 'sleep',
     name: 'Sleep',
     video: {
-      youtubeId: 'bkDC3JoRjSk',
-      note: 'This tutorial is filmed as Spoons, the name the game is best known by outside the app — the passing, the four of a kind and the race to call it are identical. Vanikar drops the spoons and you call “Sleep!” instead.',
+      youtubeId: '8IKgF2YYkAs',
+      note: 'Filmed under the name Pig, which is what this game is usually called away from the app — same deal of four cards, same passing to the next player, same race once someone has four of a kind. Vanikar simply calls it Sleep.',
     },
-    alternateNames: ['Spoons', 'Pig', 'Donkey'],
+    alternateNames: ['Pig', 'Spoons', 'Donkey'],
     tagline: 'Collect four of a kind, then call it — the last one awake loses.',
     icon: '😴',
     players: '2–6 players', playerCount: '2–6',
