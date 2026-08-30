@@ -72,6 +72,7 @@ const universalGames: Game[] = [
   {
     slug: 'high-card',
     name: 'High Card',
+    seo: { title: 'How to Play High Card Online – Rules & Strategy | Vanikar', h1: 'How to Play High Card' },
     relatedGames: ['war', 'snap', 'bluff', 'old-maid'],
     tagline: 'The simplest card game — highest card wins.',
     icon: '🂡',
@@ -143,7 +144,7 @@ const universalGames: Game[] = [
     video: { youtubeId: 'hRpXLSMdve0' },
     tagline: 'Ask, fish, and collect the most books.',
     icon: '🐟',
-    players: '2–6 players', playerCount: '2–6',
+    players: '2–4 players', playerCount: '2–4',
     difficulty: 'Easy', comingSoon: true,
     regions: ['Universal'],
     languages: [LANG.en, LANG['zh-CN'], LANG.ja, LANG.ko, LANG.hi, LANG.es, LANG.fr, LANG.pt, LANG.de],
@@ -165,11 +166,50 @@ const universalGames: Game[] = [
       'Pay attention to what opponents ask for — it reveals their holdings.',
       'Ask for ranks you already hold 2 or 3 of to complete books faster.',
     ],
+    playGuide: [
+      {
+        heading: 'Setup and the deal',
+        points: [
+          'Go Fish uses a standard 52-card deck and seats 2 to 4 players. A two-player game deals 7 cards each; with three or four players everyone gets 5.',
+          'Spread the remaining cards face-down in the middle as the pond, sometimes called the ocean.',
+          'Only rank matters in Go Fish — suits are ignored entirely.',
+          'Sort your hand by rank before you start so you can see at a glance which ranks you are closest to completing.',
+        ],
+      },
+      {
+        heading: 'Asking for cards',
+        points: [
+          'On your turn, ask one specific player for one specific rank — for example, do you have any Kings?',
+          'You may only ask for a rank you already hold at least one of. This is the rule that keeps the game honest and makes listening worthwhile.',
+          'If they have any, they must hand over every card of that rank, and you take another turn straight away.',
+          'A good turn can chain several times, so start with the rank you are most confident someone holds.',
+        ],
+      },
+      {
+        heading: 'Going fishing',
+        points: [
+          'If the player you asked has nothing, they tell you to go fish and you draw one card from the pond.',
+          'Draw exactly the card you asked for and you show it and take another turn. Otherwise your turn ends and play moves on.',
+          'Pay attention to what everybody asks for — every question reveals a rank that player is holding.',
+          'That information cuts both ways: asking for a rank tells the table you hold it too, so expect it to be asked back.',
+        ],
+      },
+      {
+        heading: 'Books and winning',
+        points: [
+          'Collecting all four cards of a rank makes a book. Lay it face-up in front of you straight away.',
+          'If a book completes your hand and cards remain in the pond, draw a new hand and stay in the game.',
+          'Play continues until all thirteen books have been made and no cards remain.',
+          'The winner is whoever collected the most books — not whoever emptied their hand first.',
+        ],
+      },
+    ],
   },
   {
     slug: 'bluff',
     name: 'Bluff',
     video: { youtubeId: 'DS2vSffV1co' },
+    seo: { title: 'How to Play Bluff Online – Rules & Strategy | Vanikar', h1: 'How to Play Bluff' },
     relatedGames: ['president', 'big-two', 'indian-jackass', 'snap'],
     alternateNames: ['Cheat', 'BS', 'I Doubt It', 'Liar'],
     tagline: 'Lie, challenge, and get rid of your cards.',
@@ -268,6 +308,44 @@ const universalGames: Game[] = [
       'Playing four of a kind resets the round and lets you play again.',
       'As Scum you\'re always handing your best cards away — escape quickly.',
     ],
+    playGuide: [
+      {
+        heading: 'Setting up the game',
+        points: [
+          'President seats 3 to 6 players and uses the standard deck, dealt out as evenly as possible.',
+          'Card ranks run from 3 as the lowest up to 2 as the highest, which is the reversal that gives the game its character.',
+          'The aim of every hand is simply to be the first to get rid of all your cards.',
+          'Finishing order sets each player\'s rank for the next hand, and that rank is what the game is really about.',
+        ],
+      },
+      {
+        heading: 'The card exchange',
+        points: [
+          'From the second hand onwards, play opens with an exchange between the highest and lowest ranked players.',
+          'The bottom player hands their best cards up, and the top player passes cards back down in return.',
+          'That handicap makes staying at the top harder and climbing from the bottom genuinely difficult.',
+          'The exchange happens before any cards are played, so you plan the hand already knowing what you gave and received.',
+        ],
+      },
+      {
+        heading: 'Playing a trick',
+        points: [
+          'The player in control leads one or more cards of the same rank — a single, a pair, three of a kind, and so on.',
+          'Everyone after them must play the same number of cards, all of one rank, and beat what is showing.',
+          'If you cannot or will not beat it, you pass. Passing puts you out of the trick until it clears.',
+          'When everyone else has passed, the table clears and the last player to have played leads whatever they like.',
+        ],
+      },
+      {
+        heading: 'Ranks and winning',
+        points: [
+          'The first player to shed every card takes the top rank for the next hand; the last one left holding cards takes the bottom.',
+          'Middle finishers fill the ranks in between, in the order they went out.',
+          'Holding a pair or triple of high cards is usually stronger than the same cards spread across separate tricks, because multi-card leads shut out anyone who cannot match the count.',
+          'Play as many hands as you like — the game has no fixed end, only the pecking order it produces.',
+        ],
+      },
+    ],
   },
   {
     slug: 'war',
@@ -297,6 +375,44 @@ const universalGames: Game[] = [
     tips: [
       'Pure chance — no strategy. Great for teaching card rankings.',
       'Set a round limit (e.g., 30 rounds) to keep the game from going on forever.',
+    ],
+    playGuide: [
+      {
+        heading: 'Setting up the game',
+        points: [
+          'War is strictly a two-player game. The full 52-card deck is split evenly, giving each player a face-down pile of 26 cards.',
+          'You never choose anything in War — the entire game is decided by the order of the cards, which is what makes it a good first card game for children.',
+          'Aces are high and suits are irrelevant. Only rank decides a battle.',
+          'Cards you win go to the bottom of your pile, so the deck slowly cycles as the game runs.',
+        ],
+      },
+      {
+        heading: 'Fighting a battle',
+        points: [
+          'Both players flip the top card of their pile at the same time. This is a battle.',
+          'The higher rank wins and takes both cards. Play then continues with the next battle.',
+          'Because every card eventually comes back around, a run of bad luck early is rarely fatal.',
+          'A game is capped at 500 battles, so a deck that keeps cycling without a winner is stopped rather than running forever.',
+        ],
+      },
+      {
+        heading: 'Going to war',
+        points: [
+          'When both flipped cards are the same rank, the battle is a tie and the game goes to war.',
+          'Each player commits three cards face-down as the stake, then flips one more card face-up.',
+          'The higher of those face-up cards wins everything on the table — both original cards, all six face-down stakes, and the two deciding cards.',
+          'If the deciding cards tie again, another war starts on top of the first, so a single war can swing ten or more cards at once.',
+        ],
+      },
+      {
+        heading: 'Winning',
+        points: [
+          'You win by capturing all 52 cards, leaving your opponent with nothing to flip.',
+          'If a player runs out of cards partway through a war, they cannot complete the stake and lose the game.',
+          'If the battle cap is reached first, the player holding more cards at that point is ahead.',
+          'There is no strategy to apply — the interest is entirely in the swings, and wars are where they happen.',
+        ],
+      },
     ],
   },
   {
@@ -329,6 +445,44 @@ const universalGames: Game[] = [
       'Call the suit you have the most cards of after playing an 8.',
       'With special card rules, a well-timed Queen or 2 can strand an opponent.',
     ],
+    playGuide: [
+      {
+        heading: 'Setup and the deal',
+        points: [
+          'Crazy Eights uses a standard 52-card deck and suits 2 to 6 players. Deal 5 cards each with more than two players, or 7 in a two-player game.',
+          'Turn one card face-up to start the discard pile and place the rest face-down as the draw pile.',
+          'The aim is simply to be first to shed every card in your hand.',
+          'If the starting card is an 8, bury it and turn another so the hand does not begin with a wild card.',
+        ],
+      },
+      {
+        heading: 'Playing a card',
+        points: [
+          'On your turn, play one card that matches the top of the discard pile by either suit or rank.',
+          'If you cannot match, draw from the pile until you find a playable card, then play it. When the draw pile is empty and you still cannot play, your turn simply passes.',
+          'Only the top card matters, so the suit in play changes constantly — a hand that looked unplayable a moment ago can open up.',
+          'Shed high-value cards early. Anything you are still holding when someone goes out is counted against you.',
+        ],
+      },
+      {
+        heading: 'The power of eights',
+        points: [
+          'Any 8 can be played at any time, regardless of the suit or rank showing. This is the rule the whole game is built around.',
+          'After playing an 8, you name the suit that the next player must follow, so an 8 is both an escape and a weapon.',
+          'Call the suit you hold most of, or the one you suspect an opponent is void in.',
+          'Hold at least one 8 in reserve rather than spending them early — an 8 is your guaranteed escape when the suit turns against you.',
+        ],
+      },
+      {
+        heading: 'Going out and scoring',
+        points: [
+          'The first player to shed every card wins the hand and the others count what remains in their hands.',
+          'Penalty values: each 8 costs 50, face cards 10, Aces 1, and every other card its face value.',
+          'Play to an agreed total, commonly 100 or 200 points. The player with the lowest score when someone crosses it wins the game.',
+          'Many tables add special cards — 2s forcing a draw, Queens skipping the next player, Aces reversing direction. Agree which are in play before you start.',
+        ],
+      },
+    ],
   },
   {
     slug: 'old-maid',
@@ -358,6 +512,44 @@ const universalGames: Game[] = [
     tips: [
       'Try to conceal the Old Maid by keeping it in the middle of your fan.',
       'Watch for the card opponents hesitate over — it\'s likely the one they don\'t want you to take.',
+    ],
+    playGuide: [
+      {
+        heading: 'Setting up the game',
+        points: [
+          'Old Maid seats 2 to 8 players and uses a 51-card deck — one Queen is removed before the deal so that a single Queen can never be paired.',
+          'All the cards are dealt out; some players may receive one more than others, which is fine.',
+          'As soon as the cards are dealt, every player discards all the pairs already in their hand face-up.',
+          'Only rank matters when pairing — any two Kings are a pair regardless of suit.',
+        ],
+      },
+      {
+        heading: 'Taking a card',
+        points: [
+          'On your turn you take one card, unseen, from the next player who still holds cards.',
+          'If the card you take pairs with one in your hand, discard the pair immediately.',
+          'If it does not pair, it stays in your hand and play moves on.',
+          'Because you draw from a fanned hand, the position of the card is the only information you get.',
+        ],
+      },
+      {
+        heading: 'Going out',
+        points: [
+          'A player whose hand becomes empty is safe and out of the game for good.',
+          'Play continues among the remaining players, so the pool of hands shrinks steadily.',
+          'The unpaired Queen cannot be discarded — it can only be passed on when another player happens to take it.',
+          'Everyone at the table eventually knows roughly who is holding it, which is where the fun comes from.',
+        ],
+      },
+      {
+        heading: 'Losing',
+        points: [
+          'The game ends when only one player is left holding a card, and that card is the odd Queen.',
+          'That player is the Old Maid. There is no winner in the usual sense — everyone else simply escaped.',
+          'If you are stuck with the Queen, try to keep your hand ordered so opponents cannot read your hesitation.',
+          'Play a series of rounds and track who has been the Old Maid most often.',
+        ],
+      },
     ],
   },
   {
@@ -390,6 +582,44 @@ const universalGames: Game[] = [
       'With limited passes, save them for when holding a blocker is strategically vital.',
       'Watch what sequences opponents are building to anticipate what they need.',
     ],
+    playGuide: [
+      {
+        heading: 'Setting up the game',
+        points: [
+          'Sevens, also called Fan Tan or Parliament, seats 2 to 7 players and uses the full 52-card deck.',
+          'Every card is dealt out, so hands are uneven when the player count does not divide 52 evenly.',
+          'The player holding the seven of diamonds leads and must play it, which opens the first sequence.',
+          'The table layout grows into four sequences, one per suit, each built outward from its seven.',
+        ],
+      },
+      {
+        heading: 'Playing a card',
+        points: [
+          'On your turn you play one card onto the layout, extending a sequence at either end.',
+          'A sequence runs upward from its seven towards the King and downward towards the Ace.',
+          'You may also open a new suit by playing that suit\'s seven, which is often the most valuable move available.',
+          'Only the two ends of each suit are live, so at any moment there are at most eight legal cards in the whole deck.',
+        ],
+      },
+      {
+        heading: 'Passing',
+        points: [
+          'If you cannot play, you pass — but passing is only legal when you genuinely hold no playable card.',
+          'That restriction is the heart of the game: you can never hold a card back to block an opponent if it is your only legal move.',
+          'It also means being forced to play a card that unlocks a whole run for someone else is a normal, unavoidable part of Sevens.',
+          'Watching which suits others pass on tells you a great deal about what they are holding.',
+        ],
+      },
+      {
+        heading: 'Winning',
+        points: [
+          'The first player to shed every card wins the hand.',
+          'Cards next to a seven are the most valuable to hold, because releasing them opens the sequence for everybody.',
+          'Sevens themselves are the strongest cards in the game — holding one keeps that suit closed entirely.',
+          'The tension is between opening a suit you can use and keeping it shut on opponents who need it more.',
+        ],
+      },
+    ],
   },
   {
     slug: 'snap',
@@ -418,6 +648,44 @@ const universalGames: Game[] = [
       'Keep your eyes on ALL piles simultaneously — Snap can involve any two players\' piles.',
       'Speed matters more than accuracy — but false snaps cost cards.',
     ],
+    playGuide: [
+      {
+        heading: 'Setting up the game',
+        points: [
+          'Snap seats 2 to 8 players. The whole deck is dealt out face-down, as evenly as the player count allows.',
+          'Each player keeps their pile face-down and builds a personal face-up stack in front of them as they play.',
+          'Only rank matters — suits and colours are ignored entirely.',
+          'The game is a pure reaction test, so it works well across very mixed ages.',
+        ],
+      },
+      {
+        heading: 'Flipping and snapping',
+        points: [
+          'Players take turns flipping the top card of their pile onto their own face-up stack.',
+          'Whenever the top cards of any two players\' face-up stacks show the same rank, the match is live and anyone at the table may call it.',
+          'The first player to call Snap wins both of those matching stacks and adds them to the bottom of their pile.',
+          'Because a match can appear between any two stacks, you have to watch the whole table rather than just your own cards.',
+        ],
+      },
+      {
+        heading: 'False snaps',
+        points: [
+          'Calling Snap when no two top cards match is a false snap, and it carries a real cost.',
+          'The false snapper pays one card to every other player still in the game, so a wrong call in a big group is expensive.',
+          'That penalty is the only brake on the game — without it the correct tactic would be to call constantly.',
+          'Watch for players who call early and often; they bleed cards steadily even when they win some piles.',
+        ],
+      },
+      {
+        heading: 'Winning',
+        points: [
+          'A player who runs out of cards is out of the game, and play continues without them.',
+          'The last player still holding cards wins.',
+          'A single successful snap late in the game can hand you a huge stack, so being behind is rarely permanent.',
+          'The game is capped at 1,000 flips to stop an endless cycle when nobody manages a clean snap.',
+        ],
+      },
+    ],
   },
 ];
 
@@ -429,6 +697,7 @@ const northAmericaGames: Game[] = [
     slug: 'hearts',
     name: 'Hearts',
     video: { youtubeId: '3Pj7y_vOs7Q' },
+    seo: { title: 'How to Play Hearts Online – Rules & Strategy | Vanikar', h1: 'How to Play Hearts' },
     relatedGames: ['spades', 'whist', 'euchre', 'president'],
     extraFaqs: [
       { q: 'What is the Queen of Spades worth in Hearts?',
@@ -510,6 +779,7 @@ const northAmericaGames: Game[] = [
     slug: 'spades',
     name: 'Spades',
     video: { youtubeId: '6pVvbbpbrlk' },
+    seo: { title: 'How to Play Spades Online – Rules & Strategy | Vanikar', h1: 'How to Play Spades' },
     relatedGames: ['hearts', 'whist', 'euchre', 'belote'],
     tagline: 'Bid smart. Spades are always trump.',
     icon: '♠',
@@ -583,6 +853,7 @@ const northAmericaGames: Game[] = [
     slug: 'gin-rummy',
     name: 'Gin Rummy',
     video: { youtubeId: 'Uy063oI9Gkk' },
+    seo: { title: 'How to Play Gin Rummy Online – Rules & Strategy | Vanikar', h1: 'How to Play Gin Rummy' },
     relatedGames: ['indian-rummy', 'canasta', 'buraco', 'chinchon'],
     tagline: 'Knock before they do.',
     icon: '🍸',
@@ -681,11 +952,50 @@ const northAmericaGames: Game[] = [
       'Memorise Bower structure — Left Bower counts as trump, not its printed suit.',
       'Three trump cards = strong "order up." Two trump + one Ace = borderline.',
     ],
+    playGuide: [
+      {
+        heading: 'The deck and the bowers',
+        points: [
+          'Euchre uses a stripped 24-card deck — only 9, 10, Jack, Queen, King and Ace in each suit. Four players sit in two fixed partnerships, opposite each other.',
+          'Everyone is dealt 5 cards in packets of 2 and 3, and the next card is turned face-up to propose a trump suit.',
+          'The two most important cards are the bowers. The Jack of the trump suit is the Right Bower — the highest card in the game. The Jack of the same colour is the Left Bower, second highest.',
+          'The Left Bower stops being its printed suit for the whole hand. If Spades are trump, the Jack of Clubs is a Spade — you cannot follow a Club lead with it.',
+        ],
+      },
+      {
+        heading: 'Naming trump',
+        points: [
+          'First round: starting left of the dealer, each player may order up the turned card as trump or pass. If someone accepts, the dealer picks it up and discards a card face-down.',
+          'Second round: if all four pass, players may name any other suit as trump — but never the suit that was just turned down.',
+          'If all four pass again, the hand is dead and the deal moves on. Some tables play stick the dealer, forcing the dealer to name a suit rather than pass.',
+          'Judge your hand before calling: three trumps, or two trumps plus an off-suit Ace, is a reasonable call. Both bowers is very strong.',
+        ],
+      },
+      {
+        heading: 'Playing the hand',
+        points: [
+          'The player left of the dealer leads the first trick. You must follow the led suit if you can; otherwise play anything, including trump.',
+          'The highest trump wins the trick, or the highest card of the led suit if no trump is played. The winner leads the next trick.',
+          'Trump ranks high to low: Right Bower, Left Bower, Ace, King, Queen, 10, 9. Non-trump suits rank normally, Ace high.',
+          'Count trump as it appears. With only five tricks per hand, knowing that both bowers have gone decides how hard you can push.',
+        ],
+      },
+      {
+        heading: 'Scoring and going alone',
+        points: [
+          'The team that named trump must win at least 3 of the 5 tricks. Taking 3 or 4 scores 1 point; taking all 5 — a march — scores 2.',
+          'Fail to take 3 and you are euchred: the opposing team scores 2 points instead. That penalty is what makes reckless calls expensive.',
+          'Going alone: the caller may bench their partner and play the hand solo. A solo march scores 4 points, making it the fastest route to victory.',
+          'First team to 10 points wins the match.',
+        ],
+      },
+    ],
   },
   {
     slug: 'cribbage',
     name: 'Cribbage',
     video: { youtubeId: 'bzRHjdS2VAE' },
+    seo: { title: 'How to Play Cribbage Online – Rules & Strategy | Vanikar', h1: 'How to Play Cribbage' },
     relatedGames: ['gin-rummy', 'whist', 'hearts', 'euchre'],
     tagline: 'Peg your way to 121 — every combination counts.',
     icon: '📌',
@@ -795,6 +1105,44 @@ const latinAmericaGames: Game[] = [
       'Taking the discard pile when it\'s large is often worth any entry cost.',
       'Protect wild cards; the opposing team may freeze the pack against you.',
     ],
+    playGuide: [
+      {
+        heading: 'Setup and the deal',
+        points: [
+          'Canasta uses two full decks plus four Jokers — 108 cards. Four players form two partnerships sitting opposite each other.',
+          'Each player is dealt 11 cards. One card starts the discard pile; if it is a wild card or a red 3, another is turned on top of it.',
+          'Threes are never melded in the app’s baseline mode — they are simply discard fodder, so do not hold them hoping to build on them.',
+          'On your turn you either draw two cards from the stock or take the entire discard pile, then meld if you wish, and finish by discarding one card.',
+        ],
+      },
+      {
+        heading: 'Melding and wild cards',
+        points: [
+          'A meld is three or more cards of the same rank laid face-up in front of your partnership. Suits are irrelevant — only rank matters.',
+          'Jokers and 2s are wild and can stand in for any natural card, but a meld can never contain more wild cards than natural ones.',
+          'A meld needs at least three cards, and it must contain at least two natural cards — so wilds can never outnumber the real cards in a meld.',
+          'Melds belong to the partnership, not the player, so either partner can extend a meld the other one started.',
+        ],
+      },
+      {
+        heading: 'Taking the discard pile',
+        points: [
+          'Taking the pile is the big swing in Canasta — it can hand you a dozen cards at once, so most of the strategy is about earning the right to take it and denying it to opponents.',
+          'To take it you must be able to use the top card immediately, either by matching it with two natural cards from your hand or by adding it to a meld your side already holds.',
+          'Watch what opponents discard and what they take — the pile is the fastest way for either side to gain cards, so denying it matters as much as building your own melds.',
+          'Jokers and 2s are wild and can stand in for any rank, but each one you spend is a card you cannot use to make a clean canasta later.',
+        ],
+      },
+      {
+        heading: 'Canastas, going out, and scoring',
+        points: [
+          'A canasta is a completed meld of seven or more cards. A natural canasta, with no wild cards, scores 500; a mixed one scores 300.',
+          'Your partnership must have at least one canasta before either player may go out, so completing the first one is the real objective of the hand.',
+          'Going out means playing or discarding your final card, which ends the hand immediately for everyone.',
+          'Score card values on top of the bonuses: Jokers 50, 2s and Aces 20, Kings down to 8s 10 each, and 7s down to 4s 5 each. Cards still in hand count against you. First side to 5,000 wins.',
+        ],
+      },
+    ],
   },
   {
     slug: 'buraco',
@@ -823,6 +1171,44 @@ const latinAmericaGames: Game[] = [
     tips: [
       'Complete a Buraco as soon as possible to enable going out.',
       'Your pot pile is both a lifeline and a target — try to empty your hand to grab it on your terms.',
+    ],
+    playGuide: [
+      {
+        heading: 'Setting up the game',
+        points: [
+          'Buraco seats 2 to 4 players and uses two full decks plus all four jokers — 108 cards in total.',
+          'Each player is dealt eleven cards, and two face-down piles of eleven, the pozzetti, are set aside as pots.',
+          'One pot belongs to each side and is picked up later in the hand, which gives Buraco its distinctive second wind.',
+          'A turn is always the same shape: draw or take the discard pile, then meld if you wish, then discard.',
+        ],
+      },
+      {
+        heading: 'Melds',
+        points: [
+          'Unlike Canasta, Buraco melds can be either sets of the same rank or runs of consecutive cards in one suit.',
+          'A meld needs at least three cards, and runs are the backbone of the game.',
+          'A meld may contain at most one wild card, so wilds are far scarcer here than in Canasta.',
+          'Melds belong to the partnership, so either partner can extend one the other started.',
+        ],
+      },
+      {
+        heading: 'The pot',
+        points: [
+          'When you play your last card, your side immediately picks up its pot of eleven cards and keeps playing.',
+          'That means emptying your hand early is not the end of the hand — it is the gateway to the second half.',
+          'Because the pot is a fixed eleven cards, timing when to take it is a real tactical decision.',
+          'A side that has already used its pot has nothing left to fall back on.',
+        ],
+      },
+      {
+        heading: 'Winning',
+        points: [
+          'A buraco is a completed meld of seven or more cards, and your side must have one before it can go out.',
+          'A clean buraco, made with no wild card at all, is worth considerably more than one containing a wild.',
+          'You cannot go out until your pot has been taken and a buraco completed, so the hand has a natural three-stage rhythm.',
+          'Cards left in hand when an opponent goes out count against your side.',
+        ],
+      },
     ],
   },
   {
@@ -856,6 +1242,44 @@ const latinAmericaGames: Game[] = [
       'Hold both low cards (cheap deadwood) and high-potential run starters.',
       'If you have 6 cards of the same suit, consider holding on for Chinchón.',
     ],
+    playGuide: [
+      {
+        heading: 'Setting up the game',
+        points: [
+          'Chinchon seats 2 to 6 players, and each player is dealt seven cards.',
+          'One card is turned face-up to start the discard pile, and the rest form the face-down stock.',
+          'The aim is to arrange your hand into combinations and leave as little unmatched as possible.',
+          'It plays much like rummy, but the seven-card hand makes rounds short and sharp.',
+        ],
+      },
+      {
+        heading: 'Melds and deadwood',
+        points: [
+          'A run is three or more consecutive cards of the same suit. A set is three or more cards of the same rank.',
+          'Anything not part of a run or set is deadwood, and deadwood is what you score against.',
+          'Aces count 1, numbered cards their face value, and court cards 10 each.',
+          'Because court cards are the most expensive to be caught with, shedding them early is usually right.',
+        ],
+      },
+      {
+        heading: 'Taking a turn',
+        points: [
+          'Each turn is the same two steps: draw one card, then discard one.',
+          'You may draw the face-down top of the stock, or take the visible card from the discard pile.',
+          'Taking from the discard tells everyone something about what you are building, so the free information has a price.',
+          'Watch what opponents pick up, and avoid discarding anything that extends what they are collecting.',
+        ],
+      },
+      {
+        heading: 'Closing the round',
+        points: [
+          'When your unmatched cards total five points or fewer, you may close the round with your discard.',
+          'Everyone then reveals and counts their deadwood, which is added to their running total.',
+          'Chinchon is the perfect hand — a single run of all seven cards in one suit — and it wins outright.',
+          'Points are penalties, so the aim across the game is the lowest total. Players who climb past the agreed limit drop out.',
+        ],
+      },
+    ],
   },
   {
     slug: 'briscola',
@@ -888,6 +1312,44 @@ const latinAmericaGames: Game[] = [
       'Lead with low point cards to test opponents\' trump holdings.',
       'In team play, signal to your partner which suit to lead back.',
     ],
+    playGuide: [
+      {
+        heading: 'Setting up the game',
+        points: [
+          'Briscola seats 2 to 4 players and uses a 40-card deck — the eights, nines and tens are removed from a standard pack.',
+          'Each player is dealt three cards, and one further card is turned face-up to set the briscola, the trump suit for the whole game.',
+          'That trump card is slid partly under the remaining stock and is the very last card taken as the stock runs down.',
+          'After every trick each player draws back up to three cards, so hands stay at three until the stock is exhausted.',
+        ],
+      },
+      {
+        heading: 'Card values',
+        points: [
+          'The deck holds exactly 120 points, and the whole game is a race to capture more than half of them.',
+          'Aces are worth 11 and threes are worth 10, which makes those two ranks far more valuable than their trick-taking power suggests.',
+          'Kings are worth 4, Queens 3 and Jacks 2. Everything else is worth nothing at all.',
+          'That gap means a trick can be worth 21 points or nothing, and knowing which is which is most of the skill.',
+        ],
+      },
+      {
+        heading: 'Playing a trick',
+        points: [
+          'There is no obligation to follow suit in Briscola — you may play any card at any time.',
+          'The highest trump in a trick wins it. If no trump is played, the strongest card of the suit that was led wins.',
+          'Because following suit is optional, discarding a worthless card on a trick you cannot win is a routine and important move.',
+          'The trick winner leads the next one, and both players draw a replacement card before it begins.',
+        ],
+      },
+      {
+        heading: 'Winning',
+        points: [
+          'Count the points on the cards you captured once every trick has been played. More than 60 of the 120 wins.',
+          'Exactly 60 each is a draw, which happens more often than you might expect.',
+          'In the four-player partnership game, partners combine their captured points at the end.',
+          'Save your trumps for tricks that actually carry points — trumping a worthless trick wins the cards but gains nothing.',
+        ],
+      },
+    ],
   },
   {
     slug: 'truco',
@@ -917,6 +1379,44 @@ const latinAmericaGames: Game[] = [
       'Bluffing is central — "Truco!" with a weak hand can still win if they fold.',
       'Memorise the top 4 cards: 1♠, 1♣, 7♦, 7♥.',
       'Develop a signalling system with your partner for card strength.',
+    ],
+    playGuide: [
+      {
+        heading: 'Setting up the game',
+        points: [
+          'Truco is played by two or four people, with partnerships sitting opposite each other in the four-player game.',
+          'Each player receives three cards from a 40-card deck, and each hand is decided over three quick tricks.',
+          'There is no trump suit. Instead the cards follow a fixed power order that has to be learned.',
+          'The real game is not the tricks themselves but the betting that runs alongside them.',
+        ],
+      },
+      {
+        heading: 'Envido',
+        points: [
+          'Envido is a side bet on card points, called before the second card of the first trick is played.',
+          'Your envido score comes from two cards of the same suit in your hand, added together with a bonus.',
+          'The opponent may accept, decline, or raise. Declining concedes a smaller number of points immediately.',
+          'Falta Envido is the largest raise available, staking everything still needed to win the game.',
+        ],
+      },
+      {
+        heading: 'Truco bidding',
+        points: [
+          'At your turn you may call Truco, raising what the hand itself is worth.',
+          'Your opponent accepts, folds, or raises again to Retruco, and from there to Vale Cuatro.',
+          'Folding hands over the current stake without playing on, which is often the right choice with a weak hand.',
+          'Because you can call with any hand at all, Truco rewards bluffing more than almost any other trick-taking game.',
+        ],
+      },
+      {
+        heading: 'Winning the hand',
+        points: [
+          'Whoever wins two of the three tricks wins the hand and collects whatever it was worth after the bidding.',
+          'A hand nobody raised is worth the base amount, so calling is how you make a good hand pay.',
+          'In partnership play, legal signalling between partners about card strength is part of the tradition.',
+          'Play continues until a side reaches the agreed target, with the escalating bets making late hands decisive.',
+        ],
+      },
     ],
   },
 ];
@@ -957,6 +1457,44 @@ const asiaGames: Game[] = [
       'A four-of-a-kind is a near-unbeatable bomb; save it for a winning play.',
       'Lead sequences early to reduce the chance of others having perfect counters.',
     ],
+    playGuide: [
+      {
+        heading: 'Setting up the game',
+        points: [
+          'Tien Len seats 2 to 4 players, and each player is dealt thirteen cards.',
+          'Ranks run 3 as the lowest through to 2 as the highest, and suits break ties in the order spades, clubs, diamonds, hearts.',
+          'The player holding the lowest card in the deal leads first, which is normally the three of spades.',
+          'The aim is simply to be the first to shed every card.',
+        ],
+      },
+      {
+        heading: 'Playing a combination',
+        points: [
+          'The leader may play a single card, a pair, a triple, or a five-card combination such as a straight or a full house.',
+          'Everyone after them must play the same shape, only higher, or pass.',
+          'Passing removes you from the current trick entirely — you cannot rejoin it even if you later wish you had played.',
+          'When everyone has passed, the table clears and whoever played last leads a fresh combination of their choice.',
+        ],
+      },
+      {
+        heading: 'Twos and bombs',
+        points: [
+          'The 2 is the highest single card in the game and normally beats anything played as a single.',
+          'Bombs are the exception. Four of a kind beats a lone 2 outright, and can also take out a pair of 2s.',
+          'That makes holding 2s powerful but not safe, and it makes collecting four of a kind worth the effort.',
+          'Because passing locks you out of a trick, timing a bomb is as important as holding one.',
+        ],
+      },
+      {
+        heading: 'Winning',
+        points: [
+          'The first player to play their final card wins the hand.',
+          'Count your escape route before you start shedding — a hand with one unplayable low card can strand you at the end.',
+          'Leading long straights early tends to be efficient, because they are hard for opponents to match.',
+          'Keeping one high single in reserve gives you a way to seize control late in the hand.',
+        ],
+      },
+    ],
   },
   {
     slug: 'koi-koi',
@@ -989,10 +1527,49 @@ const asiaGames: Game[] = [
       'Calling Koi-Koi with a weak hand is very risky against an experienced opponent.',
       'Watch which month cards your opponent captures to anticipate their yaku.',
     ],
+    playGuide: [
+      {
+        heading: 'Setting up the game',
+        points: [
+          'Koi-Koi is played by exactly two people with a 48-card hanafuda deck — twelve months of four cards each.',
+          'Each player receives eight cards, and eight more are dealt face-up to the table between them.',
+          'Cards are matched by month, not by number, so the twelve months function like suits.',
+          'The rest of the deck sits face-down as the draw pile.',
+        ],
+      },
+      {
+        heading: 'Capturing cards',
+        points: [
+          'On your turn, play a card from your hand that matches the month of a card on the table, and take both into your capture pile.',
+          'Then turn the top card of the draw pile. If it matches a month on the table, capture that pair too.',
+          'If either card has no match, it simply stays on the table as a target for later.',
+          'So a single turn can capture nothing, two cards, or four.',
+        ],
+      },
+      {
+        heading: 'Card types and yaku',
+        points: [
+          'Captured cards fall into categories worth different amounts: Brights are worth 20, Animals 10, and the plain Chaff cards 1 each.',
+          'Certain named combinations of captured cards form yaku, and completing one is what actually scores.',
+          'The Brights are the highest-value cards in the deck, so watching which ones remain unclaimed shapes the whole round.',
+          'Ribbons and Animals form several of the more achievable combinations.',
+        ],
+      },
+      {
+        heading: 'Koi-Koi or Shobu',
+        points: [
+          'The moment you complete a yaku you face the game\'s only real decision.',
+          'Call Shobu to stop the round immediately and bank the points you have earned.',
+          'Call Koi-Koi to carry on, aiming for a bigger combination — but if your opponent completes a yaku first, you lose what you were holding.',
+          'That gamble is the whole game. Calling Koi-Koi with few cards left in hand is usually a poor bet.',
+        ],
+      },
+    ],
   },
   {
     slug: 'big-two',
     video: { youtubeId: 'U28DKiVQpVM', start: 25 },
+    seo: { title: 'How to Play Big Two Online – Rules & Strategy | Vanikar', h1: 'How to Play Big Two' },
     relatedGames: ['tien-len', 'president', 'sevens', 'indian-jackass'],
     name: 'Big Two',
     alternateNames: ['大老二', 'Deuces', 'Cho Dai Di', 'Pusoy Dos (Philippines)'],
@@ -1101,6 +1678,44 @@ const indiaGames: Game[] = [
       'In the second half, defenders should break opponent runs by sacrificing tricks strategically.',
       'A Bavney win is rare but devastating — pursue it only with a dominant hand.',
     ],
+    playGuide: [
+      {
+        heading: 'Setting up the game',
+        points: [
+          'Court Piece, also called Rung, is a four-player partnership game with partners sitting opposite each other.',
+          'It uses the full 52-card deck and every card is dealt, giving each player thirteen in total.',
+          'The deal is split. Five cards go to each player first, and the rest follow only after trump has been named.',
+          'That split is what makes the trump call a genuine decision rather than a formality.',
+        ],
+      },
+      {
+        heading: 'Naming trump',
+        points: [
+          'The trump caller looks at their first five cards only and names the trump suit, the rang, from those.',
+          'You are committing on incomplete information — eight of your thirteen cards are still unseen.',
+          'Call your longest and strongest suit among the five rather than simply your highest card.',
+          'Once trump is named, the remaining cards are dealt and the hand begins.',
+        ],
+      },
+      {
+        heading: 'Playing tricks',
+        points: [
+          'The player to the caller\'s side leads, and you must follow the suit led if you are able.',
+          'If you are void in the led suit you may play anything, including a trump.',
+          'The highest trump in the trick wins it; with no trump played, the highest card of the led suit takes it.',
+          'The winner of each trick leads the next, so control of the lead passes with the cards.',
+        ],
+      },
+      {
+        heading: 'Winning',
+        points: [
+          'The target is seven tricks — the first partnership to reach that number claims the hand.',
+          'Because seven of thirteen is a simple majority, the hand often turns on a single contested trick in the middle.',
+          'Counting trumps as they fall matters enormously; knowing the last trump has gone turns your side suits into winners.',
+          'Taking all thirteen tricks is the most emphatic result available and is worth playing for when your hand supports it.',
+        ],
+      },
+    ],
   },
   {
     slug: 'mendikot',
@@ -1132,6 +1747,44 @@ const indiaGames: Game[] = [
       'Protect your 10s early — lead suits your opponents must follow to flush out their high cards.',
       'Sacrificing a trick to draw out trump is often worth it to secure a key 10.',
       'In the endgame, if you hold two 10s and your opponents hold two, the team that controls trump usually prevails.',
+    ],
+    playGuide: [
+      {
+        heading: 'Setting up the game',
+        points: [
+          'Mendikot is a four-player partnership game, with partners seated opposite one another.',
+          'The full deck is dealt out, thirteen cards to each player, so nothing is left over.',
+          'The dealer\'s last card is turned up and its suit becomes trump for the hand.',
+          'Unusually, the goal is not tricks or points — it is the four tens.',
+        ],
+      },
+      {
+        heading: 'Playing tricks',
+        points: [
+          'The player left of the dealer leads, and following the led suit is compulsory whenever you can.',
+          'If you are void you may play any card, including a trump.',
+          'The highest trump wins the trick, or the highest card of the led suit if no trump is played.',
+          'The trick winner leads the next one.',
+        ],
+      },
+      {
+        heading: 'Hunting the tens',
+        points: [
+          'Only the four tens decide the hand. Every other card matters purely as a means of capturing them.',
+          'A partnership that captures three of the four tens wins the hand.',
+          'Capture all four and it is a mendikot — the emphatic version of the same result.',
+          'This changes trick play completely: a trick with no ten in it is worth nothing except the lead it gives you.',
+        ],
+      },
+      {
+        heading: 'Playing well',
+        points: [
+          'Protect your own tens. Leading a suit in which you hold the ten invites opponents to trump it away.',
+          'Watch which tens have already fallen — once three are accounted for, the whole hand narrows to the fourth.',
+          'Sacrificing a trick to draw out trumps is often worth it if it clears the way to a ten later.',
+          'Partnership signalling through your choice of lead is the main way to tell your partner where your strength lies.',
+        ],
+      },
     ],
   },
   {
@@ -1166,42 +1819,121 @@ const indiaGames: Game[] = [
       'Reveal your trump strategically — too early gives opponents time to prepare; too late and you\'re vulnerable.',
       'As the defending team, work together to exhaust the bidding team\'s high-value cards.',
     ],
+    playGuide: [
+      {
+        heading: 'Setting up the game',
+        points: [
+          'The 29 Game is played by four people in two partnerships, using a 32-card deck of sevens through Aces.',
+          'Each player ends up with eight cards, but only the first four are dealt before the auction opens.',
+          'Card points are unusual: Jacks are worth 3, nines 2, and Aces and tens 1 each. Everything else is worth nothing.',
+          'That comes to 28 points across the deck, which is what the bidding is measured against.',
+        ],
+      },
+      {
+        heading: 'The auction',
+        points: [
+          'With four cards each, players bid the number of card points their side expects to take.',
+          'Bidding opens at 16 and can rise to 28, the entire pack. You may pass instead of bidding.',
+          'The highest bidder wins the auction and names the trump suit for the hand.',
+          'The remaining four cards are then dealt to everyone, so you bid on half a hand and play with a full one.',
+        ],
+      },
+      {
+        heading: 'Playing tricks',
+        points: [
+          'Trick-taking power runs Jack highest, then nine, Ace, ten, King, Queen, eight and seven.',
+          'That order is the single most important thing to learn — the Jack and nine outrank the Ace and ten.',
+          'You must follow the led suit if you can; otherwise any card may be played.',
+          'The highest trump wins the trick, and with no trump the strongest card of the led suit takes it.',
+        ],
+      },
+      {
+        heading: 'Winning the hand',
+        points: [
+          'Once all eight tricks are played, the bidding side counts the card points it captured.',
+          'Reach the bid and the side scores. Fall short and the defenders score instead.',
+          'Holding the Jack and nine of one suit is a very strong reason to bid high and name that suit.',
+          'As a defender, force out the bidding side\'s trumps early to strip their protection from the high-value cards.',
+        ],
+      },
+    ],
   },
   {
-    slug: 'seep',
-    name: 'Seep',
-    video: { youtubeId: 'ylVfR_9E7P8' },
-    alternateNames: ['Sweep', 'Sip', 'Seepi'],
-    tagline: 'Capture matching cards from the table — sweeps score big.',
-    icon: '🌾',
-    players: '2–4 players', playerCount: '2–4',
-    difficulty: 'Medium', comingSoon: true,
-    regions: ['India'],
-    languages: [LANG.hi, LANG.pa, LANG.en, LANG.ur],
-    description: 'Seep is a capture card game popular across North India, particularly in Uttar Pradesh, Haryana, and Punjab. Play a card to the table and capture cards of equal value or combinations that sum to your card. A "Seep" (total sweep of the table) earns a precious bonus point.',
-    objective: 'Score the most points by capturing high-value cards, achieving sweeps, and holding the most captured cards.',
+    slug: 'sleep',
+    name: 'Sleep',
+    video: { youtubeId: 'bkDC3JoRjSk' },
+    alternateNames: ['Spoons', 'Pig', 'Donkey'],
+    tagline: 'Collect four of a kind, then call it — the last one awake loses.',
+    icon: '😴',
+    players: '2–6 players', playerCount: '2–6',
+    difficulty: 'Easy', comingSoon: true,
+    regions: ['Universal'],
+    languages: [LANG.en, LANG.es, LANG.pt, LANG.fr, LANG.de, LANG.hi],
+    description: 'Sleep is a fast, chaotic passing game with no winner — only a loser. Cards circulate around the table one at a time while everyone hunts for four of a kind. The moment somebody gets it and calls "Sleep!", every other player drops what they are doing and races to call it too. The last player still awake loses the round.',
+    objective: 'Collect four cards of the same rank and call Sleep — or, once someone else has, call it before everyone but one.',
     setup: [
-      'Use a standard 52-card deck. Card point values: A=1, 2–10 = face value, J=11, Q=12, K=13.',
-      'Deal 4 cards to the first player; player bids whether they can make a capture on turn 1. If yes, begin play; if no, deal continues (house rule for opening).',
-      'Deal 4 cards each (13 total rounds).',
+      'Use a standard 52-card deck. Sleep seats 2 to 6 players.',
+      'Deal four cards to every player. Everyone looks at their own hand.',
+      'The rest of the deck sits face-down as the stock, next to the first player in seat order.',
+      'Only rank matters. Suits are irrelevant from start to finish.',
     ],
     gameplay: [
-      'On your turn, play one card from your hand face-up.',
-      'CAPTURE: if your card\'s value matches a face-up table card, capture both. You may also capture a group of table cards whose values SUM to your card\'s value.',
-      'SEEP (Sweep): if your capture removes ALL cards from the table, it is a Seep — worth 1 bonus point. Mark the capturing card face-up.',
-      'If you cannot capture, your card joins the table as a target for others.',
-      'After all hands are played, the last player to make a capture takes all remaining table cards (no Seep).',
+      'The lead seat draws the top card of the stock, bringing their hand to five.',
+      'They then pass one card of the five to the next player, keeping four.',
+      'Every other player does the same in turn: take the card passed to you, then pass one of your five on.',
+      'Cards passed on by the final seat go to a trash pile, which is reshuffled back into the stock when it runs dry.',
+      'Cards move continuously, so a rank you have been collecting can vanish as fast as it arrived.',
+      'As soon as you hold four of a kind, call Sleep.',
     ],
-    scoring: 'Most cards captured: 1 pt. Most spades: 1 pt. 10♦: 2 pts. A♠: 1 pt. 2♠: 1 pt. J♥: 1 pt. Each Seep: 1 pt. Sum of all points to 52; first player or team to an agreed total wins.',
+    scoring: 'There is no score to accumulate — each round produces one loser, the last player left awake. Play as many rounds as you like and track who has been caught most often.',
     tips: [
-      'Guard the 10♦ — it\'s the most valuable single card.',
-      'A♠ and 2♠ are worth capturing but often leave the table open for a sweep.',
-      'When near a Seep, play the exact-value capture card if you have it.',
+      'Do not fixate on the rank you were dealt most of. Whatever flows through your hands fastest is usually the better target.',
+      'Watch the table, not just your cards. The first Sleep is often called quietly, and missing it costs you the round.',
+      'Passing your junk quickly keeps the circulation fast, which favours whoever is paying closest attention.',
+    ],
+    playGuide: [
+      {
+        heading: 'Setting up the round',
+        points: [
+          'Sleep seats 2 to 6 players and uses a single standard deck.',
+          'Every player is dealt four cards, and the remainder becomes a face-down stock beside the lead seat.',
+          'The lead seat is simply the first awake player in seat order — it is not an advantage so much as a job.',
+          'Because only rank matters, four Kings of any suits is exactly as good as any other four of a kind.',
+        ],
+      },
+      {
+        heading: 'How cards circulate',
+        points: [
+          'Only the lead seat touches the stock. They draw the top card, which briefly gives them five cards.',
+          'They then choose one of those five to pass to the next player, going back down to four.',
+          'Everyone else receives a card from the player before them and passes one on in the same way, so every hand stays at four between turns.',
+          'Whatever the last seat passes on goes to the trash pile rather than back round, and the trash is reshuffled into the stock when the stock empties.',
+        ],
+      },
+      {
+        heading: 'Calling Sleep',
+        points: [
+          'The first player to hold four cards of the same rank calls Sleep.',
+          'That call opens the race. From that moment nobody else needs four of a kind — everyone still awake is simply trying to call Sleep before the others.',
+          'So the biggest mistake in the game is watching your own cards so intently that you miss somebody else\'s call.',
+          'Players who call successfully are safe, and the round continues among whoever is left.',
+        ],
+      },
+      {
+        heading: 'Losing the round',
+        points: [
+          'The last player still awake when everyone else has called is the loser of the round.',
+          'There is no winner as such — everyone else simply escaped, which is the same shape as Old Maid or Indian Jackass.',
+          'Rounds are short, so the game is normally played as a long series with the losses tallied.',
+          'Passing fast is a genuine tactic: the quicker cards move, the more likely a distracted opponent misses the call.',
+        ],
+      },
     ],
   },
   {
     slug: 'indian-rummy',
     video: { youtubeId: 'M_9aW1ZGgS4' },
+    seo: { title: 'How to Play Indian Rummy Online – Rules & Strategy | Vanikar', h1: 'How to Play Indian Rummy' },
     relatedGames: ['gin-rummy', 'canasta', 'buraco'],
     name: 'Indian Rummy',
     alternateNames: ['Paplu', '13-Card Rummy', 'Rummy (India)'],
@@ -1415,10 +2147,49 @@ const euGames: Game[] = [
       'Signal to your partner: leading your highest card suggests strength; leading low suggests weakness.',
       'Count trump — avoid leading into your partner\'s trump holding.',
     ],
+    playGuide: [
+      {
+        heading: 'Setting up the game',
+        points: [
+          'Whist is a four-player partnership game — you and the player opposite form one team against the other two.',
+          'The whole deck is dealt out, thirteen cards to each player, so nothing is left over.',
+          'The dealer\'s own last card is turned face-up for the table to see, and its suit becomes trump for the hand.',
+          'That card then joins the dealer\'s hand, which means everyone starts the hand knowing one of the dealer\'s cards.',
+        ],
+      },
+      {
+        heading: 'Playing a trick',
+        points: [
+          'The player to the dealer\'s left leads the first trick, and any card may be led.',
+          'You must follow the suit that was led if you hold it. Only when you are void may you play something else, including a trump.',
+          'The highest trump played wins the trick; if no trump appears, the highest card of the led suit wins.',
+          'The winner of each trick leads the next, so winning also hands you control of what suit comes next.',
+        ],
+      },
+      {
+        heading: 'Reading the hand',
+        points: [
+          'There is no bidding in Whist, which makes card-counting the entire skill of the game.',
+          'Track which suits your opponents have shown void, because that tells you when their trumps will appear.',
+          'Leading from your longest suit tends to exhaust opponents\' cards in it and turn your low cards into late winners.',
+          'Your partner\'s choice of lead is the only signal you get, so pay close attention to what they open with.',
+        ],
+      },
+      {
+        heading: 'Scoring',
+        points: [
+          'The first six tricks a partnership takes are called the book and score nothing at all.',
+          'Every trick beyond six scores one point, so a side taking nine tricks scores three.',
+          'This is why a hand can be hard fought and still yield a very small score.',
+          'Play a series of deals to an agreed target, with the trump suit changing each time the deal moves on.',
+        ],
+      },
+    ],
   },
   {
     slug: 'durak',
     video: { youtubeId: '3JagmUmUJOc', start: 145 },
+    seo: { title: 'How to Play Durak Online – Rules & Strategy | Vanikar', h1: 'How to Play Durak' },
     relatedGames: ['president', 'big-two', 'bluff', 'war'],
     name: 'Durak',
     alternateNames: ['Дурак', 'Fool'],
@@ -1523,10 +2294,49 @@ const euGames: Game[] = [
       'Leave awkward sums on the table to block your opponent.',
       'Deny the Sette Bello (7♦) at almost any cost.',
     ],
+    playGuide: [
+      {
+        heading: 'Setting up the game',
+        points: [
+          'Scopa seats 2 to 4 players and uses a 40-card Italian-style deck, with eights, nines and tens removed.',
+          'Each player is dealt three cards and four are placed face-up on the table.',
+          'Card values run from Ace as 1 through to the court cards at 8, 9 and 10.',
+          'Hands are replenished three at a time as the deck is used up.',
+        ],
+      },
+      {
+        heading: 'Capturing',
+        points: [
+          'On your turn you play one card and use it to capture from the table.',
+          'A card captures any single table card of the same value, and if such a match exists you must take it.',
+          'Otherwise, a card captures any group of table cards whose values add up to it — a seven can take a five and a two together.',
+          'If you cannot capture anything, your card simply joins the table for someone else to take.',
+        ],
+      },
+      {
+        heading: 'Scopa sweeps',
+        points: [
+          'Clearing every card from the table with a single capture is a scopa, and it scores an immediate point.',
+          'Turn the capturing card face-up in your pile so the sweep can be counted at the end.',
+          'The last player to capture in a round collects any cards still lying on the table, but that does not count as a scopa.',
+          'Leaving awkward totals behind is the main defensive skill — a table an opponent cannot clear is a table that cannot be swept.',
+        ],
+      },
+      {
+        heading: 'Scoring',
+        points: [
+          'After each round, points go to whoever captured the most cards and to whoever captured the most coins or diamonds.',
+          'The seven of coins, the sette bello, is worth a point on its own to whoever captured it.',
+          'A further point goes for the primiera, the best combination of one card per suit, where sevens count highest.',
+          'Add one point per scopa, and play rounds until someone passes eleven points.',
+        ],
+      },
+    ],
   },
   {
     slug: 'belote',
     video: { youtubeId: 'xWzdW8JkDFA' },
+    seo: { title: 'How to Play Belote Online – Rules & Strategy | Vanikar', h1: 'How to Play Belote' },
     relatedGames: ['skat', 'euchre', 'whist', 'spades'],
     name: 'Belote',
     alternateNames: ['Belot', 'Bleot', 'Baloot (Arabic)'],
@@ -1628,6 +2438,44 @@ const euGames: Game[] = [
       'Count your Matadors before bidding — they directly set your game value.',
       'As Defender, communicate through lead choices.',
       'Null is all-or-nothing — one trick taken and you lose.',
+    ],
+    playGuide: [
+      {
+        heading: 'The deck and card values',
+        points: [
+          'Skat is played by three people with a 32-card deck, 7 through Ace. Ten cards go to each player and two are set aside face-down as the skat.',
+          'Card values total 120 points across the deck: each Ace 11, each 10 is worth 10, King 4, Queen 3, Jack 2, and 9s through 7s nothing.',
+          'Because 10s outrank Kings in value but not in trick-taking power in the plain suits, protecting your 10s is a constant concern.',
+          'The four Jacks are always trump in suit and grand games, ranking Clubs, Spades, Hearts, Diamonds from highest to lowest.',
+        ],
+      },
+      {
+        heading: 'The bidding',
+        points: [
+          'One player becomes the declarer and plays alone against the other two, who defend as a temporary partnership.',
+          'Bidding is a sequence of numbers, each the value of a game someone is willing to play. You are not bidding tricks — you are bidding how much your intended contract is worth.',
+          'A game value is a base value for the suit multiplied by factors from your Jack holding, so counting your Jacks before bidding is essential.',
+          'The last player still bidding wins the auction and becomes the declarer.',
+        ],
+      },
+      {
+        heading: 'Choosing your game',
+        points: [
+          'Suit game: you name a trump suit, and the four Jacks plus that suit form the trump. You need 61 of the 120 card points to win.',
+          'Grand: only the four Jacks are trump, making the plain suits far more dangerous. It carries the highest base value.',
+          'Null: an inverted contract where you must lose every trick. There is no trump and card points are irrelevant — a single trick loses it.',
+          'You may pick up the two skat cards and discard two of your own, or play a hand game without touching them for extra value.',
+        ],
+      },
+      {
+        heading: 'Playing and scoring',
+        points: [
+          'The player left of the dealer leads. Following suit is compulsory when you can; otherwise any card is legal.',
+          'Remember that Jacks belong to the trump suit, not their printed one. Leading a Club does not oblige anyone to play the Jack of Clubs.',
+          'Beyond 61 points there are bonuses: holding your opponents under 30 is schneider, and taking every trick is schwarz.',
+          'Win and you add the game value to your score; lose and you subtract double. That asymmetry is why overbidding is the most expensive mistake in Skat.',
+        ],
+      },
     ],
   },
 ];
