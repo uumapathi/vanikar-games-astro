@@ -2,6 +2,7 @@
 import NavMenu from '../components/NavMenu.astro';
 import Footer  from '../components/Footer.astro';
 import { getLocale, localizePath, unlocalizePath, isTranslated, LOCALES } from '../i18n';
+import type { Locale } from '../i18n';
 import '../styles/global.css';
 
 interface Props {
@@ -10,6 +11,9 @@ interface Props {
   gaId?:       string;
   /** Keep this page out of search results (e.g. untranslated locale pages) */
   noindex?:    boolean;
+  /** Locales to advertise via hreflang. Defaults to all; pass a subset so
+   *  noindexed translations stay out of the cluster. */
+  alternateLocales?: Locale[];
 }
 
 const {
@@ -17,13 +21,15 @@ const {
   description = 'Play classic card games online or offline with Vanikar. Enjoy Hearts, Spades, Gin Rummy, Cribbage, Big Two, Indian Rummy and more against AI, friends or online players.',
   gaId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID,
   noindex = false,
+  alternateLocales,
 } = Astro.props;
 
 const locale       = getLocale(Astro.currentLocale);
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const basePath     = unlocalizePath(Astro.url.pathname);
-const alternates   = isTranslated(basePath)
-  ? LOCALES.map(l => ({ lang: l, href: new URL(localizePath(basePath, l), Astro.site) }))
+const hreflangSet  = alternateLocales ?? LOCALES;
+const alternates   = isTranslated(basePath) && hreflangSet.length > 1
+  ? hreflangSet.map(l => ({ lang: l, href: new URL(localizePath(basePath, l), Astro.site) }))
   : [];
 ---
 <!doctype html>

@@ -5,7 +5,7 @@ import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import { games, getGame } from '../data/games';
 import { localizeGame, isGameFullyLocalized } from '../data/games.i18n';
-import { getLocale, localizedHref, localizePath } from '../i18n';
+import { getLocale, localizedHref, localizePath, LOCALES } from '../i18n';
 
 interface Props { slug: string }
 const { slug } = Astro.props;
@@ -454,6 +454,9 @@ const otherTitle = related.length
 
 /* Untranslated locale pages stay out of search until fully localized */
 const noindex = !isGameFullyLocalized(game.slug, lang);
+// hreflang must only point at indexable URLs -- Google drops clusters that
+// contain noindexed members, so advertise just the fully translated locales.
+const alternateLocales = LOCALES.filter(l => isGameFullyLocalized(game.slug, l));
 
 /* Launch-notification signup (same Google Form as the download section) */
 const N = {
@@ -528,6 +531,7 @@ const jsonLd = [
   title={pageTitle}
   description={L.pageDescription}
   noindex={noindex}
+  alternateLocales={alternateLocales}
 >
   <Fragment slot="head">
     {jsonLd.map(schema => (
@@ -766,7 +770,7 @@ const jsonLd = [
       <h2 class="other-title">{otherTitle}</h2>
       <div class="other-grid">
         {otherGames.map(g => localizeGame(g, lang)).map(g => (
-          <a href={href(`/games/${g.slug}`)} class="other-card">
+          <a href={href(`/games/${g.slug}/`)} class="other-card">
             <span class="other-icon">
               {gameIcon(g.slug)
                 ? <Image src={gameIcon(g.slug)!} alt="" width={56} class="gi-img" />
