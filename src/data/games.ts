@@ -22,6 +22,9 @@ export interface GameVideo {
   youtubeId: string;
   /** Optional start offset in seconds */
   start?:    number;
+  /** Shown under the video. Use when the tutorial is filmed under another
+   *  name for the same game, so the player title does not look like a mistake. */
+  note?:     string;
 }
 
 /** A game-specific FAQ entry appended to the generated FAQ list */
@@ -1861,7 +1864,10 @@ const indiaGames: Game[] = [
   {
     slug: 'sleep',
     name: 'Sleep',
-    video: { youtubeId: 'bkDC3JoRjSk' },
+    video: {
+      youtubeId: 'bkDC3JoRjSk',
+      note: 'This tutorial is filmed as Spoons, the name the game is best known by outside the app — the passing, the four of a kind and the race to call it are identical. Vanikar drops the spoons and you call “Sleep!” instead.',
+    },
     alternateNames: ['Spoons', 'Pig', 'Donkey'],
     tagline: 'Collect four of a kind, then call it — the last one awake loses.',
     icon: '😴',
