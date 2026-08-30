@@ -81,7 +81,6 @@ export const gamesEs: Record<string, GameOverlay> = {
   'court-piece':   { name: 'Court Piece',   tagline: 'Gana 7 bazas primero — y defiéndete en la segunda mitad.' },
   'mendikot':      { name: 'Mendikot',      tagline: 'Captura los cuatro 10 — o impide que lo hagan tus rivales.' },
   '29-game':       { name: 'Juego 29',      tagline: 'Apuesta hasta 29 — gana los puntos para cumplir tu contrato.' },
-  'seep':          { name: 'Seep',          tagline: 'Captura cartas iguales de la mesa — las barridas dan muchos puntos.' },
   'indian-rummy':  { name: 'Rummy Indio',   tagline: 'Forma escaleras y grupos — la escalera pura no es negociable.' },
   'indian-jackass':{ name: 'Indian Jackass',tagline: 'Suelta todas tus cartas — el último con cartas pierde.' },
   'whist':         { name: 'Whist',         tagline: 'El ancestro del Bridge — sigue el palo y gana bazas.' },

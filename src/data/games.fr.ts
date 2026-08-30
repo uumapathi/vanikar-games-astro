@@ -30,7 +30,6 @@ export const gamesFr: Record<string, GameOverlay> = {
   'court-piece':    { name: 'Court Piece',    tagline: 'Remportez 7 plis en premier — puis défendez en seconde mi-temps.' },
   'mendikot':       { name: 'Mendikot',       tagline: 'Capturez les quatre 10 — ou empêchez vos adversaires de le faire.' },
   '29-game':        { name: 'Jeu du 29',      tagline: 'Enchérissez jusqu\'à 29 — marquez le plus de points pour remplir votre contrat.' },
-  'seep':           { name: 'Seep',           tagline: 'Capturez les cartes correspondantes sur la table — les balayages rapportent gros.' },
   'indian-rummy':   { name: 'Rami indien',    tagline: 'Formez suites et brelans — la suite pure est non négociable.' },
   'indian-jackass': { name: 'Indian Jackass', tagline: 'Défaussez toutes vos cartes — le dernier à en garder perd.' },
   'whist':          { name: 'Whist',          tagline: 'L\'ancêtre du Bridge — suivez la couleur et remportez les plis.' },

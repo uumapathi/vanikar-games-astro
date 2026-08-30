@@ -30,7 +30,6 @@ export const gamesDe: Record<string, GameOverlay> = {
   'court-piece':    { name: 'Court Piece',     tagline: 'Gewinne zuerst 7 Stiche — und verteidige in der zweiten Hälfte.' },
   'mendikot':       { name: 'Mendikot',        tagline: 'Sichere dir alle vier Zehnen — oder halte deine Gegner davon ab.' },
   '29-game':        { name: '29 Game',         tagline: 'Reize bis 29 — hole die meisten Punkte, um deinen Kontrakt zu erfüllen.' },
-  'seep':           { name: 'Seep',            tagline: 'Fange passende Karten vom Tisch — Sweeps bringen dicke Punkte.' },
   'indian-rummy':   { name: 'Indian Rummy',    tagline: 'Bilde Folgen und Sätze — eine reine Folge ist Pflicht.' },
   'indian-jackass': { name: 'Indian Jackass',  tagline: 'Wirf alle Karten ab — wer zuletzt Karten hält, verliert.' },
   'whist':          { name: 'Whist',           tagline: 'Der Vorfahre des Bridge — Farbe bedienen und Stiche gewinnen.' },

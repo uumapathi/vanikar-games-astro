@@ -30,7 +30,6 @@ export const gamesPt: Record<string, GameOverlay> = {
   'court-piece':    { name: 'Court Piece',    tagline: 'Vença 7 vazas primeiro — depois defenda na segunda metade.' },
   'mendikot':       { name: 'Mendikot',       tagline: 'Capture os quatro 10 — ou impeça seus adversários de fazer isso.' },
   '29-game':        { name: 'Jogo 29',        tagline: 'Aposte até 29 — faça mais pontos para cumprir o contrato.' },
-  'seep':           { name: 'Seep',           tagline: 'Capture cartas iguais da mesa — as varridas valem muitos pontos.' },
   'indian-rummy':   { name: 'Rummy Indiano',  tagline: 'Forme sequências e trincas — a sequência pura é inegociável.' },
   'indian-jackass': { name: 'Indian Jackass', tagline: 'Descarte todas as cartas — quem ficar com cartas por último perde.' },
   'whist':          { name: 'Whist',          tagline: 'O ancestral do Bridge — siga o naipe e vença as vazas.' },

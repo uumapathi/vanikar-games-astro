@@ -21,6 +21,9 @@ export default defineConfig({
       },
     }),
   ],
+  // Seep was replaced by Sleep (the game the engine actually implements).
+  // Keep the old indexed URL alive rather than 404ing it.
+  redirects: { '/games/seep': '/games/sleep/', '/games/seep/': '/games/sleep/' },
   output: 'static',
   i18n: {
     defaultLocale: 'en',
