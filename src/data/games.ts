@@ -140,6 +140,7 @@ const universalGames: Game[] = [
   {
     slug: 'go-fish',
     name: 'Go Fish',
+    video: { youtubeId: 'hRpXLSMdve0' },
     tagline: 'Ask, fish, and collect the most books.',
     icon: '🐟',
     players: '2–6 players', playerCount: '2–6',
@@ -241,6 +242,7 @@ const universalGames: Game[] = [
   {
     slug: 'president',
     name: 'President',
+    video: { youtubeId: 'l-QDZkwR1Os' },
     alternateNames: ['Daifugō', 'Scum', 'Asshole', 'Rich Man Poor Man', 'Satte Pe Satta (Indian variant)'],
     tagline: 'Climb the social ladder — or end up the Scum.',
     icon: '👑',
@@ -270,6 +272,7 @@ const universalGames: Game[] = [
   {
     slug: 'war',
     name: 'War',
+    video: { youtubeId: 'J5vT33Vo04s' },
     alternateNames: ['Battle', 'Bataille (French)'],
     tagline: 'Flip, battle, and collect every card.',
     icon: '⚔️',
@@ -299,6 +302,7 @@ const universalGames: Game[] = [
   {
     slug: 'crazy-eights',
     name: 'Crazy Eights',
+    video: { youtubeId: '1c4YPQTS35I' },
     alternateNames: ['Mau-Mau (Germany)', 'Dos (Mexico)'],
     tagline: 'Match the suit or rank — 8s are always wild.',
     icon: '8️⃣',
@@ -329,6 +333,7 @@ const universalGames: Game[] = [
   {
     slug: 'old-maid',
     name: 'Old Maid',
+    video: { youtubeId: 'n6UFbZ0jGWw' },
     alternateNames: ['Babanuki (Japan)', 'Black Peter (Germany)', 'Donkey'],
     tagline: 'Don\'t be left holding the unpaired Queen.',
     icon: '👵',
@@ -358,6 +363,7 @@ const universalGames: Game[] = [
   {
     slug: 'sevens',
     name: 'Sevens',
+    video: { youtubeId: 'zAhNv7xpeYg' },
     alternateNames: ['Fan Tan', 'Parliament', 'Card Dominoes', 'Sevens (Indian)'],
     tagline: 'Build from 7 out — first to empty their hand wins.',
     icon: '7️⃣',
@@ -388,6 +394,7 @@ const universalGames: Game[] = [
   {
     slug: 'snap',
     name: 'Snap',
+    video: { youtubeId: '9cFOr2T2eb8' },
     tagline: 'Match the cards — and shout first.',
     icon: '👋',
     players: '2–6 players', playerCount: '2–6',
@@ -649,6 +656,7 @@ const northAmericaGames: Game[] = [
   {
     slug: 'euchre',
     name: 'Euchre',
+    video: { youtubeId: 'MLOS84a6FtQ' },
     tagline: 'Name the trump. Take three tricks. Prove your Right Bower.',
     icon: '🪄',
     players: '4 players (2 teams)', playerCount: '4',
@@ -758,6 +766,7 @@ const latinAmericaGames: Game[] = [
   {
     slug: 'canasta',
     name: 'Canasta',
+    video: { youtubeId: 'QYEMpDoN0Mw' },
     alternateNames: ['Basket'],
     tagline: 'Build 7-card melds and go out first.',
     icon: '🧺',
@@ -790,6 +799,7 @@ const latinAmericaGames: Game[] = [
   {
     slug: 'buraco',
     name: 'Buraco',
+    video: { youtubeId: '9RNZFgqPR9E' },
     tagline: 'Complete your canastas — then grab the pot.',
     icon: '🇧🇷',
     players: '4 players (2 teams)', playerCount: '4',
@@ -818,6 +828,7 @@ const latinAmericaGames: Game[] = [
   {
     slug: 'chinchon',
     name: 'Chinchón',
+    video: { youtubeId: '2mXzkTzXlnU' },
     alternateNames: ['Chinchón', 'Chinchon'],
     tagline: 'Form your runs and sets — Chinchón closes the round instantly.',
     icon: '🇦🇷',
@@ -849,6 +860,7 @@ const latinAmericaGames: Game[] = [
   {
     slug: 'briscola',
     name: 'Briscola',
+    video: { youtubeId: 'lEk_8GlwjzA' },
     alternateNames: ['Brisca (Spain)', 'Briscola (Italy)', 'Bisca (Brazil)'],
     tagline: 'Take the high-value cards — trump beats everything else.',
     icon: '🍷',
@@ -880,6 +892,7 @@ const latinAmericaGames: Game[] = [
   {
     slug: 'truco',
     name: 'Truco',
+    video: { youtubeId: 'I_nZY0KGbXo' },
     tagline: 'Bluff, bet, and outwit — Latin America\'s card game.',
     icon: '🌶️',
     players: '2–4 players', playerCount: '2 or 4',
@@ -915,6 +928,7 @@ const asiaGames: Game[] = [
   {
     slug: 'tien-len',
     name: 'Tiến Lên',
+    video: { youtubeId: 'z2Jas5t-8Yw' },
     alternateNames: ['Thirteen', 'Vietnamese Cards', 'Thirteen Cards'],
     tagline: 'Vietnam\'s Big Two — shed your cards before anyone else.',
     icon: '🇻🇳',
@@ -947,6 +961,7 @@ const asiaGames: Game[] = [
   {
     slug: 'koi-koi',
     name: 'Koi-Koi',
+    video: { youtubeId: 'PB94VwGc89U' },
     alternateNames: ['こいこい', 'Hanafuda', 'Flower Cards'],
     tagline: 'Match the flowers — say "Koi-Koi" to risk it all.',
     icon: '🌸',
@@ -1058,6 +1073,7 @@ const indiaGames: Game[] = [
   {
     slug: 'court-piece',
     name: 'Court Piece',
+    video: { youtubeId: 'WvcAI2omY64' },
     alternateNames: ['Rung', 'Rang', 'Coat Piece', 'Hokm (Iran)'],
     tagline: 'Win 7 tricks first — then defend in the second half.',
     icon: '🏛️',
@@ -1089,6 +1105,7 @@ const indiaGames: Game[] = [
   {
     slug: 'mendikot',
     name: 'Mendikot',
+    video: { youtubeId: 'odccK-10VCc' },
     alternateNames: ['Mindicot', 'Dehla Pakad (Delhi variant)'],
     tagline: 'Capture all four 10s — or stop your opponents from doing it.',
     icon: '🔟',
@@ -1120,6 +1137,7 @@ const indiaGames: Game[] = [
   {
     slug: '29-game',
     name: '29 Game',
+    video: { youtubeId: 'zGyRlvLsfkE' },
     alternateNames: ['Twenty-Nine', 'Atu-Katta (Kerala)'],
     tagline: 'Bid up to 29 — win the most points to fulfill your contract.',
     icon: '🌴',
@@ -1152,6 +1170,7 @@ const indiaGames: Game[] = [
   {
     slug: 'seep',
     name: 'Seep',
+    video: { youtubeId: 'ylVfR_9E7P8' },
     alternateNames: ['Sweep', 'Sip', 'Seepi'],
     tagline: 'Capture matching cards from the table — sweeps score big.',
     icon: '🌾',
@@ -1259,7 +1278,8 @@ const indiaGames: Game[] = [
   {
     slug: 'indian-jackass',
     name: 'Indian Jackass',
-    alternateNames: ['Jackass'],
+    video: { youtubeId: 'QFsd7w8qiW8' },
+    alternateNames: ['Jackass', 'Donkey', 'Kazhutha'],
     tagline: 'Shed every card — the last one holding loses.',
     icon: '🎴',
     players: '2–6 players', playerCount: '2–6',
@@ -1271,7 +1291,7 @@ const indiaGames: Game[] = [
       h1:    'How to Play Indian Jackass',
     },
     relatedGames: ['president', 'big-two', 'sevens', 'bluff'],
-    description: 'Indian Jackass is a trick-based shedding game with no winner — only a loser. Follow suit while you can, dump your cards, and don\'t be the last player holding any. Each round\'s loser starts the next round with a penalty card, and rounds continue until the table decides to stop.',
+    description: 'Indian Jackass (also called Donkey, or other names for the same animal 😉) is a trick-based shedding game with no winner — only a loser. Follow suit while you can, dump your cards, and don\'t be the last player holding any. Each round\'s loser starts the next round with a penalty card, and rounds continue until the table decides to stop.',
     objective: 'Empty your hand. The last player still holding cards is the round\'s Jackass — the loser.',
     setup: [
       'Use a standard 52-card deck, no Jokers. 2–6 players.',
@@ -1368,6 +1388,7 @@ const euGames: Game[] = [
   {
     slug: 'whist',
     name: 'Whist',
+    video: { youtubeId: '9v5UxlUg55Y' },
     alternateNames: ['English Whist', 'Bid Whist'],
     tagline: 'The ancestor of Bridge — follow suit and win tricks.',
     icon: '🎩',
@@ -1475,6 +1496,7 @@ const euGames: Game[] = [
   {
     slug: 'scopa',
     name: 'Scopa',
+    video: { youtubeId: 'TuPZ3zsHmIo' },
     alternateNames: ['Sweep', 'Escoba (Spain/Latin America)'],
     tagline: 'Sweep the table — Italy\'s card game of cunning captures.',
     icon: '🍕',
@@ -1580,6 +1602,7 @@ const euGames: Game[] = [
   {
     slug: 'skat',
     name: 'Skat',
+    video: { youtubeId: 'RyiDypsr_cI' },
     alternateNames: ['German Skat'],
     tagline: 'Germany\'s greatest card game — bid, pick up the Skat, and declare.',
     icon: '🇩🇪',
