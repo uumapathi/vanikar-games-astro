@@ -1,11 +1,13 @@
 ---
 import { availableGames, comingSoonGames } from '../data/games';
 import { getLocale, localizedHref } from '../i18n';
+import { launchCopy } from '../data/launch';
 const avail = availableGames.length;
 const cs    = comingSoonGames.length;
 
 const lang = getLocale(Astro.currentLocale);
 const href = (p: string) => localizedHref(p, lang);
+const LC = launchCopy(lang);
 const copy = {
   en: {
     games: 'Card Games',    gamesSub: 'Playable today',
@@ -57,7 +59,7 @@ const copy = {
       <a class="stat-item stat-link" href={href('/games#premium-group')}>
         <div class="stat-value">{avail}</div>
         <div class="stat-label">{copy.games}</div>
-        <div class="stat-sub">{copy.gamesSub}</div>
+        <div class="stat-sub">{LC.ready}</div>
       </a>
       <a class="stat-item stat-divider stat-link" href={href('/games#coming-soon-group')}>
         <div class="stat-value">{cs}</div>
