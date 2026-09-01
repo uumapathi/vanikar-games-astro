@@ -61,12 +61,15 @@ export function isTranslated(path: string): boolean {
   return TRANSLATED_PATHS.has(clean) || TRANSLATED_PREFIXES.some(p => path.startsWith(p));
 }
 
-/** Link helper: localized path when a translation exists, English path otherwise. Preserves #hash. */
+/** Link helper: localized path when a translation exists, English path otherwise. Preserves #hash.
+ *  Always emits a trailing slash so internal links hit the canonical URL directly
+ *  instead of bouncing through the host's /path → /path/ redirect. */
 export function localizedHref(path: string, locale: Locale): string {
   const [base, hash] = path.split('#');
   const clean = base === '' ? '/' : base;
   const target = isTranslated(clean) ? localizePath(clean, locale) : clean;
-  return hash ? `${target}#${hash}` : target;
+  const slashed = target.endsWith('/') ? target : `${target}/`;
+  return hash ? `${slashed}#${hash}` : slashed;
 }
 
 /** Shared chrome strings (nav, footer, common CTAs) */

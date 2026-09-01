@@ -22,6 +22,7 @@ export default defineConfig({
     }),
   ],
   output: 'static',
+  trailingSlash: 'always',
   i18n: {
     defaultLocale: 'en',
     locales: ['en', 'es', 'pt', 'fr', 'de', 'hi'],

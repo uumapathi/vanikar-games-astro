@@ -3,6 +3,7 @@ import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import { availableGames, comingSoonGames } from '../data/games';
 import { getLocale, localizedHref } from '../i18n';
+import { launchCopy } from '../data/launch';
 import appicon     from '../assets/appicon.png';
 import vanikarLogo from '../assets/vanikar-logo.png';
 
@@ -15,6 +16,7 @@ const cs    = comingSoonGames.length;
 
 const lang = getLocale(Astro.currentLocale);
 const href = (p: string) => localizedHref(p, lang);
+const L = launchCopy(lang);
 const copy = {
   en: {
     tagline:    'Play Classic Card Games Online & Offline',
@@ -186,14 +188,14 @@ const copy = {
         </div>
 
         <div class="hero-actions">
-          <a href={href('/games')} class="btn btn-primary">{copy.download}</a>
-          <a href="#download" class="btn btn-secondary">{copy.browse}</a>
+          <a href="#download" class="btn btn-primary">{L.cta}</a>
+          <a href={href('/games')} class="btn btn-secondary">{L.ctaSecondary}</a>
         </div>
 
         <div class="hero-platforms">
-          <a class="platform-badge" href="/ios">iOS</a>
+          <a class="platform-badge" href="/ios/">iOS</a>
           <span>&middot;</span>
-          <a class="platform-badge" href="/android">Android</a>
+          <a class="platform-badge" href="/android/">Android</a>
         </div>
       </div>
 

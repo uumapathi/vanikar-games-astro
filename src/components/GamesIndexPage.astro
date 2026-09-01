@@ -5,6 +5,7 @@ import type { ImageMetadata } from 'astro';
 import { games, comingSoonGames, availableGames } from '../data/games';
 import { localizeGame } from '../data/games.i18n';
 import { getLocale, localizedHref } from '../i18n';
+import { launchCopy } from '../data/launch';
 
 const iconModules = import.meta.glob<{ default: ImageMetadata }>('../assets/game-icons/*.{png,svg}', { eager: true });
 const gameIcon = (slug: string) =>
@@ -16,6 +17,7 @@ const csCount  = comingSoonGames.length;
 const avail    = availableGames.length;
 
 const lang = getLocale(Astro.currentLocale);
+const LN = launchCopy(lang);
 const href = (p: string) => localizedHref(p, lang);
 const availL = availableGames.map(g => localizeGame(g, lang));
 const soonL  = comingSoonGames.map(g => localizeGame(g, lang));
@@ -31,12 +33,12 @@ const diffLabel: Record<string, Record<string, string>> = {
 
 const L = {
   en: {
-    title: `All ${total} Card Games | Vanikar`,
-    description: `Explore all ${total} card games on Vanikar: Hearts, Spades, Big Two, Durak, Belote, Indian Rummy, Truco, Cribbage, Skat and many more. Rules, how to play, strategy tips.`,
-    h1: 'All Card Games',
-    lead: `${avail} games available now · ${csCount} more coming soon — all free during your 2-week trial.`,
+    title: `${total} Classic Card Games – Rules, How to Play & Strategy | Vanikar`,
+    description: `All ${total} card games on Vanikar — Hearts, Spades, Big Two, Durak, Belote, Indian Rummy, Skat and more — with rules, how to play and strategy tips for each.`,
+    h1: `All ${total} Card Games – Rules & How to Play`,
+    lead: `${avail} games ready for launch · ${csCount} more coming soon — all free during your 2-week trial.`,
     premium: 'Premium', comingSoon: 'Coming Soon',
-    availDesc: `${avail} games available now`, soonDesc: `${csCount} games in development`,
+    availDesc: `${avail} games ready for launch`, soonDesc: `${csCount} games in development`,
     premiumTitle: 'Premium Games', soonTitle: 'In Development',
     gamesCount: (n: number) => `${n} games`,
     premiumSub: 'The most popular games in each region. Fully unlocked during trial. New games go to premium subscribers first.',
@@ -45,12 +47,12 @@ const L = {
     ctaPricing: 'View Pricing', ctaDownload: 'Download Free',
   },
   es: {
-    title: `Los ${total} juegos de cartas | Vanikar`,
-    description: `Explora los ${total} juegos de cartas de Vanikar: Corazones, Espadas, Big Two, Durak, Belote, Rummy Indio, Truco, Cribbage, Skat y muchos más. Reglas, cómo jugar y consejos de estrategia.`,
-    h1: 'Todos los juegos de cartas',
-    lead: `${avail} juegos disponibles ahora · ${csCount} más próximamente — todos gratis durante tu prueba de 2 semanas.`,
+    title: `${total} juegos de cartas clásicos – Reglas, cómo jugar y estrategia | Vanikar`,
+    description: `Los ${total} juegos de cartas de Vanikar — Corazones, Espadas, Big Two, Durak, Belote, Rummy indio, Skat y más — con reglas, cómo jugar y consejos de estrategia.`,
+    h1: `Los ${total} juegos de cartas – Reglas y cómo jugar`,
+    lead: `${avail} juegos listos para el lanzamiento · ${csCount} más próximamente — todos gratis durante tu prueba de 2 semanas.`,
     premium: 'Premium', comingSoon: 'Próximamente',
-    availDesc: `${avail} juegos disponibles ahora`, soonDesc: `${csCount} juegos en desarrollo`,
+    availDesc: `${avail} juegos listos para el lanzamiento`, soonDesc: `${csCount} juegos en desarrollo`,
     premiumTitle: 'Juegos Premium', soonTitle: 'En desarrollo',
     gamesCount: (n: number) => `${n} juegos`,
     premiumSub: 'Los juegos más populares de cada región. Totalmente desbloqueados durante la prueba. Los nuevos juegos llegan primero a los suscriptores premium.',
@@ -59,12 +61,12 @@ const L = {
     ctaPricing: 'Ver precios', ctaDownload: 'Descarga gratis',
   },
   pt: {
-    title: `Todos os ${total} jogos de cartas | Vanikar`,
-    description: `Explore todos os ${total} jogos de cartas do Vanikar: Copas, Espadas, Big Two, Durak, Belote, Rummy Indiano, Truco, Cribbage, Skat e muitos mais. Regras, como jogar e dicas de estratégia.`,
-    h1: 'Todos os jogos de cartas',
-    lead: `${avail} jogos disponíveis agora · ${csCount} mais em breve — todos grátis durante seu teste de 2 semanas.`,
+    title: `${total} jogos de cartas clássicos – Regras, como jogar e estratégia | Vanikar`,
+    description: `Todos os ${total} jogos de cartas do Vanikar — Copas, Espadas, Big Two, Durak, Belote, Rummy indiano, Skat e mais — com regras, como jogar e dicas de estratégia.`,
+    h1: `Todos os ${total} jogos de cartas – Regras e como jogar`,
+    lead: `${avail} jogos prontos para o lançamento · ${csCount} mais em breve — todos grátis durante seu teste de 2 semanas.`,
     premium: 'Premium', comingSoon: 'Em breve',
-    availDesc: `${avail} jogos disponíveis agora`, soonDesc: `${csCount} jogos em desenvolvimento`,
+    availDesc: `${avail} jogos prontos para o lançamento`, soonDesc: `${csCount} jogos em desenvolvimento`,
     premiumTitle: 'Jogos Premium', soonTitle: 'Em desenvolvimento',
     gamesCount: (n: number) => `${n} jogos`,
     premiumSub: 'Os jogos mais populares de cada região. Totalmente desbloqueados durante o teste. Os novos jogos chegam primeiro aos assinantes premium.',
@@ -73,12 +75,12 @@ const L = {
     ctaPricing: 'Ver preços', ctaDownload: 'Baixe grátis',
   },
   fr: {
-    title: `Les ${total} jeux de cartes | Vanikar`,
-    description: `Découvrez les ${total} jeux de cartes de Vanikar : Cœurs, Piques, Big Two, Durak, Belote, Rami indien, Truco, Cribbage, Skat et bien d'autres. Règles, comment jouer et conseils de stratégie.`,
-    h1: 'Tous les jeux de cartes',
-    lead: `${avail} jeux disponibles dès maintenant · ${csCount} autres bientôt — tous gratuits pendant votre essai de 2 semaines.`,
+    title: `${total} jeux de cartes classiques – Règles, comment jouer et stratégie | Vanikar`,
+    description: `Les ${total} jeux de cartes de Vanikar — Cœurs, Belote, Big Two, Durak, Rami indien, Skat et plus — avec règles, comment jouer et conseils de stratégie.`,
+    h1: `Les ${total} jeux de cartes – Règles et comment jouer`,
+    lead: `${avail} jeux prêts pour le lancement · ${csCount} autres bientôt — tous gratuits pendant votre essai de 2 semaines.`,
     premium: 'Premium', comingSoon: 'Bientôt disponible',
-    availDesc: `${avail} jeux disponibles dès maintenant`, soonDesc: `${csCount} jeux en développement`,
+    availDesc: `${avail} jeux prêts pour le lancement`, soonDesc: `${csCount} jeux en développement`,
     premiumTitle: 'Jeux Premium', soonTitle: 'En développement',
     gamesCount: (n: number) => `${n} jeux`,
     premiumSub: "Les jeux les plus populaires de chaque région. Entièrement débloqués pendant l'essai. Les nouveaux jeux arrivent d'abord chez les abonnés premium.",
@@ -87,12 +89,12 @@ const L = {
     ctaPricing: 'Voir les tarifs', ctaDownload: 'Télécharger gratuitement',
   },
   de: {
-    title: `Alle ${total} Kartenspiele | Vanikar`,
-    description: `Entdecke alle ${total} Kartenspiele von Vanikar: Hearts, Spades, Big Two, Durak, Belote, Indisches Rommé, Truco, Cribbage, Skat und viele mehr. Regeln, Spielanleitungen und Strategie-Tipps.`,
-    h1: 'Alle Kartenspiele',
-    lead: `${avail} Spiele jetzt verfügbar · ${csCount} weitere demnächst — alle kostenlos während deiner 2-wöchigen Testphase.`,
+    title: `${total} klassische Kartenspiele – Regeln, Spielanleitung & Strategie | Vanikar`,
+    description: `Alle ${total} Kartenspiele von Vanikar — Hearts, Skat, Big Two, Durak, Belote, Indisches Rommé und mehr — mit Regeln, Spielanleitung und Strategie-Tipps.`,
+    h1: `Alle ${total} Kartenspiele – Regeln & Spielanleitung`,
+    lead: `${avail} Spiele startklar · ${csCount} weitere demnächst — alle kostenlos während deiner 2-wöchigen Testphase.`,
     premium: 'Premium', comingSoon: 'Demnächst',
-    availDesc: `${avail} Spiele jetzt verfügbar`, soonDesc: `${csCount} Spiele in Entwicklung`,
+    availDesc: `${avail} Spiele startklar`, soonDesc: `${csCount} Spiele in Entwicklung`,
     premiumTitle: 'Premium-Spiele', soonTitle: 'In Entwicklung',
     gamesCount: (n: number) => `${n} Spiele`,
     premiumSub: 'Die beliebtesten Spiele jeder Region. Während der Testphase voll freigeschaltet. Neue Spiele erhalten Premium-Abonnenten zuerst.',
@@ -101,12 +103,12 @@ const L = {
     ctaPricing: 'Preise ansehen', ctaDownload: 'Kostenlos herunterladen',
   },
   hi: {
-    title: `सभी ${total} ताश के खेल | Vanikar`,
-    description: `Vanikar के सभी ${total} ताश के खेल देखें: Hearts, Spades, Big Two, Durak, Belote, Indian Rummy, Truco, Cribbage, Skat और भी बहुत कुछ। नियम, खेलने का तरीका और रणनीति के सुझाव।`,
-    h1: 'सभी ताश के खेल',
-    lead: `${avail} खेल अभी उपलब्ध · ${csCount} और जल्द आ रहे हैं — आपके 2-सप्ताह के ट्रायल में सभी मुफ़्त।`,
+    title: `${total} क्लासिक ताश के खेल – नियम, खेलने का तरीका और रणनीति | Vanikar`,
+    description: `Vanikar के सभी ${total} ताश के खेल — Hearts, Spades, Big Two, Durak, Belote, Indian Rummy, Skat और भी — हर खेल के नियम, खेलने का तरीका और रणनीति के सुझाव।`,
+    h1: `सभी ${total} ताश के खेल – नियम और खेलने का तरीका`,
+    lead: `${avail} खेल लॉन्च के लिए तैयार · ${csCount} और जल्द आ रहे हैं — आपके 2-सप्ताह के ट्रायल में सभी मुफ़्त।`,
     premium: 'Premium', comingSoon: 'जल्द आ रहा है',
-    availDesc: `${avail} खेल अभी उपलब्ध`, soonDesc: `${csCount} खेल विकास में`,
+    availDesc: `${avail} खेल लॉन्च के लिए तैयार`, soonDesc: `${csCount} खेल विकास में`,
     premiumTitle: 'Premium खेल', soonTitle: 'विकास में',
     gamesCount: (n: number) => `${n} खेल`,
     premiumSub: 'हर क्षेत्र के सबसे लोकप्रिय खेल। ट्रायल के दौरान पूरी तरह अनलॉक। नए खेल सबसे पहले Premium सदस्यों को मिलते हैं।',
@@ -115,12 +117,32 @@ const L = {
     ctaPricing: 'कीमतें देखें', ctaDownload: 'मुफ़्त डाउनलोड करें',
   },
 }[lang];
+
+const pageUrl = `https://vanikar.games${href('/games')}`;
+const collectionLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: L.h1,
+  url: pageUrl,
+  inLanguage: lang,
+  mainEntity: {
+    '@type': 'ItemList',
+    numberOfItems: total,
+    itemListElement: [...availL, ...soonL].map((g, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: g.name,
+      url: `https://vanikar.games${href(`/games/${g.slug}/`)}`,
+    })),
+  },
+};
 ---
 
 <BaseLayout
   title={L.title}
   description={L.description}
 >
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(collectionLd)} />
 
   <!-- Hero -->
   <section class="games-hero">
@@ -216,7 +238,7 @@ const L = {
       <p class="games-cta-sub">{L.ctaSub}</p>
       <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:1.5rem">
         <a href={href('/pricing')}   class="btn btn-primary">{L.ctaPricing}</a>
-        <a href={href('/#download')} class="btn btn-secondary">{L.ctaDownload}</a>
+        <a href={href('/#download')} class="btn btn-secondary">{LN.notify}</a>
       </div>
     </div>
   </section>

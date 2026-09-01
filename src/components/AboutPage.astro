@@ -2,8 +2,10 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { games, availableGames, comingSoonGames } from '../data/games';
 import { getLocale, localizedHref } from '../i18n';
+import { launchCopy } from '../data/launch';
 
 const lang = getLocale(Astro.currentLocale);
+const LA = launchCopy(lang);
 const href = (p: string) => localizedHref(p, lang);
 
 const L = {
@@ -31,7 +33,7 @@ const L = {
   },
   es: {
     title: 'Quiénes somos – Card Games by Vanikar',
-    description: `Vanikar LLC es el estudio detrás de Card Games by Vanikar — ${games.length} juegos de cartas clásicos de todo el mundo, construidos con más de 21 años de artesanía de software.`,
+    description: `Vanikar LLC es el estudio detrás de Card Games by Vanikar — ${games.length} juegos de cartas clásicos de todo el mundo, con más de 21 años de oficio en software.`,
     h1: 'Acerca de Vanikar LLC',
     subtitle: 'Mercaderes de la artesanía del software',
     nameMeaning: 'Tamil — "mercader · comerciante · quien crea valor a través del intercambio"',
@@ -53,7 +55,7 @@ const L = {
   },
   pt: {
     title: 'Sobre nós – Card Games by Vanikar',
-    description: `A Vanikar LLC é o estúdio por trás de Card Games by Vanikar — ${games.length} jogos de cartas clássicos do mundo todo, construídos com mais de 21 anos de artesanato de software.`,
+    description: `A Vanikar LLC é o estúdio por trás de Card Games by Vanikar — ${games.length} jogos de cartas clássicos do mundo todo, com mais de 21 anos de ofício em software.`,
     h1: 'Sobre a Vanikar LLC',
     subtitle: 'Mercadores do artesanato de software',
     nameMeaning: 'Tâmil — "mercador · comerciante · quem cria valor por meio da troca"',
@@ -179,7 +181,7 @@ const L = {
           </div>
           <div class="about-stat">
             <span class="about-stat-value">{availableGames.length}</span>
-            <span class="about-stat-label">{L.statLive}</span>
+            <span class="about-stat-label">{LA.ready}</span>
           </div>
           <div class="about-stat">
             <span class="about-stat-value">{comingSoonGames.length}</span>

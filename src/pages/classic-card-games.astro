@@ -5,7 +5,7 @@ import { games } from '../data/games';
 
 const faqs = [
   { q: 'What classic card games are in the Vanikar collection?',
-    a: 'Available now: Hearts, Spades, Gin Rummy, Cribbage, Big Two, Indian Rummy, Durak, Belote, High Card, and Bluff. Dozens more classics — Euchre, Canasta, Scopa, Skat, Truco, Tiến Lên — are in development.' },
+    a: 'Ready at launch: Hearts, Spades, Gin Rummy, Cribbage, Big Two, Indian Rummy, Durak, Belote, High Card, and Bluff. Dozens more classics — Euchre, Canasta, Scopa, Skat, Truco, Tiến Lên — are in development.' },
   { q: 'Why one app instead of separate apps per game?',
     a: 'One download gives you the whole collection: one account, one friends list, one subscription. Learn a new game without installing anything new.' },
   { q: 'Are these the traditional rules?',
@@ -32,7 +32,7 @@ const jsonLd = [
 ---
 <BaseLayout
   title="Classic Card Games Collection – All in One App | Vanikar"
-  description={`A classic card games collection in one app: ${games.length} games from around the world. Hearts, Spades, Gin Rummy, Cribbage, Durak, Belote, Indian Rummy and more — online, offline, or vs AI.`}
+  description={`A classic card games collection in one app: ${games.length} games from around the world — Hearts, Spades, Gin Rummy, Cribbage, Durak, Belote and more, online or offline.`}
 >
   <Fragment slot="head">
     {jsonLd.map(schema => (

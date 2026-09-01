@@ -4,21 +4,23 @@ import PricingSection from './PricingSection.astro';
 import { availableGames } from '../data/games';
 import { localizeGame } from '../data/games.i18n';
 import { getLocale, localizedHref } from '../i18n';
+import { launchCopy } from '../data/launch';
 
 const lang = getLocale(Astro.currentLocale);
+const LN = launchCopy(lang);
 const href = (p: string) => localizedHref(p, lang);
 const gameNames = availableGames.map(g => localizeGame(g, lang).name).join(', ');
 
 const L = {
   en: {
     title: 'Pricing – Card Games by Vanikar',
-    description: '2-week free trial with all games. Keep any 5 games free forever, or go premium to unlock everything including online play and all future games. Pricing coming soon.',
+    description: 'Free 2-week trial of every game, then keep 5 games free forever or go premium for $1.99/month or $14.99/year — all games, online play, no ads.',
     tag: '♦ Pricing', h1: 'Simple, Honest Pricing',
     lead: 'Start with a full 2-week free trial. No credit card. No obligations. Choose your path after — free forever or premium.',
     faqTitle: 'Frequently Asked Questions',
     faqs: [
       { q: 'What happens after the 2-week trial?',
-        a: 'You can pick any 5 games to keep for free — permanently, with no expiry. Free play is offline (CPU) only. If you want online multiplayer, hints, or the full catalog, you can subscribe — pricing will be announced at launch.' },
+        a: 'You can pick any 5 games to keep for free — permanently, with no expiry. Free play is offline (CPU) only. If you want online multiplayer, hints, or the full catalog, you can subscribe for $1.99/month or $14.99/year.' },
       { q: 'Which games are included?',
         a: `Premium games (${availableGames.length}): ${gameNames}.` },
       { q: 'Do I need a credit card for the trial?',
@@ -30,23 +32,23 @@ const L = {
       { q: 'Can I change my 5 free games later?',
         a: 'Yes. You can swap your free game selection once every 30 days via Settings → My Games in the app.' },
       { q: 'Will there be monthly and yearly options?',
-        a: 'Yes — we plan to offer both monthly and yearly billing, with a discount for the annual plan. Exact pricing will be announced when the app launches.' },
+        a: 'Yes. Premium is $1.99/month or $14.99/year — the annual plan works out at under $1.25 a month, so it is the better value if you plan to stay.' },
       { q: 'What happens to my progress if I cancel?',
         a: "Your game history, club membership, and statistics are saved. You'll drop back to the free tier (your 5 chosen games, offline). If you resubscribe, everything is restored." },
     ],
     ctaTitle: 'Ready to deal?',
-    ctaSub: 'Download free. 11 games unlocked. 14 days. No card needed.',
+    ctaSub: '11 games unlocked. 14 days. No card needed.',
     ctaDownload: 'Download Free', ctaBrowse: 'Browse Games',
   },
   es: {
     title: 'Precios – Card Games by Vanikar',
-    description: 'Prueba gratis de 2 semanas con todos los juegos. Conserva 5 juegos gratis para siempre, o pasa a premium para desbloquear todo, incluido el juego en línea y todos los juegos futuros. Precios próximamente.',
+    description: 'Prueba gratis 2 semanas todos los juegos; luego conserva 5 gratis para siempre o pasa a premium por 1,99 $/mes o 14,99 $/año: todo desbloqueado, sin anuncios.',
     tag: '♦ Precios', h1: 'Precios simples y honestos',
     lead: 'Empieza con una prueba gratis completa de 2 semanas. Sin tarjeta de crédito. Sin compromisos. Después eliges tu camino — gratis para siempre o premium.',
     faqTitle: 'Preguntas frecuentes',
     faqs: [
       { q: '¿Qué pasa después de la prueba de 2 semanas?',
-        a: 'Puedes elegir 5 juegos para conservar gratis — de forma permanente, sin vencimiento. El juego gratuito es solo sin conexión (contra la IA). Si quieres multijugador en línea, pistas o el catálogo completo, puedes suscribirte — el precio se anunciará en el lanzamiento.' },
+        a: 'Puedes elegir 5 juegos para conservar gratis — de forma permanente, sin vencimiento. El juego gratuito es solo sin conexión (contra la IA). Si quieres multijugador en línea, pistas o el catálogo completo, puedes suscribirte por 1,99 $/mes o 14,99 $/año.' },
       { q: '¿Qué juegos están incluidos?',
         a: `Juegos premium (${availableGames.length}): ${gameNames}.` },
       { q: '¿Necesito tarjeta de crédito para la prueba?',
@@ -58,23 +60,23 @@ const L = {
       { q: '¿Puedo cambiar mis 5 juegos gratis más adelante?',
         a: 'Sí. Puedes cambiar tu selección de juegos gratis una vez cada 30 días en Ajustes → Mis Juegos dentro de la app.' },
       { q: '¿Habrá opciones mensuales y anuales?',
-        a: 'Sí — planeamos ofrecer facturación mensual y anual, con descuento en el plan anual. El precio exacto se anunciará cuando la app se lance.' },
+        a: 'Sí. Premium cuesta 1,99 $/mes o 14,99 $/año — el plan anual sale a menos de 1,25 $ al mes, así que conviene más si piensas quedarte.' },
       { q: '¿Qué pasa con mi progreso si cancelo?',
         a: 'Tu historial de partidas, tu membresía de club y tus estadísticas se conservan. Volverás al nivel gratuito (tus 5 juegos elegidos, sin conexión). Si te vuelves a suscribir, todo se restaura.' },
     ],
     ctaTitle: '¿Listo para repartir?',
-    ctaSub: 'Descarga gratis. 11 juegos desbloqueados. 14 días. Sin tarjeta.',
+    ctaSub: '11 juegos desbloqueados. 14 días. Sin tarjeta.',
     ctaDownload: 'Descarga gratis', ctaBrowse: 'Explorar juegos',
   },
   pt: {
     title: 'Preços – Card Games by Vanikar',
-    description: 'Teste grátis de 2 semanas com todos os jogos. Fique com 5 jogos grátis para sempre, ou assine o premium para desbloquear tudo, incluindo o jogo online e todos os jogos futuros. Preços em breve.',
+    description: 'Teste grátis por 2 semanas; depois fique com 5 jogos grátis para sempre ou assine o premium por US$ 1,99/mês ou US$ 14,99/ano — tudo liberado, sem anúncios.',
     tag: '♦ Preços', h1: 'Preços simples e honestos',
     lead: 'Comece com um teste grátis completo de 2 semanas. Sem cartão de crédito. Sem compromisso. Depois escolha seu caminho — grátis para sempre ou premium.',
     faqTitle: 'Perguntas frequentes',
     faqs: [
       { q: 'O que acontece depois do teste de 2 semanas?',
-        a: 'Você pode escolher 5 jogos para manter grátis — permanentemente, sem prazo de validade. O jogo grátis é apenas offline (contra a IA). Se quiser multijogador online, dicas ou o catálogo completo, você pode assinar — os preços serão anunciados no lançamento.' },
+        a: 'Você pode escolher 5 jogos para manter grátis — permanentemente, sem prazo de validade. O jogo grátis é apenas offline (contra a IA). Se quiser multijogador online, dicas ou o catálogo completo, você pode assinar por US$ 1,99/mês ou US$ 14,99/ano.' },
       { q: 'Quais jogos estão incluídos?',
         a: `Jogos premium (${availableGames.length}): ${gameNames}.` },
       { q: 'Preciso de cartão de crédito para o teste?',
@@ -86,23 +88,23 @@ const L = {
       { q: 'Posso trocar meus 5 jogos grátis depois?',
         a: 'Sim. Você pode trocar sua seleção de jogos grátis uma vez a cada 30 dias em Configurações → Meus Jogos no app.' },
       { q: 'Haverá opções mensais e anuais?',
-        a: 'Sim — planejamos oferecer cobrança mensal e anual, com desconto no plano anual. Os preços exatos serão anunciados no lançamento do app.' },
+        a: 'Sim. O Premium custa US$ 1,99/mês ou US$ 14,99/ano — o plano anual sai por menos de US$ 1,25 ao mês, então compensa mais se você pretende ficar.' },
       { q: 'O que acontece com meu progresso se eu cancelar?',
         a: 'Seu histórico de partidas, sua participação em clubes e suas estatísticas ficam salvos. Você volta ao nível gratuito (seus 5 jogos escolhidos, offline). Se você assinar novamente, tudo é restaurado.' },
     ],
     ctaTitle: 'Pronto para dar as cartas?',
-    ctaSub: 'Baixe grátis. 11 jogos desbloqueados. 14 dias. Sem cartão.',
+    ctaSub: '11 jogos desbloqueados. 14 dias. Sem cartão.',
     ctaDownload: 'Baixe grátis', ctaBrowse: 'Ver jogos',
   },
   fr: {
     title: 'Tarifs – Card Games by Vanikar',
-    description: 'Essai gratuit de 2 semaines avec tous les jeux. Gardez 5 jeux gratuits pour toujours, ou passez au premium pour tout débloquer, y compris le jeu en ligne et tous les jeux à venir. Tarifs bientôt disponibles.',
+    description: 'Essai gratuit de 2 semaines sur tous les jeux, puis 5 jeux gratuits à vie ou premium à 1,99 $/mois ou 14,99 $/an : tout débloqué, sans pub.',
     tag: '♦ Tarifs', h1: 'Des tarifs simples et honnêtes',
     lead: 'Commencez par un essai gratuit complet de 2 semaines. Sans carte bancaire. Sans engagement. Choisissez ensuite votre voie — gratuit pour toujours ou premium.',
     faqTitle: 'Questions fréquentes',
     faqs: [
       { q: "Que se passe-t-il après l'essai de 2 semaines ?",
-        a: "Vous pouvez choisir 5 jeux à garder gratuitement — de façon permanente, sans expiration. Le jeu gratuit est uniquement hors ligne (contre l'IA). Si vous voulez le multijoueur en ligne, les indices ou le catalogue complet, vous pouvez vous abonner — les tarifs seront annoncés au lancement." },
+        a: "Oui. Premium coûte 1,99 $/mois ou 14,99 $/an — la formule annuelle revient à moins de 1,25 $ par mois, donc c’est le meilleur choix si vous comptez rester." },
       { q: 'Quels jeux sont inclus ?',
         a: `Jeux premium (${availableGames.length}) : ${gameNames}.` },
       { q: "Ai-je besoin d'une carte bancaire pour l'essai ?",
@@ -114,23 +116,23 @@ const L = {
       { q: 'Puis-je changer mes 5 jeux gratuits plus tard ?',
         a: "Oui. Vous pouvez modifier votre sélection de jeux gratuits une fois tous les 30 jours via Réglages → Mes Jeux dans l'app." },
       { q: 'Y aura-t-il des formules mensuelles et annuelles ?',
-        a: "Oui — nous prévoyons de proposer une facturation mensuelle et annuelle, avec une réduction pour la formule annuelle. Les tarifs exacts seront annoncés au lancement de l'app." },
+        a: "Oui. Premium coûte 1,99 $/mois ou 14,99 $/an — la formule annuelle revient à moins de 1,25 $ par mois, c’est donc le meilleur choix si vous comptez rester." },
       { q: "Qu'advient-il de ma progression si j'annule ?",
         a: "Votre historique de parties, votre adhésion aux clubs et vos statistiques sont conservés. Vous repasserez à l'offre gratuite (vos 5 jeux choisis, hors ligne). Si vous vous réabonnez, tout est restauré." },
     ],
     ctaTitle: 'Prêt à distribuer ?',
-    ctaSub: 'Téléchargement gratuit. 11 jeux débloqués. 14 jours. Sans carte.',
+    ctaSub: '11 jeux débloqués. 14 jours. Sans carte.',
     ctaDownload: 'Télécharger gratuitement', ctaBrowse: 'Parcourir les jeux',
   },
   de: {
     title: 'Preise – Card Games by Vanikar',
-    description: '2 Wochen kostenlos testen mit allen Spielen. Behalte 5 Spiele für immer kostenlos, oder hol dir Premium und schalte alles frei, inklusive Online-Spiel und aller zukünftigen Spiele. Preise demnächst.',
+    description: '2 Wochen alle Spiele kostenlos testen, dann 5 Spiele für immer gratis oder Premium für 1,99 $/Monat bzw. 14,99 $/Jahr – alles freigeschaltet, ohne Werbung.',
     tag: '♦ Preise', h1: 'Einfache, ehrliche Preise',
     lead: 'Starte mit einer vollen 2-wöchigen kostenlosen Testphase. Keine Kreditkarte. Keine Verpflichtungen. Danach wählst du deinen Weg — für immer kostenlos oder Premium.',
     faqTitle: 'Häufig gestellte Fragen',
     faqs: [
       { q: 'Was passiert nach der 2-wöchigen Testphase?',
-        a: 'Du kannst dir 5 beliebige Spiele aussuchen und kostenlos behalten — dauerhaft, ohne Ablaufdatum. Kostenloses Spielen ist nur offline (gegen die KI) möglich. Wenn du Online-Multiplayer, Hinweise oder den kompletten Katalog willst, kannst du ein Abo abschließen — die Preise werden zum Launch bekannt gegeben.' },
+        a: 'Du kannst dir 5 beliebige Spiele aussuchen und kostenlos behalten — dauerhaft, ohne Ablaufdatum. Kostenloses Spielen ist nur offline (gegen die KI) möglich. Wenn du Online-Multiplayer, Hinweise oder den kompletten Katalog willst, kannst du ein Abo für 1,99 $/Monat oder 14,99 $/Jahr abschließen.' },
       { q: 'Welche Spiele sind enthalten?',
         a: `Premium-Spiele (${availableGames.length}): ${gameNames}.` },
       { q: 'Brauche ich eine Kreditkarte für die Testphase?',
@@ -142,17 +144,17 @@ const L = {
       { q: 'Kann ich meine 5 kostenlosen Spiele später ändern?',
         a: 'Ja. Du kannst deine kostenlose Spielauswahl alle 30 Tage einmal ändern, unter Einstellungen → Meine Spiele in der App.' },
       { q: 'Wird es Monats- und Jahresoptionen geben?',
-        a: 'Ja — wir planen sowohl monatliche als auch jährliche Abrechnung, mit Rabatt beim Jahresplan. Die genauen Preise werden zum Launch der App bekannt gegeben.' },
+        a: 'Ja. Premium kostet 1,99 $/Monat oder 14,99 $/Jahr — der Jahresplan liegt bei unter 1,25 $ pro Monat und lohnt sich daher, wenn du dabeibleiben willst.' },
       { q: 'Was passiert mit meinem Fortschritt, wenn ich kündige?',
         a: 'Dein Spielverlauf, deine Club-Mitgliedschaft und deine Statistiken bleiben gespeichert. Du wechselst zurück auf die kostenlose Stufe (deine 5 gewählten Spiele, offline). Wenn du wieder abonnierst, wird alles wiederhergestellt.' },
     ],
     ctaTitle: 'Bereit zum Geben?',
-    ctaSub: 'Kostenlos herunterladen. 11 Spiele freigeschaltet. 14 Tage. Keine Karte nötig.',
+    ctaSub: '11 Spiele freigeschaltet. 14 Tage. Keine Karte nötig.',
     ctaDownload: 'Kostenlos herunterladen', ctaBrowse: 'Spiele entdecken',
   },
   hi: {
     title: 'कीमतें – Card Games by Vanikar',
-    description: 'सभी खेलों के साथ 2 सप्ताह का मुफ़्त ट्रायल। कोई भी 5 खेल हमेशा के लिए मुफ़्त रखें, या Premium लेकर सब कुछ अनलॉक करें — ऑनलाइन खेल और आने वाले सभी खेल शामिल। कीमतें जल्द आ रही हैं।',
+    description: 'सभी खेलों का 2 हफ़्ते का मुफ़्त ट्रायल, फिर 5 खेल हमेशा मुफ़्त या $1.99/माह अथवा $14.99/साल में प्रीमियम — सब कुछ अनलॉक, बिना विज्ञापन।',
     tag: '♦ कीमतें', h1: 'सरल, ईमानदार कीमतें',
     lead: 'पूरे 2 सप्ताह के मुफ़्त ट्रायल से शुरुआत करें। कोई क्रेडिट कार्ड नहीं। कोई बाध्यता नहीं। बाद में अपना रास्ता चुनें — हमेशा के लिए मुफ़्त या Premium।',
     faqTitle: 'अक्सर पूछे जाने वाले सवाल',
@@ -175,7 +177,7 @@ const L = {
         a: 'आपका गेम इतिहास, क्लब सदस्यता और आँकड़े सुरक्षित रहते हैं। आप मुफ़्त स्तर पर लौट आएँगे (आपके चुने हुए 5 खेल, ऑफ़लाइन)। दोबारा सदस्यता लेने पर सब कुछ बहाल हो जाता है।' },
     ],
     ctaTitle: 'पत्ते बाँटने के लिए तैयार?',
-    ctaSub: 'मुफ़्त डाउनलोड करें। 11 खेल अनलॉक। 14 दिन। कार्ड की ज़रूरत नहीं।',
+    ctaSub: '11 खेल अनलॉक। 14 दिन। कार्ड की ज़रूरत नहीं।',
     ctaDownload: 'मुफ़्त डाउनलोड करें', ctaBrowse: 'खेल देखें',
   },
 }[lang];
@@ -216,7 +218,7 @@ const L = {
       <h2>{L.ctaTitle}</h2>
       <p class="cta-sub">{L.ctaSub}</p>
       <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:1.75rem">
-        <a href={href('/#download')} class="btn btn-primary">{L.ctaDownload}</a>
+        <a href={href('/#download')} class="btn btn-primary">{LN.notify}</a>
         <a href={href('/games')}     class="btn btn-secondary">{L.ctaBrowse}</a>
       </div>
     </div>

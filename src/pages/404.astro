@@ -1,0 +1,55 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { availableGames } from '../data/games';
+
+// Served by the host for any unknown URL. English only — the locale is unknown
+// at 404 time — and noindexed so a missing page never gets indexed as content.
+const picks = availableGames.slice(0, 6);
+---
+<BaseLayout
+  title="Page Not Found | Vanikar"
+  description="That page doesn't exist. Browse all 33 card games, pricing, or head back to the Vanikar home page."
+  noindex={true}
+>
+  <section class="nf">
+    <div class="container nf-inner">
+      <div class="section-tag">♠ ♥ ♦ ♣</div>
+      <h1>Page not found</h1>
+      <p class="nf-lead">
+        That card isn't in the deck. The page may have moved, or the link was mistyped.
+      </p>
+      <div class="nf-actions">
+        <a href="/games/" class="btn btn-primary">Browse all games</a>
+        <a href="/" class="btn btn-secondary">Home</a>
+      </div>
+
+      <h2 class="nf-sub">Popular games</h2>
+      <ul class="nf-games">
+        {picks.map(g => (
+          <li><a href={`/games/${g.slug}/`}>{g.name}</a></li>
+        ))}
+      </ul>
+      <p class="nf-links">
+        <a href="/pricing/">Pricing</a> · <a href="/about/">About</a> · <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .nf { padding: 5rem 0 6rem; text-align: center; }
+  .nf-inner { max-width: 640px; }
+  .nf h1 { font-size: clamp(2.2rem, 5vw, 3.2rem); margin: .5rem 0 .75rem; }
+  .nf-lead { color: var(--text-secondary, #c9d6c9); font-size: 1.1rem; margin-bottom: 1.75rem; }
+  .nf-actions { display: flex; gap: .75rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2.5rem; }
+  .nf-sub { font-size: 1.1rem; margin-bottom: .75rem; color: var(--gold, #c9a227); }
+  .nf-games { list-style: none; padding: 0; margin: 0 0 1.5rem; display: flex; flex-wrap: wrap; gap: .5rem; justify-content: center; }
+  .nf-games a {
+    display: inline-block; padding: .4rem .9rem; border-radius: 999px;
+    background: var(--bg-card, #162a16); border: 1px solid var(--gold-border, rgba(201,162,39,.28));
+    color: inherit; text-decoration: none;
+  }
+  .nf-games a:hover { border-color: var(--gold, #c9a227); }
+  .nf-links { font-size: .9rem; color: var(--text-secondary, #c9d6c9); }
+  .nf-links a { color: inherit; }
+</style>

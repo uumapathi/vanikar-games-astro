@@ -6,11 +6,13 @@ import type { ImageMetadata } from 'astro';
 import { games, getGame } from '../data/games';
 import { localizeGame, isGameFullyLocalized } from '../data/games.i18n';
 import { getLocale, localizedHref, localizePath, LOCALES } from '../i18n';
+import { launchCopy } from '../data/launch';
 
 interface Props { slug: string }
 const { slug } = Astro.props;
 
 const lang = getLocale(Astro.currentLocale);
+const LN = launchCopy(lang);
 const href = (p: string) => localizedHref(p, lang);
 const game = localizeGame(getGame(slug)!, lang);
 
@@ -49,8 +51,8 @@ const L = {
       ? `${n} Card Game – Rules, How to Play & Strategy | Vanikar`
       : `Play ${n} Online – Rules, Scoring & Strategy | Vanikar`,
     pageDescription: soon
-      ? `${n} is coming to Vanikar. Learn ${n} rules, scoring, and strategy now — and be ready to play against AI, friends, or online players at launch. ${game.players}.`
-      : `Play ${n} online with Vanikar — with friends at private tables, against real players, or vs smart AI. Learn ${n} rules, scoring, and strategy. ${game.players}.`,
+      ? `${n} rules, scoring and strategy, explained step by step. ${game.players}. Coming to the Vanikar app — play vs AI, friends or online at launch.`
+      : `Play ${n} online with friends at private tables, vs real players or smart AI. ${n} rules, scoring and strategy explained. ${game.players}.`,
     heroTitle: soon ? n : `Play ${n} Online`,
     heroDifficulty: `${game.difficulty} difficulty`,
     soonBanner: 'This game is in development and not yet available to play. Premium subscribers will get access first when it launches.',
@@ -114,8 +116,8 @@ const L = {
       ? `${n} – Reglas, cómo jugar y estrategia | Vanikar`
       : `Juega ${n} en línea – Reglas, puntuación y estrategia | Vanikar`,
     pageDescription: soon
-      ? `${n} llegará pronto a Vanikar. Aprende ya las reglas, la puntuación y la estrategia de ${n} — y prepárate para jugar contra la IA, amigos o jugadores en línea desde el lanzamiento. ${game.players}.`
-      : `Juega ${n} en línea con Vanikar — con amigos en mesas privadas, contra jugadores reales o contra la IA. Aprende las reglas, la puntuación y la estrategia de ${n}. ${game.players}.`,
+      ? `Reglas, puntuación y estrategia de ${n}, paso a paso. ${game.players}. Próximamente en Vanikar: juega contra la IA, amigos o jugadores en línea.`
+      : `Juega ${n} en línea con amigos en mesas privadas, contra jugadores reales o la IA. Reglas, puntuación y estrategia de ${n}. ${game.players}.`,
     heroTitle: soon ? n : `Juega ${n} en línea`,
     heroDifficulty: `Dificultad ${diffLabel.es.toLowerCase()}`,
     soonBanner: 'Este juego está en desarrollo y aún no se puede jugar. Los suscriptores Premium accederán primero cuando se lance.',
@@ -179,8 +181,8 @@ const L = {
       ? `${n} – Regras, como jogar e estratégia | Vanikar`
       : `Jogue ${n} online – Regras, pontuação e estratégia | Vanikar`,
     pageDescription: soon
-      ? `${n} está chegando ao Vanikar. Aprenda agora as regras, a pontuação e a estratégia de ${n} — e esteja pronto para jogar contra a IA, amigos ou jogadores online no lançamento. ${game.players}.`
-      : `Jogue ${n} online com o Vanikar — com amigos em mesas privadas, contra jogadores reais ou contra a IA. Aprenda as regras, a pontuação e a estratégia de ${n}. ${game.players}.`,
+      ? `Regras, pontuação e estratégia de ${n}, passo a passo. ${game.players}. Em breve no Vanikar: jogue contra a IA, amigos ou jogadores online.`
+      : `Jogue ${n} online com amigos em mesas privadas, contra jogadores reais ou a IA. Regras, pontuação e estratégia de ${n}. ${game.players}.`,
     heroTitle: soon ? n : `Jogue ${n} online`,
     heroDifficulty: `Dificuldade ${diffLabel.pt.toLowerCase()}`,
     soonBanner: 'Este jogo está em desenvolvimento e ainda não está disponível. Assinantes Premium terão acesso primeiro no lançamento.',
@@ -244,8 +246,8 @@ const L = {
       ? `${n} – Règles, comment jouer et stratégie | Vanikar`
       : `Jouez à ${n} en ligne – Règles, score et stratégie | Vanikar`,
     pageDescription: soon
-      ? `${n} arrive bientôt sur Vanikar. Apprenez dès maintenant les règles, le score et la stratégie de ${n} — et soyez prêt à jouer contre l'IA, vos amis ou des joueurs en ligne dès le lancement. ${game.players}.`
-      : `Jouez à ${n} en ligne avec Vanikar — avec vos amis à des tables privées, contre de vrais joueurs ou contre l'IA. Apprenez les règles, le score et la stratégie de ${n}. ${game.players}.`,
+      ? `Règles, score et stratégie de ${n}, pas à pas. ${game.players}. Bientôt sur Vanikar : jouez contre l'IA, vos amis ou en ligne.`
+      : `Jouez à ${n} en ligne avec vos amis à des tables privées, contre de vrais joueurs ou l'IA. Règles, score et stratégie de ${n}. ${game.players}.`,
     heroTitle: soon ? n : `Jouez à ${n} en ligne`,
     heroDifficulty: `Difficulté ${({ Easy: 'facile', Medium: 'moyenne', Hard: 'difficile' } as Record<string, string>)[game.difficulty]}`,
     soonBanner: 'Ce jeu est en développement et pas encore jouable. Les abonnés Premium y accéderont en premier lors du lancement.',
@@ -309,8 +311,8 @@ const L = {
       ? `${n} – Regeln, Spielanleitung & Strategie | Vanikar`
       : `Spiele ${n} online – Regeln, Punkte & Strategie | Vanikar`,
     pageDescription: soon
-      ? `${n} kommt bald zu Vanikar. Lerne jetzt Regeln, Punktewertung und Strategie von ${n} — und sei zum Start bereit, gegen KI, Freunde oder Online-Spieler zu spielen. ${game.players}.`
-      : `Spiele ${n} online mit Vanikar — mit Freunden an privaten Tischen, gegen echte Spieler oder gegen smarte KI. Lerne Regeln, Punktewertung und Strategie von ${n}. ${game.players}.`,
+      ? `${n}: Regeln, Punktewertung und Strategie Schritt für Schritt erklärt. ${game.players}. Bald bei Vanikar – spiele gegen KI, Freunde oder online.`
+      : `Spiele ${n} online mit Freunden an privaten Tischen, gegen echte Spieler oder smarte KI. Regeln, Punkte und Strategie erklärt. ${game.players}.`,
     heroTitle: soon ? n : `Spiele ${n} online`,
     heroDifficulty: `Schwierigkeit: ${diffLabel.de}`,
     soonBanner: 'Dieses Spiel ist in Entwicklung und noch nicht spielbar. Premium-Abonnenten erhalten zum Start zuerst Zugang.',
@@ -374,8 +376,8 @@ const L = {
       ? `${n} – नियम, खेलने का तरीका और रणनीति | Vanikar`
       : `${n} ऑनलाइन खेलें – नियम, स्कोरिंग और रणनीति | Vanikar`,
     pageDescription: soon
-      ? `${n} जल्द ही Vanikar पर आ रहा है। अभी ${n} के नियम, स्कोरिंग और रणनीति सीखें — और लॉन्च होते ही AI, दोस्तों या ऑनलाइन खिलाड़ियों के साथ खेलने के लिए तैयार रहें। ${game.players}।`
-      : `Vanikar के साथ ${n} ऑनलाइन खेलें — निजी टेबल पर दोस्तों के साथ, असली खिलाड़ियों के खिलाफ या स्मार्ट AI के खिलाफ। ${n} के नियम, स्कोरिंग और रणनीति सीखें। ${game.players}।`,
+      ? `${n} के नियम, स्कोरिंग और रणनीति, कदम-दर-कदम। ${game.players}। जल्द ही Vanikar पर — AI, दोस्तों या ऑनलाइन खिलाड़ियों के साथ खेलें।`
+      : `Vanikar पर ${n} ऑनलाइन खेलें — निजी टेबल पर दोस्तों के साथ, असली खिलाड़ियों या स्मार्ट AI के खिलाफ। नियम, स्कोरिंग और रणनीति। ${game.players}।`,
     heroTitle: soon ? n : `${n} ऑनलाइन खेलें`,
     heroDifficulty: `कठिनाई: ${diffLabel.hi}`,
     soonBanner: 'यह गेम अभी विकास में है और खेलने के लिए उपलब्ध नहीं है। लॉन्च होने पर Premium सब्सक्राइबर्स को सबसे पहले एक्सेस मिलेगा।',
@@ -441,6 +443,7 @@ const pageTitle = (lang === 'en' && game.seo?.title) ? game.seo.title : L.pageTi
 const heroTitle = (lang === 'en' && game.seo?.h1)    ? game.seo.h1    : L.heroTitle;
 const faqs    = (lang === 'en' && game.extraFaqs) ? [...L.faqs, ...game.extraFaqs] : L.faqs;
 const pageUrl = `https://vanikar.games${localizePath(`/games/${game.slug}`, lang)}/`;
+const ogImage = `/og/${game.slug}.png`;   // generated by scripts/gen-og.mjs
 
 /* Contextual related games (fallback: first four other games) */
 const related = (game.relatedGames ?? [])
@@ -506,6 +509,7 @@ const jsonLd = [
     ...(game.alternateNames?.length ? { alternateName: game.alternateNames } : {}),
     description: game.description,
     url: pageUrl,
+    image: `https://vanikar.games${ogImage}`,
     inLanguage: lang,
     gamePlatform: ['iOS', 'Android'],
     applicationCategory: 'Game',
@@ -532,6 +536,7 @@ const jsonLd = [
   description={L.pageDescription}
   noindex={noindex}
   alternateLocales={alternateLocales}
+  image={ogImage}
 >
   <Fragment slot="head">
     {jsonLd.map(schema => (
@@ -561,7 +566,7 @@ const jsonLd = [
       <div class="game-hero-inner">
         <div class="game-icon-lg">
           {gameIcon(game.slug)
-            ? <Image src={gameIcon(game.slug)!} alt={`${game.name} icon`} width={192} class="gi-img" />
+            ? <Image src={gameIcon(game.slug)!} alt={`${game.name} icon`} width={192} class="gi-img" loading="eager" fetchpriority="high" />
             : game.icon}
         </div>
         <div>
@@ -711,7 +716,7 @@ const jsonLd = [
         <div class="sidebar-card sidebar-cta">
           <p>{L.sidebarCta}</p>
           <a href={href('/#download')} class="btn btn-primary" style="width:100%;justify-content:center;margin-top:.75rem">
-            {L.ctaDownload}
+            {LN.gameCta(n)}
           </a>
           <a href={href('/pricing')} class="btn btn-secondary" style="width:100%;justify-content:center;margin-top:.5rem">
             {L.ctaPricing}
