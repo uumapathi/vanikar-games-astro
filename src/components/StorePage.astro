@@ -1,0 +1,344 @@
+---
+/**
+ * "Coming soon on iOS / Android" store landing page, shared by every locale.
+ * The launch-notification form posts to the same Google Form as the home
+ * page download section.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { games, comingSoonGames } from '../data/games';
+import { getLocale, localizedHref } from '../i18n';
+
+interface Props { platform: 'ios' | 'android' }
+const { platform } = Astro.props;
+
+const lang = getLocale(Astro.currentLocale);
+const href = (p: string) => localizedHref(p, lang);
+const ios  = platform === 'ios';
+const n    = games.length;
+const cs   = comingSoonGames.length;
+const P    = ios ? 'iOS' : 'Android';
+const other = ios ? '/android' : '/ios';
+const id   = ios ? 'ios' : 'and';
+
+const L = {
+  en: {
+    store: ios ? 'the App Store' : 'Google Play', badge: ios ? 'App Store' : 'Google Play',
+    title: `Card Games by Vanikar — Coming Soon on ${P}`,
+    description: `The Vanikar Card Games app is coming soon to ${ios ? 'the App Store' : 'Google Play'} — ${n} card games, online multiplayer, voice chat, leaderboards and more.`,
+    back: '← Back to Vanikar Games', iconAlt: 'Card Games app icon',
+    soon: 'Coming Soon', on: 'on',
+    subtitle: `${n} classic card games in your pocket — online multiplayer, smart AI opponents, voice chat, leaderboards, Discord integration, and more.`,
+    chips: ios ? ['📱 iPhone & iPad', '📱 iOS 16+', '🆓 Free to download'] : ['📱 Android phones & tablets', '🤖 Android 9+', '🆓 Free to download'],
+    notifyH: 'Get notified at launch',
+    notifyP: `Be the first to know when the app hits ${ios ? 'the App Store' : 'Google Play'}. One email, no spam.`,
+    placeholder: 'your@email.com', emailLabel: 'Email address', notifyBtn: 'Notify Me', sending: 'Sending…',
+    confirm: '✓ You’re on the list — we’ll email you at launch!',
+    inside: 'What’s inside',
+    features: [
+      ['🃏', `${n} Card Games`, `From High Card to Skat — with ${cs} more games coming soon for subscribers first.`],
+      ['🌐', 'Online Multiplayer', 'Play live against real opponents from around the world at any time.'],
+      ['🤖', 'AI Practice', 'Sharpen your skills offline against responsive AI at multiple difficulty levels.'],
+      ['🎙️', 'Voice Chat', 'Talk to your teammates and opponents during live games — premium feature.'],
+      ['🏆', 'Leaderboards', 'Compete in global and regional rankings for every game.'],
+      ['🔔', 'Discord Integration', 'Connect your Discord account, show game status, and invite friends directly.'],
+    ],
+    footerP: 'In the meantime, explore the full game catalog and pricing.',
+    browse: 'Browse Games', pricing: 'View Pricing', otherPage: ios ? 'Google Play page →' : 'App Store page →',
+  },
+  es: {
+    store: ios ? 'la App Store' : 'Google Play', badge: ios ? 'App Store' : 'Google Play',
+    title: `Card Games by Vanikar — Próximamente en ${P}`,
+    description: `La app Card Games by Vanikar llegará pronto a ${ios ? 'la App Store' : 'Google Play'} — ${n} juegos de cartas, multijugador en línea, chat de voz, clasificaciones y más.`,
+    back: '← Volver a Vanikar Games', iconAlt: 'Icono de la app Card Games',
+    soon: 'Próximamente', on: 'en',
+    subtitle: `${n} juegos de cartas clásicos en tu bolsillo — multijugador en línea, rivales de IA inteligentes, chat de voz, clasificaciones, integración con Discord y más.`,
+    chips: ios ? ['📱 iPhone y iPad', '📱 iOS 16+', '🆓 Descarga gratuita'] : ['📱 Móviles y tabletas Android', '🤖 Android 9+', '🆓 Descarga gratuita'],
+    notifyH: 'Recibe aviso en el lanzamiento',
+    notifyP: `Sé el primero en enterarte cuando la app llegue a ${ios ? 'la App Store' : 'Google Play'}. Un solo correo, sin spam.`,
+    placeholder: 'tu@correo.com', emailLabel: 'Correo electrónico', notifyBtn: 'Avisarme', sending: 'Enviando…',
+    confirm: '✓ Estás en la lista — te escribiremos en el lanzamiento.',
+    inside: 'Qué incluye',
+    features: [
+      ['🃏', `${n} juegos de cartas`, `De Carta Alta a Skat — con ${cs} juegos más próximamente, primero para suscriptores.`],
+      ['🌐', 'Multijugador en línea', 'Juega en vivo contra rivales reales de todo el mundo en cualquier momento.'],
+      ['🤖', 'Práctica con IA', 'Afina tus habilidades sin conexión contra una IA ágil con varios niveles de dificultad.'],
+      ['🎙️', 'Chat de voz', 'Habla con tus compañeros y rivales durante las partidas en vivo — función premium.'],
+      ['🏆', 'Clasificaciones', 'Compite en rankings globales y regionales de cada juego.'],
+      ['🔔', 'Integración con Discord', 'Conecta tu cuenta de Discord, muestra tu estado de juego e invita amigos directamente.'],
+    ],
+    footerP: 'Mientras tanto, explora el catálogo completo de juegos y los precios.',
+    browse: 'Ver juegos', pricing: 'Ver precios', otherPage: ios ? 'Página de Google Play →' : 'Página de la App Store →',
+  },
+  pt: {
+    store: ios ? 'a App Store' : 'o Google Play', badge: ios ? 'App Store' : 'Google Play',
+    title: `Card Games by Vanikar — Em breve no ${P}`,
+    description: `O app Card Games by Vanikar chega em breve ${ios ? 'à App Store' : 'ao Google Play'} — ${n} jogos de cartas, multijogador online, chat de voz, rankings e mais.`,
+    back: '← Voltar ao Vanikar Games', iconAlt: 'Ícone do app Card Games',
+    soon: 'Em breve', on: 'no',
+    subtitle: `${n} jogos de cartas clássicos no seu bolso — multijogador online, adversários de IA inteligentes, chat de voz, rankings, integração com o Discord e mais.`,
+    chips: ios ? ['📱 iPhone e iPad', '📱 iOS 16+', '🆓 Download grátis'] : ['📱 Celulares e tablets Android', '🤖 Android 9+', '🆓 Download grátis'],
+    notifyH: 'Seja avisado no lançamento',
+    notifyP: `Seja o primeiro a saber quando o app chegar ${ios ? 'à App Store' : 'ao Google Play'}. Um e-mail só, sem spam.`,
+    placeholder: 'seu@email.com', emailLabel: 'Endereço de e-mail', notifyBtn: 'Avise-me', sending: 'Enviando…',
+    confirm: '✓ Você está na lista — enviaremos um e-mail no lançamento.',
+    inside: 'O que tem dentro',
+    features: [
+      ['🃏', `${n} jogos de cartas`, `De Carta Alta a Skat — com mais ${cs} jogos em breve, primeiro para assinantes.`],
+      ['🌐', 'Multijogador online', 'Jogue ao vivo contra adversários reais do mundo todo a qualquer hora.'],
+      ['🤖', 'Treino com IA', 'Afie suas habilidades offline contra uma IA responsiva com vários níveis de dificuldade.'],
+      ['🎙️', 'Chat de voz', 'Converse com parceiros e adversários durante as partidas ao vivo — recurso premium.'],
+      ['🏆', 'Rankings', 'Dispute rankings globais e regionais em todos os jogos.'],
+      ['🔔', 'Integração com o Discord', 'Conecte sua conta do Discord, mostre seu status no jogo e convide amigos diretamente.'],
+    ],
+    footerP: 'Enquanto isso, explore o catálogo completo de jogos e os preços.',
+    browse: 'Ver jogos', pricing: 'Ver preços', otherPage: ios ? 'Página do Google Play →' : 'Página da App Store →',
+  },
+  fr: {
+    store: ios ? 'l’App Store' : 'Google Play', badge: ios ? 'App Store' : 'Google Play',
+    title: `Card Games by Vanikar — Bientôt sur ${P}`,
+    description: `L’app Card Games by Vanikar arrive bientôt sur ${ios ? 'l’App Store' : 'Google Play'} — ${n} jeux de cartes, multijoueur en ligne, chat vocal, classements et plus.`,
+    back: '← Retour à Vanikar Games', iconAlt: 'Icône de l’app Card Games',
+    soon: 'Bientôt', on: 'sur',
+    subtitle: `${n} jeux de cartes classiques dans votre poche — multijoueur en ligne, adversaires IA intelligents, chat vocal, classements, intégration Discord et plus.`,
+    chips: ios ? ['📱 iPhone et iPad', '📱 iOS 16+', '🆓 Téléchargement gratuit'] : ['📱 Téléphones et tablettes Android', '🤖 Android 9+', '🆓 Téléchargement gratuit'],
+    notifyH: 'Soyez averti au lancement',
+    notifyP: `Soyez le premier informé quand l’app arrive sur ${ios ? 'l’App Store' : 'Google Play'}. Un seul e-mail, pas de spam.`,
+    placeholder: 'votre@email.com', emailLabel: 'Adresse e-mail', notifyBtn: 'Me prévenir', sending: 'Envoi…',
+    confirm: '✓ Vous êtes sur la liste — nous vous écrirons au lancement.',
+    inside: 'Ce que vous y trouverez',
+    features: [
+      ['🃏', `${n} jeux de cartes`, `De Carte Haute au Skat — avec ${cs} jeux supplémentaires bientôt, d’abord pour les abonnés.`],
+      ['🌐', 'Multijoueur en ligne', 'Jouez en direct contre de vrais adversaires du monde entier, à tout moment.'],
+      ['🤖', 'Entraînement contre l’IA', 'Aiguisez vos réflexes hors ligne contre une IA réactive à plusieurs niveaux de difficulté.'],
+      ['🎙️', 'Chat vocal', 'Parlez à vos partenaires et adversaires pendant les parties en direct — fonction premium.'],
+      ['🏆', 'Classements', 'Affrontez-vous dans des classements mondiaux et régionaux pour chaque jeu.'],
+      ['🔔', 'Intégration Discord', 'Connectez votre compte Discord, affichez votre statut de jeu et invitez vos amis directement.'],
+    ],
+    footerP: 'En attendant, découvrez le catalogue complet des jeux et les tarifs.',
+    browse: 'Voir les jeux', pricing: 'Voir les tarifs', otherPage: ios ? 'Page Google Play →' : 'Page App Store →',
+  },
+  de: {
+    store: ios ? 'den App Store' : 'Google Play', badge: ios ? 'App Store' : 'Google Play',
+    title: `Card Games by Vanikar — Bald für ${P}`,
+    description: `Die App Card Games by Vanikar kommt bald in ${ios ? 'den App Store' : 'den Google Play Store'} — ${n} Kartenspiele, Online-Multiplayer, Sprachchat, Bestenlisten und mehr.`,
+    back: '← Zurück zu Vanikar Games', iconAlt: 'Symbol der Card-Games-App',
+    soon: 'Bald verfügbar', on: 'für',
+    subtitle: `${n} klassische Kartenspiele in deiner Tasche — Online-Multiplayer, smarte KI-Gegner, Sprachchat, Bestenlisten, Discord-Integration und mehr.`,
+    chips: ios ? ['📱 iPhone & iPad', '📱 iOS 16+', '🆓 Kostenloser Download'] : ['📱 Android-Smartphones & -Tablets', '🤖 Android 9+', '🆓 Kostenloser Download'],
+    notifyH: 'Zum Start benachrichtigt werden',
+    notifyP: `Erfahre als Erster, wenn die App ${ios ? 'im App Store' : 'bei Google Play'} erscheint. Eine E-Mail, kein Spam.`,
+    placeholder: 'deine@email.de', emailLabel: 'E-Mail-Adresse', notifyBtn: 'Benachrichtigen', sending: 'Wird gesendet…',
+    confirm: '✓ Du stehst auf der Liste — wir melden uns zum Start.',
+    inside: 'Das steckt drin',
+    features: [
+      ['🃏', `${n} Kartenspiele`, `Von High Card bis Skat — und ${cs} weitere Spiele folgen bald, zuerst für Abonnenten.`],
+      ['🌐', 'Online-Multiplayer', 'Spiele jederzeit live gegen echte Gegner aus aller Welt.'],
+      ['🤖', 'KI-Training', 'Schärfe deine Fähigkeiten offline gegen reaktionsschnelle KI in mehreren Schwierigkeitsgraden.'],
+      ['🎙️', 'Sprachchat', 'Sprich während Live-Partien mit Partnern und Gegnern — Premium-Funktion.'],
+      ['🏆', 'Bestenlisten', 'Miss dich in globalen und regionalen Ranglisten für jedes Spiel.'],
+      ['🔔', 'Discord-Integration', 'Verbinde dein Discord-Konto, zeige deinen Spielstatus und lade Freunde direkt ein.'],
+    ],
+    footerP: 'Bis dahin: Stöbere im vollständigen Spielekatalog und den Preisen.',
+    browse: 'Spiele ansehen', pricing: 'Preise ansehen', otherPage: ios ? 'Google-Play-Seite →' : 'App-Store-Seite →',
+  },
+  hi: {
+    store: ios ? 'App Store' : 'Google Play', badge: ios ? 'App Store' : 'Google Play',
+    title: `Card Games by Vanikar — ${P} पर जल्द आ रहा है`,
+    description: `Card Games by Vanikar ऐप जल्द ही ${ios ? 'App Store' : 'Google Play'} पर आ रहा है — ${n} ताश के खेल, ऑनलाइन मल्टीप्लेयर, वॉइस चैट, लीडरबोर्ड और बहुत कुछ।`,
+    back: '← Vanikar Games पर वापस जाएँ', iconAlt: 'Card Games ऐप का आइकन',
+    soon: 'जल्द आ रहा है', on: 'पर',
+    subtitle: `${n} क्लासिक ताश के खेल आपकी जेब में — ऑनलाइन मल्टीप्लेयर, स्मार्ट AI प्रतिद्वंद्वी, वॉइस चैट, लीडरबोर्ड, Discord इंटीग्रेशन और बहुत कुछ।`,
+    chips: ios ? ['📱 iPhone और iPad', '📱 iOS 16+', '🆓 मुफ़्त डाउनलोड'] : ['📱 Android फ़ोन और टैबलेट', '🤖 Android 9+', '🆓 मुफ़्त डाउनलोड'],
+    notifyH: 'लॉन्च पर सूचना पाएँ',
+    notifyP: `ऐप के ${ios ? 'App Store' : 'Google Play'} पर आते ही सबसे पहले जानें। सिर्फ़ एक ईमेल, कोई स्पैम नहीं।`,
+    placeholder: 'aapka@email.com', emailLabel: 'ईमेल पता', notifyBtn: 'सूचित करें', sending: 'भेजा जा रहा है…',
+    confirm: '✓ आप सूची में हैं — लॉन्च पर हम ईमेल करेंगे!',
+    inside: 'इसमें क्या है',
+    features: [
+      ['🃏', `${n} ताश के खेल`, `हाई कार्ड से स्कात तक — और ${cs} खेल जल्द आ रहे हैं, पहले सब्सक्राइबरों के लिए।`],
+      ['🌐', 'ऑनलाइन मल्टीप्लेयर', 'दुनिया भर के असली प्रतिद्वंद्वियों के खिलाफ कभी भी लाइव खेलें।'],
+      ['🤖', 'AI अभ्यास', 'कई कठिनाई स्तरों वाली तेज़ AI के खिलाफ ऑफ़लाइन अपने कौशल निखारें।'],
+      ['🎙️', 'वॉइस चैट', 'लाइव खेल के दौरान साथियों और प्रतिद्वंद्वियों से बात करें — प्रीमियम सुविधा।'],
+      ['🏆', 'लीडरबोर्ड', 'हर खेल की वैश्विक और क्षेत्रीय रैंकिंग में मुकाबला करें।'],
+      ['🔔', 'Discord इंटीग्रेशन', 'अपना Discord खाता जोड़ें, गेम स्टेटस दिखाएँ और दोस्तों को सीधे आमंत्रित करें।'],
+    ],
+    footerP: 'तब तक, पूरा गेम कैटलॉग और कीमतें देखें।',
+    browse: 'खेल देखें', pricing: 'कीमतें देखें', otherPage: ios ? 'Google Play पेज →' : 'App Store पेज →',
+  },
+}[lang];
+---
+<BaseLayout title={L.title} description={L.description}>
+  <div class:list={['store-page', ios ? 'store-page--ios' : 'store-page--android']}>
+
+    <div class="store-hero">
+      <div class="container">
+        <a href={href('/')} class="back-link">{L.back}</a>
+
+        <div class="store-hero-inner">
+          <img class="store-appicon" src="/icon-180.png" width="112" height="112" alt={L.iconAlt} />
+          <div class="platform-badge">
+            <span class="platform-icon" aria-hidden="true">
+              {ios
+                ? <svg viewBox="0 0 384 512" width="16" height="16" fill="currentColor" style="display:block"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
+                : <svg viewBox="0 0 512 512" width="16" height="16" fill="currentColor" style="display:block"><path d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/></svg>}
+            </span>
+            <span>{L.badge}</span>
+          </div>
+
+          <h1 class="store-title">{L.soon}<br/>{L.on} <span class="platform-accent">{P}</span></h1>
+          <p class="store-subtitle">{L.subtitle}</p>
+          <div class="store-meta">
+            {L.chips.map(c => <span class="meta-chip">{c}</span>)}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notify -->
+    <section class="notify-section">
+      <div class="container notify-inner">
+        <div class="notify-copy">
+          <h2>{L.notifyH}</h2>
+          <p>{L.notifyP}</p>
+        </div>
+        <form class="notify-form" id={`notify-form-${id}`} novalidate>
+          <input type="email" id={`notify-email-${id}`} placeholder={L.placeholder}
+                 required class="notify-input" aria-label={L.emailLabel} />
+          <button type="button" class="btn btn-primary notify-btn"
+                  id={`notify-btn-${id}`} data-sending={L.sending} data-platform={P}>{L.notifyBtn}</button>
+        </form>
+        <p class="notify-fine" id={`notify-confirm-${id}`} hidden>{L.confirm}</p>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section class="store-features">
+      <div class="container">
+        <h2 class="section-title" style="text-align:center;margin-bottom:2.5rem">{L.inside}</h2>
+        <div class="sf-grid">
+          {L.features.map(([icon, h, p]) => (
+            <div class="sf-card">
+              <span class="sf-icon">{icon}</span>
+              <h3>{h}</h3>
+              <p>{p}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <div class="store-footer-cta">
+      <div class="container" style="text-align:center">
+        <p>{L.footerP}</p>
+        <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:1.25rem">
+          <a href={href('/games')}   class="btn btn-primary">{L.browse}</a>
+          <a href={href('/pricing')} class="btn btn-secondary">{L.pricing}</a>
+          <a href={href(other)}      class="btn btn-secondary">{L.otherPage}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  // Launch-notification signup → Google Forms (same form as the home page).
+  const GF_FORM_ID     = '1FAIpQLSeEtXUBBZXTR602ygQLThvrW1MTFbmky5ZaMa3caILWr9S4nQ';
+  const GF_EMAIL_ENTRY = 'entry.302574150';
+
+  document.querySelectorAll<HTMLButtonElement>('.notify-btn').forEach(btn => {
+    const form    = btn.closest('form')!;
+    const input   = form.querySelector('input') as HTMLInputElement;
+    const confirm = form.nextElementSibling as HTMLElement;
+
+    btn.addEventListener('click', async () => {
+      if (!input.checkValidity() || !input.value) { input.reportValidity(); return; }
+      btn.textContent = btn.dataset.sending ?? '…';
+      btn.setAttribute('disabled', 'true');
+      try {
+        await fetch(`https://docs.google.com/forms/d/e/${GF_FORM_ID}/formResponse`, {
+          method: 'POST',
+          mode: 'no-cors',   // Google Forms doesn't allow CORS; response is opaque
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams({
+            [GF_EMAIL_ENTRY]: input.value,
+            'entry.platform': btn.dataset.platform ?? '',   // ignored if the field doesn't exist
+          }).toString(),
+        });
+      } catch {
+        // no-cors always throws on response reading — submission still goes through
+      }
+      form.style.display = 'none';
+      confirm.hidden = false;
+    });
+  });
+</script>
+
+<style>
+  .store-page--ios     { --platform-color: #1d9af5; --platform-dark: #0a6fc2; --platform-rgb: 29,154,245;  --hero-tint: #091822; }
+  .store-page--android { --platform-color: #3ddc84; --platform-dark: #1ea85b; --platform-rgb: 61,220,132;  --hero-tint: #091a0f; }
+
+  .store-hero {
+    background: linear-gradient(160deg, var(--bg-deep) 0%, var(--hero-tint) 100%);
+    padding: 5rem 0 4rem; border-bottom: 1px solid var(--border);
+  }
+  .back-link { font-size: .82rem; color: var(--text-muted); transition: color var(--transition); display: inline-block; margin-bottom: 2.5rem; }
+  .back-link:hover { color: var(--gold-light); }
+
+  .store-hero-inner { max-width: 680px; }
+  .store-appicon {
+    width: 112px; height: 112px; border-radius: 24px; display: block;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 14px 36px rgba(0,0,0,.5), 0 0 26px rgba(201,162,39,.15);
+  }
+  .platform-badge {
+    display: inline-flex; align-items: center; gap: .5rem;
+    background: rgba(var(--platform-rgb),.12); border: 1px solid rgba(var(--platform-rgb),.3);
+    border-radius: var(--radius-full); padding: .4rem 1rem;
+    font-size: .78rem; font-weight: 700; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--platform-color); margin-bottom: 1.25rem;
+  }
+  .platform-icon { font-size: 1.1rem; }
+  .store-title {
+    font-size: clamp(2.5rem,6vw,4.5rem); font-weight: 900;
+    line-height: 1.1; margin-bottom: 1rem; color: var(--text-primary);
+  }
+  .platform-accent { color: var(--platform-color); }
+  .store-subtitle { font-size: 1.05rem; color: var(--text-muted); line-height: 1.75; margin-bottom: 1.5rem; max-width: 580px; }
+  .store-meta { display: flex; gap: .5rem; flex-wrap: wrap; }
+  .meta-chip {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius-full); padding: .3rem .85rem;
+    font-size: .78rem; color: var(--text-secondary);
+  }
+
+  /* Notify */
+  .notify-section { background: var(--bg-secondary); border-bottom: 1px solid var(--border); padding: 3rem 0; }
+  .notify-inner { display: flex; align-items: center; gap: 2.5rem; flex-wrap: wrap; }
+  .notify-copy h2 { font-size: 1.3rem; margin-bottom: .4rem; }
+  .notify-copy p  { font-size: .9rem; color: var(--text-muted); }
+  .notify-form { display: flex; gap: .5rem; flex-wrap: wrap; flex: 1; min-width: 280px; }
+  .notify-input {
+    flex: 1; min-width: 200px; padding: .7rem 1rem;
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius-md); color: var(--text-primary);
+    font-family: 'Inter Variable', sans-serif; font-size: .9rem;
+  }
+  .notify-input:focus { outline: none; border-color: var(--platform-color); }
+  .notify-btn { background: var(--platform-color) !important; }
+  .notify-fine { font-size: .82rem; color: #7acc7a; margin-top: .5rem; width: 100%; }
+
+  /* Feature grid */
+  .store-features { padding: 4rem 0; }
+  .sf-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(240px,1fr)); gap: 1rem; }
+  .sf-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); padding: 1.5rem; transition: all var(--transition);
+  }
+  .sf-card:hover { border-color: rgba(var(--platform-rgb),.4); transform: translateY(-2px); }
+  .sf-icon  { font-size: 2rem; display: block; margin-bottom: .75rem; }
+  .sf-card h3 { font-size: 1rem; font-weight: 700; font-family: 'Inter Variable', sans-serif; margin-bottom: .4rem; color: var(--text-primary); }
+  .sf-card p  { font-size: .85rem; color: var(--text-muted); line-height: 1.6; }
+
+  .store-footer-cta { background: var(--bg-deep); border-top: 1px solid var(--border); padding: 3rem 0; }
+  .store-footer-cta p { font-size: 1rem; color: var(--text-muted); }
+</style>

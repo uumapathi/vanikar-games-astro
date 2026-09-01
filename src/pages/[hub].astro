@@ -1,0 +1,10 @@
+---
+import HubPage from '../components/HubPage.astro';
+import { HUB_SLUGS } from '../data/hubs';
+
+export function getStaticPaths() {
+  return HUB_SLUGS.map(hub => ({ params: { hub } }));
+}
+const { hub } = Astro.params;
+---
+<HubPage slug={hub} />

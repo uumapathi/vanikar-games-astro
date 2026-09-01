@@ -51,7 +51,11 @@ export function unlocalizePath(pathname: string): string {
  * translated — the nav, footer, and language switcher use it to decide
  * whether to link to a localized path or fall back to the English page.
  */
-export const TRANSLATED_PATHS = new Set<string>(['/', '/games', '/pricing', '/about']);
+export const TRANSLATED_PATHS = new Set<string>([
+  '/', '/games', '/pricing', '/about', '/ios', '/android',
+  '/online-card-games', '/offline-card-games', '/multiplayer-card-games',
+  '/classic-card-games', '/card-games-against-computer', '/card-games-with-friends',
+]);
 
 /** Path prefixes whose entire subtree is translated (e.g. every game detail page) */
 export const TRANSLATED_PREFIXES = ['/games/'];

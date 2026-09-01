@@ -2,6 +2,9 @@
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import { availableGames, comingSoonGames } from '../data/games';
+import { localizeGame } from '../data/games.i18n';
+import { getLocale, localizedHref } from '../i18n';
+import { launchCopy } from '../data/launch';
 
 interface Section {
   heading: string;
@@ -32,12 +35,57 @@ interface Props {
 
 const { h1, intro, sections, faqs, gamesHeading, gamesSub } = Astro.props;
 
+const lang  = getLocale(Astro.currentLocale);
+const href  = (p: string) => localizedHref(p, lang);
+const LN    = launchCopy(lang);
+const avail = availableGames.map(g => localizeGame(g, lang));
+
+/* Template chrome shared by every hub page */
+const C = {
+  en: { browse: 'Browse All Games', soon: 'Coming Soon',
+        more: (names: string, k: number) => `More on the way: ${names} and ${k} others are in development.`,
+        seeAll: 'See all coming-soon games →', faq: 'Frequently Asked Questions',
+        ctaH: 'Ready to deal in?',
+        ctaP: 'Download the Vanikar Card Games app free on iOS or Android — every game unlocked for 2 weeks, no credit card required.',
+        pricing: 'View Pricing' },
+  es: { browse: 'Ver todos los juegos', soon: 'Próximamente',
+        more: (names: string, k: number) => `Más en camino: ${names} y ${k} más están en desarrollo.`,
+        seeAll: 'Ver todos los juegos próximos →', faq: 'Preguntas frecuentes',
+        ctaH: '¿Listo para repartir?',
+        ctaP: 'Descarga gratis la app Card Games by Vanikar en iOS o Android — todos los juegos desbloqueados durante 2 semanas, sin tarjeta de crédito.',
+        pricing: 'Ver precios' },
+  pt: { browse: 'Ver todos os jogos', soon: 'Em breve',
+        more: (names: string, k: number) => `Mais a caminho: ${names} e outros ${k} estão em desenvolvimento.`,
+        seeAll: 'Ver todos os jogos em breve →', faq: 'Perguntas frequentes',
+        ctaH: 'Pronto para dar as cartas?',
+        ctaP: 'Baixe grátis o app Card Games by Vanikar no iOS ou Android — todos os jogos liberados por 2 semanas, sem cartão de crédito.',
+        pricing: 'Ver preços' },
+  fr: { browse: 'Voir tous les jeux', soon: 'Bientôt',
+        more: (names: string, k: number) => `D’autres arrivent : ${names} et ${k} autres sont en développement.`,
+        seeAll: 'Voir tous les jeux à venir →', faq: 'Questions fréquentes',
+        ctaH: 'Prêt à distribuer ?',
+        ctaP: 'Téléchargez gratuitement l’app Card Games by Vanikar sur iOS ou Android — tous les jeux débloqués pendant 2 semaines, sans carte bancaire.',
+        pricing: 'Voir les tarifs' },
+  de: { browse: 'Alle Spiele ansehen', soon: 'Bald verfügbar',
+        more: (names: string, k: number) => `Weitere folgen: ${names} und ${k} weitere sind in Entwicklung.`,
+        seeAll: 'Alle kommenden Spiele ansehen →', faq: 'Häufige Fragen',
+        ctaH: 'Bereit zum Geben?',
+        ctaP: 'Lade die App Card Games by Vanikar kostenlos für iOS oder Android — alle Spiele 2 Wochen lang freigeschaltet, ohne Kreditkarte.',
+        pricing: 'Preise ansehen' },
+  hi: { browse: 'सभी खेल देखें', soon: 'जल्द आ रहा है',
+        more: (names: string, k: number) => `और भी आ रहे हैं: ${names} और ${k} अन्य खेल विकास में हैं।`,
+        seeAll: 'आने वाले सभी खेल देखें →', faq: 'अक्सर पूछे जाने वाले सवाल',
+        ctaH: 'पत्ते बाँटने को तैयार?',
+        ctaP: 'Card Games by Vanikar ऐप iOS या Android पर मुफ़्त डाउनलोड करें — 2 हफ़्ते तक सभी खेल अनलॉक, क्रेडिट कार्ड की ज़रूरत नहीं।',
+        pricing: 'कीमतें देखें' },
+}[lang];
+
 const iconModules = import.meta.glob<{ default: ImageMetadata }>('../assets/game-icons/*.{png,svg}', { eager: true });
 const gameIcon = (slug: string) =>
   iconModules[`../assets/game-icons/${slug}.png`]?.default ??
   iconModules[`../assets/game-icons/${slug}.svg`]?.default;
 
-const csNames = comingSoonGames.slice(0, 8).map(g => g.name).join(', ');
+const csNames = comingSoonGames.slice(0, 8).map(g => localizeGame(g, lang).name).join(', ');
 ---
 
 <section class="fl-hero">
@@ -46,8 +94,8 @@ const csNames = comingSoonGames.slice(0, 8).map(g => g.name).join(', ');
     <h1>{h1}</h1>
     <p class="fl-intro">{intro}</p>
     <div class="fl-actions">
-      <a href="/#download" class="btn btn-primary">🔔 Get Notified at Launch</a>
-      <a href="/games/" class="btn btn-secondary">Browse All Games</a>
+      <a href={href('/#download')} class="btn btn-primary">🔔 {LN.notify}</a>
+      <a href={href('/games')} class="btn btn-secondary">{C.browse}</a>
     </div>
   </div>
 </section>
@@ -59,7 +107,7 @@ const csNames = comingSoonGames.slice(0, 8).map(g => g.name).join(', ');
         <div class="fl-section">
           <h2>
             {s.heading}
-            {s.soon && <span class="fl-soon-badge">Coming Soon</span>}
+            {s.soon && <span class="fl-soon-badge">{C.soon}</span>}
           </h2>
           <p>{s.body}</p>
         </div>
@@ -73,8 +121,8 @@ const csNames = comingSoonGames.slice(0, 8).map(g => g.name).join(', ');
     <h2>{gamesHeading}</h2>
     <p class="fl-games-sub">{gamesSub}</p>
     <div class="fl-grid">
-      {availableGames.map(game => (
-        <a href={`/games/${game.slug}/`} class="fl-card">
+      {avail.map(game => (
+        <a href={href(`/games/${game.slug}/`)} class="fl-card">
           <span class="fl-icon">
             {gameIcon(game.slug)
               ? <Image src={gameIcon(game.slug)!} alt="" width={56} class="gi-img" />
@@ -89,15 +137,15 @@ const csNames = comingSoonGames.slice(0, 8).map(g => g.name).join(', ');
       ))}
     </div>
     <p class="fl-soon">
-      More on the way: {csNames} and {comingSoonGames.length - 8} others are in development.
-      <a href="/games/#coming-soon-group">See all coming-soon games →</a>
+      {C.more(csNames, comingSoonGames.length - 8)}
+      <a href={href('/games#coming-soon-group')}>{C.seeAll}</a>
     </p>
   </div>
 </section>
 
 <section class="fl-faq">
   <div class="container">
-    <h2>Frequently Asked Questions</h2>
+    <h2>{C.faq}</h2>
     {faqs.map(f => (
       <details class="faq-item">
         <summary>{f.q}</summary>
@@ -109,11 +157,11 @@ const csNames = comingSoonGames.slice(0, 8).map(g => g.name).join(', ');
 
 <section class="fl-cta">
   <div class="container">
-    <h2>Ready to deal in?</h2>
-    <p>Download the Vanikar Card Games app free on iOS or Android — every game unlocked for 2 weeks, no credit card required.</p>
+    <h2>{C.ctaH}</h2>
+    <p>{C.ctaP}</p>
     <div class="fl-actions">
-      <a href="/#download" class="btn btn-primary">🔔 Get Notified at Launch</a>
-      <a href="/pricing/" class="btn btn-secondary">View Pricing</a>
+      <a href={href('/#download')} class="btn btn-primary">🔔 {LN.notify}</a>
+      <a href={href('/pricing')} class="btn btn-secondary">{C.pricing}</a>
     </div>
   </div>
 </section>
@@ -138,7 +186,7 @@ const csNames = comingSoonGames.slice(0, 8).map(g => g.name).join(', ');
   }
   .fl-section h2 {
     font-size: 1.05rem; font-weight: 700; color: var(--gold-light);
-    font-family: 'Inter',sans-serif; margin-bottom: .6rem;
+    font-family: 'Inter Variable',sans-serif; margin-bottom: .6rem;
   }
   .fl-section p { font-size: .9rem; color: var(--text-secondary); line-height: 1.75; }
   .fl-soon-badge {
@@ -179,7 +227,7 @@ const csNames = comingSoonGames.slice(0, 8).map(g => g.name).join(', ');
   }
   .faq-item summary {
     cursor: pointer; padding: .85rem 1.1rem; font-size: .9rem; font-weight: 600;
-    color: var(--text-primary); font-family: 'Inter',sans-serif;
+    color: var(--text-primary); font-family: 'Inter Variable',sans-serif;
     list-style: none; position: relative; padding-right: 2.2rem;
     transition: color var(--transition);
   }
