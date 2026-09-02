@@ -16,6 +16,7 @@ const featuresByLang = {
     { text: 'New games as released' },
     { text: 'Online multiplayer & ranked play' },
     { text: 'CPU / offline practice' },
+    { text: 'AI/CPU players with personalities',   soon: 'coming soon' },
     { text: 'Hints & tips' },
     { text: 'Clubs & Tournaments',               soon: 'coming soon' },
     { text: '🎙️ In-game voice chat',            social: true },
@@ -33,6 +34,7 @@ const featuresByLang = {
     { text: 'Nuevos juegos al lanzarse' },
     { text: 'Multijugador en línea y partidas clasificatorias' },
     { text: 'Práctica contra la IA / sin conexión' },
+    { text: 'Jugadores IA/CPU con personalidad',       soon: 'próximamente' },
     { text: 'Pistas y consejos' },
     { text: 'Clubes y Torneos',                      soon: 'próximamente' },
     { text: '🎙️ Chat de voz en partida',            social: true },
@@ -50,6 +52,7 @@ const featuresByLang = {
     { text: 'Novos jogos assim que lançados' },
     { text: 'Multijogador online e partidas ranqueadas' },
     { text: 'Prática contra a CPU / offline' },
+    { text: 'Jogadores IA/CPU com personalidade',      soon: 'em breve' },
     { text: 'Dicas e sugestões' },
     { text: 'Clubes e Torneios',                       soon: 'em breve' },
     { text: '🎙️ Chat de voz em partida',              social: true },
@@ -67,6 +70,7 @@ const featuresByLang = {
     { text: 'Nouveaux jeux dès leur sortie' },
     { text: 'Multijoueur en ligne et parties classées' },
     { text: 'Entraînement contre l’IA / hors ligne' },
+    { text: 'Joueurs IA/CPU avec des personnalités',       soon: 'bientôt' },
     { text: 'Indices et conseils' },
     { text: 'Clubs et Tournois',                           soon: 'bientôt' },
     { text: '🎙️ Chat vocal en partie',                    social: true },
@@ -84,6 +88,7 @@ const featuresByLang = {
     { text: 'Neue Spiele direkt zum Release' },
     { text: 'Online-Multiplayer & Ranglistenspiele' },
     { text: 'CPU-/Offline-Training' },
+    { text: 'KI-/CPU-Gegner mit Persönlichkeit',       soon: 'demnächst' },
     { text: 'Hinweise & Tipps' },
     { text: 'Clubs & Turniere',                        soon: 'demnächst' },
     { text: '🎙️ Voice-Chat im Spiel',                  social: true },
@@ -101,6 +106,7 @@ const featuresByLang = {
     { text: 'नए गेम्स रिलीज़ होते ही' },
     { text: 'ऑनलाइन मल्टीप्लेयर और रैंक्ड प्ले' },
     { text: 'CPU / ऑफ़लाइन अभ्यास' },
+    { text: 'व्यक्तित्व वाले AI/CPU खिलाड़ी',              soon: 'जल्द आ रहा है' },
     { text: 'हिंट और टिप्स' },
     { text: 'क्लब और टूर्नामेंट',                          soon: 'जल्द आ रहा है' },
     { text: '🎙️ इन-गेम वॉइस चैट',                       social: true },
@@ -130,6 +136,9 @@ const copy = {
     premiumWas: '$23.88', premiumSave: 'Save 37%',
     premiumPeriod: 'Just $1.25 a month, billed yearly',
     premiumMonthly: 'Prefer monthly? $1.99/month.',
+    founderTag: 'Limited time',
+    founderText: 'The first 1,000 subscribers become Founders — your price stays locked at $14.99/yr for 3 years from the date of subscription.',
+    founderAvail: 'of Founder spots available right now',
     premiumDesc: 'Everything, forever. New games for subscribers first.',
     premiumCta: 'Get Premium', premiumFine: 'Cancel anytime · Billed via App Store / Google Play',
     notePremium: 'premium games', notePick: '— pick any 3 to keep free after the trial, or subscribe for everything.',
@@ -150,6 +159,9 @@ const copy = {
     premiumWas: '23,88 $', premiumSave: 'Ahorra 37 %',
     premiumPeriod: 'Solo 1,25 $ al mes, con pago anual',
     premiumMonthly: '¿Prefieres mensual? 1,99 $/mes.',
+    founderTag: 'Oferta limitada',
+    founderText: 'Los primeros 1.000 suscriptores se convierten en Fundadores: tu precio queda bloqueado en 14,99 $/año durante 3 años desde la fecha de suscripción.',
+    founderAvail: 'de las plazas de Fundador disponibles ahora mismo',
     premiumDesc: 'Todo, para siempre. Los nuevos juegos llegan primero a los suscriptores.',
     premiumCta: 'Obtén Premium', premiumFine: 'Cancela cuando quieras · Facturado vía App Store / Google Play',
     notePremium: 'juegos premium', notePick: '— elige 3 para conservar gratis tras la prueba, o suscríbete para tenerlo todo.',
@@ -170,6 +182,9 @@ const copy = {
     premiumWas: 'US$ 23,88', premiumSave: 'Economize 37%',
     premiumPeriod: 'Só US$ 1,25 por mês, cobrado anualmente',
     premiumMonthly: 'Prefere mensal? US$ 1,99/mês.',
+    founderTag: 'Tempo limitado',
+    founderText: 'Os primeiros 1.000 assinantes viram Fundadores: seu preço fica travado em US$ 14,99/ano por 3 anos a partir da data da assinatura.',
+    founderAvail: 'das vagas de Fundador disponíveis agora',
     premiumDesc: 'Tudo, para sempre. Jogos novos primeiro para assinantes.',
     premiumCta: 'Assine o Premium', premiumFine: 'Cancele quando quiser · Cobrado via App Store / Google Play',
     notePremium: 'jogos premium', notePick: '— escolha 3 para manter grátis após o teste, ou assine para ter tudo.',
@@ -190,6 +205,9 @@ const copy = {
     premiumWas: '23,88 $', premiumSave: 'Économisez 37 %',
     premiumPeriod: 'Seulement 1,25 $ par mois, facturé à l’année',
     premiumMonthly: 'Vous préférez le mensuel ? 1,99 $/mois.',
+    founderTag: 'Offre limitée',
+    founderText: 'Les 1 000 premiers abonnés deviennent Fondateurs : votre prix reste bloqué à 14,99 $/an pendant 3 ans à compter de la date d’abonnement.',
+    founderAvail: 'des places Fondateur encore disponibles',
     premiumDesc: 'Tout, pour toujours. Les nouveaux jeux arrivent d’abord chez les abonnés.',
     premiumCta: 'Passez à Premium', premiumFine: 'Annulable à tout moment · Facturé via l’App Store / Google Play',
     notePremium: 'jeux premium', notePick: '— choisissez-en 3 à garder gratuitement après l’essai, ou abonnez-vous pour tout avoir.',
@@ -210,6 +228,9 @@ const copy = {
     premiumWas: '23,88 $', premiumSave: '37 % sparen',
     premiumPeriod: 'Nur 1,25 $ pro Monat, jährlich abgerechnet',
     premiumMonthly: 'Lieber monatlich? 1,99 $/Monat.',
+    founderTag: 'Zeitlich begrenzt',
+    founderText: 'Die ersten 1.000 Abonnenten werden Founder: Dein Preis bleibt ab dem Abschlussdatum 3 Jahre lang bei 14,99 $/Jahr.',
+    founderAvail: 'der Founder-Plätze sind jetzt noch frei',
     premiumDesc: 'Alles, für immer. Neue Spiele zuerst für Abonnenten.',
     premiumCta: 'Hol dir Premium', premiumFine: 'Jederzeit kündbar · Abrechnung über App Store / Google Play',
     notePremium: 'Premium-Spiele', notePick: '— wähl 3 davon, die nach der Testphase kostenlos bleiben, oder abonniere für alles.',
@@ -230,6 +251,9 @@ const copy = {
     premiumWas: '$23.88', premiumSave: '37% बचाएँ',
     premiumPeriod: 'सिर्फ़ $1.25 प्रति माह, सालाना बिलिंग',
     premiumMonthly: 'मासिक चाहिए? $1.99/माह।',
+    founderTag: 'सीमित समय की पेशकश',
+    founderText: 'पहले 1,000 सब्सक्राइबर Founder बनेंगे — सदस्यता की तारीख़ से 3 साल तक आपकी कीमत $14.99/वर्ष पर लॉक रहेगी।',
+    founderAvail: 'Founder स्थान अभी उपलब्ध हैं',
     premiumDesc: 'सब कुछ, हमेशा के लिए। नए गेम्स सबसे पहले सब्सक्राइबर्स को।',
     premiumCta: 'Premium लें', premiumFine: 'कभी भी रद्द करें · App Store / Google Play से बिलिंग',
     notePremium: 'प्रीमियम गेम्स', notePick: '— ट्रायल के बाद मुफ़्त रखने के लिए कोई भी 3 चुनें, या सब कुछ पाने के लिए सब्सक्राइब करें।',
@@ -250,8 +274,10 @@ const copy = {
       <!-- Trial -->
       <div class="price-card price-card--trial">
         <div class="price-badge">{copy.trialBadge}</div>
-        <div class="price-icon">🎉</div>
-        <div class="price-amount">{copy.free}</div>
+        <div class="price-head">
+          <span class="price-icon">🎉</span>
+          <span class="price-amount">{copy.free}</span>
+        </div>
         <div class="price-period">{copy.trialPeriod}</div>
         <p class="price-desc">{copy.trialDesc}</p>
         <ul class="price-features">
@@ -266,8 +292,10 @@ const copy = {
       <!-- Free Forever -->
       <div class="price-card price-card--free">
         <div class="price-badge price-badge--free">{copy.freeBadge}</div>
-        <div class="price-icon">♣</div>
-        <div class="price-amount">{copy.free}</div>
+        <div class="price-head">
+          <span class="price-icon">♣</span>
+          <span class="price-amount">{copy.free}</span>
+        </div>
         <div class="price-period">{copy.freePeriod}</div>
         <p class="price-desc">{copy.freeDesc}</p>
         <ul class="price-features">
@@ -281,14 +309,24 @@ const copy = {
       <!-- Premium -->
       <div class="price-card price-card--premium">
         <div class="price-badge price-badge--premium">{copy.premiumBadge}</div>
-        <div class="price-icon">👑</div>
-        <div class="price-amount price-soon">{copy.premiumName}</div>
+        <div class="price-head">
+          <span class="price-icon">👑</span>
+          <span class="price-amount price-soon">{copy.premiumName}</span>
+        </div>
         <div class="price-save-row">
           <span class="price-was">{copy.premiumWas}</span>
           <span class="save-chip save-chip--lg">{copy.premiumSave}</span>
         </div>
         <div class="price-period">{copy.premiumPeriod}</div>
         <p class="price-yearly-note">{copy.premiumMonthly}</p>
+        <div class="founder-box">
+          <span class="founder-tag">🏅 {copy.founderTag}</span>
+          <p class="founder-text">{copy.founderText}</p>
+          <div class="founder-avail">
+            <div class="founder-bar" role="img" aria-label={`100% ${copy.founderAvail}`}><span></span></div>
+            <p class="founder-avail-text"><span class="founder-pct">100%</span> {copy.founderAvail}</p>
+          </div>
+        </div>
         <p class="price-desc">{copy.premiumDesc}</p>
         <ul class="price-features">
           {features.map(f => (
@@ -340,12 +378,47 @@ const copy = {
   .price-badge--free    { background: rgba(45,90,45,.25); color: #7acc7a; border-color: rgba(122,204,122,.3); }
   .price-badge--premium { background: var(--gold-subtle); color: var(--gold); border-color: var(--gold-border); }
 
-  .price-icon   { font-size: 2.5rem; margin-bottom: .75rem; }
+  /* Icon and price read as one unit, side by side */
+  .price-head   { display: flex; align-items: center; gap: .6rem; margin-bottom: .1rem; }
+  /* Fixed box so the price starts at the same x in every card,
+     despite the ♣ glyph being narrower than the emoji */
+  .price-icon   { font-size: 2.1rem; line-height: 1; flex-shrink: 0; min-width: 2.9rem; text-align: center; }
   .price-amount { font-family: 'Cinzel Variable',serif; font-size: 2.8rem; font-weight: 700; color: var(--gold-light); line-height: 1; }
   .price-soon   { font-size: 1.8rem; line-height: 1.2; }
   .price-period { font-size: .8rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: .1em; margin: .25rem 0 1rem; }
   .price-yearly-note { font-size: .78rem; color: var(--text-muted); margin-top: -.75rem; margin-bottom: 1rem; }
   .price-desc   { font-size: .9rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 1.25rem; }
+
+  /* Founder price-lock offer — deliberately the loudest block in the card */
+  .founder-box {
+    margin: 0 0 1.15rem; padding: .75rem .9rem;
+    border: 1px solid var(--gold-border); border-radius: var(--radius-md);
+    background: var(--gold-subtle);
+  }
+  .founder-tag {
+    display: inline-block; margin-bottom: .45rem;
+    font-size: .6rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--bg-deep); background: var(--gold-light);
+    padding: .16rem .55rem; border-radius: var(--radius-full);
+  }
+  .founder-text {
+    margin: 0; font-size: .82rem; line-height: 1.6; color: var(--gold-light);
+  }
+  /* Availability meter — green reads as "go", against the gold of the offer */
+  .founder-avail { margin-top: .75rem; }
+  .founder-bar {
+    height: 7px; border-radius: var(--radius-full); overflow: hidden;
+    background: rgba(0,0,0,.35); border: 1px solid rgba(122,204,122,.3);
+  }
+  .founder-bar span {
+    display: block; height: 100%; width: 100%;
+    background: linear-gradient(90deg, #7acc7a, #4e9e4e);
+  }
+  .founder-avail-text {
+    margin: .4rem 0 0; font-size: .75rem; line-height: 1.5;
+    color: #7acc7a; font-weight: 600;
+  }
+  .founder-pct { font-size: .95rem; font-weight: 800; letter-spacing: .01em; }
 
   .price-features { list-style: none; padding: 0; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: .45rem; }
   .price-features li { font-size: .875rem; color: var(--text-secondary); }
