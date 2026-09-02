@@ -17,7 +17,7 @@ const featuresByLang = {
     { text: 'Online multiplayer & ranked play' },
     { text: 'CPU / offline practice' },
     { text: 'Hints & tips' },
-    { text: 'Clubs & Tournaments' },
+    { text: 'Clubs & Tournaments',               soon: 'coming soon' },
     { text: '🎙️ In-game voice chat',            social: true },
     { text: '🟣 Discord integration',            social: true },
     { text: '🏆 Global leaderboards',            social: true },
@@ -34,7 +34,7 @@ const featuresByLang = {
     { text: 'Multijugador en línea y partidas clasificatorias' },
     { text: 'Práctica contra la IA / sin conexión' },
     { text: 'Pistas y consejos' },
-    { text: 'Clubes y Torneos' },
+    { text: 'Clubes y Torneos',                      soon: 'próximamente' },
     { text: '🎙️ Chat de voz en partida',            social: true },
     { text: '🟣 Integración con Discord',            social: true },
     { text: '🏆 Clasificaciones globales',           social: true },
@@ -51,7 +51,7 @@ const featuresByLang = {
     { text: 'Multijogador online e partidas ranqueadas' },
     { text: 'Prática contra a CPU / offline' },
     { text: 'Dicas e sugestões' },
-    { text: 'Clubes e Torneios' },
+    { text: 'Clubes e Torneios',                       soon: 'em breve' },
     { text: '🎙️ Chat de voz em partida',              social: true },
     { text: '🟣 Integração com Discord',               social: true },
     { text: '🏆 Rankings globais',                     social: true },
@@ -68,7 +68,7 @@ const featuresByLang = {
     { text: 'Multijoueur en ligne et parties classées' },
     { text: 'Entraînement contre l’IA / hors ligne' },
     { text: 'Indices et conseils' },
-    { text: 'Clubs et Tournois' },
+    { text: 'Clubs et Tournois',                           soon: 'bientôt' },
     { text: '🎙️ Chat vocal en partie',                    social: true },
     { text: '🟣 Intégration Discord',                      social: true },
     { text: '🏆 Classements mondiaux',                     social: true },
@@ -85,7 +85,7 @@ const featuresByLang = {
     { text: 'Online-Multiplayer & Ranglistenspiele' },
     { text: 'CPU-/Offline-Training' },
     { text: 'Hinweise & Tipps' },
-    { text: 'Clubs & Turniere' },
+    { text: 'Clubs & Turniere',                        soon: 'demnächst' },
     { text: '🎙️ Voice-Chat im Spiel',                  social: true },
     { text: '🟣 Discord-Integration',                   social: true },
     { text: '🏆 Globale Bestenlisten',                  social: true },
@@ -102,7 +102,7 @@ const featuresByLang = {
     { text: 'ऑनलाइन मल्टीप्लेयर और रैंक्ड प्ले' },
     { text: 'CPU / ऑफ़लाइन अभ्यास' },
     { text: 'हिंट और टिप्स' },
-    { text: 'क्लब और टूर्नामेंट' },
+    { text: 'क्लब और टूर्नामेंट',                          soon: 'जल्द आ रहा है' },
     { text: '🎙️ इन-गेम वॉइस चैट',                       social: true },
     { text: '🟣 Discord इंटीग्रेशन',                     social: true },
     { text: '🏆 ग्लोबल लीडरबोर्ड',                       social: true },
@@ -122,15 +122,17 @@ const copy = {
     trialDesc: 'Everything in Premium, unlocked. Just download and play.',
     trialCta: 'Start Free Trial', trialFine: 'No credit card · No account required to play',
     freeBadge: 'After Trial', freePeriod: 'forever',
-    freeDesc: 'Pick any 5 games to keep — offline & CPU play, no expiry.',
-    freeItems: ['✓ No ads — ever','✓ Choose any 5 games','✓ Offline / CPU play'],
+    freeDesc: 'Pick any 3 games to keep — offline & CPU play, no expiry.',
+    freeItems: ['✓ No ads — ever','✓ Choose any 3 games','✓ Offline / CPU play'],
     freeNoItems: ['✗ Online multiplayer','✗ Hints','✗ All other games','✗ Clubs & Tournaments'],
     freeCta: 'See All Games', freeFine: 'Upgrade to Premium any time to unlock every game and feature',
-    premiumBadge: 'Most Popular', premiumName: '$14.99/yr',
-    premiumPeriod: 'Best value — or $1.99/month',
+    premiumBadge: 'Save 37% · Most Popular', premiumName: '$14.99/yr',
+    premiumWas: '$23.88', premiumSave: 'Save 37%',
+    premiumPeriod: 'Just $1.25 a month, billed yearly',
+    premiumMonthly: 'Prefer monthly? $1.99/month.',
     premiumDesc: 'Everything, forever. New games for subscribers first.',
     premiumCta: 'Get Premium', premiumFine: 'Cancel anytime · Billed via App Store / Google Play',
-    notePremium: 'premium games', notePick: '— pick any 5 to keep free after the trial, or subscribe for everything.',
+    notePremium: 'premium games', notePick: '— pick any 3 to keep free after the trial, or subscribe for everything.',
     noteSoon: 'coming soon', noteEarly: '— premium subscribers get early access.', noteAll: 'See all games →',
   },
   es: {
@@ -140,15 +142,17 @@ const copy = {
     trialDesc: 'Todo lo de Premium, desbloqueado. Solo descarga y juega.',
     trialCta: 'Comienza la prueba gratis', trialFine: 'Sin tarjeta de crédito · Sin cuenta para jugar',
     freeBadge: 'Después de la prueba', freePeriod: 'para siempre',
-    freeDesc: 'Elige 5 juegos para conservar — modo IA y sin conexión, sin vencimiento.',
-    freeItems: ['✓ Sin anuncios — nunca','✓ Elige 5 juegos','✓ Juego sin conexión / contra la IA'],
+    freeDesc: 'Elige 3 juegos para conservar — modo IA y sin conexión, sin vencimiento.',
+    freeItems: ['✓ Sin anuncios — nunca','✓ Elige 3 juegos','✓ Juego sin conexión / contra la IA'],
     freeNoItems: ['✗ Multijugador en línea','✗ Pistas','✗ Los demás juegos','✗ Clubes y Torneos'],
     freeCta: 'Ver todos los juegos', freeFine: 'Pasa a Premium cuando quieras para desbloquear todos los juegos y funciones',
-    premiumBadge: 'El más popular', premiumName: '14,99 $/año',
-    premiumPeriod: 'La mejor opción — o 1,99 $/mes',
+    premiumBadge: 'Ahorra 37 % · El más popular', premiumName: '14,99 $/año',
+    premiumWas: '23,88 $', premiumSave: 'Ahorra 37 %',
+    premiumPeriod: 'Solo 1,25 $ al mes, con pago anual',
+    premiumMonthly: '¿Prefieres mensual? 1,99 $/mes.',
     premiumDesc: 'Todo, para siempre. Los nuevos juegos llegan primero a los suscriptores.',
     premiumCta: 'Obtén Premium', premiumFine: 'Cancela cuando quieras · Facturado vía App Store / Google Play',
-    notePremium: 'juegos premium', notePick: '— elige 5 para conservar gratis tras la prueba, o suscríbete para tenerlo todo.',
+    notePremium: 'juegos premium', notePick: '— elige 3 para conservar gratis tras la prueba, o suscríbete para tenerlo todo.',
     noteSoon: 'próximamente', noteEarly: '— los suscriptores premium acceden primero.', noteAll: 'Ver todos los juegos →',
   },
   pt: {
@@ -158,15 +162,17 @@ const copy = {
     trialDesc: 'Tudo do Premium, desbloqueado. É só baixar e jogar.',
     trialCta: 'Começar o teste grátis', trialFine: 'Sem cartão de crédito · Sem conta para jogar',
     freeBadge: 'Após o teste', freePeriod: 'para sempre',
-    freeDesc: 'Escolha 5 jogos para manter — modo offline e contra a CPU, sem prazo de validade.',
-    freeItems: ['✓ Sem anúncios — nunca','✓ Escolha 5 jogos','✓ Jogo offline / contra a CPU'],
+    freeDesc: 'Escolha 3 jogos para manter — modo offline e contra a CPU, sem prazo de validade.',
+    freeItems: ['✓ Sem anúncios — nunca','✓ Escolha 3 jogos','✓ Jogo offline / contra a CPU'],
     freeNoItems: ['✗ Multijogador online','✗ Dicas','✗ Todos os outros jogos','✗ Clubes e Torneios'],
     freeCta: 'Ver todos os jogos', freeFine: 'Passe para o Premium quando quiser para desbloquear todos os jogos e recursos',
-    premiumBadge: 'Mais popular', premiumName: 'US$ 14,99/ano',
-    premiumPeriod: 'Melhor custo-benefício — ou US$ 1,99/mês',
+    premiumBadge: 'Economize 37% · Mais popular', premiumName: 'US$ 14,99/ano',
+    premiumWas: 'US$ 23,88', premiumSave: 'Economize 37%',
+    premiumPeriod: 'Só US$ 1,25 por mês, cobrado anualmente',
+    premiumMonthly: 'Prefere mensal? US$ 1,99/mês.',
     premiumDesc: 'Tudo, para sempre. Jogos novos primeiro para assinantes.',
     premiumCta: 'Assine o Premium', premiumFine: 'Cancele quando quiser · Cobrado via App Store / Google Play',
-    notePremium: 'jogos premium', notePick: '— escolha 5 para manter grátis após o teste, ou assine para ter tudo.',
+    notePremium: 'jogos premium', notePick: '— escolha 3 para manter grátis após o teste, ou assine para ter tudo.',
     noteSoon: 'em breve', noteEarly: '— assinantes premium têm acesso antecipado.', noteAll: 'Ver todos os jogos →',
   },
   fr: {
@@ -176,15 +182,17 @@ const copy = {
     trialDesc: 'Tout Premium, débloqué. Téléchargez et jouez, c’est tout.',
     trialCta: 'Commencer l’essai gratuit', trialFine: 'Sans carte bancaire · Aucun compte requis pour jouer',
     freeBadge: 'Après l’essai', freePeriod: 'pour toujours',
-    freeDesc: 'Choisissez 5 jeux à garder — mode hors ligne et contre l’IA, sans expiration.',
-    freeItems: ['✓ Aucune pub — jamais','✓ Choisissez 5 jeux','✓ Jeu hors ligne / contre l’IA'],
+    freeDesc: 'Choisissez 3 jeux à garder — mode hors ligne et contre l’IA, sans expiration.',
+    freeItems: ['✓ Aucune pub — jamais','✓ Choisissez 3 jeux','✓ Jeu hors ligne / contre l’IA'],
     freeNoItems: ['✗ Multijoueur en ligne','✗ Indices','✗ Tous les autres jeux','✗ Clubs et Tournois'],
     freeCta: 'Voir tous les jeux', freeFine: 'Passez à Premium à tout moment pour débloquer tous les jeux et fonctionnalités',
-    premiumBadge: 'Le plus populaire', premiumName: '14,99 $/an',
-    premiumPeriod: 'Meilleure offre — ou 1,99 $/mois',
+    premiumBadge: 'Économisez 37 % · Le plus populaire', premiumName: '14,99 $/an',
+    premiumWas: '23,88 $', premiumSave: 'Économisez 37 %',
+    premiumPeriod: 'Seulement 1,25 $ par mois, facturé à l’année',
+    premiumMonthly: 'Vous préférez le mensuel ? 1,99 $/mois.',
     premiumDesc: 'Tout, pour toujours. Les nouveaux jeux arrivent d’abord chez les abonnés.',
     premiumCta: 'Passez à Premium', premiumFine: 'Annulable à tout moment · Facturé via l’App Store / Google Play',
-    notePremium: 'jeux premium', notePick: '— choisissez-en 5 à garder gratuitement après l’essai, ou abonnez-vous pour tout avoir.',
+    notePremium: 'jeux premium', notePick: '— choisissez-en 3 à garder gratuitement après l’essai, ou abonnez-vous pour tout avoir.',
     noteSoon: 'bientôt disponibles', noteEarly: '— les abonnés premium y accèdent en avant-première.', noteAll: 'Voir tous les jeux →',
   },
   de: {
@@ -194,15 +202,17 @@ const copy = {
     trialDesc: 'Alles aus Premium, freigeschaltet. Einfach herunterladen und spielen.',
     trialCta: 'Kostenlos testen', trialFine: 'Keine Kreditkarte · Kein Konto zum Spielen nötig',
     freeBadge: 'Nach der Testphase', freePeriod: 'für immer',
-    freeDesc: 'Wähl 5 beliebige Spiele zum Behalten — Offline- & CPU-Modus, ohne Ablauf.',
-    freeItems: ['✓ Keine Werbung — niemals','✓ Wähl 5 beliebige Spiele','✓ Offline-/CPU-Modus'],
+    freeDesc: 'Wähl 3 beliebige Spiele zum Behalten — Offline- & CPU-Modus, ohne Ablauf.',
+    freeItems: ['✓ Keine Werbung — niemals','✓ Wähl 3 beliebige Spiele','✓ Offline-/CPU-Modus'],
     freeNoItems: ['✗ Online-Multiplayer','✗ Hinweise','✗ Alle anderen Spiele','✗ Clubs & Turniere'],
     freeCta: 'Alle Spiele ansehen', freeFine: 'Wechsle jederzeit zu Premium und schalte jedes Spiel und jede Funktion frei',
-    premiumBadge: 'Am beliebtesten', premiumName: '14,99 $/Jahr',
-    premiumPeriod: 'Bestes Angebot — oder 1,99 $/Monat',
+    premiumBadge: '37 % sparen · Am beliebtesten', premiumName: '14,99 $/Jahr',
+    premiumWas: '23,88 $', premiumSave: '37 % sparen',
+    premiumPeriod: 'Nur 1,25 $ pro Monat, jährlich abgerechnet',
+    premiumMonthly: 'Lieber monatlich? 1,99 $/Monat.',
     premiumDesc: 'Alles, für immer. Neue Spiele zuerst für Abonnenten.',
     premiumCta: 'Hol dir Premium', premiumFine: 'Jederzeit kündbar · Abrechnung über App Store / Google Play',
-    notePremium: 'Premium-Spiele', notePick: '— wähl 5 davon, die nach der Testphase kostenlos bleiben, oder abonniere für alles.',
+    notePremium: 'Premium-Spiele', notePick: '— wähl 3 davon, die nach der Testphase kostenlos bleiben, oder abonniere für alles.',
     noteSoon: 'demnächst', noteEarly: '— Premium-Abonnenten erhalten frühen Zugang.', noteAll: 'Alle Spiele ansehen →',
   },
   hi: {
@@ -212,15 +222,17 @@ const copy = {
     trialDesc: 'Premium का सब कुछ, अनलॉक। बस डाउनलोड करें और खेलें।',
     trialCta: 'मुफ़्त ट्रायल शुरू करें', trialFine: 'क्रेडिट कार्ड नहीं · खेलने के लिए अकाउंट ज़रूरी नहीं',
     freeBadge: 'ट्रायल के बाद', freePeriod: 'हमेशा के लिए',
-    freeDesc: 'कोई भी 5 गेम रखने के लिए चुनें — ऑफ़लाइन और CPU प्ले, कभी एक्सपायर नहीं।',
-    freeItems: ['✓ कोई विज्ञापन नहीं — कभी नहीं','✓ कोई भी 5 गेम चुनें','✓ ऑफ़लाइन / CPU प्ले'],
+    freeDesc: 'कोई भी 3 गेम रखने के लिए चुनें — ऑफ़लाइन और CPU प्ले, कभी एक्सपायर नहीं।',
+    freeItems: ['✓ कोई विज्ञापन नहीं — कभी नहीं','✓ कोई भी 3 गेम चुनें','✓ ऑफ़लाइन / CPU प्ले'],
     freeNoItems: ['✗ ऑनलाइन मल्टीप्लेयर','✗ हिंट','✗ बाक़ी सभी गेम्स','✗ क्लब और टूर्नामेंट'],
     freeCta: 'सभी गेम्स देखें', freeFine: 'हर गेम और फ़ीचर अनलॉक करने के लिए कभी भी Premium में अपग्रेड करें',
-    premiumBadge: 'सबसे लोकप्रिय', premiumName: '$14.99/वर्ष',
-    premiumPeriod: 'सबसे अच्छा मूल्य — या $1.99/माह',
+    premiumBadge: '37% बचत · सबसे लोकप्रिय', premiumName: '$14.99/वर्ष',
+    premiumWas: '$23.88', premiumSave: '37% बचाएँ',
+    premiumPeriod: 'सिर्फ़ $1.25 प्रति माह, सालाना बिलिंग',
+    premiumMonthly: 'मासिक चाहिए? $1.99/माह।',
     premiumDesc: 'सब कुछ, हमेशा के लिए। नए गेम्स सबसे पहले सब्सक्राइबर्स को।',
     premiumCta: 'Premium लें', premiumFine: 'कभी भी रद्द करें · App Store / Google Play से बिलिंग',
-    notePremium: 'प्रीमियम गेम्स', notePick: '— ट्रायल के बाद मुफ़्त रखने के लिए कोई भी 5 चुनें, या सब कुछ पाने के लिए सब्सक्राइब करें।',
+    notePremium: 'प्रीमियम गेम्स', notePick: '— ट्रायल के बाद मुफ़्त रखने के लिए कोई भी 3 चुनें, या सब कुछ पाने के लिए सब्सक्राइब करें।',
     noteSoon: 'जल्द आ रहे हैं', noteEarly: '— प्रीमियम सब्सक्राइबर्स को अर्ली एक्सेस मिलता है।', noteAll: 'सभी गेम्स देखें →',
   },
 }[lang];
@@ -244,7 +256,7 @@ const copy = {
         <p class="price-desc">{copy.trialDesc}</p>
         <ul class="price-features">
           {features.map(f => (
-            <li class={f.social ? 'feat-social' : ''}>{f.social ? f.text : `✓ ${f.text}`}</li>
+            <li class={f.social ? 'feat-social' : ''}>{f.social ? f.text : `✓ ${f.text}`}{f.soon && <span class="feat-soon">({f.soon})</span>}</li>
           ))}
         </ul>
         <a href={href('/#download')} class="btn btn-primary price-btn">{copy.trialCta}</a>
@@ -271,11 +283,16 @@ const copy = {
         <div class="price-badge price-badge--premium">{copy.premiumBadge}</div>
         <div class="price-icon">👑</div>
         <div class="price-amount price-soon">{copy.premiumName}</div>
+        <div class="price-save-row">
+          <span class="price-was">{copy.premiumWas}</span>
+          <span class="save-chip save-chip--lg">{copy.premiumSave}</span>
+        </div>
         <div class="price-period">{copy.premiumPeriod}</div>
+        <p class="price-yearly-note">{copy.premiumMonthly}</p>
         <p class="price-desc">{copy.premiumDesc}</p>
         <ul class="price-features">
           {features.map(f => (
-            <li class={f.social ? 'feat-social' : ''}>{f.social ? f.text : `✓ ${f.text}`}</li>
+            <li class={f.social ? 'feat-social' : ''}>{f.social ? f.text : `✓ ${f.text}`}{f.soon && <span class="feat-soon">({f.soon})</span>}</li>
           ))}
         </ul>
         <a href={href('/#download')} class="btn btn-primary price-btn">{copy.premiumCta}</a>
@@ -333,6 +350,11 @@ const copy = {
   .price-features { list-style: none; padding: 0; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: .45rem; }
   .price-features li { font-size: .875rem; color: var(--text-secondary); }
   .feat-social { color: var(--gold-light) !important; }
+  /* Feature shipped later — reads as a qualifier, not a separate bullet */
+  .feat-soon {
+    margin-left: .35rem; font-size: .72rem; font-style: italic;
+    color: var(--text-dim); white-space: nowrap;
+  }
   .feat-no { color: var(--text-dim) !important; }
 
   .price-btn    { width: 100%; justify-content: center; }
@@ -355,6 +377,18 @@ const copy = {
     font-size: .6rem; padding: .05rem .4rem; border-radius: var(--radius-full);
     margin-left: .3rem; vertical-align: middle;
   }
+  /* Premium savings: struck-through 12x monthly price next to the % saved */
+  .price-save-row { display: flex; align-items: center; gap: .5rem; margin-top: .4rem; }
+  .price-was {
+    font-size: .95rem; color: var(--text-dim);
+    text-decoration: line-through; text-decoration-thickness: 1.5px;
+  }
+  .save-chip--lg {
+    margin-left: 0; font-size: .72rem; font-weight: 700;
+    letter-spacing: .04em; padding: .18rem .6rem;
+    background: rgba(45,90,45,.55); border: 1px solid rgba(122,204,122,.4);
+  }
+  .price-card--premium .price-badge--premium { font-weight: 800; }
 
   .pricing-note {
     text-align: center; font-size: .82rem; color: var(--text-dim); line-height: 1.7;
