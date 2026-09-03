@@ -285,7 +285,7 @@ const copy = {
             <li class={f.social ? 'feat-social' : ''}>{f.social ? f.text : `✓ ${f.text}`}{f.soon && <span class="feat-soon">({f.soon})</span>}</li>
           ))}
         </ul>
-        <a href={href('/#download')} class="btn btn-primary price-btn">{copy.trialCta}</a>
+        <button type="button" data-store="App Store / Google Play" class="btn btn-primary price-btn">{copy.trialCta}</button>
         <p class="price-fine">{copy.trialFine}</p>
       </div>
 
@@ -333,7 +333,7 @@ const copy = {
             <li class={f.social ? 'feat-social' : ''}>{f.social ? f.text : `✓ ${f.text}`}{f.soon && <span class="feat-soon">({f.soon})</span>}</li>
           ))}
         </ul>
-        <a href={href('/#download')} class="btn btn-primary price-btn">{copy.premiumCta}</a>
+        <button type="button" data-store="App Store / Google Play" class="btn btn-primary price-btn">{copy.premiumCta}</button>
         <p class="price-fine">{copy.premiumFine}</p>
       </div>
 

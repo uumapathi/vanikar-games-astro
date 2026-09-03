@@ -94,7 +94,7 @@ const csNames = comingSoonGames.slice(0, 8).map(g => localizeGame(g, lang).name)
     <h1>{h1}</h1>
     <p class="fl-intro">{intro}</p>
     <div class="fl-actions">
-      <a href={href('/#download')} class="btn btn-primary">{LN.notify}</a>
+      <button type="button" data-store="App Store / Google Play" class="btn btn-primary">{LN.notify}</button>
       <a href={href('/games')} class="btn btn-secondary">{C.browse}</a>
     </div>
   </div>
@@ -160,7 +160,7 @@ const csNames = comingSoonGames.slice(0, 8).map(g => localizeGame(g, lang).name)
     <h2>{C.ctaH}</h2>
     <p>{C.ctaP}</p>
     <div class="fl-actions">
-      <a href={href('/#download')} class="btn btn-primary">{LN.notify}</a>
+      <button type="button" data-store="App Store / Google Play" class="btn btn-primary">{LN.notify}</button>
       <a href={href('/pricing')} class="btn btn-secondary">{C.pricing}</a>
     </div>
   </div>

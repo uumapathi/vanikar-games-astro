@@ -31,7 +31,7 @@ const switchTarget = (l: (typeof LOCALES)[number]) =>
       <a href={href('/pricing')}   class:list={['nav-link', { active: isPricing }]}>{t('nav.pricing')}</a>
       <a href={href('/privacy')}   class:list={['nav-link', { active: isPrivacy }]}>{t('nav.privacy')}</a>
       <a href={href('/terms')}     class:list={['nav-link', { active: isTerms }]}>{t('nav.terms')}</a>
-      <a href={href('/#download')} class="nav-link nav-cta">{t('nav.getApp')}</a>
+      <button type="button" data-store="App Store / Google Play" class="nav-link nav-cta">{t('nav.getApp')}</button>
       <div class="lang-dd" id="lang-dd">
         <button class="lang-dd-btn" id="lang-dd-btn" aria-haspopup="true" aria-expanded="false" aria-label="Language">
           <svg class="lang-dd-globe" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
@@ -76,7 +76,7 @@ const switchTarget = (l: (typeof LOCALES)[number]) =>
            lang={l}>{LOCALE_LABELS[l]}</a>
       ))}
     </div>
-    <a href={href('/#download')} class="nav-cta" style="text-align:center;margin-top:.5rem">{t('nav.getApp')}</a>
+    <button type="button" data-store="App Store / Google Play" class="nav-cta" style="text-align:center;margin-top:.5rem;width:100%">{t('nav.getApp')}</button>
   </div>
 </nav>
 
@@ -156,6 +156,8 @@ const switchTarget = (l: (typeof LOCALES)[number]) =>
     background: var(--gold); color: var(--bg-deep) !important;
     font-weight: 700; border-radius: var(--radius-full);
     padding: .5rem 1.2rem; margin-left: .5rem;
+    /* rendered as <button> until real store URLs exist */
+    border: none; font-family: inherit; font-size: inherit; cursor: pointer;
   }
   .nav-cta:hover { background: var(--gold-light); }
   .lang-dd { position: relative; margin-left: .6rem; }
