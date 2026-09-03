@@ -132,3 +132,34 @@ section { padding: 5rem 0; }
   section { padding: 3.5rem 0; }
   .btn { width: 100%; justify-content: center; }
 }
+
+/* ── Desktop store picker (BaseLayout) ─────────────────────────────────── */
+.sp {
+  /* the global `* { margin: 0 }` reset removes the UA's `margin: auto`,
+     which is what centres an open modal dialog — put it back */
+  margin: auto;
+  border: 1px solid var(--gold-border);
+  border-radius: var(--radius-lg);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  padding: 2rem;
+  max-width: 26rem;
+  width: calc(100% - 2rem);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, .6);
+  text-align: center;
+  /* the UA sheet sets overflow:auto on dialog, which shows empty scrollbar
+     gutters; this content is short and the picker is desktop-only */
+  overflow: hidden;
+  max-height: calc(100vh - 2rem);
+}
+.sp::backdrop { background: rgba(0, 0, 0, .65); backdrop-filter: blur(2px); }
+.sp-title { font-size: 1.25rem; margin: 0 0 .5rem; color: var(--gold-light); }
+.sp-body  { font-size: .9rem; color: var(--text-muted); margin: 0 0 1.5rem; }
+.sp-actions { display: flex; flex-direction: column; gap: .6rem; }
+.sp-btn { width: 100%; justify-content: center; }
+.sp-close {
+  margin-top: 1.1rem; background: none; border: none; cursor: pointer;
+  font-family: inherit; font-size: .82rem; color: var(--text-dim);
+  text-decoration: underline;
+}
+.sp-close:hover { color: var(--gold-light); }
