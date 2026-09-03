@@ -68,22 +68,22 @@ const copy = {
     </div>
 
     <div class="store-buttons">
-      <a href={href('/ios')} class="btn-store" aria-label="Download on the App Store">
+      <button type="button" data-store="App Store" class="btn-store" aria-label="Download on the App Store">
         <img class="btn-store-appicon" src="/favicon-32.png" srcset="/favicon-32.png 1x, /icon-180.png 2x" width="36" height="36" alt="" />
         <div class="btn-store-text">
           <span class="btn-store-label">{copy.iosLabel}</span>
           <span class="btn-store-name">App Store</span>
         </div>
         <span class="store-soon-pip">{copy.soon}</span>
-      </a>
-      <a href={href('/android')} class="btn-store" aria-label="Get it on Google Play">
+      </button>
+      <button type="button" data-store="Google Play" class="btn-store" aria-label="Get it on Google Play">
         <img class="btn-store-appicon" src="/favicon-32.png" srcset="/favicon-32.png 1x, /icon-180.png 2x" width="36" height="36" alt="" />
         <div class="btn-store-text">
           <span class="btn-store-label">{copy.playLabel}</span>
           <span class="btn-store-name">Google Play</span>
         </div>
         <span class="store-soon-pip">{copy.soon}</span>
-      </a>
+      </button>
     </div>
 
     <div class="notify-block">

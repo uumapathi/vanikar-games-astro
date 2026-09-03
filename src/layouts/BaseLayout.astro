@@ -99,5 +99,15 @@ const alternates   = isTranslated(basePath) && hreflangSet.length > 1
     <slot />
   </main>
   <Footer />
+
+  <script>
+    /* Placeholder for the App Store / Google Play buttons until the real
+       store URLs exist. Replace these handlers with hrefs at launch. */
+    document.querySelectorAll<HTMLElement>('[data-store]').forEach(el => {
+      el.addEventListener('click', () => {
+        alert(`need store url — ${el.dataset.store}`);
+      });
+    });
+  </script>
 </body>
 </html>

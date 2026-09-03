@@ -52,7 +52,7 @@ export function unlocalizePath(pathname: string): string {
  * whether to link to a localized path or fall back to the English page.
  */
 export const TRANSLATED_PATHS = new Set<string>([
-  '/', '/games', '/pricing', '/about', '/ios', '/android',
+  '/', '/games', '/pricing', '/about',
   '/online-card-games', '/offline-card-games', '/multiplayer-card-games',
   '/classic-card-games', '/card-games-against-computer', '/card-games-with-friends',
 ]);

@@ -29,8 +29,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         </div>
 
         <div class="join-stores">
-          <a class="store-btn" href="/android/">▶ Get it on Android</a>
-          <a class="store-btn" href="/ios/"> Get it on iOS</a>
+          <button type="button" data-store="Google Play" class="store-btn">▶ Get it on Android</button>
+          <button type="button" data-store="App Store" class="store-btn"> Get it on iOS</button>
         </div>
       </div>
     </div>
@@ -78,6 +78,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     .store-btn {
       padding: .8rem 1.4rem; border-radius: 12px; font-weight: 600;
       border: 1px solid rgba(255, 255, 255, .25);
+      /* Rendered as <button> until real store URLs exist */
+      background: none; color: inherit; font-family: inherit;
+      font-size: inherit; cursor: pointer;
     }
   </style>
 </BaseLayout>

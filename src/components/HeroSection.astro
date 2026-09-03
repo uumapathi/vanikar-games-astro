@@ -193,9 +193,9 @@ const copy = {
         </div>
 
         <div class="hero-platforms">
-          <a class="platform-badge" href="/ios/">iOS</a>
+          <button type="button" data-store="App Store" class="platform-badge">iOS</button>
           <span>&middot;</span>
-          <a class="platform-badge" href="/android/">Android</a>
+          <button type="button" data-store="Google Play" class="platform-badge">Android</button>
         </div>
       </div>
 
@@ -353,8 +353,10 @@ const copy = {
     background: var(--bg-card); border: 1px solid var(--border);
     border-radius: var(--radius-sm); padding: .2rem .6rem; font-weight: 500;
     color: inherit; text-decoration: none; transition: all var(--transition);
+    /* Rendered as <button> until real store URLs exist */
+    font-family: inherit; font-size: inherit; cursor: pointer;
   }
-  a.platform-badge:hover { border-color: var(--gold-border); color: var(--gold-light); }
+  .platform-badge:hover { border-color: var(--gold-border); color: var(--gold-light); }
   .hero-noads { display: flex; flex-wrap: wrap; gap: .5rem; margin: -1rem 0 1.75rem; }
   .noads-pill {
     display: inline-block;
