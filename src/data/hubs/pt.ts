@@ -73,7 +73,7 @@ const pt: HubSet = {
   },
 
   'multiplayer-card-games': {
-    title: 'Jogos de cartas multijogador – Jogue ao vivo com jogadores reais | Vanikar',
+    title: 'Jogos de cartas multijogador – Jogadores reais | Vanikar',
     description: 'Jogos de cartas multijogador em mesas ao vivo — Copas, Espadas, Big Two, Bluff, Durak, Belote e mais. Jogue de 2 a 6 jogadores com pessoas reais, amigos ou IA.',
     crumb: 'Jogos de cartas multijogador',
     h1: 'Jogos de cartas multijogador',
@@ -133,7 +133,7 @@ const pt: HubSet = {
   },
 
   'card-games-against-computer': {
-    title: 'Jogos de cartas contra o computador – Jogue contra uma IA inteligente | Vanikar',
+    title: 'Jogos de cartas contra o computador – IA inteligente',
     description: 'Jogue cartas contra o computador com IA inteligente e vários níveis de dificuldade — Copas, Espadas, Gin Rummy, Cribbage e mais, online ou totalmente offline.',
     crumb: 'Cartas contra o computador',
     h1: 'Jogue cartas contra o computador',

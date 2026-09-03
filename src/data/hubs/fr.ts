@@ -3,7 +3,7 @@ import { games } from '../games';
 
 const fr: HubSet = {
   'online-card-games': {
-    title: 'Jouer aux cartes en ligne – Tables en direct et vrais adversaires | Vanikar',
+    title: 'Jouer aux cartes en ligne – Tables en direct | Vanikar',
     description: 'Jouez aux cartes en ligne à des tables en direct contre de vrais adversaires — Cœurs, Belote, Cribbage, Durak et plus. Parties rapides et tables privées.',
     crumb: 'Jeux de cartes en ligne',
     h1: 'Jouer aux cartes en ligne',
@@ -73,7 +73,7 @@ const fr: HubSet = {
   },
 
   'multiplayer-card-games': {
-    title: 'Jeux de cartes multijoueur – Jouer en direct avec de vrais joueurs | Vanikar',
+    title: 'Jeux de cartes multijoueur – De vrais joueurs | Vanikar',
     description: 'Jeux de cartes multijoueur à des tables en direct — Cœurs, Piques, Big Two, Bluff, Durak et plus. Jouez de 2 à 6 avec de vraies personnes, des amis ou l’IA.',
     crumb: 'Jeux de cartes multijoueur',
     h1: 'Jeux de cartes multijoueur',
@@ -103,7 +103,7 @@ const fr: HubSet = {
   },
 
   'classic-card-games': {
-    title: 'Collection de jeux de cartes classiques – Tout dans une seule app | Vanikar',
+    title: 'Jeux de cartes classiques – Toute la collection | Vanikar',
     description: `${games.length} jeux de cartes classiques du monde entier dans une seule app — Cœurs, Belote, Cribbage, Durak, Big Two et plus, en ligne ou hors ligne.`,
     crumb: 'Jeux de cartes classiques',
     h1: 'Une collection de jeux de cartes classiques dans une seule app',
@@ -133,7 +133,7 @@ const fr: HubSet = {
   },
 
   'card-games-against-computer': {
-    title: 'Jeux de cartes contre l’ordinateur – Jouer contre une IA intelligente | Vanikar',
+    title: 'Jeux de cartes contre l’ordinateur – IA intelligente',
     description: 'Jouez aux cartes contre l’ordinateur : IA intelligente, plusieurs niveaux de difficulté — Cœurs, Belote, Cribbage et plus, en ligne ou hors ligne.',
     crumb: 'Cartes contre l’ordinateur',
     h1: 'Jouer aux cartes contre l’ordinateur',
