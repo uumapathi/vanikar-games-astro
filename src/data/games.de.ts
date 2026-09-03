@@ -9,7 +9,7 @@
 import type { Game } from './games';
 
 export type GameOverlay = Partial<Pick<Game,
-  'name' | 'tagline' | 'players' | 'description' | 'objective' | 'setup' | 'gameplay' | 'scoring' | 'tips'>>;
+  'name' | 'tagline' | 'players' | 'description' | 'objective' | 'setup' | 'gameplay' | 'scoring' | 'tips' | 'extraFaqs'>>;
 
 export const gamesDe: Record<string, GameOverlay> = {
   'high-card': {
@@ -214,6 +214,14 @@ export const gamesDe: Record<string, GameOverlay> = {
     ],
   },
   'hearts': {
+    extraFaqs: [
+      { q: "Wie viel ist die Pik-Dame bei Hearts wert?",
+        a: "Die Pik-Dame (Q♠) bringt 13 Strafpunkte — so viel wie alle dreizehn Herzkarten zusammen. Ihr auszuweichen oder sie einem Gegner unterzuschieben, ist der Kern des Spiels." },
+      { q: "Was bedeutet „Shooting the Moon“ bei Hearts?",
+        a: "Shooting the Moon heißt, in einer Hand absichtlich ALLE 13 Herzkarten und die Pik-Dame zu holen. Statt 26 Strafpunkte zu kassieren, bekommst du null — und jeder Gegner 26." },
+      { q: "Kann man Hearts zu zweit spielen?",
+        a: "Klassisches Hearts ist ein reines Vierpersonenspiel. Bei Vanikar kannst du mit weniger Menschen spielen und die freien Plätze mit KI-Gegnern besetzen — zwei Freunde plus zwei KI-Spieler funktionieren bestens." },
+    ],
     name: "Hearts",
     players: "4 Spieler",
     description: "Hearts ist ein klassisches Vermeidungsspiel: Du willst weder Herzkarten noch die gefürchtete Pik-Dame gewinnen. Sammelst du aber ALLE Strafkarten, schießt du den Mond ab und alle anderen kassieren stattdessen.",
@@ -642,6 +650,16 @@ export const gamesDe: Record<string, GameOverlay> = {
     ],
   },
   'indian-jackass': {
+    extraFaqs: [
+      { q: "Was ist Indischer Esel?",
+        a: "Indischer Esel ist ein Stich- und Abwurfspiel, das an indischen Familienkartentischen zu Hause ist. Es gibt keinen Gewinner: Alle wetteifern darum, ihre Hand zu leeren, und wer zuletzt noch Karten hält, ist der „Esel“ der Runde. Gespielt wird mit einem Standarddeck aus 52 Karten, für 2 bis 6 Spieler." },
+      { q: "Gibt es bei Indischer Esel einen Gewinner?",
+        a: "Nein — jede Runde bringt nur einen Verlierer hervor. Alle anderen kommen davon, indem sie ihre Hand zuerst leeren. Das macht es zum lockeren Partyspiel: Der Reiz liegt darin, den Titel zu vermeiden, nicht Punkte zu jagen." },
+      { q: "Was sind die Strafkarten bei Indischer Esel?",
+        a: "Wer die Runde verliert, startet die nächste mit einer garantierten Strafkarte auf der Hand: beim ersten Mal das Pik-Ass, danach A♣, A♦, A♥, K♠ und so weiter bei jeder weiteren Niederlage in Folge. Verlierst du mehrfach, summieren sich die Strafen." },
+      { q: "Wie endet eine Runde Indischer Esel?",
+        a: "Wer seine letzte Karte spielt, scheidet aus. Sobald nur noch eine Person Karten hält, endet die Runde sofort und diese Person verliert — selbst wenn ihr nur eine einzige Karte geblieben ist." },
+    ],
     name: "Indischer Esel",
     players: "2–6 Spieler",
     description: "Indischer Esel (auch Donkey genannt, oder wie auch immer man dasselbe Tier sonst nennt 😉) ist ein Stich- und Abwurfspiel ohne Gewinner — es gibt nur einen Verlierer. Bediene, solange du kannst, wirf deine Karten ab und sei bloß nicht der Letzte, der noch welche hält. Wer eine Runde verliert, beginnt die nächste mit einer Strafkarte, und gespielt wird, bis der Tisch aufhören mag.",

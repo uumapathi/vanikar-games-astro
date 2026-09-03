@@ -9,7 +9,7 @@
 import type { Game } from './games';
 
 export type GameOverlay = Partial<Pick<Game,
-  'name' | 'tagline' | 'players' | 'description' | 'objective' | 'setup' | 'gameplay' | 'scoring' | 'tips'>>;
+  'name' | 'tagline' | 'players' | 'description' | 'objective' | 'setup' | 'gameplay' | 'scoring' | 'tips' | 'extraFaqs'>>;
 
 export const gamesPt: Record<string, GameOverlay> = {
   'high-card': {
@@ -214,6 +214,14 @@ export const gamesPt: Record<string, GameOverlay> = {
     ],
   },
   'hearts': {
+    extraFaqs: [
+      { q: "Quanto vale a Dama de Espadas em Copas?",
+        a: "A Dama de Espadas (Q♠) vale 13 pontos de penalidade — tanto quanto as treze copas juntas. Evitá-la, ou empurrá-la para um adversário, é o coração do jogo." },
+      { q: "O que significa acertar a lua em Copas?",
+        a: "Acertar a lua é capturar de propósito TODAS as 13 copas e a Dama de Espadas em uma única mão. Em vez de levar 26 pontos de penalidade, você marca zero e cada adversário leva 26." },
+      { q: "Dá para jogar Copas com dois jogadores?",
+        a: "O Copas tradicional é um jogo estrito de quatro jogadores. No Vanikar você pode jogar com menos pessoas preenchendo os lugares restantes com adversários de IA — dois amigos e dois jogadores de IA funcionam muito bem." },
+    ],
     name: "Copas",
     players: "4 jogadores",
     description: "Copas é um clássico jogo de evitar vazas: você não quer ganhar copas nem a temida Dama de Espadas. Mas se juntar TODAS as cartas de penalidade, você \"acerta a lua\" e é o resto da mesa que sofre.",
@@ -642,6 +650,16 @@ export const gamesPt: Record<string, GameOverlay> = {
     ],
   },
   'indian-jackass': {
+    extraFaqs: [
+      { q: "O que é o Burro indiano?",
+        a: "O Burro indiano é um jogo de vazas e descarte comum nas mesas de carteado das famílias indianas. Não há vencedor: todos correm para esvaziar a mão, e quem ainda estiver com cartas é o «Burro» da rodada. Usa um baralho padrão de 52 cartas, de 2 a 6 jogadores." },
+      { q: "Existe vencedor no Burro indiano?",
+        a: "Não — cada rodada produz apenas um perdedor. Todos os outros escapam ao esvaziar a mão primeiro. Essa estrutura faz dele um jogo de festa leve: a graça está em evitar o título, não em perseguir pontos." },
+      { q: "Quais são as cartas de castigo no Burro indiano?",
+        a: "Quem perde a rodada começa a seguinte com uma carta de castigo garantida na mão: o ás de espadas na primeira derrota, depois A♣, A♦, A♥, K♠ e assim por diante a cada derrota consecutiva. Perca várias vezes seguidas e os castigos se acumulam." },
+      { q: "Como termina uma rodada de Burro indiano?",
+        a: "Os jogadores vão saindo conforme jogam a última carta. Quando só uma pessoa ainda tem cartas, a rodada acaba na hora e essa pessoa perde — mesmo que lhe reste uma única carta." },
+    ],
     name: "Burro indiano",
     players: "2–6 jogadores",
     description: "O Burro indiano (também chamado Donkey, ou qualquer outro nome para o mesmo animal 😉) é um jogo de vazas e descarte em que não há vencedor, apenas um perdedor. Siga o naipe enquanto puder, largue suas cartas e não seja o último a ficar com alguma. Quem perde uma rodada começa a seguinte com uma carta de castigo, e joga-se até a mesa decidir parar.",

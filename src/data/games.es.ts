@@ -9,7 +9,7 @@
 import type { Game } from './games';
 
 export type GameOverlay = Partial<Pick<Game,
-  'name' | 'tagline' | 'players' | 'description' | 'objective' | 'setup' | 'gameplay' | 'scoring' | 'tips'>>;
+  'name' | 'tagline' | 'players' | 'description' | 'objective' | 'setup' | 'gameplay' | 'scoring' | 'tips' | 'extraFaqs'>>;
 
 export const gamesEs: Record<string, GameOverlay> = {
   'high-card': {
@@ -214,6 +214,14 @@ export const gamesEs: Record<string, GameOverlay> = {
     ],
   },
   'hearts': {
+    extraFaqs: [
+      { q: "¿Cuánto vale la Reina de Espadas en Corazones?",
+        a: "La Reina de Espadas (Q♠) vale 13 puntos de castigo, tantos como los trece corazones juntos. Evitarla, o endosársela a un rival, es el corazón del juego." },
+      { q: "¿Qué significa disparar a la luna en Corazones?",
+        a: "Disparar a la luna consiste en capturar a propósito TODOS los 13 corazones y la Reina de Espadas en una misma mano. En lugar de llevarte 26 puntos de castigo, anotas cero y cada rival se lleva 26." },
+      { q: "¿Se puede jugar a Corazones con dos jugadores?",
+        a: "El Corazones tradicional es un juego estricto de cuatro jugadores. En Vanikar puedes jugar con menos personas llenando los asientos restantes con oponentes de IA — dos amigos y dos jugadores de IA funcionan de maravilla." },
+    ],
     name: "Corazones",
     tagline: "Evita los corazones — y cuidado con la Reina de Espadas.",
     players: "4 jugadores",
@@ -644,6 +652,16 @@ export const gamesEs: Record<string, GameOverlay> = {
     ],
   },
   'indian-jackass': {
+    extraFaqs: [
+      { q: "¿Qué es el Burro indio?",
+        a: "El Burro indio es un juego de bazas y descarte muy habitual en las mesas familiares de India. No hay ganador: todos compiten por quedarse sin cartas, y el último que aún tenga alguna es el «Burro» de la ronda. Se juega con una baraja estándar de 52 cartas, de 2 a 6 jugadores." },
+      { q: "¿Hay un ganador en el Burro indio?",
+        a: "No: cada ronda solo produce un perdedor. Todos los demás se libran al vaciar su mano antes. Esa estructura lo convierte en un juego de fiesta desenfadado: la gracia está en evitar el título, no en perseguir una puntuación." },
+      { q: "¿Cuáles son las cartas de castigo en el Burro indio?",
+        a: "Quien pierde la ronda empieza la siguiente con una carta de castigo asegurada en la mano: el as de picas en la primera derrota, y luego A♣, A♦, A♥, K♠ y así sucesivamente en cada derrota consecutiva. Si pierdes varias veces seguidas, los castigos se acumulan." },
+      { q: "¿Cómo termina una ronda de Burro indio?",
+        a: "Los jugadores van saliendo a medida que juegan su última carta. Cuando solo queda una persona con cartas, la ronda acaba de inmediato y esa persona pierde, aunque le quede una sola carta." },
+    ],
     name: "Burro indio",
     players: "2–6 jugadores",
     description: "El Burro indio (también llamado Donkey, o cualquier otro nombre para el mismo animal 😉) es un juego de bazas y descarte en el que no hay ganador, solo un perdedor. Sigue el palo mientras puedas, suelta tus cartas y procura no ser el último que se quede con alguna. Quien pierde una ronda empieza la siguiente con una carta de castigo, y se juega hasta que la mesa decida parar.",

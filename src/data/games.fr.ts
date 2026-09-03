@@ -9,7 +9,7 @@
 import type { Game } from './games';
 
 export type GameOverlay = Partial<Pick<Game,
-  'name' | 'tagline' | 'players' | 'description' | 'objective' | 'setup' | 'gameplay' | 'scoring' | 'tips'>>;
+  'name' | 'tagline' | 'players' | 'description' | 'objective' | 'setup' | 'gameplay' | 'scoring' | 'tips' | 'extraFaqs'>>;
 
 export const gamesFr: Record<string, GameOverlay> = {
   'high-card': {
@@ -214,6 +214,14 @@ export const gamesFr: Record<string, GameOverlay> = {
     ],
   },
   'hearts': {
+    extraFaqs: [
+      { q: "Combien vaut la Dame de Pique au Cœurs ?",
+        a: "La Dame de Pique (Q♠) vaut 13 points de pénalité — autant que les treize cœurs réunis. L’éviter, ou la refiler à un adversaire, est tout le sel du jeu." },
+      { q: "Que signifie « faire la lune » au Cœurs ?",
+        a: "Faire la lune consiste à capturer volontairement TOUS les 13 cœurs et la Dame de Pique dans une même donne. Au lieu de prendre 26 points de pénalité, vous marquez zéro et chaque adversaire en prend 26." },
+      { q: "Peut-on jouer au Cœurs à deux ?",
+        a: "Le Cœurs traditionnel se joue strictement à quatre. Sur Vanikar, vous pouvez jouer à moins en complétant les places libres avec des adversaires IA — deux amis et deux joueurs IA fonctionnent très bien." },
+    ],
     name: "Cœurs",
     players: "4 joueurs",
     description: "Cœurs est un classique du jeu à plis où l’on cherche à éviter les cœurs et la redoutable dame de pique. Mais si vous ramassez TOUTES les cartes de pénalité, vous \"tirez la lune\" et ce sont les autres qui trinquent.",
@@ -642,6 +650,16 @@ export const gamesFr: Record<string, GameOverlay> = {
     ],
   },
   'indian-jackass': {
+    extraFaqs: [
+      { q: "Qu’est-ce que l’Âne indien ?",
+        a: "L’Âne indien est un jeu de plis et de défausse courant sur les tables de cartes familiales en Inde. Il n’y a pas de gagnant : tout le monde court pour vider sa main, et le dernier joueur détenant encore des cartes est l’« Âne » de la manche. Il se joue avec un jeu standard de 52 cartes, de 2 à 6 joueurs." },
+      { q: "Y a-t-il un gagnant à l’Âne indien ?",
+        a: "Non — chaque manche ne désigne qu’un perdant. Tous les autres s’en sortent en vidant leur main les premiers. Cette structure en fait un jeu de soirée léger : le plaisir est d’éviter le titre, pas de courir après un score." },
+      { q: "Quelles sont les cartes de pénalité à l’Âne indien ?",
+        a: "Le perdant de la manche commence la suivante avec une carte de pénalité garantie en main : l’as de pique à la première défaite, puis A♣, A♦, A♥, R♠ et ainsi de suite à chaque défaite consécutive. Enchaînez les défaites et les pénalités s’accumulent." },
+      { q: "Comment se termine une manche d’Âne indien ?",
+        a: "Les joueurs sortent au fur et à mesure qu’ils posent leur dernière carte. Quand un seul joueur détient encore des cartes, la manche s’arrête aussitôt et ce joueur perd — même s’il ne lui reste qu’une carte." },
+    ],
     name: "Âne indien",
     players: "2 à 6 joueurs",
     description: "L’Âne indien (aussi appelé Donkey, ou tout autre nom pour le même animal 😉) est un jeu de plis et de défausse sans gagnant — seulement un perdant. Fournissez tant que vous le pouvez, videz votre main et évitez d’être le dernier à détenir des cartes. Le perdant de chaque manche commence la suivante avec une carte de pénalité, et l’on joue jusqu’à ce que la table décide d’arrêter.",

@@ -35,3 +35,16 @@ export function isGameFullyLocalized(slug: string, locale: Locale): boolean {
   const overlay = overlays[locale]?.[slug];
   return !!overlay?.description;
 }
+
+/**
+ * True when the game's extra FAQs exist in this locale's own words.
+ *
+ * localizeGame spreads the overlay over the English game, so an untranslated
+ * locale would otherwise inherit — and render — the English extraFaqs on an
+ * otherwise translated page. Callers use this to append them only when the
+ * locale actually has its own.
+ */
+export function hasLocalizedExtraFaqs(slug: string, locale: Locale): boolean {
+  if (locale === 'en') return true;
+  return !!overlays[locale]?.[slug]?.extraFaqs?.length;
+}
