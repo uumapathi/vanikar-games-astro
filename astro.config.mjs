@@ -14,7 +14,12 @@ export default defineConfig({
   integrations: [
     sitemap({
       // /join is a one-off invite landing page (noindex) — keep it out of the sitemap.
-      filter: page => !page.includes('/join') && !isUntranslatedGamePage(page),
+      // /join is a one-off invite landing page and /ios + /android are noindex
+      // redirect stubs to the app stores — keep all three out of the sitemap.
+      filter: page =>
+        !page.includes('/join') &&
+        !/\/(ios|android)\/$/.test(page) &&
+        !isUntranslatedGamePage(page),
       i18n: {
         defaultLocale: 'en',
         locales: { en: 'en', es: 'es', pt: 'pt', fr: 'fr', de: 'de', hi: 'hi' },

@@ -1,0 +1,87 @@
+---
+/**
+ * /ios and /android — redirect stubs for URLs that were indexed before the
+ * store landing pages were removed, so they bounce to the store instead of
+ * 404ing.
+ *
+ * Before STORES_LIVE (see src/data/stores.ts) there is nowhere real to send
+ * anyone, so the page explains and offers the usual store button. Once the
+ * URLs are filled in, it redirects: meta refresh for crawlers and no-JS
+ * clients, location.replace for everyone else so it leaves no history entry.
+ *
+ * noindex either way — a redirect stub is not a page worth ranking.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { STORES_LIVE, APP_STORE_URL, PLAY_STORE_URL } from '../data/stores';
+import { getLocale } from '../i18n';
+
+interface Props { platform: 'ios' | 'android' }
+const { platform } = Astro.props;
+
+const ios    = platform === 'ios';
+const store  = ios ? 'App Store' : 'Google Play';
+const target = ios ? APP_STORE_URL : PLAY_STORE_URL;
+const lang   = getLocale(Astro.currentLocale);
+
+const L = {
+  en: { going: `Taking you to the ${store}…`, manual: `Continue to the ${store}`,
+        soonTitle: 'Coming soon', soonBody: `Card Games by Vanikar is on its way to the ${store}.`,
+        home: 'Back to Vanikar Games' },
+  es: { going: `Te llevamos a la ${store}…`, manual: `Continuar a la ${store}`,
+        soonTitle: 'Próximamente', soonBody: `Card Games by Vanikar llegará pronto a la ${store}.`,
+        home: 'Volver a Vanikar Games' },
+  pt: { going: `Levando você para a ${store}…`, manual: `Continuar para a ${store}`,
+        soonTitle: 'Em breve', soonBody: `Card Games by Vanikar está a caminho da ${store}.`,
+        home: 'Voltar ao Vanikar Games' },
+  fr: { going: `Redirection vers l’${store}…`, manual: `Continuer vers l’${store}`,
+        soonTitle: 'Bientôt', soonBody: `Card Games by Vanikar arrive bientôt sur l’${store}.`,
+        home: 'Retour à Vanikar Games' },
+  de: { going: `Weiterleitung zum ${store}…`, manual: `Weiter zum ${store}`,
+        soonTitle: 'Bald verfügbar', soonBody: `Card Games by Vanikar kommt bald in den ${store}.`,
+        home: 'Zurück zu Vanikar Games' },
+  hi: { going: `आपको ${store} पर ले जा रहे हैं…`, manual: `${store} पर जाएँ`,
+        soonTitle: 'जल्द आ रहा है', soonBody: `Card Games by Vanikar जल्द ही ${store} पर आ रहा है।`,
+        home: 'Vanikar Games पर वापस जाएँ' },
+}[lang];
+
+const title = ios
+  ? 'Card Games by Vanikar on the App Store'
+  : 'Card Games by Vanikar on Google Play';
+---
+<BaseLayout title={title} description={L.soonBody} noindex={true}>
+  {STORES_LIVE && (
+    <Fragment slot="head">
+      <meta http-equiv="refresh" content={`0; url=${target}`} />
+    </Fragment>
+  )}
+
+  <section class="redir">
+    <div class="container">
+      <img src="/icon-180.png" width="96" height="96" alt="" class="redir-icon" />
+      {STORES_LIVE ? (
+        <Fragment>
+          <p class="redir-going">{L.going}</p>
+          <a class="btn btn-primary" href={target} rel="noopener">{L.manual}</a>
+        </Fragment>
+      ) : (
+        <Fragment>
+          <h1 class="redir-title">{L.soonTitle}</h1>
+          <p class="redir-going">{L.soonBody}</p>
+          <button type="button" data-store={store} class="btn btn-primary">{L.manual}</button>
+        </Fragment>
+      )}
+      <p><a class="redir-home" href="/">{L.home}</a></p>
+    </div>
+  </section>
+</BaseLayout>
+
+{STORES_LIVE && <script is:inline set:html={`location.replace(${JSON.stringify(target)});`} />}
+
+<style>
+  .redir { padding: 5rem 0; text-align: center; }
+  .redir-icon { width: 96px; height: 96px; border-radius: 20px; margin: 0 auto 1.5rem; }
+  .redir-title { font-size: 1.8rem; margin-bottom: .6rem; }
+  .redir-going { color: var(--text-muted); margin-bottom: 1.5rem; }
+  .redir-home { display: inline-block; margin-top: 1.5rem; font-size: .85rem; color: var(--text-dim); text-decoration: underline; }
+  .redir-home:hover { color: var(--gold-light); }
+</style>
