@@ -13,7 +13,8 @@ export type GameOverlay = Partial<Pick<Game,
 
 export const gamesPt: Record<string, GameOverlay> = {
   'high-card': {
-    name: "Carta Alta",
+    name: "High Card",
+    tagline: "O jogo de cartas mais simples — a carta mais alta vence.",
     players: "2–6 jogadores",
     description: "Carta Alta é a porta de entrada perfeita para os jogos de cartas. A cada rodada todos os jogadores viram uma carta ao mesmo tempo; quem tiver a carta mais alta leva todas as cartas jogadas na rodada. Simples, rápido e sempre divertido.",
     objective: "Juntar o maior número de cartas antes de o baralho acabar.",
@@ -37,6 +38,7 @@ export const gamesPt: Record<string, GameOverlay> = {
   },
   'go-fish': {
     name: "Go Fish",
+    tagline: "Peça, pesque e junte o maior número de quadras.",
     players: "2–4 jogadores",
     description: "Go Fish é um clássico querido por jogadores de todas as idades. Peça aos adversários as cartas de que precisa, forme quartetos completos e junte o maior número deles para vencer.",
     objective: "Juntar o maior número de quartetos — conjuntos completos das 4 cartas do mesmo valor.",
@@ -59,6 +61,7 @@ export const gamesPt: Record<string, GameOverlay> = {
   },
   'bluff': {
     name: "Bluff",
+    tagline: "Minta, desafie e livre-se das suas cartas.",
     players: "2–6 jogadores",
     description: "Bluff (também conhecido como Mentiroso, Cheat ou I Doubt It) é um jogo de descarte e blefe. Você joga cartas viradas para baixo declarando um valor — mas pode mentir. Qualquer um pode desmascarar você, e é isso que deixa cada rodada elétrica.",
     objective: "Ser o primeiro a ficar sem cartas.",
@@ -82,6 +85,7 @@ export const gamesPt: Record<string, GameOverlay> = {
   },
   'president': {
     name: "Presidente",
+    tagline: "Suba na escada social — ou acabe como o Plebeu.",
     players: "3–6 jogadores",
     description: "Presidente (Daifugō no Japão, Scum ou Asshole nos EUA) é um jogo de descarte em que se disputa quem esvazia a mão primeiro. A ordem de saída define a hierarquia da rodada seguinte, com trocas obrigatórias de cartas entre os de cima e os de baixo.",
     objective: "Ser o primeiro a ficar sem cartas e virar o Presidente.",
@@ -103,7 +107,8 @@ export const gamesPt: Record<string, GameOverlay> = {
     ],
   },
   'war': {
-    name: "Guerra",
+    name: "War",
+    tagline: "Vire, batalhe e conquiste todas as cartas.",
     players: "2 jogadores",
     description: "Guerra é o jogo de cartas para iniciantes por excelência — não há decisões a tomar. Os dois jogadores viram a carta do topo ao mesmo tempo; a mais alta leva o monte. Empates desencadeiam uma \"guerra\" que aumenta a aposta. Puro acaso e tensão do início ao fim.",
     objective: "Conquistar as 52 cartas.",
@@ -125,7 +130,8 @@ export const gamesPt: Record<string, GameOverlay> = {
     ],
   },
   'crazy-eights': {
-    name: "Oito Louco",
+    name: "Crazy Eights",
+    tagline: "Combine o naipe ou o valor — os 8 são sempre curingas.",
     players: "2–8 jogadores",
     description: "Oito Louco é um clássico jogo de descarte que inspirou o Uno. Jogue uma carta que combine em naipe ou valor com a do descarte; os 8 são curingas e deixam você escolher o naipe. Vence o primeiro a esvaziar a mão.",
     objective: "Ser o primeiro a descartar todas as suas cartas.",
@@ -148,7 +154,8 @@ export const gamesPt: Record<string, GameOverlay> = {
     ],
   },
   'old-maid': {
-    name: "A Solteirona",
+    name: "Mico",
+    tagline: "Não fique na mão com a Dama sem par.",
     players: "2–8 jogadores",
     description: "A Solteirona é um charmoso jogo de pares para todas as idades. Retira-se uma dama para que sobre uma sem par — a \"Solteirona\"; descarte todos os seus pares e torça para que nenhum adversário lhe empurre a dama que não combina com nada.",
     objective: "Não ficar com a única dama sem par (a Solteirona) quando todas as outras cartas já estiverem emparelhadas.",
@@ -170,7 +177,8 @@ export const gamesPt: Record<string, GameOverlay> = {
     ],
   },
   'sevens': {
-    name: "Setes",
+    name: "Sevens",
+    tagline: "Construa a partir do 7 — vence quem esvaziar a mão primeiro.",
     players: "2–7 jogadores",
     description: "Setes (Fan Tan) é um dos jogos de cartas mais difundidos do mundo. Constroem-se quatro sequências, uma por naipe, a partir do 7 de cada um; a cada vez você precisa estender uma sequência ou passar. Segure bem suas cartas para travar os adversários.",
     objective: "Ser o primeiro jogador a jogar todas as suas cartas.",
@@ -194,6 +202,7 @@ export const gamesPt: Record<string, GameOverlay> = {
   },
   'snap': {
     name: "Snap",
+    tagline: "Combine as cartas — e grite primeiro.",
     players: "2–8 jogadores",
     description: "Snap é um jogo de reflexos muito querido no Reino Unido e em toda a Europa. Os jogadores viram cartas nos seus montes; quando duas cartas visíveis coincidem em valor, o primeiro a gritar \"Snap!\" leva o monte. Aqui a velocidade sempre vence a estratégia.",
     objective: "Ganhar todas as cartas gritando \"Snap!\" antes de todo mundo quando aparecerem cartas iguais.",
@@ -223,6 +232,7 @@ export const gamesPt: Record<string, GameOverlay> = {
         a: "O Copas tradicional é um jogo estrito de quatro jogadores. No Vanikar você pode jogar com menos pessoas preenchendo os lugares restantes com adversários de IA — dois amigos e dois jogadores de IA funcionam muito bem." },
     ],
     name: "Copas",
+    tagline: "Evite as copas — e cuidado com a Dama de Espadas.",
     players: "4 jogadores",
     description: "Copas é um clássico jogo de evitar vazas: você não quer ganhar copas nem a temida Dama de Espadas. Mas se juntar TODAS as cartas de penalidade, você \"acerta a lua\" e é o resto da mesa que sofre.",
     objective: "Ter a menor pontuação quando algum jogador chegar a 100 pontos.",
@@ -246,6 +256,7 @@ export const gamesPt: Record<string, GameOverlay> = {
   },
   'spades': {
     name: "Espadas",
+    tagline: "Aposte com inteligência. Espadas sempre são trunfo.",
     players: "4 jogadores (2 times)",
     description: "Espadas é o jogo de vazas em dupla mais emblemático da América do Norte. Cada mão começa com uma fase de apostas — sua dupla precisa fazer exatamente as vazas que apostou. Ficar abaixo custa pontos; passar acumula \"sacos\" que acabam virando penalidade.",
     objective: "Ser a primeira dupla a chegar a 500 pontos.",
@@ -267,6 +278,7 @@ export const gamesPt: Record<string, GameOverlay> = {
   },
   'gin-rummy': {
     name: "Gin Rummy",
+    tagline: "Bata antes que eles batam.",
     players: "2 jogadores",
     description: "Gin Rummy é a variante de rummy para dois jogadores mais querida, famosa pela tensão de decidir entre bater ou buscar o gin. Compre, descarte, monte combinações — e bata quando suas cartas soltas somarem 10 ou menos.",
     objective: "Chegar primeiro a 100 pontos reduzindo as cartas soltas a 10 ou menos para bater, ou a 0 para fazer gin.",
@@ -291,6 +303,7 @@ export const gamesPt: Record<string, GameOverlay> = {
   },
   'euchre': {
     name: "Euchre",
+    tagline: "Escolha o trunfo. Faça três vazas. Prove o seu Right Bower.",
     players: "4 jogadores (2 times)",
     description: "Euchre é um jogo de vazas em dupla muito popular no Meio-Oeste dos EUA, no Canadá e no Reino Unido. Sua marca registrada: o valete do trunfo (Bower direito) é a carta mais alta, e o valete da mesma cor (Bower esquerdo) vem logo atrás.",
     objective: "A primeira dupla a chegar a 10 pontos vence, fazendo ao menos 3 das 5 vazas depois de escolher o trunfo.",
@@ -313,6 +326,7 @@ export const gamesPt: Record<string, GameOverlay> = {
   },
   'cribbage': {
     name: "Cribbage",
+    tagline: "Avance os pinos até 121 — cada combinação conta.",
     players: "2 jogadores",
     description: "Cribbage é um jogo inglês do século XVII famoso pelo tabuleiro de pinos e pela riqueza da pontuação. Tem duas fases bem distintas: a marcação (jogando cartas alternadamente) e a contagem (pontuando as combinações da mão).",
     objective: "Ser o primeiro a alcançar exatamente 121 pontos no tabuleiro.",
@@ -336,6 +350,7 @@ export const gamesPt: Record<string, GameOverlay> = {
   },
   'canasta': {
     name: "Canastra",
+    tagline: "Monte canastras de 7 cartas e bata primeiro.",
     players: "2–4 jogadores",
     description: "A Canastra nasceu em Montevidéu, no Uruguai, e conquistou o mundo nos anos 1950. As duplas montam combinações de 7 cartas ou mais do mesmo valor (as \"canastras\") usando curingas à vontade. Mistura a construção do rummy com a estratégia de parceria.",
     objective: "Ser a primeira dupla a chegar a 5.000 pontos completando canastras e batendo.",
@@ -361,6 +376,7 @@ export const gamesPt: Record<string, GameOverlay> = {
   },
   'buraco': {
     name: "Buraco",
+    tagline: "Complete suas canastras — e pegue o morto.",
     players: "2–4 jogadores",
     description: "O Buraco é o presente da Itália para a América do Sul, trazido pelos imigrantes, e hoje é paixão nacional no Brasil e na Argentina. Dois montes escondidos, os \"pots\", dão uma sobrevida no meio da partida; os Buracos limpos (sequências puras de 7 cartas) valem os melhores bônus.",
     objective: "Ser a primeira dupla a chegar a 3.000 pontos montando jogos, completando Buracos e batendo.",
@@ -383,6 +399,7 @@ export const gamesPt: Record<string, GameOverlay> = {
   },
   'chinchon': {
     name: "Chinchón",
+    tagline: "Forme suas sequências e trincas — o Chinchón fecha a rodada na hora.",
     players: "2–6 jogadores",
     description: "O Chinchón é uma querida variante espanhola e argentina do rummy, jogada com o baralho espanhol de 40 cartas. Monte trincas e sequências para reduzir suas cartas soltas — ou complete as 7 cartas do mesmo naipe (Chinchón) e vença a rodada na hora.",
     objective: "Somar o menor número de pontos de penalidade. Quem chega a 100 pontos é eliminado; vence o último que sobrar.",
@@ -407,6 +424,7 @@ export const gamesPt: Record<string, GameOverlay> = {
   },
   'briscola': {
     name: "Briscola",
+    tagline: "Leve as cartas de maior valor — o trunfo vence todo o resto.",
     players: "2–4 jogadores",
     description: "A Briscola é o jogo de cartas mais popular da Itália e um clássico na Espanha e na América Latina com o nome de Brisca. Não é obrigatório seguir o naipe — corte os adversários, capture os ases e treses carregados de pontos e ganhe no placar.",
     objective: "Somar mais de 60 dos 120 pontos possíveis.",
@@ -431,6 +449,7 @@ export const gamesPt: Record<string, GameOverlay> = {
   },
   'truco': {
     name: "Truco",
+    tagline: "Blefe, aposte e vença na malandragem — o jogo de cartas da América Latina.",
     players: "2–4 jogadores",
     description: "O Truco é um jogo de vazas e blefe extremamente popular no Brasil, na Argentina e em toda a América Latina. A hierarquia própria das cartas, os cantos de aposta (Truco! Retruco! Vale Quatro!) e a sinalização entre parceiros o tornam diferente de qualquer outro jogo de cartas.",
     objective: "O primeiro jogador ou dupla a chegar a 12 pontos vence (jogo curto) ou a 30 pontos (jogo completo).",
@@ -454,6 +473,7 @@ export const gamesPt: Record<string, GameOverlay> = {
   },
   'tien-len': {
     name: "Tiến Lên",
+    tagline: "O Big Two do Vietnã — descarte suas cartas antes de todo mundo.",
     players: "2–4 jogadores",
     description: "Tiến Lên (\"subir\" em vietnamita) é o jogo de cartas mais popular do Vietnã e um dos mais jogados do Sudeste Asiático. Como no Big Two, todos correm para se livrar das cartas; a diferença é que os 2 são a carta única mais alta e as \"bombas\" superam qualquer combinação.",
     objective: "Ser o primeiro jogador a se livrar de todas as cartas da mão.",
@@ -479,6 +499,7 @@ export const gamesPt: Record<string, GameOverlay> = {
   },
   'koi-koi': {
     name: "Koi-Koi",
+    tagline: "Combine as flores — diga \"Koi-Koi\" para arriscar tudo.",
     players: "2 jogadores",
     description: "O Koi-Koi é jogado com o belo baralho Hanafuda de 48 cartas, em que cada um dos 12 naipes representa um mês e uma planta. Combine cartas da mesa para formar \"yaku\" (combinações que pontuam). Dizer \"Koi-Koi\" permite continuar jogando por mais pontos — mas arrisca o adversário fechar antes.",
     objective: "Somar o maior número de pontos ao longo de várias rodadas completando yaku.",
@@ -503,6 +524,7 @@ export const gamesPt: Record<string, GameOverlay> = {
   },
   'big-two': {
     name: "Big Two",
+    tagline: "O 2 manda — corra para esvaziar a mão.",
     players: "2–4 jogadores",
     description: "O Big Two (大老二, Deuces) é enormemente popular no Leste e no Sudeste da Ásia. Os dois são as cartas mais altas, os naipes desempatam e você pode jogar cartas únicas, pares, trincas ou poderosas mãos de cinco cartas para abrir vantagem.",
     objective: "Ser o primeiro jogador a ficar sem cartas.",
@@ -528,6 +550,7 @@ export const gamesPt: Record<string, GameOverlay> = {
   },
   'court-piece': {
     name: "Court Piece",
+    tagline: "Vença 7 vazas primeiro — depois defenda na segunda metade.",
     players: "4 jogadores (2 duplas)",
     description: "O Court Piece (Rang/Rung) é um dos jogos de vazas mais populares da Índia, do Paquistão e do Irã. A dupla que vence as 7 primeiras vazas “corta a corte”; a partir daí precisa impedir que os adversários emendem 7 vazas seguidas na segunda fase.",
     objective: "Vencer a partida garantindo a “corte” (7 vazas na primeira metade) e defendendo-a na segunda, ou levando todas as 13 vazas.",
@@ -552,6 +575,7 @@ export const gamesPt: Record<string, GameOverlay> = {
   },
   'mendikot': {
     name: "Mendikot",
+    tagline: "Capture os quatro 10 — ou impeça seus adversários de fazer isso.",
     players: "4 jogadores (2 duplas)",
     description: "O Mendikot é o principal jogo de cartas de Maharashtra e do Gujarat, na Índia. O objetivo parece simples: capturar os quatro dez. Levar todos eles é um Mendikot, uma vitória esmagadora que vale o dobro. Toda a estratégia gira em torno de proteger e caçar os dez.",
     objective: "Capturar os quatro dez para fazer um Mendikot, ou capturar a maioria deles para vencer a rodada.",
@@ -575,7 +599,8 @@ export const gamesPt: Record<string, GameOverlay> = {
     ],
   },
   '29-game': {
-    name: "Jogo do 29",
+    name: "29 Game",
+    tagline: "Aposte até 29 — faça mais pontos para cumprir o contrato.",
     players: "4 jogadores (2 duplas)",
     description: "O Jogo do 29 é um célebre jogo de vazas de Kerala, no sul da Índia, muito jogado também em Bangladesh e no Nepal. O nome vem dos 28 pontos de cartas do baralho de 32 (mais 1 pela última vaza). Aposta-se em fazer esses pontos com apenas 8 cartas por jogador e um trunfo escondido.",
     objective: "A dupla que vence o leilão precisa somar pelo menos tantos pontos de cartas quanto apostou; caso contrário, vence a dupla defensora.",
@@ -601,6 +626,7 @@ export const gamesPt: Record<string, GameOverlay> = {
   },
   'sleep': {
     name: "Sleep",
+    tagline: "Junte quatro iguais e cante — o último ainda acordado perde.",
     players: "2–6 jogadores",
     description: "Sleep é um jogo de passar cartas rápido e caótico em que não há vencedor, apenas um perdedor. As cartas circulam pela mesa uma a uma enquanto todos caçam uma quadra. No instante em que alguém consegue e grita “Sleep!”, todos largam o que estão fazendo e correm para gritar também. O último ainda acordado perde a rodada.",
     objective: "Juntar quatro cartas do mesmo valor e cantar Sleep — ou, se outro se antecipar, cantar antes de todos menos um.",
@@ -626,7 +652,8 @@ export const gamesPt: Record<string, GameOverlay> = {
     ],
   },
   'indian-rummy': {
-    name: "Rummy indiano",
+    name: "Indian Rummy",
+    tagline: "Forme sequências e trincas — a sequência pura é inegociável.",
     players: "2–6 jogadores",
     description: "O rummy indiano (Paplu, ou rummy de 13 cartas) é o jogo de cartas mais popular da Índia. Cada jogador recebe 13 cartas e precisa organizá-las em sequências e trincas válidas. A regra de ouro: você precisa de pelo menos uma sequência pura antes de poder bater.",
     objective: "Organizar as 13 cartas em sequências e trincas válidas, com pelo menos uma sequência pura, e bater antes dos adversários.",
@@ -660,7 +687,8 @@ export const gamesPt: Record<string, GameOverlay> = {
       { q: "Como termina uma rodada de Burro indiano?",
         a: "Os jogadores vão saindo conforme jogam a última carta. Quando só uma pessoa ainda tem cartas, a rodada acaba na hora e essa pessoa perde — mesmo que lhe reste uma única carta." },
     ],
-    name: "Burro indiano",
+    name: "Indian Jackass",
+    tagline: "Descarte todas as cartas — quem ficar com cartas por último perde.",
     players: "2–6 jogadores",
     description: "O Burro indiano (também chamado Donkey, ou qualquer outro nome para o mesmo animal 😉) é um jogo de vazas e descarte em que não há vencedor, apenas um perdedor. Siga o naipe enquanto puder, largue suas cartas e não seja o último a ficar com alguma. Quem perde uma rodada começa a seguinte com uma carta de castigo, e joga-se até a mesa decidir parar.",
     objective: "Esvaziar a mão. O último jogador que ainda tiver cartas é o Burro da rodada — o perdedor.",
@@ -686,6 +714,7 @@ export const gamesPt: Record<string, GameOverlay> = {
   },
   'whist': {
     name: "Whist",
+    tagline: "O ancestral do Bridge — siga o naipe e vença as vazas.",
     players: "4 jogadores (2 duplas)",
     description: "O Whist é o grande ancestral do bridge e do spades, jogado nos salões da Inglaterra do século XVIII. Sem leilão nem canto de trunfo: apenas siga o naipe, use o trunfo com juízo e vença mais vazas do que a dupla apostou.",
     objective: "Vencer o maior número de vazas ao lado do parceiro. Marca-se 1 ponto por vaza acima de 6 (o “book”).",
@@ -709,6 +738,7 @@ export const gamesPt: Record<string, GameOverlay> = {
   },
   'durak': {
     name: "Durak",
+    tagline: "Ataque, defenda ou seja o Bobo.",
     players: "2–6 jogadores",
     description: "O Durak (Дурак, “tolo”) é o jogo de cartas mais querido da Rússia e um clássico em todo o Leste Europeu. O último jogador que ficar com cartas é o Durak — o tolo da rodada.",
     objective: "Ficar sem cartas. O último jogador com cartas na mão é o Durak (o tolo).",
@@ -732,7 +762,8 @@ export const gamesPt: Record<string, GameOverlay> = {
     ],
   },
   'scopa': {
-    name: "Scopa",
+    name: "Escova",
+    tagline: "Varra a mesa — o jogo de cartas italiano das capturas astutas.",
     players: "2–4 jogadores",
     description: "A Scopa (“vassoura”) é o jogo de cartas nacional da Itália. A cada turno você joga uma carta na mesa e captura as de mesmo valor ou as combinações que somem o valor da sua carta. Varrer a mesa inteira — uma Scopa — vale um ponto extra.",
     objective: "Somar mais pontos com as cartas capturadas. Vence quem chegar primeiro a 11 (ou ao total combinado).",
@@ -756,6 +787,7 @@ export const gamesPt: Record<string, GameOverlay> = {
   },
   'belote': {
     name: "Belote",
+    tagline: "O jogo de cartas nacional da França — aposte, trunfe e Coinché.",
     players: "4 jogadores (2 duplas)",
     description: "A Belote é o jogo de cartas mais querido da França e um clássico em boa parte da Europa e do Oriente Médio. Suas marcas registradas — o valete e o nove como os dois maiores trunfos, o bônus Belote-Rebelote e o sistema de contratos — lhe dão um sabor único entre os jogos de vazas.",
     objective: "Cumprir o contrato da sua dupla somando pelo menos aqueles pontos entre cartas e declarações. Vence a primeira dupla a chegar a 501 pontos.",
@@ -779,6 +811,7 @@ export const gamesPt: Record<string, GameOverlay> = {
   },
   'skat': {
     name: "Skat",
+    tagline: "O maior jogo de cartas da Alemanha — aposte, pegue o Skat e declare.",
     players: "3 jogadores",
     description: "O Skat é o jogo de cartas nacional da Alemanha e um dos jogos de vazas mais exigentes do mundo. Um declarante aposta para jogar sozinho contra dois defensores; pegar o Skat (duas cartas escondidas) e escolher o tipo de jogo é um desafio quase enxadrístico.",
     objective: "Como declarante, cumprir o contrato (em geral 61 pontos de cartas ou mais). Como defensor, impedir isso.",

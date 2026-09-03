@@ -14,6 +14,7 @@ export type GameOverlay = Partial<Pick<Game,
 export const gamesDe: Record<string, GameOverlay> = {
   'high-card': {
     name: "High Card",
+    tagline: "Das einfachste Kartenspiel — die höchste Karte gewinnt.",
     players: "2–6 Spieler",
     description: "High Card ist der perfekte Einstieg in die Welt der Kartenspiele. In jeder Runde decken alle gleichzeitig eine Karte auf; wer die höchste hat, gewinnt alle Karten dieser Runde. Einfach, schnell und immer wieder spielbar.",
     objective: "Die meisten Karten sammeln, bis das Deck aufgebraucht ist.",
@@ -37,6 +38,7 @@ export const gamesDe: Record<string, GameOverlay> = {
   },
   'go-fish': {
     name: "Go Fish",
+    tagline: "Fragen, fischen und die meisten Quartette sammeln.",
     players: "2–4 Spieler",
     description: "Go Fish ist ein Klassiker, den Spieler jeden Alters lieben. Frage deine Mitspieler nach den Karten, die dir fehlen, sammle vollständige Vierersätze und gewinne mit den meisten davon.",
     objective: "Die meisten Vierersätze sammeln — alle 4 Karten eines Wertes.",
@@ -59,6 +61,7 @@ export const gamesDe: Record<string, GameOverlay> = {
   },
   'bluff': {
     name: "Bluff",
+    tagline: "Lüge, fordere heraus und werde deine Karten los.",
     players: "2–6 Spieler",
     description: "Bluff (auch bekannt als Mogeln, Cheat oder I Doubt It) ist ein Ablegespiel mit Täuschung. Du legst Karten verdeckt ab und nennst dabei einen Wert — lügen ist erlaubt. Jeder darf dich auffliegen lassen, und genau das macht jeden Zug spannend.",
     objective: "Als Erster alle Karten loswerden.",
@@ -82,6 +85,7 @@ export const gamesDe: Record<string, GameOverlay> = {
   },
   'president': {
     name: "Präsident",
+    tagline: "Erklimme die soziale Leiter — oder lande ganz unten.",
     players: "3–6 Spieler",
     description: "Präsident (Daifugō in Japan, Scum oder Asshole in den USA) ist ein Ablegespiel, bei dem alle darum wetteifern, ihre Hand zu leeren. Die Reihenfolge des Aussteigens bestimmt die Rangordnung der nächsten Runde, samt Pflichttausch zwischen Erstem und Letztem.",
     objective: "Als Erster alle Karten ablegen und Präsident werden.",
@@ -103,7 +107,8 @@ export const gamesDe: Record<string, GameOverlay> = {
     ],
   },
   'war': {
-    name: "Krieg",
+    name: "War",
+    tagline: "Aufdecken, kämpfen und alle Karten einsammeln.",
     players: "2 Spieler",
     description: "Krieg ist das Einsteigerspiel schlechthin — es gibt keine Entscheidungen zu treffen. Beide decken gleichzeitig ihre oberste Karte auf; die höhere gewinnt den Stich. Bei Gleichstand folgt ein \"Krieg\", der den Einsatz erhöht. Reiner Zufall, und trotzdem dauernd spannend.",
     objective: "Alle 52 Karten gewinnen.",
@@ -126,6 +131,7 @@ export const gamesDe: Record<string, GameOverlay> = {
   },
   'crazy-eights': {
     name: "Mau-Mau",
+    tagline: "Passende Farbe oder Zahl legen — die 8 ist immer wild.",
     players: "2–8 Spieler",
     description: "Mau-Mau ist der Ablege-Klassiker, der Uno inspiriert hat. Lege eine Karte, die in Farbe oder Wert zur obersten Ablage passt; 8er sind Joker und lassen dich eine beliebige Farbe ansagen. Wer zuerst die Hand leert, gewinnt.",
     objective: "Als Erster alle Karten ablegen.",
@@ -149,6 +155,7 @@ export const gamesDe: Record<string, GameOverlay> = {
   },
   'old-maid': {
     name: "Schwarzer Peter",
+    tagline: "Bleib nicht auf der ungepaarten Dame sitzen.",
     players: "2–8 Spieler",
     description: "Schwarzer Peter ist ein charmantes Paarespiel für jedes Alter. Eine Dame wird entfernt, sodass eine ohne Partnerin bleibt; lege alle deine Paare ab und hoffe, dass dir niemand die übrig gebliebene Dame unterschiebt.",
     objective: "Am Ende nicht auf der einzelnen, unpaarigen Dame sitzen bleiben, wenn alle anderen Karten abgelegt sind.",
@@ -170,7 +177,8 @@ export const gamesDe: Record<string, GameOverlay> = {
     ],
   },
   'sevens': {
-    name: "Siebener",
+    name: "Sevens",
+    tagline: "Baue von der 7 aus an — wer zuerst die Hand leert, gewinnt.",
     players: "2–7 Spieler",
     description: "Siebener (auch Fan Tan) gehört zu den weltweit am weitesten verbreiteten Kartenspielen. Es entstehen vier Reihen, eine je Farbe, jeweils ausgehend von der 7; in jedem Zug musst du eine Reihe verlängern oder passen. Halte deine Karten klug zurück, um andere zu blockieren.",
     objective: "Als Erster alle eigenen Karten ablegen.",
@@ -194,6 +202,7 @@ export const gamesDe: Record<string, GameOverlay> = {
   },
   'snap': {
     name: "Snap",
+    tagline: "Finde die Paare — und rufe zuerst.",
     players: "2–8 Spieler",
     description: "Snap ist ein Reaktionsspiel, das in Großbritannien und ganz Europa beliebt ist. Alle decken Karten auf ihren eigenen Stapel auf; sobald zwei offene Karten im Wert übereinstimmen, gewinnt der Erste, der \"Snap!\" ruft, die Stapel. Schnelligkeit schlägt hier jede Strategie.",
     objective: "Alle Karten gewinnen, indem du bei passenden Karten als Erster \"Snap!\" rufst.",
@@ -223,6 +232,7 @@ export const gamesDe: Record<string, GameOverlay> = {
         a: "Klassisches Hearts ist ein reines Vierpersonenspiel. Bei Vanikar kannst du mit weniger Menschen spielen und die freien Plätze mit KI-Gegnern besetzen — zwei Freunde plus zwei KI-Spieler funktionieren bestens." },
     ],
     name: "Hearts",
+    tagline: "Meide die Herzen — und hüte dich vor der Pik-Dame.",
     players: "4 Spieler",
     description: "Hearts ist ein klassisches Vermeidungsspiel: Du willst weder Herzkarten noch die gefürchtete Pik-Dame gewinnen. Sammelst du aber ALLE Strafkarten, schießt du den Mond ab und alle anderen kassieren stattdessen.",
     objective: "Die niedrigste Punktzahl haben, wenn ein Spieler 100 Punkte erreicht.",
@@ -246,6 +256,7 @@ export const gamesDe: Record<string, GameOverlay> = {
   },
   'spades': {
     name: "Spades",
+    tagline: "Reize clever. Pik ist immer Trumpf.",
     players: "4 Spieler (2 Teams)",
     description: "Spades ist das bekannteste Stichspiel für Partnerschaften aus Nordamerika. Jede Runde beginnt mit einer Ansage — dein Team muss genau so viele Stiche machen, wie angesagt. Zu wenige kosten Punkte; zu viele sammeln sich als \"Säcke\" an und werden am Ende bestraft.",
     objective: "Als erstes Team 500 Punkte erreichen.",
@@ -266,7 +277,8 @@ export const gamesDe: Record<string, GameOverlay> = {
     ],
   },
   'gin-rummy': {
-    name: "Gin Rummy",
+    name: "Gin Rommé",
+    tagline: "Klopfe, bevor es die anderen tun.",
     players: "2 Spieler",
     description: "Gin Rummy ist die beliebteste Rommé-Variante für zwei Personen, bekannt für die spannende Entscheidung zwischen Klopfen und Gin. Ziehen, ablegen, Kombinationen bauen — und klopfen, sobald deine losen Karten zusammen 10 Punkte oder weniger ergeben.",
     objective: "Als Erster 100 Punkte erreichen, indem du deine losen Karten auf 10 oder weniger senkst (Klopfen) oder auf 0 (Gin).",
@@ -291,6 +303,7 @@ export const gamesDe: Record<string, GameOverlay> = {
   },
   'euchre': {
     name: "Euchre",
+    tagline: "Bestimme den Trumpf. Hole drei Stiche. Beweise deinen Right Bower.",
     players: "4 Spieler (2 Teams)",
     description: "Euchre ist ein schnelles Stichspiel für Partnerschaften, das im Mittleren Westen der USA, in Kanada und Großbritannien enorm beliebt ist. Das Besondere: Der Trumpfbube (Right Bower) ist die höchste Karte, der Bube der gleichfarbigen Farbe (Left Bower) die zweithöchste.",
     objective: "Das erste Team mit 10 Punkten gewinnt, indem es nach der Trumpfansage mindestens 3 der 5 Stiche macht.",
@@ -313,6 +326,7 @@ export const gamesDe: Record<string, GameOverlay> = {
   },
   'cribbage': {
     name: "Cribbage",
+    tagline: "Stecke dich bis 121 vor — jede Kombination zählt.",
     players: "2 Spieler",
     description: "Cribbage ist ein englisches Spiel aus dem 17. Jahrhundert, berühmt für sein Steckbrett und die Tiefe seiner Wertung. Es hat zwei klar getrennte Phasen: das Abstecken (abwechselnd Karten legen) und das Zählen (Kombinationen der Hand werten).",
     objective: "Als Erster genau 121 Punkte auf dem Brett erreichen.",
@@ -336,6 +350,7 @@ export const gamesDe: Record<string, GameOverlay> = {
   },
   'canasta': {
     name: "Canasta",
+    tagline: "Bilde Meldungen aus 7 Karten und gehe zuerst aus.",
     players: "2–4 Spieler",
     description: "Canasta entstand in Montevideo, Uruguay, und eroberte in den 1950er-Jahren die Welt. Teams bauen Kombinationen aus 7 oder mehr Karten desselben Werts (die \"Canastas\") und dürfen dabei großzügig Joker einsetzen. Das Spiel verbindet Rommé-Aufbau mit Partnerstrategie.",
     objective: "Als erstes Team 5.000 Punkte erreichen, indem ihr Canastas vollendet und ausmacht.",
@@ -361,6 +376,7 @@ export const gamesDe: Record<string, GameOverlay> = {
   },
   'buraco': {
     name: "Buraco",
+    tagline: "Vervollständige deine Canastas — und schnapp dir den Pott.",
     players: "2–4 Spieler",
     description: "Buraco ist Italiens Geschenk an Südamerika, mitgebracht von Auswanderern, und heute eine nationale Leidenschaft in Brasilien und Argentinien. Zwei verdeckte \"Pots\" sorgen für einen dramatischen Nachschub mitten im Spiel; reine Buracos (lupenreine Folgen aus 7 Karten) bringen die höchsten Boni.",
     objective: "Als erstes Team 3.000 Punkte erreichen, indem ihr Kombinationen baut, Buracos vollendet und ausmacht.",
@@ -383,6 +399,7 @@ export const gamesDe: Record<string, GameOverlay> = {
   },
   'chinchon': {
     name: "Chinchón",
+    tagline: "Bilde Reihen und Sätze — Chinchón beendet die Runde sofort.",
     players: "2–6 Spieler",
     description: "Chinchón ist eine beliebte spanisch-argentinische Rommé-Variante, gespielt mit einem spanischen Deck aus 40 Karten. Baue Sätze und Folgen, um deine losen Karten zu senken — oder vollende alle 7 Karten derselben Farbe (Chinchón) und gewinne die Runde auf der Stelle.",
     objective: "So wenige Strafpunkte wie möglich sammeln. Wer 100 Punkte erreicht, scheidet aus; der letzte verbliebene Spieler gewinnt.",
@@ -407,6 +424,7 @@ export const gamesDe: Record<string, GameOverlay> = {
   },
   'briscola': {
     name: "Briscola",
+    tagline: "Hol dir die wertvollen Karten — Trumpf schlägt alles andere.",
     players: "2–4 Spieler",
     description: "Briscola ist Italiens beliebtestes Kartenspiel und in Spanien und Lateinamerika unter dem Namen Brisca ein Klassiker. Es gibt keine Bedienpflicht — steche deine Gegner, sammle die punktereichen Asse und Dreien und zieh im Punktestand davon.",
     objective: "Mehr als 60 der insgesamt 120 Kartenpunkte holen.",
@@ -431,6 +449,7 @@ export const gamesDe: Record<string, GameOverlay> = {
   },
   'truco': {
     name: "Truco",
+    tagline: "Bluffen, reizen, austricksen — das Kartenspiel Lateinamerikas.",
     players: "2–4 Spieler",
     description: "Truco ist ein Stich- und Bluffspiel, das in Brasilien, Argentinien und ganz Lateinamerika enorm beliebt ist. Die eigenwillige Kartenrangfolge, die gerufenen Wetten (Truco! Retruco! Vale Quatro!) und die Zeichen zwischen Partnern machen es einzigartig.",
     objective: "Wer als Erster (allein oder als Team) 12 Punkte erreicht, gewinnt die kurze Partie — 30 Punkte die lange.",
@@ -454,6 +473,7 @@ export const gamesDe: Record<string, GameOverlay> = {
   },
   'tien-len': {
     name: "Tiến Lên",
+    tagline: "Vietnams Big Two — wirf deine Karten vor allen anderen ab.",
     players: "2–4 Spieler",
     description: "Tiến Lên (vietnamesisch für \"aufsteigen\") ist Vietnams beliebtestes Kartenspiel und eines der meistgespielten in ganz Südostasien. Wie bei Big Two geht es darum, seine Karten als Erster loszuwerden; die Besonderheit sind die 2er als höchste Einzelkarten und die \"Bomben\", die jede Kombination schlagen.",
     objective: "Als Erster alle Karten aus der Hand ablegen.",
@@ -479,6 +499,7 @@ export const gamesDe: Record<string, GameOverlay> = {
   },
   'koi-koi': {
     name: "Koi-Koi",
+    tagline: "Kombiniere die Blumen — sag „Koi-Koi“ und riskiere alles.",
     players: "2 Spieler",
     description: "Koi-Koi wird mit dem wunderschönen Hanafuda-Deck aus 48 Karten gespielt, bei dem jede der 12 Farben für einen Monat und eine Pflanze steht. Passe Karten vom Tisch zusammen, um \"Yaku\" (wertende Kombinationen) zu bilden. Mit \"Koi-Koi\" spielst du weiter für mehr Punkte — riskierst aber, dass dein Gegner zuerst abschließt.",
     objective: "Über mehrere Runden hinweg die meisten Punkte sammeln, indem du Yaku vollendest.",
@@ -503,6 +524,7 @@ export const gamesDe: Record<string, GameOverlay> = {
   },
   'big-two': {
     name: "Big Two",
+    tagline: "Die 2 regiert — leere deine Hand als Erster.",
     players: "2–4 Spieler",
     description: "Big Two (大老二, Deuces) ist in Ost- und Südostasien enorm beliebt. Die 2er sind die höchsten Karten, die Farben entscheiden bei Gleichstand, und du kannst Einzelkarten, Paare, Drillinge oder starke Fünfkartenblätter legen, um vorn zu bleiben.",
     objective: "Als Erster alle Karten loswerden.",
@@ -528,6 +550,7 @@ export const gamesDe: Record<string, GameOverlay> = {
   },
   'court-piece': {
     name: "Court Piece",
+    tagline: "Gewinne zuerst 7 Stiche — und verteidige in der zweiten Hälfte.",
     players: "4 Spieler (2 Teams)",
     description: "Court Piece (Rang/Rung) ist eines der beliebtesten Stichspiele in Indien, Pakistan und dem Iran. Das Team, das die ersten 7 Stiche gewinnt, „schneidet den Hof“ — danach muss es verhindern, dass die Gegner in der zweiten Phase 7 Stiche in Folge holen.",
     objective: "Die Partie gewinnen, indem man sich den „Hof“ sichert (7 Stiche in der ersten Hälfte) und ihn in der zweiten verteidigt — oder alle 13 Stiche holt.",
@@ -552,6 +575,7 @@ export const gamesDe: Record<string, GameOverlay> = {
   },
   'mendikot': {
     name: "Mendikot",
+    tagline: "Sichere dir alle vier Zehnen — oder halte deine Gegner davon ab.",
     players: "4 Spieler (2 Teams)",
     description: "Mendikot ist das führende Kartenspiel in Maharashtra und Gujarat in Indien. Das Ziel klingt einfach: alle vier Zehner erobern. Wer alle vier holt, erzielt ein Mendikot — einen doppelt zählenden Kantersieg. Die gesamte Strategie dreht sich darum, Zehner zu schützen und zu jagen.",
     objective: "Alle vier Zehner erobern für ein Mendikot — oder die Mehrheit der Zehner, um die Runde zu gewinnen.",
@@ -575,7 +599,8 @@ export const gamesDe: Record<string, GameOverlay> = {
     ],
   },
   '29-game': {
-    name: "29-Spiel",
+    name: "29 Game",
+    tagline: "Reize bis 29 — hole die meisten Punkte, um deinen Kontrakt zu erfüllen.",
     players: "4 Spieler (2 Teams)",
     description: "Das 29-Spiel ist ein berühmtes Stichspiel aus Kerala in Südindien, das auch in Bangladesch und Nepal weit verbreitet ist. Der Name kommt von den 28 Kartenpunkten im 32-Karten-Deck (plus 1 für den letzten Stich). Man reizt darauf, diese Punkte mit nur 8 Karten pro Spieler und einem verdeckten Trumpf zu holen.",
     objective: "Das Team, das die Reizung gewinnt, muss mindestens so viele Kartenpunkte holen wie gereizt — sonst gewinnt das Gegenteam.",
@@ -601,6 +626,7 @@ export const gamesDe: Record<string, GameOverlay> = {
   },
   'sleep': {
     name: "Sleep",
+    tagline: "Sammle vier Gleiche und ruf es aus — wer zuletzt noch wach ist, verliert.",
     players: "2–6 Spieler",
     description: "Sleep ist ein schnelles, chaotisches Weitergabespiel ohne Gewinner — es gibt nur einen Verlierer. Die Karten wandern einzeln um den Tisch, während alle einen Vierling jagen. Sobald jemand ihn hat und „Sleep!“ ruft, lassen alle anderen alles fallen und wollen es ebenfalls rufen. Wer zuletzt noch wach ist, verliert die Runde.",
     objective: "Vier Karten desselben Werts sammeln und Sleep rufen — oder, wenn jemand schneller war, es vor allen außer einem rufen.",
@@ -626,7 +652,8 @@ export const gamesDe: Record<string, GameOverlay> = {
     ],
   },
   'indian-rummy': {
-    name: "Indisches Rommé",
+    name: "Indian Rummy",
+    tagline: "Bilde Folgen und Sätze — eine reine Folge ist Pflicht.",
     players: "2–6 Spieler",
     description: "Indisches Rommé (Paplu bzw. 13-Karten-Rommé) ist Indiens beliebtestes Kartenspiel. Jeder Spieler erhält 13 Karten und muss sie in gültige Folgen und Sätze ordnen. Die goldene Regel: Ohne mindestens eine reine Folge darfst du nicht auslegen.",
     objective: "Alle 13 Karten in gültige Folgen und Sätze ordnen — mit mindestens einer reinen Folge — und vor den Gegnern auslegen.",
@@ -660,7 +687,8 @@ export const gamesDe: Record<string, GameOverlay> = {
       { q: "Wie endet eine Runde Indischer Esel?",
         a: "Wer seine letzte Karte spielt, scheidet aus. Sobald nur noch eine Person Karten hält, endet die Runde sofort und diese Person verliert — selbst wenn ihr nur eine einzige Karte geblieben ist." },
     ],
-    name: "Indischer Esel",
+    name: "Indian Jackass",
+    tagline: "Wirf alle Karten ab — wer zuletzt Karten hält, verliert.",
     players: "2–6 Spieler",
     description: "Indischer Esel (auch Donkey genannt, oder wie auch immer man dasselbe Tier sonst nennt 😉) ist ein Stich- und Abwurfspiel ohne Gewinner — es gibt nur einen Verlierer. Bediene, solange du kannst, wirf deine Karten ab und sei bloß nicht der Letzte, der noch welche hält. Wer eine Runde verliert, beginnt die nächste mit einer Strafkarte, und gespielt wird, bis der Tisch aufhören mag.",
     objective: "Deine Hand leeren. Der letzte Spieler, der noch Karten hält, ist der Esel der Runde — der Verlierer.",
@@ -686,6 +714,7 @@ export const gamesDe: Record<string, GameOverlay> = {
   },
   'whist': {
     name: "Whist",
+    tagline: "Der Vorfahre des Bridge — Farbe bedienen und Stiche gewinnen.",
     players: "4 Spieler (2 Teams)",
     description: "Whist ist der große Urahn von Bridge und Spades, gespielt in den Salons des England des 18. Jahrhunderts. Kein Reizen, keine Trumpfansage — einfach bedienen, den Trumpf klug einsetzen und mehr Stiche machen, als euer Team angesagt hat.",
     objective: "Mit deinem Partner die meisten Stiche gewinnen. Für jeden Stich über 6 (das „Book“) gibt es 1 Punkt.",
@@ -709,6 +738,7 @@ export const gamesDe: Record<string, GameOverlay> = {
   },
   'durak': {
     name: "Durak",
+    tagline: "Greife an, verteidige — oder sei der Dummkopf.",
     players: "2–6 Spieler",
     description: "Durak (Дурак, „Narr“) ist Russlands beliebtestes Kartenspiel und in ganz Osteuropa ein Klassiker. Wer am Ende als Letzter noch Karten hält, ist der Durak — der Narr der Runde.",
     objective: "Alle Karten loswerden. Der letzte Spieler mit Karten auf der Hand ist der Durak (der Narr).",
@@ -733,6 +763,7 @@ export const gamesDe: Record<string, GameOverlay> = {
   },
   'scopa': {
     name: "Scopa",
+    tagline: "Fege den Tisch leer — Italiens Kartenspiel der schlauen Fänge.",
     players: "2–4 Spieler",
     description: "Scopa („Besen“) ist Italiens Nationalkartenspiel. In jedem Zug legst du eine Karte auf den Tisch und nimmst Karten desselben Werts oder Kombinationen, deren Summe dem Wert deiner Karte entspricht. Den ganzen Tisch leerzufegen — eine Scopa — bringt einen Bonuspunkt.",
     objective: "Mit den gesammelten Karten die meisten Punkte holen. Wer zuerst 11 (oder den vereinbarten Gesamtwert) erreicht, gewinnt.",
@@ -756,6 +787,7 @@ export const gamesDe: Record<string, GameOverlay> = {
   },
   'belote': {
     name: "Belote",
+    tagline: "Frankreichs Nationalkartenspiel — reizen, trumpfen und Coinché.",
     players: "4 Spieler (2 Teams)",
     description: "Belote ist Frankreichs beliebtestes Kartenspiel und in weiten Teilen Europas und des Nahen Ostens ein Klassiker. Seine Markenzeichen — Bube und Neun als die beiden höchsten Trümpfe, der Belote-Rebelote-Bonus und das Reizsystem — geben ihm eine Note, die kein anderes Stichspiel hat.",
     objective: "Den Kontrakt eures Teams erfüllen, indem ihr mindestens so viele Punkte aus Karten und Ansagen holt. Das erste Team mit 501 Punkten gewinnt.",
@@ -779,6 +811,7 @@ export const gamesDe: Record<string, GameOverlay> = {
   },
   'skat': {
     name: "Skat",
+    tagline: "Deutschlands größtes Kartenspiel — reizen, Skat aufnehmen und ansagen.",
     players: "3 Spieler",
     description: "Skat ist Deutschlands Nationalkartenspiel und eines der anspruchsvollsten Stichspiele der Welt. Ein Alleinspieler reizt, um allein gegen zwei Verteidiger zu spielen; den Skat aufzunehmen (zwei verdeckte Karten) und das Spiel anzusagen, ist eine fast schachartige Herausforderung.",
     objective: "Als Alleinspieler deinen Kontrakt erfüllen (meist 61 Kartenpunkte oder mehr). Als Verteidiger genau das verhindern.",

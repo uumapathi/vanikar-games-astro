@@ -13,7 +13,8 @@ export type GameOverlay = Partial<Pick<Game,
 
 export const gamesFr: Record<string, GameOverlay> = {
   'high-card': {
-    name: "Carte Haute",
+    name: "High Card",
+    tagline: "Le jeu de cartes le plus simple — la carte la plus haute gagne.",
     players: "2 à 6 joueurs",
     description: "Carte Haute est l’introduction parfaite aux jeux de cartes. À chaque manche, tous les joueurs retournent une carte en même temps ; celui qui a la plus forte remporte toutes les cartes jouées. Simple, rapide et inépuisable.",
     objective: "Récolter le plus de cartes possible avant que le paquet ne soit épuisé.",
@@ -37,6 +38,7 @@ export const gamesFr: Record<string, GameOverlay> = {
   },
   'go-fish': {
     name: "Go Fish",
+    tagline: "Demandez, pêchez et récoltez le plus de familles.",
     players: "2 à 4 joueurs",
     description: "Go Fish est un classique apprécié à tout âge. Demandez aux adversaires les cartes qu’il vous manque, constituez des carrés complets et récoltez-en le plus possible pour gagner.",
     objective: "Réunir le plus de carrés — des séries complètes des 4 cartes d’une même valeur.",
@@ -59,6 +61,7 @@ export const gamesFr: Record<string, GameOverlay> = {
   },
   'bluff': {
     name: "Bluff",
+    tagline: "Mentez, contestez et débarrassez-vous de vos cartes.",
     players: "2 à 6 joueurs",
     description: "Bluff (aussi appelé Menteur, Cheat ou I Doubt It) est un jeu de défausse et de tromperie. Vous posez des cartes face cachée en annonçant une valeur — mais vous pouvez mentir. N’importe qui peut vous démasquer, et c’est ce qui rend chaque tour électrique.",
     objective: "Être le premier à se débarrasser de toutes ses cartes.",
@@ -82,6 +85,7 @@ export const gamesFr: Record<string, GameOverlay> = {
   },
   'president': {
     name: "Président",
+    tagline: "Grimpez l'échelle sociale — ou finissez bon dernier.",
     players: "3 à 6 joueurs",
     description: "Président (Daifugō au Japon, Scum ou Asshole aux États-Unis) est un jeu de défausse où l’on court pour vider sa main. L’ordre d’arrivée fixe une hiérarchie pour la manche suivante, avec des échanges de cartes obligatoires entre le haut et le bas du classement.",
     objective: "Être le premier à se débarrasser de ses cartes et devenir Président.",
@@ -104,6 +108,7 @@ export const gamesFr: Record<string, GameOverlay> = {
   },
   'war': {
     name: "Bataille",
+    tagline: "Retournez, bataillez et raflez toutes les cartes.",
     players: "2 joueurs",
     description: "Bataille est le jeu de cartes pour débutants par excellence — aucune décision à prendre. Les deux joueurs retournent leur carte du dessus en même temps ; la plus forte remporte le pli. Les égalités déclenchent une \"bataille\" qui fait monter les enjeux. Du pur hasard, et une tension permanente.",
     objective: "Remporter les 52 cartes.",
@@ -125,7 +130,8 @@ export const gamesFr: Record<string, GameOverlay> = {
     ],
   },
   'crazy-eights': {
-    name: "Huit Américain",
+    name: "Huit américain",
+    tagline: "Suivez la couleur ou la valeur — les 8 sont toujours des jokers.",
     players: "2 à 8 joueurs",
     description: "Le Huit Américain est un classique de la défausse qui a inspiré le Uno. Posez une carte de la même couleur ou de la même valeur que la défausse ; les 8 sont des jokers et vous laissent annoncer la couleur de votre choix. Le premier à vider sa main gagne.",
     objective: "Être le premier à se défausser de toutes ses cartes.",
@@ -148,7 +154,8 @@ export const gamesFr: Record<string, GameOverlay> = {
     ],
   },
   'old-maid': {
-    name: "Le Vieux Garçon",
+    name: "Pouilleux",
+    tagline: "Ne restez pas avec la Dame sans paire.",
     players: "2 à 8 joueurs",
     description: "Le Vieux Garçon est un charmant jeu d’appariement pour tous les âges. On retire une dame afin qu’il en reste une sans paire ; défaussez toutes vos paires et priez pour qu’aucun adversaire ne vous refile la dame impossible à apparier.",
     objective: "Éviter de se retrouver avec l’unique dame dépareillée quand toutes les autres cartes ont été appariées.",
@@ -170,7 +177,8 @@ export const gamesFr: Record<string, GameOverlay> = {
     ],
   },
   'sevens': {
-    name: "Domino",
+    name: "Sevens",
+    tagline: "Construisez à partir du 7 — le premier à vider sa main gagne.",
     players: "2 à 7 joueurs",
     description: "Domino (ou Fan Tan) est l’un des jeux de cartes les plus répandus au monde. On construit quatre suites, une par couleur, à partir du 7 de chacune ; à chaque tour, il faut prolonger une suite ou passer. Gardez vos cartes intelligemment pour bloquer les autres.",
     objective: "Être le premier joueur à poser toutes ses cartes.",
@@ -194,6 +202,7 @@ export const gamesFr: Record<string, GameOverlay> = {
   },
   'snap': {
     name: "Snap",
+    tagline: "Repérez les paires — et criez le premier.",
     players: "2 à 8 joueurs",
     description: "Snap est un jeu de réflexes très apprécié au Royaume-Uni et dans toute l’Europe. Les joueurs retournent des cartes sur leur pile ; dès que deux cartes visibles ont la même valeur, le premier à crier \"Snap !\" remporte les piles. Ici, la vitesse bat toujours la stratégie.",
     objective: "Remporter toutes les cartes en criant \"Snap !\" le plus vite dès que deux cartes identiques apparaissent.",
@@ -222,7 +231,8 @@ export const gamesFr: Record<string, GameOverlay> = {
       { q: "Peut-on jouer au Cœurs à deux ?",
         a: "Le Cœurs traditionnel se joue strictement à quatre. Sur Vanikar, vous pouvez jouer à moins en complétant les places libres avec des adversaires IA — deux amis et deux joueurs IA fonctionnent très bien." },
     ],
-    name: "Cœurs",
+    name: "Dame de pique",
+    tagline: "Évitez les cœurs — et gare à la Dame de pique.",
     players: "4 joueurs",
     description: "Cœurs est un classique du jeu à plis où l’on cherche à éviter les cœurs et la redoutable dame de pique. Mais si vous ramassez TOUTES les cartes de pénalité, vous \"tirez la lune\" et ce sont les autres qui trinquent.",
     objective: "Avoir le score le plus bas lorsqu’un joueur atteint 100 points.",
@@ -246,6 +256,7 @@ export const gamesFr: Record<string, GameOverlay> = {
   },
   'spades': {
     name: "Spades",
+    tagline: "Enchérissez malin. Le pique est toujours atout.",
     players: "4 joueurs (2 équipes)",
     description: "Spades est le jeu de plis en équipe le plus emblématique d’Amérique du Nord. Chaque donne commence par une phase d’enchères — votre équipe doit remporter exactement le nombre de plis annoncé. En faire trop peu coûte des points ; en faire trop accumule des \"sacs\" qui finissent par pénaliser.",
     objective: "Être la première équipe à atteindre 500 points.",
@@ -266,7 +277,8 @@ export const gamesFr: Record<string, GameOverlay> = {
     ],
   },
   'gin-rummy': {
-    name: "Gin Rummy",
+    name: "Gin rami",
+    tagline: "Frappez avant qu'ils ne le fassent.",
     players: "2 joueurs",
     description: "Le Gin Rummy est la variante de rami à deux joueurs la plus appréciée, célèbre pour la tension du choix entre frapper ou viser le gin. Piochez, défaussez, construisez vos combinaisons — puis frappez quand vos cartes isolées totalisent 10 points ou moins.",
     objective: "Atteindre 100 points le premier en réduisant vos cartes isolées à 10 ou moins pour frapper, ou à 0 pour faire gin.",
@@ -291,6 +303,7 @@ export const gamesFr: Record<string, GameOverlay> = {
   },
   'euchre': {
     name: "Euchre",
+    tagline: "Choisissez l'atout. Remportez trois plis. Prouvez votre Right Bower.",
     players: "4 joueurs (2 équipes)",
     description: "L’Euchre est un jeu de plis en équipe très populaire dans le Midwest américain, au Canada et au Royaume-Uni. Sa particularité : le valet d’atout (Bower droit) est la carte la plus forte, et le valet de la couleur de même teinte (Bower gauche) arrive juste derrière.",
     objective: "La première équipe à 10 points gagne, en remportant au moins 3 des 5 plis après avoir nommé l’atout.",
@@ -313,6 +326,7 @@ export const gamesFr: Record<string, GameOverlay> = {
   },
   'cribbage': {
     name: "Cribbage",
+    tagline: "Avancez vos fiches jusqu'à 121 — chaque combinaison compte.",
     players: "2 joueurs",
     description: "Le Cribbage est un jeu anglais du XVIIe siècle, célèbre pour sa planche à fiches et la richesse de son décompte. Il comporte deux phases bien distinctes : le marquage (on pose les cartes à tour de rôle) et le comptage (on marque les combinaisons de sa main).",
     objective: "Être le premier à atteindre exactement 121 points sur la planche.",
@@ -336,6 +350,7 @@ export const gamesFr: Record<string, GameOverlay> = {
   },
   'canasta': {
     name: "Canasta",
+    tagline: "Formez des combinaisons de 7 cartes et sortez le premier.",
     players: "2 à 4 joueurs",
     description: "La Canasta est née à Montevideo, en Uruguay, et a conquis le monde dans les années 1950. Les équipes montent des combinaisons de 7 cartes ou plus de même valeur (les \"canastas\") en utilisant les jokers sans retenue. Elle mêle la construction du rami à la stratégie d’équipe.",
     objective: "Être la première équipe à 5 000 points en complétant des canastas et en terminant.",
@@ -361,6 +376,7 @@ export const gamesFr: Record<string, GameOverlay> = {
   },
   'buraco': {
     name: "Buraco",
+    tagline: "Complétez vos canastas — puis emparez-vous du pot.",
     players: "2 à 4 joueurs",
     description: "Le Buraco est le cadeau de l’Italie à l’Amérique du Sud, apporté par les immigrants, et c’est aujourd’hui une passion nationale au Brésil et en Argentine. Deux pioches cachées, les \"pots\", offrent une seconde vie en milieu de partie ; les Buracos propres (suites pures de 7 cartes) rapportent les meilleurs bonus.",
     objective: "Être la première équipe à 3 000 points en montant des combinaisons, en complétant des Buracos et en terminant.",
@@ -383,6 +399,7 @@ export const gamesFr: Record<string, GameOverlay> = {
   },
   'chinchon': {
     name: "Chinchón",
+    tagline: "Formez vos suites et vos brelans — le Chinchón clôt la manche instantanément.",
     players: "2 à 6 joueurs",
     description: "Le Chinchón est une variante espagnole et argentine du rami très appréciée, jouée avec un jeu espagnol de 40 cartes. Montez des brelans et des suites pour réduire vos cartes isolées — ou complétez les 7 cartes d’une même couleur (Chinchón) pour remporter la manche sur-le-champ.",
     objective: "Marquer le moins de points de pénalité possible. Un joueur atteignant 100 points est éliminé ; le dernier en lice gagne.",
@@ -407,6 +424,7 @@ export const gamesFr: Record<string, GameOverlay> = {
   },
   'briscola': {
     name: "Briscola",
+    tagline: "Prenez les cartes de valeur — l'atout bat tout le reste.",
     players: "2 à 4 joueurs",
     description: "La Briscola est le jeu de cartes le plus populaire d’Italie et un classique en Espagne et en Amérique latine sous le nom de Brisca. Aucune obligation de fournir — coupez vos adversaires, ramassez les as et les trois chargés de points et devancez-les au score.",
     objective: "Marquer plus de 60 des 120 points possibles.",
@@ -431,6 +449,7 @@ export const gamesFr: Record<string, GameOverlay> = {
   },
   'truco': {
     name: "Truco",
+    tagline: "Bluffez, misez et déjouez — le jeu de cartes de l'Amérique latine.",
     players: "2 à 4 joueurs",
     description: "Le Truco est un jeu de plis et de bluff extrêmement populaire au Brésil, en Argentine et dans toute l’Amérique latine. Sa hiérarchie de cartes très particulière, ses annonces de pari (Truco ! Retruco ! Vale Quatro !) et les signaux entre partenaires en font un jeu à part.",
     objective: "Le premier joueur ou la première équipe à 12 points l’emporte (partie courte) ou à 30 points (partie complète).",
@@ -454,6 +473,7 @@ export const gamesFr: Record<string, GameOverlay> = {
   },
   'tien-len': {
     name: "Tiến Lên",
+    tagline: "Le Big Two du Vietnam — défaussez vos cartes avant tout le monde.",
     players: "2 à 4 joueurs",
     description: "Le Tiến Lên (\"monter\" en vietnamien) est le jeu de cartes le plus populaire du Viêt Nam et l’un des plus pratiqués d’Asie du Sud-Est. Comme au Big Two, on court pour se défausser ; sa particularité, ce sont les 2, cartes isolées les plus fortes, et les \"bombes\" qui battent n’importe quelle combinaison.",
     objective: "Être le premier joueur à se défausser de toutes ses cartes.",
@@ -479,6 +499,7 @@ export const gamesFr: Record<string, GameOverlay> = {
   },
   'koi-koi': {
     name: "Koi-Koi",
+    tagline: "Associez les fleurs — dites « Koi-Koi » pour tout risquer.",
     players: "2 joueurs",
     description: "Le Koi-Koi se joue avec le magnifique jeu Hanafuda de 48 cartes, où chacune des 12 couleurs représente un mois et une plante. Appariez les cartes de la table pour former des \"yaku\" (combinaisons qui rapportent). Dire \"Koi-Koi\" permet de continuer pour marquer davantage — au risque de voir l’adversaire conclure avant vous.",
     objective: "Marquer le plus de points au fil des manches en complétant des yaku.",
@@ -503,6 +524,7 @@ export const gamesFr: Record<string, GameOverlay> = {
   },
   'big-two': {
     name: "Big Two",
+    tagline: "Le 2 fait la loi — videz votre main le premier.",
     players: "2 à 4 joueurs",
     description: "Le Big Two (大老二, Deuces) est extrêmement populaire en Asie de l’Est et du Sud-Est. Les 2 sont les cartes les plus fortes, les couleurs départagent les égalités, et vous pouvez poser des cartes seules, des paires, des brelans ou de puissantes mains de cinq cartes pour prendre l’avantage.",
     objective: "Être le premier joueur à se débarrasser de toutes ses cartes.",
@@ -528,6 +550,7 @@ export const gamesFr: Record<string, GameOverlay> = {
   },
   'court-piece': {
     name: "Court Piece",
+    tagline: "Remportez 7 plis en premier — puis défendez en seconde mi-temps.",
     players: "4 joueurs (2 équipes)",
     description: "Le Court Piece (Rang/Rung) est l’un des jeux de plis les plus populaires en Inde, au Pakistan et en Iran. L’équipe qui remporte les 7 premiers plis « coupe la cour » ; elle doit ensuite empêcher ses adversaires d’enchaîner 7 plis consécutifs dans la seconde phase.",
     objective: "Gagner la partie en s’assurant la « cour » (7 plis dans la première moitié) puis en la défendant dans la seconde, ou en remportant les 13 plis.",
@@ -552,6 +575,7 @@ export const gamesFr: Record<string, GameOverlay> = {
   },
   'mendikot': {
     name: "Mendikot",
+    tagline: "Capturez les quatre 10 — ou empêchez vos adversaires de le faire.",
     players: "4 joueurs (2 équipes)",
     description: "Le Mendikot est LE jeu de cartes du Maharashtra et du Gujarat, en Inde. L’objectif paraît simple : capturer les quatre 10. Les rafler tous, c’est un Mendikot, une victoire écrasante qui vaut double. Toute la stratégie consiste à protéger et à traquer les 10.",
     objective: "Capturer les quatre 10 pour réussir un Mendikot, ou en capturer la majorité pour gagner la manche.",
@@ -575,7 +599,8 @@ export const gamesFr: Record<string, GameOverlay> = {
     ],
   },
   '29-game': {
-    name: "Jeu du 29",
+    name: "29 Game",
+    tagline: "Enchérissez jusqu'à 29 — marquez le plus de points pour remplir votre contrat.",
     players: "4 joueurs (2 équipes)",
     description: "Le Jeu du 29 est un célèbre jeu de plis originaire du Kerala, dans le sud de l’Inde, très pratiqué aussi au Bangladesh et au Népal. Son nom vient des 28 points de cartes du jeu de 32 (plus 1 pour le dernier pli). On enchérit pour réaliser ces points avec seulement 8 cartes par joueur et un atout caché.",
     objective: "L’équipe qui remporte l’enchère doit réunir au moins autant de points de cartes que son contrat ; sinon, c’est l’équipe défenseure qui gagne.",
@@ -601,6 +626,7 @@ export const gamesFr: Record<string, GameOverlay> = {
   },
   'sleep': {
     name: "Sleep",
+    tagline: "Réunissez un carré et annoncez-le — le dernier encore éveillé perd.",
     players: "2 à 6 joueurs",
     description: "Sleep est un jeu de passe rapide et chaotique où il n’y a pas de gagnant, seulement un perdant. Les cartes circulent autour de la table une par une pendant que chacun traque un carré. Dès que quelqu’un y parvient et crie « Sleep ! », tous les autres lâchent tout et se précipitent pour le crier aussi. Le dernier encore éveillé perd la manche.",
     objective: "Réunir quatre cartes de même valeur et annoncer Sleep — ou, si quelqu’un vous devance, l’annoncer avant tous sauf un.",
@@ -626,7 +652,8 @@ export const gamesFr: Record<string, GameOverlay> = {
     ],
   },
   'indian-rummy': {
-    name: "Rami indien",
+    name: "Indian Rummy",
+    tagline: "Formez suites et brelans — la suite pure est non négociable.",
     players: "2 à 6 joueurs",
     description: "Le rami indien (Paplu, ou rami à 13 cartes) est le jeu de cartes le plus populaire d’Inde. Chaque joueur reçoit 13 cartes et doit les organiser en suites et en brelans valides. La règle d’or : il vous faut au moins une suite pure avant de pouvoir clôturer.",
     objective: "Organiser les 13 cartes en suites et brelans valides, avec au moins une suite pure, et clôturer avant vos adversaires.",
@@ -660,7 +687,8 @@ export const gamesFr: Record<string, GameOverlay> = {
       { q: "Comment se termine une manche d’Âne indien ?",
         a: "Les joueurs sortent au fur et à mesure qu’ils posent leur dernière carte. Quand un seul joueur détient encore des cartes, la manche s’arrête aussitôt et ce joueur perd — même s’il ne lui reste qu’une carte." },
     ],
-    name: "Âne indien",
+    name: "Indian Jackass",
+    tagline: "Défaussez toutes vos cartes — le dernier à en garder perd.",
     players: "2 à 6 joueurs",
     description: "L’Âne indien (aussi appelé Donkey, ou tout autre nom pour le même animal 😉) est un jeu de plis et de défausse sans gagnant — seulement un perdant. Fournissez tant que vous le pouvez, videz votre main et évitez d’être le dernier à détenir des cartes. Le perdant de chaque manche commence la suivante avec une carte de pénalité, et l’on joue jusqu’à ce que la table décide d’arrêter.",
     objective: "Vider votre main. Le dernier joueur détenant encore des cartes est l’Âne de la manche — le perdant.",
@@ -686,6 +714,7 @@ export const gamesFr: Record<string, GameOverlay> = {
   },
   'whist': {
     name: "Whist",
+    tagline: "L'ancêtre du Bridge — suivez la couleur et remportez les plis.",
     players: "4 joueurs (2 équipes)",
     description: "Le Whist est le grand ancêtre du bridge et du spades, joué dans les salons de l’Angleterre du XVIIIe siècle. Ni enchères ni annonce d’atout : il faut simplement fournir, utiliser l’atout à bon escient et remporter plus de plis que ce que votre camp a annoncé.",
     objective: "Remporter le plus de plis avec votre partenaire. On marque 1 point par pli au-delà de 6 (le « book »).",
@@ -709,6 +738,7 @@ export const gamesFr: Record<string, GameOverlay> = {
   },
   'durak': {
     name: "Durak",
+    tagline: "Attaquez, défendez — ou soyez le Fou.",
     players: "2 à 6 joueurs",
     description: "Le Durak (Дурак, « l’idiot ») est le jeu de cartes le plus aimé de Russie et un incontournable de toute l’Europe de l’Est. Le dernier joueur qui reste avec des cartes est le Durak — l’idiot de la manche.",
     objective: "Se débarrasser de toutes ses cartes. Le dernier joueur qui en détient encore est le Durak (l’idiot).",
@@ -733,6 +763,7 @@ export const gamesFr: Record<string, GameOverlay> = {
   },
   'scopa': {
     name: "Scopa",
+    tagline: "Balayez la table — le jeu de cartes italien des captures rusées.",
     players: "2 à 4 joueurs",
     description: "La Scopa (« balai ») est le jeu de cartes national de l’Italie. À chaque tour, vous posez une carte sur la table et capturez les cartes de même valeur ou les combinaisons dont la somme égale la valeur de votre carte. Balayer toute la table — une Scopa — rapporte un point bonus.",
     objective: "Marquer le plus de points grâce aux cartes capturées. Le premier à 11 (ou au total convenu) gagne.",
@@ -756,6 +787,7 @@ export const gamesFr: Record<string, GameOverlay> = {
   },
   'belote': {
     name: "Belote",
+    tagline: "Le jeu de cartes national de la France — enchères, atout et Coinche.",
     players: "4 joueurs (2 équipes)",
     description: "La Belote est le jeu de cartes préféré des Français et un classique dans une grande partie de l’Europe et du Moyen-Orient. Ses signes distinctifs — le valet et le neuf devenus les deux plus forts atouts, le bonus Belote-Rebelote et le système d’enchères — lui donnent une saveur unique parmi les jeux de plis.",
     objective: "Réaliser le contrat de votre équipe en totalisant au moins autant de points entre les cartes et les annonces. La première équipe à 501 points gagne.",
@@ -779,6 +811,7 @@ export const gamesFr: Record<string, GameOverlay> = {
   },
   'skat': {
     name: "Skat",
+    tagline: "Le plus grand jeu de cartes d'Allemagne — enchérissez, ramassez le Skat et déclarez.",
     players: "3 joueurs",
     description: "Le Skat est le jeu de cartes national de l’Allemagne et l’un des jeux de plis les plus exigeants au monde. Un déclarant enchérit pour jouer seul contre deux défenseurs ; ramasser le Skat (deux cartes cachées) puis choisir le type de jeu tient de la partie d’échecs.",
     objective: "En tant que déclarant, réaliser votre contrat (généralement 61 points de cartes ou plus). En tant que défenseur, l’en empêcher.",
