@@ -7,7 +7,7 @@
  *
  * On launch day: set IS_LAUNCHED to true.
  */
-export const IS_LAUNCHED = false;
+export const IS_LAUNCHED = true;
 
 import type { Locale } from '../i18n';
 
