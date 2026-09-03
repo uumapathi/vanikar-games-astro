@@ -9,6 +9,7 @@ const icons = {
   shield: '<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>',
   trophy: '<path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>',
   medal:  '<path d="M7.21 15 2.66 7.14a2 2 0 0 1 .13-2.2L4.4 2.8A2 2 0 0 1 6 2h12a2 2 0 0 1 1.6.8l1.6 2.14a2 2 0 0 1 .14 2.2L16.79 15"/><path d="M11 12 5.12 2.2"/><path d="m13 12 5.88-9.8"/><path d="M8 7h8"/><circle cx="12" cy="17" r="5"/><path d="M12 18v-2h-.5"/>',
+  mic:    '<path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><path d="M12 19v3"/><path d="M8 22h8"/>',
 };
 
 const lang = getLocale(Astro.currentLocale);
@@ -22,6 +23,8 @@ const itemsByLang = {
       points:['Multiple AI difficulty levels, from casual to cutthroat.','Play fully offline — no connection needed.','All games free during your 2-week trial.','After the trial: keep 3 games of your choice free forever for CPU play — no subscription needed.'] },
     { icon:icons.join,   cls:'icon-diamond', title:'Join a Table by Invite', desc:'Enter an invite code and take your seat in a private room.', premium:true,
       points:["Enter a friend's code and you're at the table in seconds.",'Invite-only — no strangers at your table.','Play with friends and family wherever they are.','Free during your 2-week trial, then part of Premium.'] },
+    { icon:icons.mic,    cls:'icon-diamond', title:'Voice Chat with Discord', desc:'Talk to the table as you play, and bring your Discord friends in.', premium:true, emphasis:true,
+      points:['Crystal-clear in-game voice chat at any table.','Link your Discord account and show your game status in your profile.','Invite Discord friends straight to your table.','Mute, push-to-talk, and per-player volume.','Included with Premium — free during your 2-week trial.'] },
     { icon:icons.shield, cls:'icon-purple',  title:'Clubs & Leagues',       desc:'Create or join a club and compete in weekly league standings.', soon:true,
       points:['Create a club, recruit members, and play together.','Club chat and shared tables.','Weekly league standings — every member’s results count.','Rise through the divisions together.'] },
     { icon:icons.trophy, cls:'icon-trophy',  title:'Tournaments',           desc:"Compete in brackets, earn trophies, prove you're champion.", soon:true,
@@ -36,6 +39,8 @@ const itemsByLang = {
       points:['Varios niveles de dificultad, de casual a implacable.','Juega totalmente sin conexión — no necesitas internet.','Todos los juegos gratis durante tu prueba de 2 semanas.','Tras la prueba: conserva 3 juegos a tu elección gratis para siempre en modo IA — sin suscripción.'] },
     { icon:icons.join,   cls:'icon-diamond', title:'Únete a una mesa por invitación', desc:'Ingresa un código de invitación y toma tu asiento en una sala privada.', premium:true,
       points:['Ingresa el código de un amigo y estarás en la mesa en segundos.','Solo por invitación — sin extraños en tu mesa.','Juega con amigos y familia estén donde estén.','Gratis durante tu prueba de 2 semanas; después, parte de Premium.'] },
+    { icon:icons.mic,    cls:'icon-diamond', title:'Chat de voz con Discord', desc:'Habla con la mesa mientras juegas y trae a tus amigos de Discord.', premium:true, emphasis:true,
+      points:['Chat de voz nítido en cualquier mesa.','Vincula tu cuenta de Discord y muestra tu estado de juego en tu perfil.','Invita a tus amigos de Discord directamente a tu mesa.','Silencio, pulsar para hablar y volumen por jugador.','Incluido con Premium — gratis durante tu prueba de 2 semanas.'] },
     { icon:icons.shield, cls:'icon-purple',  title:'Clubes y ligas',          desc:'Crea o únete a un club y compite en ligas semanales.', soon:true,
       points:['Crea un club, recluta miembros y jueguen juntos.','Chat de club y mesas compartidas.','Clasificación semanal de liga — cuentan los resultados de cada miembro.','Asciendan juntos de división.'] },
     { icon:icons.trophy, cls:'icon-trophy',  title:'Torneos',                 desc:'Compite en llaves, gana trofeos y demuestra que eres campeón.', soon:true,
@@ -50,6 +55,8 @@ const itemsByLang = {
       points:['Vários níveis de dificuldade de IA, do casual ao implacável.','Jogue totalmente offline — sem precisar de conexão.','Todos os jogos grátis durante seu teste de 2 semanas.','Após o teste: mantenha 3 jogos à sua escolha grátis para sempre no modo CPU — sem assinatura.'] },
     { icon:icons.join,   cls:'icon-diamond', title:'Entre em uma mesa por convite', desc:'Digite um código de convite e ocupe seu lugar em uma sala privada.', premium:true,
       points:['Digite o código de um amigo e você estará na mesa em segundos.','Somente por convite — sem estranhos na sua mesa.','Jogue com amigos e família onde quer que estejam.','Grátis durante seu teste de 2 semanas; depois, parte do Premium.'] },
+    { icon:icons.mic,    cls:'icon-diamond', title:'Chat de voz com Discord', desc:'Converse com a mesa enquanto joga e traga seus amigos do Discord.', premium:true, emphasis:true,
+      points:['Chat de voz nítido em qualquer mesa.','Vincule sua conta do Discord e mostre seu status de jogo no perfil.','Convide amigos do Discord direto para a sua mesa.','Mudo, apertar para falar e volume por jogador.','Incluído no Premium — grátis durante seu teste de 2 semanas.'] },
     { icon:icons.shield, cls:'icon-purple',  title:'Clubes e ligas',          desc:'Crie ou entre em um clube e dispute a classificação semanal da liga.', soon:true,
       points:['Crie um clube, recrute membros e joguem juntos.','Chat do clube e mesas compartilhadas.','Classificação semanal da liga — os resultados de cada membro contam.','Subam de divisão juntos.'] },
     { icon:icons.trophy, cls:'icon-trophy',  title:'Torneios',                desc:'Dispute chaves, ganhe troféus e prove que você é campeão.', soon:true,
@@ -64,7 +71,9 @@ const itemsByLang = {
       points:['Plusieurs niveaux de difficulté d’IA, du décontracté à l’impitoyable.','Jouez entièrement hors ligne — aucune connexion requise.','Tous les jeux gratuits pendant votre essai de 2 semaines.','Après l’essai : gardez 3 jeux de votre choix gratuits à vie en mode IA — sans abonnement.'] },
     { icon:icons.join,   cls:'icon-diamond', title:'Rejoignez une table sur invitation', desc:'Saisissez un code d’invitation et prenez place dans un salon privé.', premium:true,
       points:['Saisissez le code d’un ami et vous êtes à table en quelques secondes.','Sur invitation uniquement — pas d’inconnus à votre table.','Jouez avec vos amis et votre famille, où qu’ils soient.','Gratuit pendant votre essai de 2 semaines, puis inclus dans Premium.'] },
-    { icon:icons.shield, cls:'icon-purple',  title:'Clubs et ligues',         desc:'Créez ou rejoignez un club et disputez le classement hebdomadaire de la ligue.', soon:true,
+    { icon:icons.mic,    cls:'icon-diamond', title:'Chat vocal avec Discord', desc:'Parlez à la table en jouant et amenez vos amis Discord.', premium:true, emphasis:true,
+      points:['Chat vocal limpide à n’importe quelle table.','Reliez votre compte Discord et affichez votre statut de jeu dans votre profil.','Invitez vos amis Discord directement à votre table.','Sourdine, appuyer pour parler et volume par joueur.','Inclus avec Premium — gratuit pendant votre essai de 2 semaines.'] },
+    { icon:icons.shield, cls:'icon-purple',  title:'Clubs et ligues',         desc:'Créez ou rejoignez unclub et disputez le classement hebdomadaire de la ligue.', soon:true,
       points:['Créez un club, recrutez des membres et jouez ensemble.','Chat de club et tables partagées.','Classement de ligue hebdomadaire — les résultats de chaque membre comptent.','Grimpez les divisions ensemble.'] },
     { icon:icons.trophy, cls:'icon-trophy',  title:'Tournois',                desc:'Affrontez-vous en tableaux, gagnez des trophées et prouvez que vous êtes champion.', soon:true,
       points:['Éliminations directes en tableaux avec classement en direct.','Gagnez trophées et badges pour vos beaux parcours.','Des événements programmés dans toute la bibliothèque de jeux.'] },
@@ -78,6 +87,8 @@ const itemsByLang = {
       points:['Mehrere KI-Schwierigkeitsgrade, von locker bis gnadenlos.','Spiele komplett offline — keine Verbindung nötig.','Alle Spiele kostenlos während deiner 2-wöchigen Testphase.','Nach der Testphase: Behalte 3 Spiele deiner Wahl für immer kostenlos im KI-Modus — ganz ohne Abo.'] },
     { icon:icons.join,   cls:'icon-diamond', title:'Tritt per Einladung bei', desc:'Gib einen Einladungscode ein und nimm an einem privaten Tisch Platz.', premium:true,
       points:['Gib den Code eines Freundes ein und du sitzt in Sekunden am Tisch.','Nur auf Einladung — keine Fremden an deinem Tisch.','Spiel mit Freunden und Familie, egal wo sie sind.','Kostenlos während deiner 2-wöchigen Testphase, danach Teil von Premium.'] },
+    { icon:icons.mic,    cls:'icon-diamond', title:'Voice-Chat mit Discord',  desc:'Sprich beim Spielen mit dem Tisch und hol deine Discord-Freunde dazu.', premium:true, emphasis:true,
+      points:['Glasklarer Voice-Chat an jedem Tisch.','Verknüpfe dein Discord-Konto und zeige deinen Spielstatus im Profil.','Lade Discord-Freunde direkt an deinen Tisch ein.','Stummschalten, Push-to-Talk und Lautstärke pro Spieler.','In Premium enthalten — während deiner 2-wöchigen Testphase kostenlos.'] },
     { icon:icons.shield, cls:'icon-purple',  title:'Clubs & Ligen',           desc:'Gründe einen Club oder tritt einem bei und kämpfe um die wöchentliche Ligawertung.', soon:true,
       points:['Gründe einen Club, wirb Mitglieder an und spielt zusammen.','Club-Chat und gemeinsame Tische.','Wöchentliche Ligawertung — die Ergebnisse jedes Mitglieds zählen.','Steigt gemeinsam durch die Divisionen auf.'] },
     { icon:icons.trophy, cls:'icon-trophy',  title:'Turniere',                desc:'Tritt in Turnierbäumen an, hol dir Trophäen und beweise, dass du Champion bist.', soon:true,
@@ -92,6 +103,8 @@ const itemsByLang = {
       points:['कैज़ुअल से लेकर कड़े मुक़ाबले तक, कई AI कठिनाई स्तर।','पूरी तरह ऑफ़लाइन खेलें — इंटरनेट की ज़रूरत नहीं।','2 हफ़्ते के ट्रायल में सभी गेम मुफ़्त।','ट्रायल के बाद: अपनी पसंद के 3 गेम CPU मोड में हमेशा के लिए मुफ़्त रखें — कोई सब्सक्रिप्शन नहीं।'] },
     { icon:icons.join,   cls:'icon-diamond', title:'इनवाइट से टेबल जॉइन करें', desc:'इनवाइट कोड डालें और प्राइवेट रूम में अपनी सीट लें।', premium:true,
       points:['दोस्त का कोड डालें और सेकंडों में टेबल पर पहुँच जाएँ।','सिर्फ़ आमंत्रण से — आपकी टेबल पर कोई अजनबी नहीं।','दोस्तों और परिवार के साथ खेलें, चाहे वे कहीं भी हों।','2 हफ़्ते के ट्रायल में मुफ़्त, उसके बाद Premium का हिस्सा।'] },
+    { icon:icons.mic,    cls:'icon-diamond', title:'Discord के साथ वॉइस चैट', desc:'खेलते हुए मेज़ से बात करें और अपने Discord दोस्तों को बुलाएँ।', premium:true, emphasis:true,
+      points:['हर मेज़ पर साफ़-सुथरा इन-गेम वॉइस चैट।','अपना Discord खाता जोड़ें और प्रोफ़ाइल में अपना गेम स्टेटस दिखाएँ।','Discord दोस्तों को सीधे अपनी मेज़ पर आमंत्रित करें।','म्यूट, पुश-टू-टॉक और हर खिलाड़ी का अलग वॉल्यूम।','Premium में शामिल — 2 हफ़्ते के ट्रायल में मुफ़्त।'] },
     { icon:icons.shield, cls:'icon-purple',  title:'क्लब और लीग',             desc:'क्लब बनाएँ या उसमें शामिल हों और साप्ताहिक लीग स्टैंडिंग में मुक़ाबला करें।', soon:true,
       points:['क्लब बनाएँ, सदस्य जोड़ें और साथ खेलें।','क्लब चैट और साझा टेबल।','साप्ताहिक लीग स्टैंडिंग — हर सदस्य के नतीजे गिने जाते हैं।','साथ मिलकर डिवीज़नों में ऊपर चढ़ें।'] },
     { icon:icons.trophy, cls:'icon-trophy',  title:'टूर्नामेंट',               desc:'ब्रैकेट में मुक़ाबला करें, ट्रॉफ़ियाँ जीतें और साबित करें कि चैंपियन आप हैं।', soon:true,
@@ -105,7 +118,7 @@ const copy = {
   en: {
     tag: '♣ How do you want to play?', title: 'Pick Your Game Mode',
     subtitle: "Jump into solo practice, go live in multiplayer, or join a friend's table.",
-    availableNow: 'At Launch', comingSoon: 'Coming Soon',
+    availableNow: 'Available Now', comingSoon: 'Coming Soon',
     chipPremium: 'Premium', chipFree: 'Free',
     linkSoon: 'Premium subscribers get access first →',
     linkPremium: 'Included with Premium — try free for 2 weeks →',
@@ -114,7 +127,7 @@ const copy = {
   es: {
     tag: '♣ ¿Cómo quieres jugar?', title: 'Elige tu modo de juego',
     subtitle: 'Practica en solitario, juega en vivo en multijugador o únete a la mesa de un amigo.',
-    availableNow: 'En el lanzamiento', comingSoon: 'Próximamente',
+    availableNow: 'Disponible ahora', comingSoon: 'Próximamente',
     chipPremium: 'Premium', chipFree: 'Gratis',
     linkSoon: 'Los suscriptores Premium acceden primero →',
     linkPremium: 'Incluido con Premium — pruébalo gratis por 2 semanas →',
@@ -123,7 +136,7 @@ const copy = {
   pt: {
     tag: '♣ Como você quer jogar?', title: 'Escolha seu modo de jogo',
     subtitle: 'Pratique sozinho, jogue ao vivo no multijogador ou entre na mesa de um amigo.',
-    availableNow: 'No lançamento', comingSoon: 'Em breve',
+    availableNow: 'Disponível agora', comingSoon: 'Em breve',
     chipPremium: 'Premium', chipFree: 'Grátis',
     linkSoon: 'Assinantes Premium têm acesso primeiro →',
     linkPremium: 'Incluído no Premium — teste grátis por 2 semanas →',
@@ -132,7 +145,7 @@ const copy = {
   fr: {
     tag: '♣ Comment voulez-vous jouer ?', title: 'Choisissez votre mode de jeu',
     subtitle: 'Entraînez-vous en solo, jouez en direct en multijoueur ou rejoignez la table d’un ami.',
-    availableNow: 'Au lancement', comingSoon: 'Bientôt disponible',
+    availableNow: 'Disponible maintenant', comingSoon: 'Bientôt disponible',
     chipPremium: 'Premium', chipFree: 'Gratuit',
     linkSoon: 'Les abonnés Premium y accèdent en premier →',
     linkPremium: 'Inclus avec Premium — essai gratuit de 2 semaines →',
@@ -141,7 +154,7 @@ const copy = {
   de: {
     tag: '♣ Wie willst du spielen?', title: 'Wähl deinen Spielmodus',
     subtitle: 'Übe solo, spiel live im Multiplayer oder setz dich an den Tisch eines Freundes.',
-    availableNow: 'Zum Start', comingSoon: 'Demnächst',
+    availableNow: 'Jetzt verfügbar', comingSoon: 'Demnächst',
     chipPremium: 'Premium', chipFree: 'Kostenlos',
     linkSoon: 'Premium-Abonnenten erhalten zuerst Zugang →',
     linkPremium: 'In Premium enthalten — 2 Wochen gratis testen →',
@@ -150,7 +163,7 @@ const copy = {
   hi: {
     tag: '♣ आप कैसे खेलना चाहते हैं?', title: 'अपना गेम मोड चुनें',
     subtitle: 'अकेले अभ्यास करें, मल्टीप्लेयर में लाइव खेलें या किसी दोस्त की टेबल से जुड़ें।',
-    availableNow: 'लॉन्च पर', comingSoon: 'जल्द आ रहा है',
+    availableNow: 'अभी उपलब्ध', comingSoon: 'जल्द आ रहा है',
     chipPremium: 'Premium', chipFree: 'मुफ़्त',
     linkSoon: 'Premium सब्सक्राइबर्स को सबसे पहले एक्सेस →',
     linkPremium: 'Premium में शामिल — 2 हफ़्ते मुफ़्त आज़माएँ →',
@@ -174,7 +187,7 @@ const comingSoon   = all.filter(f =>  f.soon);
     <div class="group-label">{copy.availableNow}</div>
     <div class="features-list">
       {availableNow.map(f => (
-        <div class="feature-card">
+        <div class:list={['feature-card', { 'feature-card--star': f.emphasis }]}>
           <button class="feature-head" aria-expanded="false">
             <div class={`feature-icon ${f.cls}`}>
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
@@ -208,7 +221,7 @@ const comingSoon   = all.filter(f =>  f.soon);
     <div class="group-label group-label--soon">{copy.comingSoon}</div>
     <div class="features-list">
       {comingSoon.map(f => (
-        <div class="feature-card">
+        <div class:list={['feature-card', { 'feature-card--star': f.emphasis }]}>
           <button class="feature-head" aria-expanded="false">
             <div class={`feature-icon ${f.cls}`}>
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
@@ -275,6 +288,12 @@ const comingSoon   = all.filter(f =>  f.soon);
     box-shadow: var(--shadow-md), var(--glow-gold);
   }
   .feature-card:hover:not(.open) { transform: translateX(5px); }
+  /* Flagship premium feature — gold edge so it reads first in the list */
+  .feature-card--star {
+    border-color: var(--gold-border);
+    background: linear-gradient(180deg, var(--gold-subtle), transparent 70%), var(--bg-card);
+  }
+  .feature-card--star .feature-title { color: var(--gold-light); }
   .feature-head {
     display: flex; align-items: center; gap: 1.25rem;
     width: 100%; padding: 1.2rem 1.4rem;
