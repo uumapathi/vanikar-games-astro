@@ -138,7 +138,7 @@ const copy = {
     premiumMonthly: 'Prefer monthly? $1.99/month.',
     founderTag: 'Limited time',
     founderText: 'The first 1,000 subscribers become Founders — your price stays locked at $14.99/yr for 3 years from the date of subscription.',
-    founderAvail: 'of Founder spots available right now',
+    founderAvail: 'Hurry — only a limited number of Founder spots available.',
     premiumDesc: 'Everything, forever. New games for subscribers first.',
     premiumCta: 'Get Premium', premiumFine: 'Cancel anytime · Billed via App Store / Google Play',
     notePremium: 'premium games', notePick: '— pick any 3 to keep free after the trial, or subscribe for everything.',
@@ -161,7 +161,7 @@ const copy = {
     premiumMonthly: '¿Prefieres mensual? 1,99 $/mes.',
     founderTag: 'Oferta limitada',
     founderText: 'Los primeros 1.000 suscriptores se convierten en Fundadores: tu precio queda bloqueado en 14,99 $/año durante 3 años desde la fecha de suscripción.',
-    founderAvail: 'de las plazas de Fundador disponibles ahora mismo',
+    founderAvail: 'Date prisa: las plazas de Fundador son limitadas.',
     premiumDesc: 'Todo, para siempre. Los nuevos juegos llegan primero a los suscriptores.',
     premiumCta: 'Obtén Premium', premiumFine: 'Cancela cuando quieras · Facturado vía App Store / Google Play',
     notePremium: 'juegos premium', notePick: '— elige 3 para conservar gratis tras la prueba, o suscríbete para tenerlo todo.',
@@ -184,7 +184,7 @@ const copy = {
     premiumMonthly: 'Prefere mensal? US$ 1,99/mês.',
     founderTag: 'Tempo limitado',
     founderText: 'Os primeiros 1.000 assinantes viram Fundadores: seu preço fica travado em US$ 14,99/ano por 3 anos a partir da data da assinatura.',
-    founderAvail: 'das vagas de Fundador disponíveis agora',
+    founderAvail: 'Corra: as vagas de Fundador são limitadas.',
     premiumDesc: 'Tudo, para sempre. Jogos novos primeiro para assinantes.',
     premiumCta: 'Assine o Premium', premiumFine: 'Cancele quando quiser · Cobrado via App Store / Google Play',
     notePremium: 'jogos premium', notePick: '— escolha 3 para manter grátis após o teste, ou assine para ter tudo.',
@@ -207,7 +207,7 @@ const copy = {
     premiumMonthly: 'Vous préférez le mensuel ? 1,99 $/mois.',
     founderTag: 'Offre limitée',
     founderText: 'Les 1 000 premiers abonnés deviennent Fondateurs : votre prix reste bloqué à 14,99 $/an pendant 3 ans à compter de la date d’abonnement.',
-    founderAvail: 'des places Fondateur encore disponibles',
+    founderAvail: 'Dépêchez-vous : les places Fondateur sont en nombre limité.',
     premiumDesc: 'Tout, pour toujours. Les nouveaux jeux arrivent d’abord chez les abonnés.',
     premiumCta: 'Passez à Premium', premiumFine: 'Annulable à tout moment · Facturé via l’App Store / Google Play',
     notePremium: 'jeux premium', notePick: '— choisissez-en 3 à garder gratuitement après l’essai, ou abonnez-vous pour tout avoir.',
@@ -230,7 +230,7 @@ const copy = {
     premiumMonthly: 'Lieber monatlich? 1,99 $/Monat.',
     founderTag: 'Zeitlich begrenzt',
     founderText: 'Die ersten 1.000 Abonnenten werden Founder: Dein Preis bleibt ab dem Abschlussdatum 3 Jahre lang bei 14,99 $/Jahr.',
-    founderAvail: 'der Founder-Plätze sind jetzt noch frei',
+    founderAvail: 'Schnell sein: Die Founder-Plätze sind begrenzt.',
     premiumDesc: 'Alles, für immer. Neue Spiele zuerst für Abonnenten.',
     premiumCta: 'Hol dir Premium', premiumFine: 'Jederzeit kündbar · Abrechnung über App Store / Google Play',
     notePremium: 'Premium-Spiele', notePick: '— wähl 3 davon, die nach der Testphase kostenlos bleiben, oder abonniere für alles.',
@@ -253,7 +253,7 @@ const copy = {
     premiumMonthly: 'मासिक चाहिए? $1.99/माह।',
     founderTag: 'सीमित समय की पेशकश',
     founderText: 'पहले 1,000 सब्सक्राइबर Founder बनेंगे — सदस्यता की तारीख़ से 3 साल तक आपकी कीमत $14.99/वर्ष पर लॉक रहेगी।',
-    founderAvail: 'Founder स्थान अभी उपलब्ध हैं',
+    founderAvail: 'जल्दी करें — Founder स्थान सीमित हैं।',
     premiumDesc: 'सब कुछ, हमेशा के लिए। नए गेम्स सबसे पहले सब्सक्राइबर्स को।',
     premiumCta: 'Premium लें', premiumFine: 'कभी भी रद्द करें · App Store / Google Play से बिलिंग',
     notePremium: 'प्रीमियम गेम्स', notePick: '— ट्रायल के बाद मुफ़्त रखने के लिए कोई भी 3 चुनें, या सब कुछ पाने के लिए सब्सक्राइब करें।',
@@ -323,8 +323,7 @@ const copy = {
           <span class="founder-tag">🏅 {copy.founderTag}</span>
           <p class="founder-text">{copy.founderText}</p>
           <div class="founder-avail">
-            <div class="founder-bar" role="img" aria-label={`100% ${copy.founderAvail}`}><span></span></div>
-            <p class="founder-avail-text"><span class="founder-pct">100%</span> {copy.founderAvail}</p>
+            <p class="founder-avail-text">⏳ {copy.founderAvail}</p>
           </div>
         </div>
         <p class="price-desc">{copy.premiumDesc}</p>
@@ -405,20 +404,13 @@ const copy = {
     margin: 0; font-size: .82rem; line-height: 1.6; color: var(--gold-light);
   }
   /* Availability meter — green reads as "go", against the gold of the offer */
-  .founder-avail { margin-top: .75rem; }
-  .founder-bar {
-    height: 7px; border-radius: var(--radius-full); overflow: hidden;
-    background: rgba(0,0,0,.35); border: 1px solid rgba(122,204,122,.3);
-  }
-  .founder-bar span {
-    display: block; height: 100%; width: 100%;
-    background: linear-gradient(90deg, #7acc7a, #4e9e4e);
-  }
+  /* Scarcity line. Deliberately has no number: a live count needs a
+     subscriber backend, and a hardcoded one goes stale on the first sale. */
+  .founder-avail { margin-top: .7rem; padding-top: .7rem; border-top: 1px solid var(--gold-border); }
   .founder-avail-text {
-    margin: .4rem 0 0; font-size: .75rem; line-height: 1.5;
+    margin: 0; font-size: .76rem; line-height: 1.5;
     color: #7acc7a; font-weight: 600;
   }
-  .founder-pct { font-size: .95rem; font-weight: 800; letter-spacing: .01em; }
 
   .price-features { list-style: none; padding: 0; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: .45rem; }
   .price-features li { font-size: .875rem; color: var(--text-secondary); }
