@@ -7,45 +7,39 @@ const lang = getLocale(Astro.currentLocale);
 const href = (p: string) => localizedHref(p, lang);
 const copy = {
   en: {
-    tag: '♠ Launching Soon', title: 'Deal Yourself In',
+    tag: '♠ Get the App', title: 'Deal Yourself In',
     subtitle: 'Free to download on iOS and Android. No account required to start playing — just pick a game and go.',
-    iosLabel: 'Download on the', playLabel: 'Get it on', soon: 'Soon',
-    notifyTitle: '🔔 Get notified at launch', notifyBtn: 'Notify Me', notifySending: 'Sending…', notifyConfirm: "✓ You're on the list — we'll email you at launch!",
+    iosLabel: 'Download on the', playLabel: 'Get it on',
     note: 'Free to play  ·  iOS 16+  ·  Android 9+  ·  In English — more languages coming soon',
   },
   es: {
-    tag: '♠ Muy pronto', title: 'Reparte y juega',
+    tag: '♠ Consigue la app', title: 'Reparte y juega',
     subtitle: 'Descarga gratis en iOS y Android. No necesitas cuenta para empezar a jugar — elige un juego y listo.',
-    iosLabel: 'Descárgala en el', playLabel: 'Disponible en', soon: 'Pronto',
-    notifyTitle: '🔔 Recibe aviso en el lanzamiento', notifyBtn: 'Avisarme', notifySending: 'Enviando…', notifyConfirm: '✓ Estás en la lista — te escribiremos en el lanzamiento.',
+    iosLabel: 'Descárgala en el', playLabel: 'Disponible en',
     note: 'Gratis  ·  iOS 16+  ·  Android 9+  ·  En inglés — más idiomas próximamente',
   },
   pt: {
-    tag: '♠ Em breve', title: 'Entre na jogada',
+    tag: '♠ Baixe o app', title: 'Entre na jogada',
     subtitle: 'Baixe grátis no iOS e no Android. Não precisa de conta para começar a jogar — é só escolher um jogo e partir para a mesa.',
-    iosLabel: 'Baixar na', playLabel: 'Disponível no', soon: 'Em breve',
-    notifyTitle: '🔔 Seja avisado no lançamento', notifyBtn: 'Avise-me', notifySending: 'Enviando…', notifyConfirm: '✓ Você está na lista — enviaremos um e-mail no lançamento.',
+    iosLabel: 'Baixar na', playLabel: 'Disponível no',
     note: 'Grátis para jogar  ·  iOS 16+  ·  Android 9+  ·  Em inglês — mais idiomas em breve',
   },
   fr: {
-    tag: '♠ Bientôt disponible', title: 'À vous de jouer',
+    tag: '♠ Obtenir l’app', title: 'À vous de jouer',
     subtitle: 'Téléchargement gratuit sur iOS et Android. Aucun compte requis pour commencer — choisissez un jeu et lancez-vous.',
-    iosLabel: 'Télécharger dans l’', playLabel: 'Disponible sur', soon: 'Bientôt',
-    notifyTitle: '🔔 Soyez averti au lancement', notifyBtn: 'Me prévenir', notifySending: 'Envoi…', notifyConfirm: '✓ Vous êtes sur la liste — nous vous écrirons au lancement.',
+    iosLabel: 'Télécharger dans l’', playLabel: 'Disponible sur',
     note: 'Gratuit  ·  iOS 16+  ·  Android 9+  ·  En anglais — d’autres langues arrivent bientôt',
   },
   de: {
-    tag: '♠ Bald verfügbar', title: 'Misch dich ein',
+    tag: '♠ App holen', title: 'Misch dich ein',
     subtitle: 'Kostenlos für iOS und Android. Kein Konto nötig, um loszulegen — wähl einfach ein Spiel und spiel los.',
-    iosLabel: 'Laden im', playLabel: 'Jetzt bei', soon: 'Bald',
-    notifyTitle: '🔔 Zum Start benachrichtigt werden', notifyBtn: 'Benachrichtigen', notifySending: 'Wird gesendet…', notifyConfirm: '✓ Du stehst auf der Liste — wir melden uns zum Start.',
+    iosLabel: 'Laden im', playLabel: 'Jetzt bei',
     note: 'Kostenlos spielbar  ·  iOS 16+  ·  Android 9+  ·  Auf Englisch — weitere Sprachen folgen bald',
   },
   hi: {
-    tag: '♠ जल्द उपलब्ध', title: 'खेल में शामिल हों',
+    tag: '♠ ऐप पाएँ', title: 'खेल में शामिल हों',
     subtitle: 'iOS और Android पर मुफ़्त डाउनलोड करें। खेलना शुरू करने के लिए अकाउंट की ज़रूरत नहीं — बस एक गेम चुनें और खेलना शुरू करें।',
-    iosLabel: 'डाउनलोड करें', playLabel: 'उपलब्ध है', soon: 'जल्द',
-    notifyTitle: '🔔 लॉन्च पर सूचना पाएँ', notifyBtn: 'सूचित करें', notifySending: 'भेजा जा रहा है…', notifyConfirm: '✓ आप सूची में हैं — लॉन्च पर हम ईमेल करेंगे!',
+    iosLabel: 'डाउनलोड करें', playLabel: 'उपलब्ध है',
     note: 'खेलने के लिए मुफ़्त  ·  iOS 16+  ·  Android 9+  ·  अंग्रेज़ी में — और भाषाएँ जल्द आ रही हैं',
   },
 }[lang];
@@ -74,7 +68,6 @@ const copy = {
           <span class="btn-store-label">{copy.iosLabel}</span>
           <span class="btn-store-name">App Store</span>
         </div>
-        <span class="store-soon-pip">{copy.soon}</span>
       </button>
       <button type="button" data-store="Google Play" class="btn-store" aria-label="Get it on Google Play">
         <img class="btn-store-appicon" src="/favicon-32.png" srcset="/favicon-32.png 1x, /icon-180.png 2x" width="36" height="36" alt="" />
@@ -82,67 +75,12 @@ const copy = {
           <span class="btn-store-label">{copy.playLabel}</span>
           <span class="btn-store-name">Google Play</span>
         </div>
-        <span class="store-soon-pip">{copy.soon}</span>
       </button>
-    </div>
-
-    <div class="notify-block">
-      <p class="notify-title">{copy.notifyTitle}</p>
-      <form class="notify-form" id="notify-form-home" novalidate>
-        <input type="email" id="notify-email-home" placeholder="your@email.com"
-               required class="notify-input" aria-label="Email address" />
-        <button type="button" class="btn btn-primary notify-btn"
-                id="notify-btn-home" data-sending={copy.notifySending}>{copy.notifyBtn}</button>
-      </form>
-      <p class="notify-fine" id="notify-confirm-home" hidden>{copy.notifyConfirm}</p>
     </div>
 
     <p class="download-note">{copy.note}</p>
   </div>
 </section>
-
-<script>
-  // ─── Google Forms config (same form as the /ios and /android pages) ────────
-  const GF_FORM_ID     = '1FAIpQLSeEtXUBBZXTR602ygQLThvrW1MTFbmky5ZaMa3caILWr9S4nQ';
-  const GF_EMAIL_ENTRY = 'entry.302574150';
-  const GF_PLATFORM    = 'Homepage';
-  // ──────────────────────────────────────────────────────────────────────────
-
-  const btn     = document.getElementById('notify-btn-home')!;
-  const input   = document.getElementById('notify-email-home') as HTMLInputElement;
-  const form    = document.getElementById('notify-form-home')!;
-  const confirm = document.getElementById('notify-confirm-home')!;
-
-  btn.addEventListener('click', async () => {
-    if (!input.checkValidity() || !input.value) {
-      input.reportValidity();
-      return;
-    }
-
-    btn.textContent = btn.dataset.sending ?? 'Sending…';
-    btn.setAttribute('disabled', 'true');
-
-    try {
-      await fetch(
-        `https://docs.google.com/forms/d/e/${GF_FORM_ID}/formResponse`,
-        {
-          method:  'POST',
-          mode:    'no-cors',           // Google Forms doesn't allow CORS; response is opaque
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body:    new URLSearchParams({
-            [GF_EMAIL_ENTRY]:   input.value,
-            'entry.platform':   GF_PLATFORM,   // ignored if field doesn't exist — harmless
-          }).toString(),
-        }
-      );
-    } catch {
-      // no-cors always throws on response reading — submission still goes through
-    }
-
-    form.style.display = 'none';
-    confirm.hidden     = false;
-  });
-</script>
 
 <style>
   .download {
@@ -164,24 +102,4 @@ const copy = {
   .btn-store-appicon { width: 36px; height: 36px; border-radius: 9px; flex-shrink: 0; }
   .download-note { margin-top: 1.5rem; font-size: .8rem; color: var(--text-dim); }
 
-  /* Launch notification signup */
-  .notify-block {
-    max-width: 480px; margin: 2rem auto 0;
-  }
-  .notify-title { font-size: .9rem; font-weight: 600; color: var(--text-secondary); margin-bottom: .75rem; }
-  .notify-form  { display: flex; gap: .5rem; flex-wrap: wrap; justify-content: center; }
-  .notify-input {
-    flex: 1; min-width: 220px;
-    background: var(--bg-card); border: 1px solid var(--border);
-    border-radius: var(--radius-md); padding: .7rem 1rem;
-    font-size: .9rem; color: var(--text-primary);
-    transition: border-color var(--transition);
-  }
-  .notify-input:focus { outline: none; border-color: var(--gold); }
-  .notify-fine { font-size: .82rem; color: #7acc7a; margin-top: .75rem; }
-  .store-soon-pip {
-    margin-left: .4rem; font-size: .62rem; font-weight: 700; text-transform: uppercase;
-    background: rgba(120,80,200,.18); color: #b490f5; border: 1px solid rgba(180,144,245,.3);
-    border-radius: var(--radius-full); padding: .12rem .45rem; white-space: nowrap;
-  }
 </style>
