@@ -772,10 +772,13 @@ const northAmericaGames: Game[] = [
       },
     ],
     screenshots: [
-      { file: 'hearts/01-game-setup.png', title: 'Set up the table', caption: 'Hearts is a 4-player game — fill the remaining seats with AI and start.' },
-      { file: 'hearts/02-deal.png',       title: '13 cards each',    caption: 'The full deck is dealt; every player card shows round and total penalty points.' },
-      { file: 'hearts/03-pass.png',       title: 'Pass three cards', caption: 'Select 3 cards to pass — the direction rotates each round, and the fourth round has no pass.' },
-      { file: 'hearts/04-gameplay.png',   title: 'Trick play',       caption: 'Follow the led suit if you can; the highest card of that suit takes the trick.' },
+      { file: 'hearts/01-game-setup.png',     title: 'Set up the table',    caption: 'Hearts is a 4-player game — fill the remaining seats with AI and start.' },
+      { file: 'hearts/02-deal.png',           title: '13 cards each',       caption: 'The full deck is dealt; every player card shows round and total penalty points.' },
+      { file: 'hearts/03-pass.png',           title: 'Pass three cards',    caption: 'Select 3 cards to pass — the direction rotates each round, and the fourth round has no pass.' },
+      { file: 'hearts/04-opening-lead.png',   title: 'The 2♣ opens',        caption: 'Every hand begins with the 2 of clubs — whoever was dealt it leads the first trick.' },
+      { file: 'hearts/05-follow-suit.png',    title: 'Follow the led suit', caption: 'Holding a club, each player must play one — you cannot duck a suit you can follow.' },
+      { file: 'hearts/06-trick-builds.png',   title: 'The trick builds',    caption: 'The highest club on the table is winning, and the last player still has to answer it.' },
+      { file: 'hearts/07-trick-complete.png', title: 'Void — discard',      caption: 'Out of clubs, CPU 4 sheds the Q♦ instead; the highest club still takes the trick.' },
     ],
   },
   {
