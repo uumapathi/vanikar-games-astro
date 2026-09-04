@@ -9,7 +9,7 @@
  *   const copy = { en: {...}, es: {...} }[lang];
  */
 
-export const LOCALES = ['en', 'es', 'pt', 'fr', 'de', 'hi'] as const;
+export const LOCALES = ['en', 'es', 'pt', 'fr', 'de', 'hi', 'it', 'ja'] as const;
 export type Locale = (typeof LOCALES)[number];
 export const DEFAULT_LOCALE: Locale = 'en';
 
@@ -20,6 +20,8 @@ export const LOCALE_LABELS: Record<Locale, string> = {
   fr: 'Français',
   de: 'Deutsch',
   hi: 'हिन्दी',
+  it: 'Italiano',
+  ja: '日本語',
 };
 
 /** Narrow Astro.currentLocale (string | undefined) to a known Locale */
@@ -233,6 +235,58 @@ export const ui = {
     'footer.rights':       'सर्वाधिकार सुरक्षित।',
     'footer.trademarks':   'Apple, Apple लोगो और App Store, Apple Inc. के ट्रेडमार्क हैं। Google Play और Google Play लोगो, Google LLC के ट्रेडमार्क हैं। Discord, Discord Inc. का ट्रेडमार्क है। अन्य सभी उत्पाद नाम, लोगो, ब्रांड और चित्र अपने-अपने स्वामियों की संपत्ति हैं और केवल पहचान के लिए उपयोग किए गए हैं; इनके उपयोग का अर्थ कोई संबद्धता या समर्थन नहीं है। Vanikar LLC किसी तीसरे पक्ष के ट्रेडमार्क या चित्रों पर कोई अधिकार नहीं जताता।',
     'footer.contact':      'संपर्क',
+  },
+  it: {
+    'nav.home':      'Home',
+    'nav.games':     'Giochi',
+    'nav.community': 'Community',
+    'nav.pricing':   'Prezzi',
+    'nav.privacy':   'Privacy',
+    'nav.terms':     'Termini',
+    'nav.getApp':    'Scarica l’app',
+
+    'footer.tagline':      'Tavoli da gioco classici, splendidamente reinventati. Gioca online, allenati con l’IA e competi nei tornei — tutto in un’unica app.',
+    'footer.waysToPlay':   'Modi per giocare',
+    'footer.online':       'Giochi di carte online',
+    'footer.multiplayer':  'Giochi di carte multiplayer',
+    'footer.withFriends':  'Giochi di carte con gli amici',
+    'footer.vsComputer':   'Carte contro il computer',
+    'footer.offline':      'Giochi di carte offline',
+    'footer.classic':      'Giochi di carte classici',
+    'footer.company':      'Azienda',
+    'footer.about':        'Chi siamo',
+    'footer.privacy':      'Informativa sulla privacy',
+    'footer.terms':        'Termini di servizio',
+    'footer.support':      'Supporto',
+    'footer.rights':       'Tutti i diritti riservati.',
+    'footer.trademarks':   'Apple, il logo Apple e App Store sono marchi di Apple Inc. Google Play e il logo Google Play sono marchi di Google LLC. Discord è un marchio di Discord Inc. Tutti gli altri nomi di prodotti, loghi, marchi e immagini appartengono ai rispettivi proprietari e sono usati solo a scopo identificativo; il loro uso non implica affiliazione o approvazione. Vanikar LLC non rivendica alcuna proprietà su marchi o immagini di terzi.',
+    'footer.contact':      'Contatti',
+  },
+  ja: {
+    'nav.home':      'ホーム',
+    'nav.games':     'ゲーム',
+    'nav.community': 'コミュニティ',
+    'nav.pricing':   '料金',
+    'nav.privacy':   'プライバシー',
+    'nav.terms':     '利用規約',
+    'nav.getApp':    'アプリを入手',
+
+    'footer.tagline':      'クラシックなカードテーブルを、美しく再構築。オンラインで対戦し、AIと練習し、トーナメントで競う——すべてひとつのアプリで。',
+    'footer.waysToPlay':   '遊び方',
+    'footer.online':       'オンラインカードゲーム',
+    'footer.multiplayer':  'マルチプレイカードゲーム',
+    'footer.withFriends':  '友人とカードゲーム',
+    'footer.vsComputer':   'コンピュータとカードゲーム',
+    'footer.offline':      'オフラインカードゲーム',
+    'footer.classic':      'クラシックカードゲーム',
+    'footer.company':      '会社',
+    'footer.about':        '会社概要',
+    'footer.privacy':      'プライバシーポリシー',
+    'footer.terms':        '利用規約',
+    'footer.support':      'サポート',
+    'footer.rights':       'All rights reserved.',
+    'footer.trademarks':   'Apple、Appleロゴ、App StoreはApple Inc.の商標です。Google PlayおよびGoogle PlayロゴはGoogle LLCの商標です。DiscordはDiscord Inc.の商標です。その他すべての製品名、ロゴ、ブランド、画像はそれぞれの所有者に帰属し、識別目的でのみ使用されています。その使用は提携や推奨を意味するものではありません。Vanikar LLCは第三者の商標や画像に対する所有権を一切主張しません。',
+    'footer.contact':      'お問い合わせ',
   },
 } as const;
 

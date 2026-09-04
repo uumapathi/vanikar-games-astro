@@ -78,6 +78,18 @@ const C = {
         ctaH: 'पत्ते बाँटने को तैयार?',
         ctaP: 'Card Games by Vanikar ऐप iOS या Android पर मुफ़्त डाउनलोड करें — 2 हफ़्ते तक सभी खेल अनलॉक, क्रेडिट कार्ड की ज़रूरत नहीं।',
         pricing: 'कीमतें देखें' },
+  it: { browse: 'Sfoglia tutti i giochi', soon: 'In arrivo',
+        more: (names: string, k: number) => `Altri in arrivo: ${names} e altri ${k} sono in sviluppo.`,
+        seeAll: 'Vedi tutti i giochi in arrivo →', faq: 'Domande frequenti',
+        ctaH: 'Pronto a dare le carte?',
+        ctaP: 'Scarica gratis l’app Card Games by Vanikar su iOS o Android — tutti i giochi sbloccati per 2 settimane, senza carta di credito.',
+        pricing: 'Vedi i prezzi' },
+  ja: { browse: 'すべてのゲームを見る', soon: '近日公開',
+        more: (names: string, k: number) => `さらに追加予定：${names}、ほか${k}タイトルが開発中です。`,
+        seeAll: '近日公開のゲームをすべて見る →', faq: 'よくある質問',
+        ctaH: '配りますか？',
+        ctaP: 'Card Games by VanikarアプリをiOSまたはAndroidで無料ダウンロード——2週間すべてのゲームが解放、クレジットカード不要。',
+        pricing: '料金を見る' },
 }[lang];
 
 const iconModules = import.meta.glob<{ default: ImageMetadata }>('../assets/game-icons/*.{png,svg}', { eager: true });

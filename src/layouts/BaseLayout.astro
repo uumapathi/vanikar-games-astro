@@ -37,7 +37,7 @@ const {
 // than let the keyword tail get cut. Social cards keep the full title.
 const docTitle = title.length > 60 ? title.replace(/ \| Vanikar$/, '') : title;
 const ogImage  = new URL(image, Astro.site);
-const OG_LOCALE: Record<Locale, string> = { en: 'en_US', es: 'es_ES', pt: 'pt_BR', fr: 'fr_FR', de: 'de_DE', hi: 'hi_IN' };
+const OG_LOCALE: Record<Locale, string> = { en: 'en_US', es: 'es_419', pt: 'pt_BR', fr: 'fr_FR', de: 'de_DE', hi: 'hi_IN', it: 'it_IT', ja: 'ja_JP' };
 
 const locale       = getLocale(Astro.currentLocale);
 
@@ -56,6 +56,10 @@ const SP = {
         ios: 'Zum App Store', play: 'Zu Google Play', close: 'Schließen' },
   hi: { title: 'Card Games by Vanikar पाएँ', body: 'अपने डिवाइस के लिए स्टोर चुनें।',
         ios: 'App Store पर जाएँ', play: 'Google Play पर जाएँ', close: 'बंद करें' },
+  it: { title: 'Scarica Card Games by Vanikar', body: 'Scegli lo store per il tuo dispositivo.',
+        ios: 'Vai all’App Store', play: 'Vai a Google Play', close: 'Chiudi' },
+  ja: { title: 'Card Games by Vanikarを入手', body: 'お使いの端末のストアを選んでください。',
+        ios: 'App Storeへ', play: 'Google Playへ', close: '閉じる' },
 }[locale];
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const basePath     = unlocalizePath(Astro.url.pathname);

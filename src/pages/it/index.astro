@@ -1,0 +1,57 @@
+---
+import BaseLayout            from '../../layouts/BaseLayout.astro';
+import HeroSection           from '../../components/HeroSection.astro';
+import NoAdsSection         from '../../components/NoAdsSection.astro';
+import StatsSection          from '../../components/StatsSection.astro';
+import GamesMarquee          from '../../components/GamesMarquee.astro';
+import FeaturesSection       from '../../components/FeaturesSection.astro';
+import AppShowcaseSection    from '../../components/AppShowcaseSection.astro';
+import SocialFeaturesSection from '../../components/SocialFeaturesSection.astro';
+import PricingSection        from '../../components/PricingSection.astro';
+import HomeFaqSection        from '../../components/HomeFaqSection.astro';
+import DownloadSection       from '../../components/DownloadSection.astro';
+import { games, availableGames } from '../../data/games';
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Vanikar LLC',
+    url: 'https://vanikar.com',
+    logo: 'https://vanikar.games/icon-180.png',
+    sameAs: ['https://vanikar.games'],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'Card Games by Vanikar',
+    operatingSystem: 'iOS, Android',
+    applicationCategory: 'GameApplication',
+    applicationSubCategory: 'Card Game',
+    inLanguage: 'it',
+    description: `Gioca a ${availableGames.length} giochi di carte classici online o offline — Cuori, Spades, Scopa, Briscola, Big Two, Indian Rummy e altri — contro l’IA, gli amici o giocatori online. Altri ${games.length - availableGames.length} giochi in sviluppo.`,
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD', description: 'Prova gratuita di 2 settimane' },
+    publisher: { '@type': 'Organization', name: 'Vanikar LLC', url: 'https://vanikar.com' },
+  },
+];
+---
+<BaseLayout
+  title="Giochi di carte online – Scopa, Briscola, Cuori e altri | Vanikar"
+  description="Gioca ai classici di carte online o offline — Scopa, Briscola, Cuori, Big Two e altri — contro l’IA, gli amici o online. Senza pubblicità."
+>
+  <Fragment slot="head">
+    {jsonLd.map(schema => (
+      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    ))}
+  </Fragment>
+  <HeroSection />
+  <NoAdsSection />
+  <StatsSection />
+  <GamesMarquee />
+  <FeaturesSection />
+  <AppShowcaseSection />
+  <SocialFeaturesSection />
+  <PricingSection />
+  <HomeFaqSection />
+  <DownloadSection />
+</BaseLayout>

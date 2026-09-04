@@ -15,7 +15,7 @@ const { slug } = Astro.props;
 const lang = getLocale(Astro.currentLocale);
 const href = (p: string) => localizedHref(p, lang);
 const C    = hubCopy(slug, lang);
-const home = { en: 'Home', es: 'Inicio', pt: 'Início', fr: 'Accueil', de: 'Startseite', hi: 'होम' }[lang];
+const home = { en: 'Home', es: 'Inicio', pt: 'Início', fr: 'Accueil', de: 'Startseite', hi: 'होम', it: 'Home', ja: 'ホーム' }[lang];
 const pageUrl = `https://vanikar.games${href(`/${slug}`)}`;
 
 const jsonLd = [

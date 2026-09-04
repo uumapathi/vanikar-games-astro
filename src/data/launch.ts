@@ -73,6 +73,26 @@ const COPY = {
             notify: 'मुफ़्त डाउनलोड करें',
             gameCta: (g: string) => `${g} मुफ़्त खेलें` },
   },
+  it: {
+    pre:  { cta: 'In arrivo', ctaSecondary: 'Scopri i giochi', status: 'In arrivo',
+            ready: 'Pronto al lancio', readyCount: (n: number) => `${n} giochi pronti al lancio`,
+            notify: 'Avvisami al lancio',
+            gameCta: (g: string) => `Ottieni ${g} al lancio` },
+    post: { cta: '⬇ Scarica gratis', ctaSecondary: 'Scopri i giochi', status: 'Disponibile ora',
+            ready: 'Giocabile oggi', readyCount: (n: number) => `${n} giochi disponibili ora`,
+            notify: 'Scarica gratis',
+            gameCta: (g: string) => `Gioca a ${g} gratis` },
+  },
+  ja: {
+    pre:  { cta: '近日公開', ctaSecondary: 'ゲームを見る', status: '近日公開',
+            ready: 'リリース時に利用可能', readyCount: (n: number) => `${n}ゲームがリリース準備完了`,
+            notify: 'リリース時にお知らせ',
+            gameCta: (g: string) => `リリース時に${g}を入手` },
+    post: { cta: '⬇ 無料ダウンロード', ctaSecondary: 'ゲームを見る', status: '利用可能',
+            ready: '今すぐ遊べる', readyCount: (n: number) => `${n}ゲームが利用可能`,
+            notify: '無料ダウンロード',
+            gameCta: (g: string) => `${g}を無料でプレイ` },
+  },
 } as const;
 
 /** Launch-aware CTA and status wording for a locale. */

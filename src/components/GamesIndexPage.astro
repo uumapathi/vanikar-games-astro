@@ -29,6 +29,8 @@ const diffLabel: Record<string, Record<string, string>> = {
   fr: { Easy: 'Facile', Medium: 'Moyen', Hard: 'Difficile' },
   de: { Easy: 'Leicht', Medium: 'Mittel', Hard: 'Schwer' },
   hi: { Easy: 'आसान', Medium: 'मध्यम', Hard: 'कठिन' },
+  it: { Easy: 'Facile', Medium: 'Media', Hard: 'Difficile' },
+  ja: { Easy: 'かんたん', Medium: 'ふつう', Hard: 'むずかしい' },
 };
 
 const L = {
@@ -115,6 +117,34 @@ const L = {
     soonSub: 'ये खेल विकास में हैं और ऐप में जोड़े जाएँगे। Premium सदस्यों को सबसे पहले एक्सेस मिलता है।',
     ctaSub: 'सभी खेल 2 सप्ताह तक मुफ़्त आज़माएँ। क्रेडिट कार्ड की ज़रूरत नहीं।',
     ctaPricing: 'कीमतें देखें', ctaDownload: 'मुफ़्त डाउनलोड करें',
+  },
+  it: {
+    title: `${total} giochi di carte classici – Regole e strategia | Vanikar`,
+    description: `Tutti i ${total} giochi di carte di Vanikar — Cuori, Spades, Big Two, Durak, Belote, Scopa, Briscola, Skat e altri — con regole, come si gioca e consigli strategici per ciascuno.`,
+    h1: `Tutti i ${total} giochi di carte – Regole e come si gioca`,
+    lead: `${avail} giochi disponibili ora · altri ${csCount} in arrivo — tutti gratis durante la prova di 2 settimane.`,
+    premium: 'Premium', comingSoon: 'In arrivo',
+    availDesc: `${avail} giochi disponibili ora`, soonDesc: `${csCount} giochi in sviluppo`,
+    premiumTitle: 'Giochi Premium', soonTitle: 'In sviluppo',
+    gamesCount: (n: number) => `${n} giochi`,
+    premiumSub: 'I giochi più amati di ogni regione. Tutti sbloccati durante la prova. I nuovi giochi arrivano prima agli abbonati Premium.',
+    soonSub: 'Questi giochi sono in sviluppo e saranno aggiunti all’app. Gli abbonati Premium accedono per primi.',
+    ctaSub: 'Prova tutti i giochi gratis per 2 settimane. Senza carta di credito.',
+    ctaPricing: 'Vedi i prezzi', ctaDownload: 'Scarica gratis',
+  },
+  ja: {
+    title: `${total}種のクラシックカードゲーム – ルールと戦略 | Vanikar`,
+    description: `Vanikarの全${total}ゲーム——Hearts、Spades、Big Two、Durak、Belote、Indian Rummy、Skatなど——それぞれのルール、遊び方、戦略のコツ付き。`,
+    h1: `全${total}ゲーム – ルールと遊び方`,
+    lead: `${avail}ゲームが利用可能 · さらに${csCount}ゲームが近日公開——2週間のトライアル中はすべて無料。`,
+    premium: 'Premium', comingSoon: '近日公開',
+    availDesc: `${avail}ゲームが利用可能`, soonDesc: `${csCount}ゲームが開発中`,
+    premiumTitle: 'Premiumゲーム', soonTitle: '開発中',
+    gamesCount: (n: number) => `${n}ゲーム`,
+    premiumSub: '各地域で最も人気のゲーム。トライアル中は完全解放。新作はPremium会員に先行提供されます。',
+    soonSub: 'これらのゲームは開発中で、アプリに追加予定です。Premium会員が最初にアクセスできます。',
+    ctaSub: 'すべてのゲームを2週間無料でお試し。クレジットカード不要。',
+    ctaPricing: '料金を見る', ctaDownload: '無料ダウンロード',
   },
 }[lang];
 

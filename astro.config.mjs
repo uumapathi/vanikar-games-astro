@@ -5,7 +5,7 @@ import { isGameFullyLocalized } from './src/data/games.i18n';
 // Untranslated locale game pages are noindexed until their overlay carries a
 // full translation — keep them out of the sitemap too.
 const isUntranslatedGamePage = page => {
-  const m = page.match(/^https:\/\/vanikar\.games\/(es|pt|fr|de|hi)\/games\/([^/]+)\/$/);
+  const m = page.match(/^https:\/\/vanikar\.games\/(es|pt|fr|de|hi|it|ja)\/games\/([^/]+)\/$/);
   return m ? !isGameFullyLocalized(m[2], m[1]) : false;
 };
 
@@ -22,7 +22,7 @@ export default defineConfig({
         !isUntranslatedGamePage(page),
       i18n: {
         defaultLocale: 'en',
-        locales: { en: 'en', es: 'es', pt: 'pt', fr: 'fr', de: 'de', hi: 'hi' },
+        locales: { en: 'en', es: 'es', pt: 'pt', fr: 'fr', de: 'de', hi: 'hi', it: 'it', ja: 'ja' },
       },
     }),
   ],
@@ -30,7 +30,7 @@ export default defineConfig({
   trailingSlash: 'always',
   i18n: {
     defaultLocale: 'en',
-    locales: ['en', 'es', 'pt', 'fr', 'de', 'hi'],
+    locales: ['en', 'es', 'pt', 'fr', 'de', 'hi', 'it', 'ja'],
     routing: {
       prefixDefaultLocale: false,
     },

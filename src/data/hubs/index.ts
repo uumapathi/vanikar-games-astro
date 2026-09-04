@@ -10,6 +10,8 @@ import pt from './pt';
 import fr from './fr';
 import de from './de';
 import hi from './hi';
+import it from './it';
+import ja from './ja';
 
 export const HUB_SLUGS = [
   'online-card-games',
@@ -46,7 +48,7 @@ export interface HubCopy {
 
 export type HubSet = Record<HubSlug, HubCopy>;
 
-const HUBS: Record<Locale, HubSet> = { en, es, pt, fr, de, hi };
+const HUBS: Record<Locale, HubSet> = { en, es, pt, fr, de, hi, it, ja };
 
 export function hubCopy(slug: HubSlug, locale: Locale): HubCopy {
   return HUBS[locale]?.[slug] ?? en[slug];

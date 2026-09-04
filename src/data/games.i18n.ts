@@ -6,6 +6,8 @@ import { gamesPt } from './games.pt';
 import { gamesFr } from './games.fr';
 import { gamesDe } from './games.de';
 import { gamesHi } from './games.hi';
+import { gamesIt } from './games.it';
+import { gamesJa } from './games.ja';
 
 export type { GameOverlay };
 
@@ -16,6 +18,8 @@ const overlays: Partial<Record<Locale, Record<string, GameOverlay>>> = {
   fr: gamesFr,
   de: gamesDe,
   hi: gamesHi,
+  it: gamesIt,
+  ja: gamesJa,
 };
 
 /** Merge a locale's overlay onto a game; returns the game unchanged when there is none. */

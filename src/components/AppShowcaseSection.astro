@@ -41,6 +41,16 @@ const featuredByLang = {
     { image: shot('offline-game-selection'),  title: 'अपना गेम चुनें',     caption: 'बड़े आइकन और साफ़ खिलाड़ी संख्या वाले चुनिंदा कार्ड रूम — आपका अगला गेम बस एक टैप दूर।' },
     { image: shot('settings-appearance'),     title: 'इसे अपना बनाएँ',     caption: 'रॉयल फ़ेल्ट से मिडनाइट इंडिगो तक टेबल थीम — डार्क और लाइट, सब चमकते सुनहरे रंग में।' },
   ],
+  it: [
+    { image: shot('home'),                    title: 'Home',            caption: 'Entra in Pratica, tavoli Online, Club o Tornei direttamente dalla schermata iniziale.' },
+    { image: shot('offline-game-selection'),  title: 'Scegli il gioco', caption: 'Sale da gioco curate con icone grandi e numero di giocatori chiaro — la prossima partita è a un tocco.' },
+    { image: shot('settings-appearance'),     title: 'Rendila tua',     caption: 'Temi del tavolo da Royal Felt a Midnight Indigo — scuro e chiaro, tutti in oro brunito.' },
+  ],
+  ja: [
+    { image: shot('home'),                    title: 'ホーム',           caption: 'ホーム画面から練習、オンラインテーブル、クラブ、トーナメントへすぐに移動できます。' },
+    { image: shot('offline-game-selection'),  title: 'ゲームを選ぶ',     caption: '大きなアイコンと分かりやすい人数表示のゲームルーム——次の一局はワンタップ先です。' },
+    { image: shot('settings-appearance'),     title: '自分らしく',       caption: 'Royal FeltからMidnight Indigoまでのテーブルテーマ——ダークもライトも、すべて燻し金の仕上げ。' },
+  ],
 };
 const tourByLang = {
   en: [
@@ -91,6 +101,22 @@ const tourByLang = {
     { image: shot('settings'),            title: 'सेटिंग्स',             caption: 'ऐप को अपने टेबल स्टाइल के हिसाब से ढालें — साउंड, थीम और गेमप्ले विकल्प।' },
     { image: shot('settings-animations'), title: 'एनिमेशन',             caption: 'कार्ड बाँटने और चाल की एनिमेशन गति चुनें — फुर्तीली या सिनेमाई, आपकी मर्ज़ी।' },
   ],
+  it: [
+    { image: shot('slide-menu'),          title: 'Tutto a portata di mano', caption: 'Profilo, impostazioni e note legali in un unico menu laterale — gioca come ospite o accedi.' },
+    { image: shot('profile'),             title: 'Il tuo profilo',          caption: 'Scegli avatar e nome visualizzato — è così che gli altri ti vedono nelle lobby e nelle sale.' },
+    { image: shot('login'),               title: 'Accedi',                  caption: 'Accedi per sincronizzare profilo, statistiche e abbonamento su tutti i dispositivi.' },
+    { image: shot('register'),            title: 'Crea un account',         caption: 'Una registrazione rapida sblocca il gioco online, i Club e i Tornei.' },
+    { image: shot('settings'),            title: 'Impostazioni',            caption: 'Regola l’app al tuo stile di gioco — suoni, temi e opzioni di partita.' },
+    { image: shot('settings-animations'), title: 'Animazioni',              caption: 'Imposta la velocità delle animazioni di distribuzione e gioco — scattante o cinematografica, decidi tu.' },
+  ],
+  ja: [
+    { image: shot('slide-menu'),          title: 'すべてが手の届く場所に', caption: 'プロフィール、設定、法的情報をひとつのスライドメニューに——ゲストで遊ぶか、ログインするか。' },
+    { image: shot('profile'),             title: 'プロフィール',           caption: 'アバターと表示名を選びましょう——ロビーやルームで他のプレイヤーに見える名前です。' },
+    { image: shot('login'),               title: 'サインイン',             caption: 'ログインすると、プロフィール、成績、サブスクリプションが端末間で同期されます。' },
+    { image: shot('register'),            title: 'アカウント作成',         caption: '簡単な登録で、オンライン対戦、クラブ、トーナメントが解放されます。' },
+    { image: shot('settings'),            title: '設定',                   caption: 'サウンド、テーマ、ゲームプレイの各オプションを、自分のスタイルに合わせて調整。' },
+    { image: shot('settings-animations'), title: 'アニメーション',         caption: '配札やプレイのアニメーション速度を設定——きびきびでも映画のようでも、お好みで。' },
+  ],
 };
 
 const sectionCopy = {
@@ -100,6 +126,8 @@ const sectionCopy = {
   fr: { tag: '♠ Au cœur de l’app', title: 'Faites le tour', subtitle: 'De vrais écrans de l’app — une table de cartes magnifiquement soignée dans votre poche.' },
   de: { tag: '♠ Ein Blick in die App', title: 'Mach die Tour', subtitle: 'Echte Screens aus der App — ein liebevoll gestalteter Kartentisch für deine Hosentasche.' },
   hi: { tag: '♠ ऐप के अंदर', title: 'टूर कीजिए', subtitle: 'ऐप की असली स्क्रीनें — शानदार ढंग से तैयार की गई ताश की टेबल आपकी जेब में।' },
+  it: { tag: '♠ Dentro l’app', title: 'Fai il tour', subtitle: 'Schermate reali dell’app — un tavolo da gioco curato nei dettagli, in tasca.' },
+  ja: { tag: '♠ アプリの中へ', title: 'ツアーへ', subtitle: 'アプリの実際の画面——美しく仕上げられたカードテーブルを、ポケットに。' },
 }[lang];
 
 const featured = featuredByLang[lang];

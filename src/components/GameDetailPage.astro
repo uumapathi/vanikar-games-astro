@@ -40,6 +40,8 @@ const diffLabel: Record<string, string> = {
   fr: ({ Easy: 'Facile', Medium: 'Moyen', Hard: 'Difficile' } as Record<string, string>)[game.difficulty],
   de: ({ Easy: 'Leicht', Medium: 'Mittel', Hard: 'Schwer' } as Record<string, string>)[game.difficulty],
   hi: ({ Easy: 'आसान', Medium: 'मध्यम', Hard: 'कठिन' } as Record<string, string>)[game.difficulty],
+  it: ({ Easy: 'Facile', Medium: 'Media', Hard: 'Difficile' } as Record<string, string>)[game.difficulty],
+  ja: ({ Easy: 'かんたん', Medium: 'ふつう', Hard: 'むずかしい' } as Record<string, string>)[game.difficulty],
 };
 
 const n = game.name;
@@ -437,6 +439,136 @@ const L = {
             a: `हाँ — iOS या Android पर Vanikar का Card Games ऐप डाउनलोड करें और ${n} 2 हफ़्ते मुफ़्त खेलें, क्रेडिट कार्ड की ज़रूरत नहीं।` },
         ],
   },
+  it: {
+    pageTitle: soon
+      ? `${n} – Regole, come si gioca e strategia | Vanikar`
+      : `Gioca a ${n} online – Regole, punteggio e strategia | Vanikar`,
+    pageDescription: soon
+      ? `Regole, punteggio e strategia di ${n}, passo dopo passo. ${game.players}. In arrivo su Vanikar: gioca contro l’IA, gli amici o online.`
+      : `Gioca a ${n} online con gli amici a tavoli privati, contro giocatori reali o l’IA. Regole, punteggio e strategia di ${n}. ${game.players}.`,
+    heroTitle: soon ? n : `Gioca a ${n} online`,
+    heroDifficulty: `Difficoltà ${diffLabel.it.toLowerCase()}`,
+    soonBanner: 'Questo gioco è in sviluppo e non è ancora disponibile. Gli abbonati Premium avranno accesso per primi al lancio.',
+    soonBannerTag: 'In arrivo', soonBannerLink: 'Passa a Premium →',
+    backLink: '← Tutti i giochi',
+    premium: 'Premium',
+    players: 'giocatori', difficultyWord: 'difficoltà',
+    breadcrumbHome: 'Home', breadcrumbGames: 'Giochi',
+    waysTitle: `🎮 Modi per giocare a ${n}`,
+    wayOnlineH: `Crea un tavolo di ${n}`,
+    wayOnlineP: soon
+      ? `Quando ${n} uscirà, creerai il tuo tavolo in pochi secondi, con un codice invito per far sedere esattamente chi vuoi.`
+      : `Crea il tuo tavolo di ${n} in pochi secondi — scegli i posti, condividi il codice invito e riempi i posti vuoti con avversari IA.`,
+    wayFriendsH: `Unisciti a un tavolo di ${n} su invito`,
+    wayFriendsP: soon
+      ? `Unirsi sarà semplice come inserire un codice tavolo — un tocco e sei seduto alla partita di ${n} di un amico.`
+      : `Inserisci il codice invito di un amico e prendi posto al suo tavolo di ${n} — nessuno sconosciuto, solo la tua compagnia.`,
+    wayCpuH: `Gioca a ${n} contro il computer`,
+    wayCpuP: soon
+      ? `Avversari IA intelligenti con più livelli di difficoltà renderanno facile imparare ${n} e allenare la strategia da solo.`
+      : `Allenati a ${n} contro avversari IA intelligenti con più livelli di difficoltà — il modo perfetto per imparare il gioco o provare nuove strategie.`,
+    wayOfflineH: `Gioca a ${n} offline`,
+    wayOfflineP: soon
+      ? `${n} supporterà il gioco offline contro il computer, così potrai giocare ovunque — senza connessione internet.`
+      : `Niente connessione? Nessun problema. Gioca a ${n} offline contro il computer, ovunque tu sia.`,
+    hObjective: '🎯 Obiettivo', hSetup: `🃏 Preparazione e regole di ${n}`, hHowTo: `▶ Come si gioca a ${n}`,
+    hGuide: '📖 Guida dettagliata', hScoring: `📊 Punteggio di ${n}`, hFaq: `❓ ${n} — Domande frequenti`,
+    quickFacts: 'In breve', factPlayers: 'Giocatori', factDifficulty: 'Difficoltà', factTier: 'Piano',
+    tipsTitle: `💡 Consigli strategici per ${n}`,
+    sidebarCta: `Gioca a ${n} gratis per 2 settimane — senza carta di credito.`,
+    ctaDownload: 'Scarica gratis', ctaPricing: 'Vedi i prezzi',
+    shotsTitle: `📱 ${n} nell’app`, shotsSub: 'Una partita vera al tavolo, passo dopo passo.',
+    moreGames: 'Altri giochi', viewAll: `Vedi tutti i ${games.length} giochi`,
+    trialOffer: 'Prova gratuita di 2 settimane',
+    faqs: soon
+      ? [
+          { q: `Quanti giocatori servono per ${n}?`,
+            a: `${n} si gioca in ${game.playerCount} giocatori. Su Vanikar i posti vuoti possono essere occupati da avversari IA, così puoi sempre iniziare una partita.` },
+          { q: `Quando arriva ${n} su Vanikar?`,
+            a: `${n} è in sviluppo. Gli abbonati Premium avranno accesso per primi al lancio — scarica l’app per essere pronto dal primo giorno.` },
+          { q: `Potrò giocare a ${n} contro il computer?`,
+            a: `Sì. Come ogni gioco Vanikar, ${n} supporterà il gioco contro avversari IA intelligenti con più livelli di difficoltà, oltre al multiplayer online e ai tavoli privati con gli amici.` },
+          { q: `${n} è gratis?`,
+            a: `L’app Card Games by Vanikar è gratuita su iOS e Android, e ogni gioco è gratis per 2 settimane — senza carta di credito.` },
+        ]
+      : [
+          { q: `Quanti giocatori servono per ${n}?`,
+            a: `${n} si gioca in ${game.playerCount} giocatori. Su Vanikar i posti vuoti possono essere occupati da avversari IA, così puoi sempre iniziare una partita.` },
+          { q: `Posso giocare a ${n} contro il computer?`,
+            a: `Sì — gioca a ${n} contro avversari IA intelligenti con più livelli di difficoltà. È il modo perfetto per imparare il gioco o affinare la strategia.` },
+          { q: `Posso giocare a ${n} online con gli amici?`,
+            a: `Sì. Crea un tavolo privato nell’app Vanikar e invita amici e famiglia a giocare a ${n} insieme online, ovunque si trovino.` },
+          { q: `Posso giocare a ${n} offline?`,
+            a: `Sì — ${n} supporta il gioco offline contro il computer, così puoi giocare senza connessione internet.` },
+          { q: `${n} è gratis?`,
+            a: `Sì — scarica l’app Card Games by Vanikar su iOS o Android e gioca a ${n} gratis per 2 settimane, senza carta di credito.` },
+        ],
+  },
+  ja: {
+    pageTitle: soon
+      ? `${n} – ルール・遊び方・戦略 | Vanikar`
+      : `${n}をオンラインでプレイ – ルール・得点・戦略 | Vanikar`,
+    pageDescription: soon
+      ? `${n}のルール、得点、戦略をステップごとに解説。${game.players}。Vanikarアプリに近日登場——AI、友人、オンラインで対戦。`
+      : `${n}をオンラインで——プライベートテーブルで友人と、実際のプレイヤーやスマートAIと対戦。${n}のルール、得点、戦略を解説。${game.players}。`,
+    heroTitle: soon ? n : `${n}をオンラインでプレイ`,
+    heroDifficulty: `難易度：${diffLabel.ja}`,
+    soonBanner: 'このゲームは開発中で、まだプレイできません。リリース時にはPremium会員が最初にアクセスできます。',
+    soonBannerTag: '近日公開', soonBannerLink: 'Premiumを入手 →',
+    backLink: '← すべてのゲーム',
+    premium: 'Premium',
+    players: '人', difficultyWord: '難易度',
+    breadcrumbHome: 'ホーム', breadcrumbGames: 'ゲーム',
+    waysTitle: `🎮 ${n}の遊び方`,
+    wayOnlineH: `${n}のテーブルを作る`,
+    wayOnlineP: soon
+      ? `${n}のリリース後は、数秒で自分のテーブルを作り、招待コードを取得して、遊びたい相手だけを迎えられます。`
+      : `数秒で${n}のテーブルを作成——席数を選び、招待コードを共有し、空席はAI対戦相手で埋められます。`,
+    wayFriendsH: `招待で${n}のテーブルに参加`,
+    wayFriendsP: soon
+      ? `参加はテーブルコードを入力するだけ——ワンタップで友人の${n}の席に着けます。`
+      : `友人の招待コードを入力して、${n}のテーブルの席へ——知らない人はいません、仲間だけです。`,
+    wayCpuH: `コンピュータと${n}をプレイ`,
+    wayCpuP: soon
+      ? `複数の難易度を持つスマートなAI対戦相手で、${n}を覚えたりひとりで戦略を練習したりが簡単に。`
+      : `複数の難易度を持つスマートなAI相手に${n}を練習——ゲームを覚えるにも新しい戦略を試すにも最適です。`,
+    wayOfflineH: `${n}をオフラインでプレイ`,
+    wayOfflineP: soon
+      ? `${n}はコンピュータ相手のオフラインプレイに対応予定——インターネット接続なしでどこでも遊べます。`
+      : `接続がない？問題ありません。${n}をコンピュータ相手にオフラインで、どこにいてもプレイできます。`,
+    hObjective: '🎯 目的', hSetup: `🃏 ${n}の準備とルール`, hHowTo: `▶ ${n}の遊び方`,
+    hGuide: '📖 詳しいガイド', hScoring: `📊 ${n}の得点`, hFaq: `❓ ${n} — よくある質問`,
+    quickFacts: '基本情報', factPlayers: 'プレイヤー', factDifficulty: '難易度', factTier: 'プラン',
+    tipsTitle: `💡 ${n}の戦略のコツ`,
+    sidebarCta: `${n}を2週間無料でプレイ——クレジットカード不要。`,
+    ctaDownload: '無料ダウンロード', ctaPricing: '料金を見る',
+    shotsTitle: `📱 アプリの${n}`, shotsSub: '実際の一局をテーブルでステップごとに。',
+    moreGames: 'ほかのゲーム', viewAll: `全${games.length}ゲームを見る`,
+    trialOffer: '2週間無料トライアル',
+    faqs: soon
+      ? [
+          { q: `${n}は何人で遊べますか？`,
+            a: `${n}は${game.playerCount}人でプレイします。Vanikarでは空席をAI対戦相手で埋められるので、いつでもゲームを始められます。` },
+          { q: `${n}はいつVanikarに登場しますか？`,
+            a: `${n}は現在開発中です。リリース時にはPremium会員が最初にアクセスできます——初日から遊べるよう、アプリをダウンロードしておきましょう。` },
+          { q: `${n}をコンピュータと対戦できますか？`,
+            a: `はい。Vanikarの他のゲームと同じく、${n}も複数の難易度を持つスマートなAI対戦に加え、オンラインマルチプレイと友人とのプライベートテーブルに対応予定です。` },
+          { q: `${n}は無料ですか？`,
+            a: `Card Games by VanikarアプリはiOSとAndroidで無料ダウンロードでき、すべてのゲームが2週間無料でプレイできます——クレジットカード不要。` },
+        ]
+      : [
+          { q: `${n}は何人で遊べますか？`,
+            a: `${n}は${game.playerCount}人でプレイします。Vanikarでは空席をAI対戦相手で埋められるので、いつでもゲームを始められます。` },
+          { q: `${n}をコンピュータと対戦できますか？`,
+            a: `はい——複数の難易度を持つスマートなAI相手に${n}をプレイできます。ゲームを覚えるにも戦略を磨くにも最適です。` },
+          { q: `${n}を友人とオンラインで遊べますか？`,
+            a: `はい。Vanikarアプリでプライベートテーブルを作り、友人や家族を招待して、どこにいても一緒に${n}をオンラインで遊べます。` },
+          { q: `${n}をオフラインで遊べますか？`,
+            a: `はい——${n}はコンピュータ相手のオフラインプレイに対応しているので、インターネット接続なしでプレイできます。` },
+          { q: `${n}は無料ですか？`,
+            a: `はい——Card Games by VanikarアプリをiOSまたはAndroidでダウンロードして、${n}を2週間無料でプレイ。クレジットカード不要です。` },
+        ],
+  },
 }[lang];
 
 /* Per-game SEO overrides + game-specific FAQs (English pages only) */
@@ -455,7 +587,7 @@ const related = (game.relatedGames ?? [])
 const otherGames = related.length ? related : games.filter(g => g.slug !== game.slug).slice(0, 4);
 const otherTitle = related.length
   ? { en: 'Related Games', es: 'Juegos relacionados', pt: 'Jogos relacionados',
-      fr: 'Jeux similaires', de: 'Ähnliche Spiele', hi: 'मिलते-जुलते गेम' }[lang]
+      fr: 'Jeux similaires', de: 'Ähnliche Spiele', hi: 'मिलते-जुलते गेम', it: 'Giochi correlati', ja: '関連ゲーム' }[lang]
   : L.moreGames;
 
 /* Untranslated locale pages stay out of search until fully localized */
@@ -473,11 +605,13 @@ const videoHeading = {
   fr: `🎬 Vidéo : comment jouer à ${n}`,
   de: `🎬 Video: So spielst du ${n}`,
   hi: `🎬 वीडियो: ${n} कैसे खेलें`,
+  it: `🎬 Video: come si gioca a ${n}`,
+  ja: `🎬 動画：${n}の遊び方`,
 }[lang];
 const videoSrc = game.video
   ? `https://www.youtube-nocookie.com/embed/${game.video.youtubeId}${game.video.start ? `?start=${game.video.start}` : ''}`
   : null;
-const playLabel = { en: 'Play video', es: 'Reproducir vídeo', pt: 'Reproduzir vídeo', fr: 'Lire la vidéo', de: 'Video abspielen', hi: 'वीडियो चलाएँ' }[lang];
+const playLabel = { en: 'Play video', es: 'Reproducir vídeo', pt: 'Reproduzir vídeo', fr: 'Lire la vidéo', de: 'Video abspielen', hi: 'वीडियो चलाएँ', it: 'Riproduci video', ja: '動画を再生' }[lang];
 const videoDisclaimer = {
   en: 'This video is embedded from YouTube and remains the intellectual property of its respective creator and/or rights holder. Vanikar LLC claims no ownership of, or rights in, the video content, and no affiliation with or endorsement by its creator is implied. The video is displayed via YouTube’s public embed feature in accordance with the YouTube Terms of Service and the agreements between YouTube and the content uploader.',
   es: 'Este vídeo se muestra desde YouTube y sigue siendo propiedad intelectual de su creador o titular de derechos correspondiente. Vanikar LLC no reclama ninguna titularidad ni derecho sobre este contenido, y no se implica afiliación alguna con su creador ni respaldo por su parte. El vídeo se reproduce mediante la función pública de inserción de YouTube, de conformidad con las Condiciones del Servicio de YouTube y los acuerdos entre YouTube y quien subió el contenido.',
@@ -485,6 +619,8 @@ const videoDisclaimer = {
   fr: 'Cette vidéo est diffusée depuis YouTube et demeure la propriété intellectuelle de son créateur ou de l’ayant droit concerné. Vanikar LLC ne revendique aucun droit sur ce contenu, et aucune affiliation avec son créateur ni aucun parrainage de sa part ne saurait en être déduit. La vidéo est affichée au moyen de la fonction d’intégration publique de YouTube, conformément aux Conditions d’utilisation de YouTube et aux accords conclus entre YouTube et le déposant du contenu.',
   de: 'Dieses Video wird von YouTube eingebunden und verbleibt geistiges Eigentum des jeweiligen Urhebers bzw. Rechteinhabers. Vanikar LLC beansprucht keinerlei Eigentum oder Rechte an diesem Inhalt; eine Verbindung zum Urheber oder dessen Befürwortung wird nicht impliziert. Die Anzeige erfolgt über die öffentliche Einbettungsfunktion von YouTube im Einklang mit den Nutzungsbedingungen von YouTube und den Vereinbarungen zwischen YouTube und dem Uploader.',
   hi: 'यह वीडियो YouTube से एम्बेड किया गया है और इसकी बौद्धिक संपदा संबंधित निर्माता और/या अधिकार धारक की ही रहती है। Vanikar LLC इस वीडियो सामग्री पर किसी स्वामित्व या अधिकार का दावा नहीं करता, और निर्माता से किसी संबद्धता या समर्थन का कोई निहितार्थ नहीं है। यह वीडियो YouTube की सार्वजनिक एम्बेड सुविधा के माध्यम से, YouTube की सेवा शर्तों तथा YouTube और सामग्री अपलोडर के बीच के अनुबंधों के अनुसार प्रदर्शित किया गया है।',
+  it: 'Questo video è incorporato da YouTube e resta proprietà intellettuale del rispettivo creatore e/o titolare dei diritti. Vanikar LLC non rivendica alcuna proprietà o diritto sul contenuto del video, e non è implicita alcuna affiliazione o approvazione da parte del creatore. Il video è mostrato tramite la funzione pubblica di incorporamento di YouTube, in conformità con i Termini di servizio di YouTube e gli accordi tra YouTube e chi ha caricato il contenuto.',
+  ja: 'この動画はYouTubeから埋め込まれたもので、その知的財産権は各制作者および／または権利者に帰属します。Vanikar LLCは動画コンテンツの所有権や権利を一切主張せず、制作者との提携や推奨を示唆するものでもありません。動画はYouTubeの利用規約およびYouTubeとアップロード者との契約に従い、YouTubeの公開埋め込み機能を通じて表示されています。',
 }[lang];
 
 const jsonLd = [
