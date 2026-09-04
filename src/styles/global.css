@@ -163,3 +163,6 @@ section { padding: 5rem 0; }
   text-decoration: underline;
 }
 .sp-close:hover { color: var(--gold-light); }
+
+/* Breadcrumb wrapper on Pricing / About / Games index (hubs use .hub-crumbs) */
+.page-crumbs { margin-bottom: 1.25rem; }

@@ -1,13 +1,15 @@
 ---
 import BaseLayout     from '../layouts/BaseLayout.astro';
 import PricingSection from './PricingSection.astro';
+import Breadcrumb     from './Breadcrumb.astro';
 import { availableGames } from '../data/games';
 import { localizeGame } from '../data/games.i18n';
-import { getLocale, localizedHref } from '../i18n';
+import { getLocale, localizedHref, useTranslations } from '../i18n';
 import { launchCopy } from '../data/launch';
 
 const lang = getLocale(Astro.currentLocale);
 const LN = launchCopy(lang);
+const t = useTranslations(lang);
 const href = (p: string) => localizedHref(p, lang);
 const gameNames = availableGames.map(g => localizeGame(g, lang).name).join(', ');
 
@@ -182,7 +184,7 @@ const L = {
   },
   it: {
     title: 'Prezzi – Card Games by Vanikar',
-    description: 'Prova gratuita di 2 settimane, poi tieni 3 giochi gratis per sempre o passa a Premium: 14,99 $/anno fa risparmiare il 37% rispetto a 1,99 $/mese. Senza pubblicità.',
+    description: 'Prova gratuita di 2 settimane, poi 3 giochi gratis per sempre o Premium: 14,99 $/anno, il 37% in meno di 1,99 $/mese. Senza pubblicità.',
     tag: '♦ Prezzi', h1: 'Prezzi semplici e onesti',
     lead: 'Inizia con una prova gratuita completa di 2 settimane. Senza carta di credito. Senza vincoli. Poi scegli la tua strada — gratis per sempre o Premium.',
     faqTitle: 'Domande frequenti',
@@ -237,14 +239,39 @@ const L = {
     ctaDownload: '無料ダウンロード', ctaBrowse: 'ゲームを見る',
   },
 }[lang];
+
+const crumbs = [{ name: t('nav.home'), href: href('/') }, { name: t('nav.pricing') }];
+const pageUrl = `https://vanikar.games${href('/pricing')}`;
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: crumbs[0].name, item: `https://vanikar.games${href('/')}` },
+      { '@type': 'ListItem', position: 2, name: crumbs[1].name, item: pageUrl },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: L.faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  },
+];
 ---
 <BaseLayout
   title={L.title}
   description={L.description}
 >
+  <Fragment slot="head">
+    {jsonLd.map(schema => (
+      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    ))}
+  </Fragment>
+
   <!-- Header -->
   <section class="pricing-header">
     <div class="container" style="text-align:center">
+      <div class="page-crumbs"><Breadcrumb items={crumbs} /></div>
       <div class="section-tag">{L.tag}</div>
       <h1>{L.h1}</h1>
       <p class="pricing-lead">{L.lead}</p>
