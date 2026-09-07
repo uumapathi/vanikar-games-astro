@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json.schemastore.org/staticwebapp.config.json",
+  "trailingSlash": "auto",
+  "routes": [
+    {
+      "route": "/_astro/*",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable"
+      }
+    },
+    {
+      "route": "/og/*",
+      "headers": {
+        "Cache-Control": "public, max-age=604800"
+      }
+    },
+    {
+      "route": "/*.png",
+      "headers": {
+        "Cache-Control": "public, max-age=604800"
+      }
+    },
+    {
+      "route": "/*.svg",
+      "headers": {
+        "Cache-Control": "public, max-age=604800"
+      }
+    },
+    {
+      "route": "/*.woff2",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable"
+      }
+    },
+    {
+      "route": "/sitemap-index.xml",
+      "headers": {
+        "Cache-Control": "public, max-age=3600"
+      }
+    },
+    {
+      "route": "/sitemap-0.xml",
+      "headers": {
+        "Cache-Control": "public, max-age=3600"
+      }
+    },
+    {
+      "route": "/robots.txt",
+      "headers": {
+        "Cache-Control": "public, max-age=3600"
+      }
+    },
+    {
+      "route": "/.well-known/apple-app-site-association",
+      "headers": {
+        "Content-Type": "application/json"
+      }
+    },
+    {
+      "route": "/.well-known/assetlinks.json",
+      "headers": {
+        "Content-Type": "application/json"
+      }
+    },
+    {
+      "route": "/games/",
+      "redirect": "/cardgames/availablegames/",
+      "statusCode": 301
+    },
+    {
+      "route": "/pricing/",
+      "redirect": "/cardgames/pricing/",
+      "statusCode": 301
+    },
+    {
+      "route": "/ios/",
+      "redirect": "/cardgames/ios/",
+      "statusCode": 301
+    },
+    {
+      "route": "/android/",
+      "redirect": "/cardgames/android/",
+      "statusCode": 301
+    },
+    {
+      "route": "/join/",
+      "redirect": "/cardgames/join/",
+      "statusCode": 301
+    },
+    {
+      "route": "/privacy-policy/",
+      "redirect": "/privacy/",
+      "statusCode": 301
+    },
+    {
+      "route": "/terms-of-service/",
+      "redirect": "/terms/",
+      "statusCode": 301
+    }
+  ],
+  "responseOverrides": {
+    "404": {
+      "rewrite": "/404.html"
+    }
+  },
+  "globalHeaders": {
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "DENY",
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "Permissions-Policy": "camera=(), microphone=(), geolocation=()"
+  },
+  "mimeTypes": {
+    ".webp": "image/webp",
+    ".woff2": "font/woff2",
+    ".json": "application/json",
+    ".xml": "application/xml"
+  }
+}

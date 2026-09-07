@@ -1,0 +1,77 @@
+name: Deploy to Azure Static Web Apps
+
+# The site is built here rather than by Azure's Oryx builder, then uploaded with
+# skip_app_build. That pins the Node version and keeps sharp's image
+# optimization on a runner we control, instead of whatever Oryx picks.
+#
+# SITE_URL matters: canonical URLs, hreflang, OG tags and the sitemap are all
+# derived from it, and scripts/gen-swa-config.mjs adds X-Robots-Tag: noindex
+# whenever it points at a dev host. Getting it wrong publishes a site that
+# either competes with production or advertises the wrong domain.
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+    branches: [master]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Which stack to deploy
+        type: choice
+        options: [dev]
+        default: dev
+
+concurrency:
+  group: swa-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build_and_deploy:
+    if: github.event_name != 'pull_request' || github.event.action != 'closed'
+    runs-on: ubuntu-latest
+    name: Build and deploy (dev)
+    env:
+      SITE_URL: https://dev.vanikar.games
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      # Cheap gates: both read the built output, so a broken deploy is caught
+      # before it reaches Azure rather than after.
+      - name: Audit content
+        run: |
+          npm run overlay-audit
+          npm run faq-audit
+
+      - name: Deploy
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_SWA_TOKEN_MKT_DEV }}
+          action: upload
+          app_location: dist
+          skip_app_build: true
+          skip_api_build: true
+
+  close_pull_request:
+    if: github.event_name == 'pull_request' && github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    name: Close preview environment
+    steps:
+      - uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_SWA_TOKEN_MKT_DEV }}
+          action: close

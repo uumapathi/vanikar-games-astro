@@ -1,0 +1,25 @@
+---
+/**
+ * Every single-segment page under /cardgames/ — the game detail pages and the
+ * feature hubs — resolves through this one dynamic route, because Astro allows
+ * only one [param] route at a given level. Static siblings (index, pricing,
+ * availablegames) take precedence over it automatically.
+ */
+import GameDetailPage from '../../components/GameDetailPage.astro';
+import HubPage        from '../../components/HubPage.astro';
+import { games }      from '../../data/games';
+import { HUB_SLUGS }  from '../../data/hubs';
+import type { HubSlug } from '../../data/hubs';
+import type { GetStaticPaths } from 'astro';
+
+export const getStaticPaths: GetStaticPaths = () => [
+  ...games.map(g   => ({ params: { slug: g.slug }, props: { kind: 'game' as const } })),
+  ...HUB_SLUGS.map(h => ({ params: { slug: h },    props: { kind: 'hub'  as const } })),
+];
+
+const { slug } = Astro.params;
+const { kind } = Astro.props as { kind: 'game' | 'hub' };
+---
+{kind === 'game'
+  ? <GameDetailPage slug={slug as string} />
+  : <HubPage slug={slug as HubSlug} />}

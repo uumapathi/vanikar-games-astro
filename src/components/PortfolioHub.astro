@@ -1,0 +1,265 @@
+---
+/**
+ * Domain root — the Vanikar Games portfolio.
+ *
+ * Card Games lives at /cardgames/; later titles get their own /<product>/
+ * namespace beside it and a card on this page. Keeping every product in a
+ * subfolder of one domain lets them share its authority, which is the whole
+ * reason the marketing sites are not on separate subdomains.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { Image } from 'astro:assets';
+import appicon from '../assets/appicon.png';
+import { games, availableGames } from '../data/games';
+import { getLocale, localizedHref } from '../i18n';
+
+const lang = getLocale(Astro.currentLocale);
+const href = (p: string) => localizedHref(p, lang);
+const total = games.length;
+const avail = availableGames.length;
+
+const L = {
+  en: {
+    title: 'Vanikar Games – Classic Card Games, Beautifully Rebuilt',
+    description: `Games by Vanikar LLC. Card Games by Vanikar brings ${total} classic card games from around the world to iOS and Android — play online, with friends, or offline against AI.`,
+    tag: '♠ ♥ ♦ ♣ Vanikar Games',
+    h1: 'Games by Vanikar',
+    lead: 'Timeless games, rebuilt with care for the phone in your pocket. No ads, no interruptions — just the table.',
+    live: 'Available now',
+    cardName: 'Card Games by Vanikar',
+    cardDesc: `${total} classic card games from every continent — Hearts, Spades, Scopa, Durak, Belote, Indian Rummy and more. Play online with friends, or offline against smart AI.`,
+    cardStat: (a: number, t: number) => `${a} playable today · ${t - a} in development`,
+    cardCta: 'Explore Card Games →',
+    moreTitle: 'More on the way',
+    moreBody: 'Card Games is the first title from our studio. More games are in development — built to the same standard, on the same promise: no advertising, ever.',
+    company: 'About the studio →',
+  },
+  es: {
+    title: 'Vanikar Games – Juegos de cartas clásicos, reconstruidos',
+    description: `Juegos de Vanikar LLC. Card Games by Vanikar reúne ${total} juegos de cartas clásicos de todo el mundo en iOS y Android: juega en línea, con amigos o sin conexión contra la IA.`,
+    tag: '♠ ♥ ♦ ♣ Vanikar Games',
+    h1: 'Juegos de Vanikar',
+    lead: 'Juegos de siempre, reconstruidos con cuidado para el celular que llevas encima. Sin anuncios, sin interrupciones — solo la mesa.',
+    live: 'Disponible ahora',
+    cardName: 'Card Games by Vanikar',
+    cardDesc: `${total} juegos de cartas clásicos de todos los continentes — Corazones, Espadas, Escoba, Durak, Belote, Rummy indio y más. Juega en línea con amigos o sin conexión contra una IA inteligente.`,
+    cardStat: (a: number, t: number) => `${a} disponibles hoy · ${t - a} en desarrollo`,
+    cardCta: 'Descubre Card Games →',
+    moreTitle: 'Más en camino',
+    moreBody: 'Card Games es el primer título de nuestro estudio. Hay más juegos en desarrollo, con el mismo cuidado y la misma promesa: nunca publicidad.',
+    company: 'Sobre el estudio →',
+  },
+  pt: {
+    title: 'Vanikar Games – Jogos de cartas clássicos, reconstruídos',
+    description: `Jogos da Vanikar LLC. O Card Games by Vanikar traz ${total} jogos de cartas clássicos do mundo todo para iOS e Android: jogue online, com amigos ou offline contra a IA.`,
+    tag: '♠ ♥ ♦ ♣ Vanikar Games',
+    h1: 'Jogos da Vanikar',
+    lead: 'Jogos de sempre, reconstruídos com capricho para o celular no seu bolso. Sem anúncios, sem interrupções — só a mesa.',
+    live: 'Disponível agora',
+    cardName: 'Card Games by Vanikar',
+    cardDesc: `${total} jogos de cartas clássicos de todos os continentes — Copas, Espadas, Escova, Durak, Belote, Rummy indiano e mais. Jogue online com amigos ou offline contra uma IA inteligente.`,
+    cardStat: (a: number, t: number) => `${a} jogáveis hoje · ${t - a} em desenvolvimento`,
+    cardCta: 'Conheça o Card Games →',
+    moreTitle: 'Mais a caminho',
+    moreBody: 'O Card Games é o primeiro título do nosso estúdio. Há mais jogos em desenvolvimento, com o mesmo capricho e a mesma promessa: nunca publicidade.',
+    company: 'Sobre o estúdio →',
+  },
+  fr: {
+    title: 'Vanikar Games – Jeux de cartes classiques, repensés',
+    description: `Les jeux de Vanikar LLC. Card Games by Vanikar réunit ${total} jeux de cartes classiques du monde entier sur iOS et Android : jouez en ligne, entre amis ou hors ligne contre l’IA.`,
+    tag: '♠ ♥ ♦ ♣ Vanikar Games',
+    h1: 'Les jeux de Vanikar',
+    lead: 'Des jeux intemporels, repensés avec soin pour le téléphone dans votre poche. Sans publicité, sans interruption — juste la table.',
+    live: 'Disponible maintenant',
+    cardName: 'Card Games by Vanikar',
+    cardDesc: `${total} jeux de cartes classiques de tous les continents — Dame de pique, Belote, Scopa, Durak, Rami indien et bien d’autres. Jouez en ligne entre amis ou hors ligne contre une IA futée.`,
+    cardStat: (a: number, t: number) => `${a} jouables aujourd’hui · ${t - a} en développement`,
+    cardCta: 'Découvrir Card Games →',
+    moreTitle: 'D’autres arrivent',
+    moreBody: 'Card Games est le premier titre de notre studio. D’autres jeux sont en développement, avec le même soin et la même promesse : jamais de publicité.',
+    company: 'À propos du studio →',
+  },
+  de: {
+    title: 'Vanikar Games – Klassische Kartenspiele, neu gebaut',
+    description: `Spiele von Vanikar LLC. Card Games by Vanikar bringt ${total} klassische Kartenspiele aus aller Welt auf iOS und Android — online, mit Freunden oder offline gegen die KI.`,
+    tag: '♠ ♥ ♦ ♣ Vanikar Games',
+    h1: 'Spiele von Vanikar',
+    lead: 'Zeitlose Spiele, sorgfältig neu gebaut für das Handy in deiner Tasche. Keine Werbung, keine Unterbrechungen — nur der Tisch.',
+    live: 'Jetzt verfügbar',
+    cardName: 'Card Games by Vanikar',
+    cardDesc: `${total} klassische Kartenspiele von allen Kontinenten — Hearts, Skat, Mau-Mau, Durak, Belote, Indisches Rommé und mehr. Online mit Freunden oder offline gegen kluge KI.`,
+    cardStat: (a: number, t: number) => `${a} heute spielbar · ${t - a} in Entwicklung`,
+    cardCta: 'Card Games entdecken →',
+    moreTitle: 'Mehr ist unterwegs',
+    moreBody: 'Card Games ist der erste Titel unseres Studios. Weitere Spiele sind in Entwicklung — mit demselben Anspruch und demselben Versprechen: niemals Werbung.',
+    company: 'Über das Studio →',
+  },
+  hi: {
+    title: 'Vanikar Games – क्लासिक ताश के खेल, नए सिरे से',
+    description: `Vanikar LLC के खेल। Card Games by Vanikar दुनिया भर के ${total} क्लासिक ताश के खेल iOS और Android पर लाता है — ऑनलाइन, दोस्तों के साथ, या ऑफ़लाइन AI के खिलाफ खेलें।`,
+    tag: '♠ ♥ ♦ ♣ Vanikar Games',
+    h1: 'Vanikar के खेल',
+    lead: 'सदाबहार खेल, आपकी जेब के फ़ोन के लिए बड़ी बारीकी से नए सिरे से बनाए गए। कोई विज्ञापन नहीं, कोई रुकावट नहीं — बस खेल की मेज़।',
+    live: 'अभी उपलब्ध',
+    cardName: 'Card Games by Vanikar',
+    cardDesc: `हर महाद्वीप के ${total} क्लासिक ताश के खेल — Hearts, Spades, Durak, Belote, Indian Rummy और भी बहुत कुछ। दोस्तों के साथ ऑनलाइन खेलें या स्मार्ट AI के खिलाफ ऑफ़लाइन।`,
+    cardStat: (a: number, t: number) => `${a} आज खेलने योग्य · ${t - a} विकास में`,
+    cardCta: 'Card Games देखें →',
+    moreTitle: 'और भी आ रहे हैं',
+    moreBody: 'Card Games हमारे स्टूडियो का पहला टाइटल है। और खेल विकास में हैं — उसी मानक पर, उसी वादे के साथ: कभी विज्ञापन नहीं।',
+    company: 'स्टूडियो के बारे में →',
+  },
+  it: {
+    title: 'Vanikar Games – Giochi di carte classici, ricostruiti',
+    description: `I giochi di Vanikar LLC. Card Games by Vanikar porta ${total} giochi di carte classici da tutto il mondo su iOS e Android: gioca online, con gli amici o offline contro l’IA.`,
+    tag: '♠ ♥ ♦ ♣ Vanikar Games',
+    h1: 'I giochi di Vanikar',
+    lead: 'Giochi senza tempo, ricostruiti con cura per il telefono che hai in tasca. Niente pubblicità, niente interruzioni — solo il tavolo.',
+    live: 'Disponibile ora',
+    cardName: 'Card Games by Vanikar',
+    cardDesc: `${total} giochi di carte classici da ogni continente — Cuori, Scopa, Briscola, Durak, Belote, Indian Rummy e altri. Gioca online con gli amici o offline contro un’IA intelligente.`,
+    cardStat: (a: number, t: number) => `${a} giocabili oggi · ${t - a} in sviluppo`,
+    cardCta: 'Scopri Card Games →',
+    moreTitle: 'Altri in arrivo',
+    moreBody: 'Card Games è il primo titolo del nostro studio. Altri giochi sono in sviluppo — con la stessa cura e la stessa promessa: mai pubblicità.',
+    company: 'Sullo studio →',
+  },
+  ja: {
+    title: 'Vanikar Games – クラシックなカードゲームを、美しく',
+    description: `Vanikar LLCのゲーム。Card Games by Vanikarは世界中の${total}種のクラシックなカードゲームをiOSとAndroidへ——オンラインで、友人と、あるいはオフラインでAIと対戦。`,
+    tag: '♠ ♥ ♦ ♣ Vanikar Games',
+    h1: 'Vanikarのゲーム',
+    lead: '時代を超えたゲームを、ポケットの中の一台のために丁寧に作り直しました。広告なし、中断なし——あるのはテーブルだけ。',
+    live: '利用可能',
+    cardName: 'Card Games by Vanikar',
+    cardDesc: `各大陸から集めた${total}種のクラシックカードゲーム——Hearts、Spades、こいこい、Durak、Belote、Indian Rummyなど。友人とオンラインで、またはスマートAIとオフラインで。`,
+    cardStat: (a: number, t: number) => `${a}ゲームが今すぐ遊べる · ${t - a}ゲームが開発中`,
+    cardCta: 'Card Gamesを見る →',
+    moreTitle: '続きも準備中',
+    moreBody: 'Card Gamesは私たちのスタジオの最初のタイトルです。同じ基準と同じ約束——広告は決して出さない——で、次のゲームを開発しています。',
+    company: 'スタジオについて →',
+  },
+}[lang];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: L.h1,
+  description: L.description,
+  inLanguage: lang,
+  url: new URL(href('/'), Astro.site).href,
+  publisher: {
+    '@type': 'Organization',
+    name: 'Vanikar LLC',
+    url: 'https://vanikar.com',
+    logo: new URL('/icon-180.png', Astro.site).href,
+  },
+  mainEntity: {
+    '@type': 'ItemList',
+    numberOfItems: 1,
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: L.cardName,
+        url: new URL(href('/cardgames'), Astro.site).href,
+      },
+    ],
+  },
+};
+---
+<BaseLayout title={L.title} description={L.description}>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <section class="portfolio">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">{L.tag}</div>
+        <h1 class="portfolio-title">{L.h1}</h1>
+        <p class="section-subtitle">{L.lead}</p>
+      </div>
+
+      <div class="product-grid">
+        <a class="product-card" href={href('/cardgames')}>
+          <Image
+            src={appicon}
+            alt={L.cardName}
+            width={192}
+            widths={[96, 192]}
+            sizes="96px"
+            quality={80}
+            class="product-icon"
+          />
+          <div class="product-body">
+            <span class="product-badge">{L.live}</span>
+            <h2 class="product-name">{L.cardName}</h2>
+            <p class="product-desc">{L.cardDesc}</p>
+            <p class="product-stat">{L.cardStat(avail, total)}</p>
+            <span class="product-cta">{L.cardCta}</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="more-panel">
+        <h2 class="more-title">{L.moreTitle}</h2>
+        <p class="more-body">{L.moreBody}</p>
+        <a class="more-link" href="https://vanikar.com" target="_blank" rel="noopener">{L.company}</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .portfolio {
+    background:
+      radial-gradient(ellipse at 50% 0%, rgba(201,162,39,.08) 0%, transparent 60%),
+      var(--bg-deep);
+    min-height: 70vh;
+  }
+  .portfolio-title {
+    font-family: 'Cinzel Variable', Georgia, serif;
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
+    color: var(--gold-light);
+    margin-bottom: .75rem;
+  }
+  .product-grid {
+    display: grid; gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+    max-width: 720px; margin: 0 auto;
+  }
+  .product-card {
+    display: flex; gap: 1.25rem; align-items: flex-start;
+    padding: 1.5rem; text-decoration: none;
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 16px; transition: border-color var(--transition), transform var(--transition);
+  }
+  .product-card:hover { border-color: var(--gold); transform: translateY(-2px); }
+  .product-card :global(.product-icon) {
+    width: 96px; height: 96px; border-radius: 20px; flex-shrink: 0;
+    box-shadow: 0 8px 24px rgba(0,0,0,.45);
+  }
+  .product-body { flex: 1; min-width: 0; }
+  .product-badge {
+    display: inline-block; font-size: .7rem; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--gold-light); border: 1px solid var(--gold-border);
+    border-radius: 999px; padding: .15rem .6rem; margin-bottom: .5rem;
+  }
+  .product-name { font-size: 1.25rem; color: var(--text-primary); margin: 0 0 .4rem; }
+  .product-desc { font-size: .9rem; color: var(--text-secondary); margin: 0 0 .6rem; }
+  .product-stat { font-size: .8rem; color: var(--text-dim); margin: 0 0 .75rem; }
+  .product-cta { font-size: .9rem; color: var(--gold-light); font-weight: 600; }
+
+  .more-panel {
+    max-width: 720px; margin: 3rem auto 0; padding: 1.5rem;
+    border: 1px dashed var(--border); border-radius: 16px; text-align: center;
+  }
+  .more-title { font-size: 1.05rem; color: var(--text-primary); margin: 0 0 .5rem; }
+  .more-body { font-size: .9rem; color: var(--text-secondary); margin: 0 0 .75rem; }
+  .more-link { font-size: .875rem; color: var(--gold-light); text-decoration: none; }
+  .more-link:hover { text-decoration: underline; }
+
+  @media (max-width: 520px) {
+    .product-card { flex-direction: column; }
+    .product-card :global(.product-icon) { width: 80px; height: 80px; }
+  }
+</style>

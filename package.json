@@ -7,7 +7,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "faq-audit": "node scripts/faq-audit.mjs",
-    "overlay-audit": "node scripts/overlay-audit.mjs"
+    "overlay-audit": "node scripts/overlay-audit.mjs",
+    "postbuild": "node scripts/gen-swa-config.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",

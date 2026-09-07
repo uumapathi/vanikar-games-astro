@@ -241,13 +241,13 @@ const L = {
 }[lang];
 
 const crumbs = [{ name: t('nav.home'), href: href('/') }, { name: t('nav.pricing') }];
-const pageUrl = `https://vanikar.games${href('/pricing')}`;
+const pageUrl = new URL(href('/pricing'), Astro.site).href;
 const jsonLd = [
   {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: crumbs[0].name, item: `https://vanikar.games${href('/')}` },
+      { '@type': 'ListItem', position: 1, name: crumbs[0].name, item: new URL(href('/'), Astro.site).href },
       { '@type': 'ListItem', position: 2, name: crumbs[1].name, item: pageUrl },
     ],
   },

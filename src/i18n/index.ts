@@ -49,21 +49,66 @@ export function unlocalizePath(pathname: string): string {
 }
 
 /**
+ * Product namespace for the Card Games marketing site.
+ *
+ * Every page of this product lives under /cardgames/ so that later products
+ * can sit beside it at /<product>/ and share the domain's authority, while
+ * the domain root is a portfolio hub listing all of them.
+ */
+export const PRODUCT_BASE = '/cardgames';
+
+/** Company-wide pages that stay at the domain root, shared by every product. */
+const SHARED_PATHS = new Set(['/', '/about', '/privacy', '/terms']);
+
+/** Authored paths that map somewhere other than `${PRODUCT_BASE}${path}`. */
+const PRODUCT_ALIASES: Record<string, string> = {
+  '/': PRODUCT_BASE,                                  // product home
+  '/games': `${PRODUCT_BASE}/availablegames`,         // the game catalog
+};
+
+/**
+ * Map an authored path onto the product namespace, so components keep writing
+ * readable literals (`href('/pricing')`) while the emitted URL is
+ * `/cardgames/pricing/`. Shared paths and paths already inside the namespace
+ * pass through untouched. Preserves a #hash.
+ */
+export function productPath(path: string): string {
+  const [base, hash] = path.split('#');
+  const raw = base === '' ? '/' : base;
+  const clean = raw !== '/' && raw.endsWith('/') ? raw.slice(0, -1) : raw;
+  const mapped =
+    clean.startsWith(`${PRODUCT_BASE}/`) || clean === PRODUCT_BASE ? clean
+    : SHARED_PATHS.has(clean) && clean !== '/' ? clean
+    // game detail pages flatten: /games/hearts → /cardgames/hearts
+    : clean.startsWith('/games/') ? `${PRODUCT_BASE}${clean.slice('/games'.length)}`
+    : PRODUCT_ALIASES[clean] ?? `${PRODUCT_BASE}${clean}`;
+  return hash ? `${mapped}#${hash}` : mapped;
+}
+
+/**
  * Root-relative paths that exist in every locale. Extend this as pages are
  * translated — the nav, footer, and language switcher use it to decide
  * whether to link to a localized path or fall back to the English page.
  */
 export const TRANSLATED_PATHS = new Set<string>([
-  '/', '/games', '/pricing', '/about',
-  '/online-card-games', '/offline-card-games', '/multiplayer-card-games',
-  '/classic-card-games', '/card-games-against-computer', '/card-games-with-friends',
+  '/', '/about', PRODUCT_BASE,
 ]);
 
-/** Path prefixes whose entire subtree is translated (e.g. every game detail page) */
-export const TRANSLATED_PREFIXES = ['/games/'];
+/** Path prefixes whose entire subtree is translated (every game and hub page) */
+export const TRANSLATED_PREFIXES = [`${PRODUCT_BASE}/`];
+
+/**
+ * Utility pages under the product namespace that exist only in English —
+ * noindexed store-redirect stubs and the invite landing page. Listing them
+ * here keeps hreflang from advertising locale URLs that are never built.
+ */
+const UNTRANSLATED_PATHS = new Set([
+  `${PRODUCT_BASE}/ios`, `${PRODUCT_BASE}/android`, `${PRODUCT_BASE}/join`,
+]);
 
 export function isTranslated(path: string): boolean {
   const clean = path !== '/' && path.endsWith('/') ? path.slice(0, -1) : path;
+  if (UNTRANSLATED_PATHS.has(clean)) return false;
   return TRANSLATED_PATHS.has(clean) || TRANSLATED_PREFIXES.some(p => path.startsWith(p));
 }
 
@@ -71,11 +116,17 @@ export function isTranslated(path: string): boolean {
  *  Always emits a trailing slash so internal links hit the canonical URL directly
  *  instead of bouncing through the host's /path → /path/ redirect. */
 export function localizedHref(path: string, locale: Locale): string {
-  const [base, hash] = path.split('#');
+  const [base, hash] = productPath(path).split('#');
   const clean = base === '' ? '/' : base;
   const target = isTranslated(clean) ? localizePath(clean, locale) : clean;
   const slashed = target.endsWith('/') ? target : `${target}/`;
   return hash ? `${slashed}#${hash}` : slashed;
+}
+
+/** Link helper for company-wide pages that ignore the product namespace. */
+export function rootHref(path: string, locale: Locale): string {
+  const target = isTranslated(path) ? localizePath(path, locale) : path;
+  return target.endsWith('/') ? target : `${target}/`;
 }
 
 /** Shared chrome strings (nav, footer, common CTAs) */

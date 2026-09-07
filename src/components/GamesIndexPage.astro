@@ -149,7 +149,7 @@ const L = {
   },
 }[lang];
 
-const pageUrl = `https://vanikar.games${href('/games')}`;
+const pageUrl = new URL(href('/games'), Astro.site).href;
 const collectionLd = {
   '@context': 'https://schema.org',
   '@type': 'CollectionPage',
@@ -163,7 +163,7 @@ const collectionLd = {
       '@type': 'ListItem',
       position: i + 1,
       name: g.name,
-      url: `https://vanikar.games${href(`/games/${g.slug}/`)}`,
+      url: new URL(href(`/games/${g.slug}`), Astro.site).href,
     })),
   },
 };
@@ -174,8 +174,8 @@ const breadcrumbLd = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: crumbs[0].name, item: `https://vanikar.games${href('/')}` },
-    { '@type': 'ListItem', position: 2, name: crumbs[1].name, item: `https://vanikar.games${href('/games')}/` },
+    { '@type': 'ListItem', position: 1, name: crumbs[0].name, item: new URL(href('/'), Astro.site).href },
+    { '@type': 'ListItem', position: 2, name: crumbs[1].name, item: new URL(href('/games'), Astro.site).href },
   ],
 };
 ---
