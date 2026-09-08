@@ -1,10 +1,13 @@
 ---
-import { getLocale, useTranslations, localizedHref, rootHref } from '../i18n';
+import { getLocale, useTranslations, localizedHref, rootHref, unlocalizePath } from '../i18n';
 
 const year   = new Date().getFullYear();
 const locale = getLocale(Astro.currentLocale);
 const t      = useTranslations(locale);
 const href   = (p: string) => localizedHref(p, locale);
+// The portfolio hub belongs to every product, so it drops the Card Games
+// brand block and the Ways to Play links the same way the nav does.
+const isHub  = unlocalizePath(Astro.url.pathname) === '/';
 // href('/') resolves to the product home (/cardgames/), so the portfolio hub
 // at the domain root needs rootHref. Without this link the hub is orphaned:
 // nothing else on the site points at it.
@@ -14,21 +17,23 @@ const hub    = rootHref('/', locale);
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
-        <div class="footer-brand-text"><img src="/favicon-32.png" srcset="/favicon-32.png 1x, /icon-180.png 2x" width="24" height="24" alt="" style="border-radius:6px" /> Card Games by Vanikar</div>
-        <p class="footer-tagline">{t('footer.tagline')}</p>
+        <div class="footer-brand-text"><img src="/favicon-32.png" srcset="/favicon-32.png 1x, /icon-180.png 2x" width="24" height="24" alt="" style="border-radius:6px" /> {isHub ? 'Vanikar Games' : 'Card Games by Vanikar'}</div>
+        {!isHub && <p class="footer-tagline">{t('footer.tagline')}</p>}
       </div>
 
-      <div class="footer-col">
-        <div class="footer-heading">{t('footer.waysToPlay')}</div>
-        <ul class="footer-links">
-          <li><a href={href('/online-card-games')}>{t('footer.online')}</a></li>
-          <li><a href={href('/multiplayer-card-games')}>{t('footer.multiplayer')}</a></li>
-          <li><a href={href('/card-games-with-friends')}>{t('footer.withFriends')}</a></li>
-          <li><a href={href('/card-games-against-computer')}>{t('footer.vsComputer')}</a></li>
-          <li><a href={href('/offline-card-games')}>{t('footer.offline')}</a></li>
-          <li><a href={href('/classic-card-games')}>{t('footer.classic')}</a></li>
-        </ul>
-      </div>
+      {!isHub && (
+        <div class="footer-col">
+          <div class="footer-heading">{t('footer.waysToPlay')}</div>
+          <ul class="footer-links">
+            <li><a href={href('/online-card-games')}>{t('footer.online')}</a></li>
+            <li><a href={href('/multiplayer-card-games')}>{t('footer.multiplayer')}</a></li>
+            <li><a href={href('/card-games-with-friends')}>{t('footer.withFriends')}</a></li>
+            <li><a href={href('/card-games-against-computer')}>{t('footer.vsComputer')}</a></li>
+            <li><a href={href('/offline-card-games')}>{t('footer.offline')}</a></li>
+            <li><a href={href('/classic-card-games')}>{t('footer.classic')}</a></li>
+          </ul>
+        </div>
+      )}
 
       <div class="footer-col">
         <div class="footer-heading">{t('footer.company')}</div>

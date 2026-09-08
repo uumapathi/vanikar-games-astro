@@ -11,6 +11,10 @@ import PricingSection        from '../../../components/PricingSection.astro';
 import HomeFaqSection        from '../../../components/HomeFaqSection.astro';
 import DownloadSection       from '../../../components/DownloadSection.astro';
 import { games, availableGames } from '../../../data/games';
+import { getLocale, localizedHref, rootHref, useTranslations } from '../../../i18n';
+
+const lang = getLocale(Astro.currentLocale);
+const t = useTranslations(lang);
 
 const jsonLd = [
   {
@@ -32,6 +36,14 @@ const jsonLd = [
     description: `${availableGames.length}種のクラシックなカードゲームをオンラインでもオフラインでも——Hearts、Spades、こいこい、Big Two、Indian Rummyなど——AI、友人、オンラインのプレイヤーと対戦。さらに${games.length - availableGames.length}ゲームが開発中。`,
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD', description: '2週間無料トライアル' },
     publisher: { '@type': 'Organization', name: 'Vanikar LLC', url: 'https://vanikar.com' },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: t('nav.allGames'), item: new URL(rootHref('/', lang), Astro.site).href },
+      { '@type': 'ListItem', position: 2, name: t('nav.product'),  item: new URL(localizedHref('/', lang), Astro.site).href },
+    ],
   },
 ];
 ---

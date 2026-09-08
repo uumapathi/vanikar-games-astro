@@ -2,7 +2,8 @@
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import { availableGames, comingSoonGames } from '../data/games';
-import { getLocale, localizedHref } from '../i18n';
+import { getLocale, localizedHref, rootHref, useTranslations } from '../i18n';
+import Breadcrumb from './Breadcrumb.astro';
 import { launchCopy } from '../data/launch';
 import appicon     from '../assets/appicon.png';
 import vanikarLogo from '../assets/vanikar-logo.png';
@@ -16,6 +17,7 @@ const cs    = comingSoonGames.length;
 
 const lang = getLocale(Astro.currentLocale);
 const href = (p: string) => localizedHref(p, lang);
+const t    = useTranslations(lang);
 const L = launchCopy(lang);
 const copy = {
   en: {
@@ -165,6 +167,13 @@ const copy = {
   </div>
 
   <div class="container">
+    <!-- /cardgames/ is a second-level page now, so it gets a trail up to the
+         portfolio hub. The nav's "Home" points at this page, which left the
+         root reachable only from the footer. -->
+    <div class="hero-crumbs">
+      <Breadcrumb items={[{ name: t('nav.allGames'), href: rootHref('/', lang) }, { name: t('nav.product') }]} />
+    </div>
+
     <div class="hero-grid">
       <div class="hero-content">
         <div class="hero-title-row">
@@ -268,6 +277,7 @@ const copy = {
 </section>
 
 <style>
+  .hero-crumbs { margin-bottom: 1rem; }
   .hero {
     position: relative;
     min-height: calc(100vh - var(--nav-height));

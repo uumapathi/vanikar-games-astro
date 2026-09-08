@@ -10,6 +10,10 @@ import SocialFeaturesSection from '../../../components/SocialFeaturesSection.ast
 import PricingSection        from '../../../components/PricingSection.astro';
 import HomeFaqSection        from '../../../components/HomeFaqSection.astro';
 import DownloadSection       from '../../../components/DownloadSection.astro';
+import { getLocale, localizedHref, rootHref, useTranslations } from '../../../i18n';
+
+const lang = getLocale(Astro.currentLocale);
+const t = useTranslations(lang);
 
 const jsonLd = [
   {
@@ -31,6 +35,14 @@ const jsonLd = [
     description: "Jogue jogos de cartas clássicos online ou offline com o Vanikar. Copas, Espadas, Gin Rummy, Cribbage, Big Two, Rummy Indiano e mais — contra a IA, amigos ou jogadores online.",
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD', description: "Teste grátis de 2 semanas" },
     publisher: { '@type': 'Organization', name: 'Vanikar LLC', url: 'https://vanikar.com' },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: t('nav.allGames'), item: new URL(rootHref('/', lang), Astro.site).href },
+      { '@type': 'ListItem', position: 2, name: t('nav.product'),  item: new URL(localizedHref('/', lang), Astro.site).href },
+    ],
   },
 ];
 ---

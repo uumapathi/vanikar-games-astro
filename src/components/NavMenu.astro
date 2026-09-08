@@ -1,14 +1,23 @@
 ---
-import { getLocale, useTranslations, localizedHref, unlocalizePath, localizePath, isTranslated, LOCALES, LOCALE_LABELS } from '../i18n';
+import { getLocale, useTranslations, localizedHref, rootHref, unlocalizePath, localizePath, isTranslated, PRODUCT_BASE, LOCALES, LOCALE_LABELS } from '../i18n';
 
 const locale = getLocale(Astro.currentLocale);
 const t      = useTranslations(locale);
 const href   = (p: string) => localizedHref(p, locale);
 
-const basePath  = unlocalizePath(Astro.url.pathname);
-const isHome    = basePath === '/';
-const isGames   = basePath.startsWith('/games');
-const isPricing = basePath.startsWith('/pricing');
+const basePath = unlocalizePath(Astro.url.pathname);
+
+/* The domain root is a portfolio hub shared by every product, so it must not
+   carry Card Games' navigation. Only the company-wide pages and the language
+   picker belong there. Everywhere else is inside a product, where "Home"
+   means the hub and a separate link returns to the product's own home. */
+const isHub       = basePath === '/';
+const hubHref     = rootHref('/', locale);
+const productHome = href('/');
+
+const isProductHome = basePath === PRODUCT_BASE || basePath === `${PRODUCT_BASE}/`;
+const isGames   = basePath.startsWith(`${PRODUCT_BASE}/availablegames`);
+const isPricing = basePath.startsWith(`${PRODUCT_BASE}/pricing`);
 const isPrivacy = basePath.startsWith('/privacy');
 const isTerms   = basePath.startsWith('/terms');
 
@@ -19,19 +28,24 @@ const switchTarget = (l: (typeof LOCALES)[number]) =>
 
 <nav class="navbar">
   <div class="navbar-inner">
-    <a href={href('/')} class="navbar-brand">
+    <a href={isHub ? hubHref : productHome} class="navbar-brand">
       <img class="brand-icon" src="/favicon-32.png" srcset="/favicon-32.png 1x, /icon-180.png 2x" width="28" height="28" alt="" />
-      <span>CARD GAMES</span>
+      <span>{isHub ? 'VANIKAR GAMES' : 'CARD GAMES'}</span>
     </a>
 
     <div class="navbar-nav">
-      <a href={href('/')}          class:list={['nav-link', { active: isHome }]}>{t('nav.home')}</a>
-      <a href={href('/games')}     class:list={['nav-link', { active: isGames }]}>{t('nav.games')}</a>
-      <a href={href('/#social')}   class="nav-link">{t('nav.community')}</a>
-      <a href={href('/pricing')}   class:list={['nav-link', { active: isPricing }]}>{t('nav.pricing')}</a>
+      {!isHub && (
+        <Fragment>
+          <a href={hubHref}            class="nav-link">{t('nav.home')}</a>
+          <a href={productHome}        class:list={['nav-link', { active: isProductHome }]}>{t('nav.productHome')}</a>
+          <a href={href('/games')}     class:list={['nav-link', { active: isGames }]}>{t('nav.games')}</a>
+          <a href={href('/#social')}   class="nav-link">{t('nav.community')}</a>
+          <a href={href('/pricing')}   class:list={['nav-link', { active: isPricing }]}>{t('nav.pricing')}</a>
+        </Fragment>
+      )}
       <a href={href('/privacy')}   class:list={['nav-link', { active: isPrivacy }]}>{t('nav.privacy')}</a>
       <a href={href('/terms')}     class:list={['nav-link', { active: isTerms }]}>{t('nav.terms')}</a>
-      <button type="button" data-store="App Store / Google Play" class="nav-link nav-cta">{t('nav.getApp')}</button>
+      {!isHub && <button type="button" data-store="App Store / Google Play" class="nav-link nav-cta">{t('nav.getApp')}</button>}
       <div class="lang-dd" id="lang-dd">
         <button class="lang-dd-btn" id="lang-dd-btn" aria-haspopup="true" aria-expanded="false" aria-label="Language">
           <svg class="lang-dd-globe" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
@@ -63,10 +77,15 @@ const switchTarget = (l: (typeof LOCALES)[number]) =>
   </div>
 
   <div class="navbar-mobile" id="nav-mobile" aria-hidden="true">
-    <a href={href('/')}>{t('nav.home')}</a>
-    <a href={href('/games')}>{t('nav.games')}</a>
-    <a href={href('/#social')}>{t('nav.community')}</a>
-    <a href={href('/pricing')}>{t('nav.pricing')}</a>
+    {!isHub && (
+      <Fragment>
+        <a href={hubHref}>{t('nav.home')}</a>
+        <a href={productHome}>{t('nav.productHome')}</a>
+        <a href={href('/games')}>{t('nav.games')}</a>
+        <a href={href('/#social')}>{t('nav.community')}</a>
+        <a href={href('/pricing')}>{t('nav.pricing')}</a>
+      </Fragment>
+    )}
     <a href={href('/privacy')}>{t('footer.privacy')}</a>
     <a href={href('/terms')}>{t('footer.terms')}</a>
     <div class="lang-mobile" role="group" aria-label="Language">
@@ -76,7 +95,7 @@ const switchTarget = (l: (typeof LOCALES)[number]) =>
            lang={l}>{LOCALE_LABELS[l]}</a>
       ))}
     </div>
-    <button type="button" data-store="App Store / Google Play" class="nav-cta" style="text-align:center;margin-top:.5rem;width:100%">{t('nav.getApp')}</button>
+    {!isHub && <button type="button" data-store="App Store / Google Play" class="nav-cta" style="text-align:center;margin-top:.5rem;width:100%">{t('nav.getApp')}</button>}
   </div>
 </nav>
 

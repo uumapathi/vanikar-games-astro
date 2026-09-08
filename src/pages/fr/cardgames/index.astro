@@ -10,6 +10,10 @@ import SocialFeaturesSection from '../../../components/SocialFeaturesSection.ast
 import PricingSection        from '../../../components/PricingSection.astro';
 import HomeFaqSection        from '../../../components/HomeFaqSection.astro';
 import DownloadSection       from '../../../components/DownloadSection.astro';
+import { getLocale, localizedHref, rootHref, useTranslations } from '../../../i18n';
+
+const lang = getLocale(Astro.currentLocale);
+const t = useTranslations(lang);
 
 const jsonLd = [
   {
@@ -31,6 +35,14 @@ const jsonLd = [
     description: "Jouez à des jeux de cartes classiques en ligne ou hors ligne avec Vanikar. Cœurs, Belote, Gin-rami, Cribbage, Big Two, Rami indien et plus — contre l'IA, des amis ou des joueurs en ligne.",
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD', description: "Essai gratuit de 2 semaines" },
     publisher: { '@type': 'Organization', name: 'Vanikar LLC', url: 'https://vanikar.com' },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: t('nav.allGames'), item: new URL(rootHref('/', lang), Astro.site).href },
+      { '@type': 'ListItem', position: 2, name: t('nav.product'),  item: new URL(localizedHref('/', lang), Astro.site).href },
+    ],
   },
 ];
 ---
