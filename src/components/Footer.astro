@@ -15,9 +15,24 @@ const hub    = rootHref('/', locale);
 ---
 <footer class="footer">
   <div class="container">
-    <div class="footer-grid">
+    <div class:list={['footer-grid', isHub ? 'footer-grid--hub' : 'footer-grid--product']}>
       <div class="footer-brand">
-        <div class="footer-brand-text"><img src="/favicon-32.png" srcset="/favicon-32.png 1x, /icon-180.png 2x" width="24" height="24" alt="" style="border-radius:6px" /> {isHub ? 'Vanikar Games' : 'Card Games by Vanikar'}</div>
+        <div class="footer-brand-text">
+          {/* The hub carries the company mark; inside a product it is that
+              product's icon. Serving the Card Games app icon under the words
+              "Vanikar Games" was the wrong brand on the wrong page. The two
+              images are shaped differently — the app icon is an opaque
+              rounded square, the company mark a transparent glyph — so the
+              corner rounding belongs to one and not the other. */}
+          {isHub
+            ? <img class="footer-mark" src="/vanikar-icon-32.png"
+                   srcset="/vanikar-icon-32.png 1x, /vanikar-icon-180.png 2x"
+                   width="26" height="26" alt="" />
+            : <img class="footer-mark footer-mark--app" src="/favicon-32.png"
+                   srcset="/favicon-32.png 1x, /icon-180.png 2x"
+                   width="26" height="26" alt="" />}
+          <span>{isHub ? 'Vanikar Games' : 'Card Games by Vanikar'}</span>
+        </div>
         {!isHub && <p class="footer-tagline">{t('footer.tagline')}</p>}
       </div>
 
@@ -35,27 +50,34 @@ const hub    = rootHref('/', locale);
         </div>
       )}
 
+      {/* Privacy, Terms and Contact used to sit here *and* in the bar below,
+          twelve pixels apart. They live in the bar now — the conventional
+          place for them — so this column is only the company. */}
       <div class="footer-col">
         <div class="footer-heading">{t('footer.company')}</div>
         <ul class="footer-links">
-          <li><a href={hub}>{t('nav.allGames')}</a></li>
-          <li><a href="https://vanikar.com" target="_blank" rel="noopener">Vanikar LLC</a></li>
+          {/* On the hub this pointed at the page it was rendered on. */}
+          {!isHub && <li><a href={hub}>{t('nav.allGames')}</a></li>}
           <li><a href={href('/about')}>{t('footer.about')}</a></li>
-          <li><a href={href('/privacy')}>{t('footer.privacy')}</a></li>
-          <li><a href={href('/terms')}>{t('footer.terms')}</a></li>
           <li><a href="mailto:info@vanikar.com">{t('footer.support')}</a></li>
+          <li>
+            <a href="https://vanikar.com" target="_blank" rel="noopener">
+              Vanikar LLC<span class="footer-ext" aria-hidden="true">↗</span>
+            </a>
+          </li>
         </ul>
       </div>
     </div>
 
-    <p class="footer-trademarks">{t('footer.trademarks')}</p>
+    {/* The App Store, Google Play and Discord marks are Card Games' to
+        acknowledge. The hub references none of them. */}
+    {!isHub && <p class="footer-trademarks">{t('footer.trademarks')}</p>}
 
     <div class="footer-bottom">
       <p class="footer-copy">&copy; {year} Vanikar LLC. {t('footer.rights')}</p>
       <div class="footer-legal">
-        <a href={href('/terms')}>{t('nav.terms')}</a>
         <a href={href('/privacy')}>{t('nav.privacy')}</a>
-        <a href="mailto:info@vanikar.com">{t('footer.contact')}</a>
+        <a href={href('/terms')}>{t('nav.terms')}</a>
       </div>
     </div>
   </div>
@@ -63,14 +85,22 @@ const hub    = rootHref('/', locale);
 
 <style>
   .footer { background: var(--bg-deep); border-top: 1px solid var(--border); padding: 4rem 0 1.5rem; }
+  /* align-items:start stops a one-line brand block from being stretched to
+     the height of the tallest link column and stranded at the top of it. */
   .footer-grid {
-    display: grid; grid-template-columns: 1fr; gap: 2.5rem; margin-bottom: 3rem;
+    display: grid; grid-template-columns: 1fr; align-items: start;
+    gap: 2.5rem 3rem; margin-bottom: 2.75rem;
   }
   .footer-brand-text {
     font-family: 'Cinzel Variable',serif; font-size: 1.05rem; font-weight: 700;
-    color: var(--gold-light); display: flex; align-items: center; gap: .5rem; margin-bottom: .75rem;
+    color: var(--gold-light); display: flex; align-items: center; gap: .55rem;
   }
-  .footer-tagline { font-size: .875rem; color: var(--text-muted); line-height: 1.7; max-width: 340px; }
+  .footer-mark { width: 26px; height: 26px; display: block; flex-shrink: 0; }
+  .footer-mark--app { border-radius: 6px; }
+  .footer-tagline {
+    font-size: .875rem; color: var(--text-muted); line-height: 1.7;
+    max-width: 340px; margin-top: .85rem;
+  }
   .footer-heading {
     font-size: .72rem; font-weight: 700; text-transform: uppercase;
     letter-spacing: .18em; color: var(--text-muted); margin-bottom: 1rem;
@@ -78,6 +108,7 @@ const hub    = rootHref('/', locale);
   .footer-links { display: flex; flex-direction: column; gap: .55rem; }
   .footer-links a { font-size: .9rem; color: var(--text-secondary); transition: color var(--transition); }
   .footer-links a:hover { color: var(--gold-light); }
+  .footer-ext { font-size: .72em; margin-left: .3em; opacity: .6; }
   .footer-trademarks {
     font-size: .72rem; color: var(--text-dim); line-height: 1.7;
     margin-bottom: 1.25rem; max-width: 860px;
@@ -90,6 +121,23 @@ const hub    = rootHref('/', locale);
   .footer-legal { display: flex; gap: 1.5rem; }
   .footer-legal a { font-size: .78rem; color: var(--text-dim); transition: color var(--transition); }
   .footer-legal a:hover { color: var(--text-secondary); }
-  @media (min-width: 640px)  { .footer-grid { grid-template-columns: 1fr 1fr; } }
-  @media (min-width: 768px)  { .footer-grid { grid-template-columns: 2fr 1fr 1fr; } }
+  @media (min-width: 640px) {
+    .footer-grid--product { grid-template-columns: 1fr 1fr; }
+  }
+  @media (min-width: 768px) {
+    .footer-grid--product { grid-template-columns: 1.6fr 1fr 1fr; }
+  }
+
+  /* The hub has a brand line and three links — not enough to fill a column
+     grid, which left it stretched across a mostly empty row. It gets a single
+     compact band instead: brand at one end, links at the other. The COMPANY
+     heading goes with the column it labelled. */
+  .footer-grid--hub {
+    display: flex; flex-wrap: wrap; align-items: center;
+    justify-content: space-between; gap: 1rem 2rem;
+  }
+  .footer-grid--hub .footer-heading { display: none; }
+  .footer-grid--hub .footer-links {
+    flex-direction: row; flex-wrap: wrap; gap: .5rem 1.5rem;
+  }
 </style>
