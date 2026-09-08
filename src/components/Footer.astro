@@ -1,10 +1,14 @@
 ---
-import { getLocale, useTranslations, localizedHref } from '../i18n';
+import { getLocale, useTranslations, localizedHref, rootHref } from '../i18n';
 
 const year   = new Date().getFullYear();
 const locale = getLocale(Astro.currentLocale);
 const t      = useTranslations(locale);
 const href   = (p: string) => localizedHref(p, locale);
+// href('/') resolves to the product home (/cardgames/), so the portfolio hub
+// at the domain root needs rootHref. Without this link the hub is orphaned:
+// nothing else on the site points at it.
+const hub    = rootHref('/', locale);
 ---
 <footer class="footer">
   <div class="container">
@@ -29,6 +33,7 @@ const href   = (p: string) => localizedHref(p, locale);
       <div class="footer-col">
         <div class="footer-heading">{t('footer.company')}</div>
         <ul class="footer-links">
+          <li><a href={hub}>{t('nav.allGames')}</a></li>
           <li><a href="https://vanikar.com" target="_blank" rel="noopener">Vanikar LLC</a></li>
           <li><a href={href('/about')}>{t('footer.about')}</a></li>
           <li><a href={href('/privacy')}>{t('footer.privacy')}</a></li>
