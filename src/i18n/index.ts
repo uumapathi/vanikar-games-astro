@@ -60,6 +60,26 @@ export const PRODUCT_BASE = '/cardgames';
 /** Company-wide pages that stay at the domain root, shared by every product. */
 const SHARED_PATHS = new Set(['/', '/about', '/privacy', '/terms']);
 
+/**
+ * Pages that wear the portfolio hub's chrome rather than a product's.
+ *
+ * The legal documents are Vanikar LLC's and cover every product, so dressing
+ * them as Card Games pages — app icon, product nav, Ways to Play, the App
+ * Store trademark notice — attributed them to the wrong entity. They belong
+ * beside the hub.
+ *
+ * Not the same question as "is this the hub itself": /privacy is hub-chromed
+ * but is not the hub, so a link back to the hub is useful there and would be
+ * a self-link on the hub. Callers that care use isHubRoot for that.
+ */
+const HUB_CHROME_PATHS = new Set(['/', '/about', '/privacy', '/terms']);
+
+/** True when `path` (already unlocalized) should render the hub's header and footer. */
+export function usesHubChrome(path: string): boolean {
+  const clean = path !== '/' && path.endsWith('/') ? path.slice(0, -1) : path;
+  return HUB_CHROME_PATHS.has(clean);
+}
+
 /** Authored paths that map somewhere other than `${PRODUCT_BASE}${path}`. */
 const PRODUCT_ALIASES: Record<string, string> = {
   '/': PRODUCT_BASE,                                  // product home

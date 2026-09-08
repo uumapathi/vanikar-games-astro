@@ -1,5 +1,6 @@
 ---
-import { getLocale, useTranslations, localizedHref, rootHref, unlocalizePath, localizePath, isTranslated, PRODUCT_BASE, LOCALES, LOCALE_LABELS } from '../i18n';
+import VanikarLockup from './VanikarLockup.astro';
+import { getLocale, useTranslations, localizedHref, rootHref, unlocalizePath, localizePath, isTranslated, usesHubChrome, PRODUCT_BASE, LOCALES, LOCALE_LABELS } from '../i18n';
 
 const locale = getLocale(Astro.currentLocale);
 const t      = useTranslations(locale);
@@ -9,9 +10,15 @@ const basePath = unlocalizePath(Astro.url.pathname);
 
 /* The domain root is a portfolio hub shared by every product, so it must not
    carry Card Games' navigation. Only the company-wide pages and the language
-   picker belong there. Everywhere else is inside a product, where "Home"
-   means the hub and a separate link returns to the product's own home. */
-const isHub       = basePath === '/';
+   picker belong there. The legal pages are Vanikar LLC's and cover every
+   product, so they get the same treatment. Everywhere else is inside a
+   product, where "Home" means the hub and a separate link returns to the
+   product's own home. */
+const isHub       = usesHubChrome(basePath);
+/* Hub chrome is not the same as being the hub: About, Privacy and Terms wear
+   it but need a way back, which on the hub itself would link to the page you
+   are already on. */
+const isHubRoot   = basePath === '/';
 const hubHref     = rootHref('/', locale);
 const productHome = href('/');
 
@@ -30,22 +37,13 @@ const switchTarget = (l: (typeof LOCALES)[number]) =>
   <div class="navbar-inner">
     <a href={isHub ? hubHref : productHome} class="navbar-brand">
       {isHub
-        /* The hub carries the full logo — framed mark with GAMES inside — not
-           the Card Games app icon. GAMES is 7.5% of the artwork's width, so the
-           lockup has to be ~190px for it to be legible at all, which is what
-           sets the taller bar on this page. */
-        ? <span class="brand-lockup">
-            <span class="brand-frame">
-              <span class="brand-inner">
-                <span class="brand-art">
-                  <img src="/vanikar-mark.png" width="84" height="48" alt="" />
-                  <span class="brand-word" aria-hidden="true">GAMES</span>
-                </span>
-              </span>
-            </span>
-          </span>
+        /* Hub pages carry the full logo — framed mark with GAMES inside — not
+           the Card Games app icon. GAMES is only 7.5% of the artwork's width,
+           so the lockup needs this much room to read at all, which is what
+           sets the taller bar on these pages. */
+        ? <span class="brand-lockup"><VanikarLockup /></span>
         : <img class="brand-icon" src="/favicon-32.png" srcset="/favicon-32.png 1x, /icon-180.png 2x" width="28" height="28" alt="" />}
-      <span class:list={['brand-name', { 'brand-name--metal': isHub }]}>{isHub ? 'VANIKAR GAMES' : 'CARD GAMES'}</span>
+      <span class:list={['brand-name', { 'metal-teal': isHub }]}>{isHub ? 'VANIKAR GAMES' : 'CARD GAMES'}</span>
     </a>
 
     <div class="navbar-nav">
@@ -58,6 +56,7 @@ const switchTarget = (l: (typeof LOCALES)[number]) =>
           <a href={href('/pricing')}   class:list={['nav-link', { active: isPricing }]}>{t('nav.pricing')}</a>
         </Fragment>
       )}
+      {isHub && !isHubRoot && <a href={hubHref} class="nav-link">{t('nav.home')}</a>}
       <a href={href('/privacy')}   class:list={['nav-link', { active: isPrivacy }]}>{t('nav.privacy')}</a>
       <a href={href('/terms')}     class:list={['nav-link', { active: isTerms }]}>{t('nav.terms')}</a>
       {!isHub && <button type="button" data-store="App Store / Google Play" class="nav-link nav-cta">{t('nav.getApp')}</button>}
@@ -101,6 +100,7 @@ const switchTarget = (l: (typeof LOCALES)[number]) =>
         <a href={href('/pricing')}>{t('nav.pricing')}</a>
       </Fragment>
     )}
+    {isHub && !isHubRoot && <a href={hubHref}>{t('nav.home')}</a>}
     <a href={href('/privacy')}>{t('footer.privacy')}</a>
     <a href={href('/terms')}>{t('footer.terms')}</a>
     <div class="lang-mobile" role="group" aria-label="Language">
@@ -179,46 +179,11 @@ const switchTarget = (l: (typeof LOCALES)[number]) =>
   .brand-icon { width: 28px; height: 28px; border-radius: 7px; display: block; }
 
   /* Hub header logo. Sized to match the mark on vanikar.com so the two
-     properties read as siblings: 64px overall (48px on phones), a 2px ring,
-     15px radius, 6px/9px padding, and the same scale-on-hover. The parent
-     site frames its logo with a teal-to-gold gradient border, which is the
-     same idea as this ring. */
-  .brand-lockup { display: block; }
-  .brand-frame {
-    display: block; border-radius: 15px; padding: 2px;
-    background-image: linear-gradient(180deg,
-      #b6ece8 0%, #63cec8 18%, #1d938d 40%,
-      #14727e 54%, #3fb5af 72%, #9ce4df 88%, #1c7f88 100%);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,.5), 0 4px 14px rgba(14,138,138,.25);
-    transition: transform .2s, box-shadow .2s;
-  }
-  .navbar-brand:hover .brand-frame {
-    transform: scale(1.06);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,.5), 0 7px 20px rgba(14,138,138,.42);
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .brand-frame { transition: none; }
-    .navbar-brand:hover .brand-frame { transform: none; }
-  }
-  .brand-inner {
-    display: block; border-radius: 12px; padding: 6px 9px;
-    background: linear-gradient(180deg, rgba(63,181,175,.17), rgba(20,114,126,.05)), #08120a;
-    box-shadow: inset 0 2px 5px rgba(0,0,0,.85);
-  }
-  /* Width is explicit rather than derived from the image: container-type
-     applies inline-axis containment, so a content-sized width collapses. */
-  .brand-art { position: relative; display: block; width: 84px; container-type: inline-size; }
-  .brand-art img { width: 100%; height: auto; display: block; }
-  .brand-word {
-    position: absolute; top: 0; right: 0;
-    font-family: 'Cinzel Variable', serif; font-weight: 700; line-height: 1;
-    font-size: 7.5cqw; letter-spacing: .26em; margin-right: -.26em;
-    background-image: linear-gradient(180deg,
-      #b6ece8 0%, #63cec8 18%, #1d938d 40%,
-      #14727e 54%, #3fb5af 72%, #9ce4df 88%, #1c7f88 100%);
-    -webkit-background-clip: text; background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
+     properties read as siblings: 64px overall (48px on phones). The artwork
+     width is all this sets — VanikarLockup scales its frame, padding and
+     wordmark from it. The parent site frames its logo with a teal-to-gold
+     gradient border, which is the same idea as this ring. */
+  .brand-lockup { display: block; --lockup-w: 84px; }
   /* A 64px logo needs slightly more room than the 68px default bar allows.
      --nav-height is set on the body, not here, because .main-content padding
      reads the same variable and would otherwise sit under the bar. */
@@ -238,27 +203,12 @@ const switchTarget = (l: (typeof LOCALES)[number]) =>
   :global(body.is-hub) .navbar-nav    { grid-column: 3; justify-self: end; }
   :global(body.is-hub) .navbar-toggle { grid-column: 3; justify-self: end; }
 
-  /* The wordmark is finished like GAMES inside the logo: the same teal ramp
-     clipped to the glyphs, the same paired shadows for the emboss. The colour
-     is a fallback for anything that cannot clip a background to text. */
-  .brand-name--metal {
-    font-family: 'Cinzel Variable', serif;
-    color: #63cec8;
-    background-image: linear-gradient(180deg,
-      #b6ece8 0%, #63cec8 18%, #1d938d 40%,
-      #14727e 54%, #3fb5af 72%, #9ce4df 88%, #1c7f88 100%);
-    -webkit-background-clip: text; background-clip: text;
-    filter:
-      drop-shadow(0 1px 0 rgba(0,0,0,.6))
-      drop-shadow(0 -1px 0 rgba(143,222,219,.24));
-  }
-  @supports ((-webkit-background-clip: text) or (background-clip: text)) {
-    .brand-name--metal { -webkit-text-fill-color: transparent; color: transparent; }
-  }
+  /* The wordmark's metallic finish lives in global.css as .metal-teal, shared
+     with the footer — the two had drifted to different colours while each kept
+     a copy. Only the face belongs to the header. */
+  .brand-name { font-family: 'Cinzel Variable', serif; }
   @media (max-width: 720px) {
-    .brand-frame { border-radius: 12px; }
-    .brand-inner { border-radius: 9px; padding: 5px 7px; }
-    .brand-art { width: 59px; }
+    .brand-lockup { --lockup-w: 59px; }
     :global(body.is-hub) { --nav-height: 72px; }
     .navbar-brand { font-size: .95rem; letter-spacing: .08em; }
   }

@@ -1,13 +1,24 @@
 ---
-import { getLocale, useTranslations, localizedHref, rootHref, unlocalizePath } from '../i18n';
+import VanikarLockup from './VanikarLockup.astro';
+import { getLocale, useTranslations, localizedHref, rootHref, unlocalizePath, usesHubChrome } from '../i18n';
 
 const year   = new Date().getFullYear();
 const locale = getLocale(Astro.currentLocale);
 const t      = useTranslations(locale);
 const href   = (p: string) => localizedHref(p, locale);
+/* Set by BaseLayout from the build's measurement ID: no analytics, no consent
+   to revisit, so no link. */
+interface Props { analytics?: boolean }
+const { analytics = false } = Astro.props;
+
+const basePath = unlocalizePath(Astro.url.pathname);
 // The portfolio hub belongs to every product, so it drops the Card Games
-// brand block and the Ways to Play links the same way the nav does.
-const isHub  = unlocalizePath(Astro.url.pathname) === '/';
+// brand block and the Ways to Play links the same way the nav does. The legal
+// pages are company documents and do the same.
+const isHub  = usesHubChrome(basePath);
+// Hub chrome is not the same as being the hub: /privacy wants a link back to
+// it, which on the hub itself would point at the page you are already on.
+const isHubRoot = basePath === '/';
 // href('/') resolves to the product home (/cardgames/), so the portfolio hub
 // at the domain root needs rootHref. Without this link the hub is orphaned:
 // nothing else on the site points at it.
@@ -18,20 +29,20 @@ const hub    = rootHref('/', locale);
     <div class:list={['footer-grid', isHub ? 'footer-grid--hub' : 'footer-grid--product']}>
       <div class="footer-brand">
         <div class="footer-brand-text">
-          {/* The hub carries the company mark; inside a product it is that
-              product's icon. Serving the Card Games app icon under the words
-              "Vanikar Games" was the wrong brand on the wrong page. The two
-              images are shaped differently — the app icon is an opaque
-              rounded square, the company mark a transparent glyph — so the
-              corner rounding belongs to one and not the other. */}
+          {/* Hub pages carry the company lockup — the same one the header
+              shows. This used to be a bare square crop of the artwork beside
+              a gold wordmark, so a single page displayed two different Vanikar
+              logos in two different colours. Inside a product it is that
+              product's icon, an opaque rounded square, which is why the corner
+              rounding belongs to that branch and not this one. */}
           {isHub
-            ? <img class="footer-mark" src="/vanikar-icon-32.png"
-                   srcset="/vanikar-icon-32.png 1x, /vanikar-icon-180.png 2x"
-                   width="26" height="26" alt="" />
-            : <img class="footer-mark footer-mark--app" src="/favicon-32.png"
+            ? <span class="footer-lockup"><VanikarLockup /></span>
+            : <img class="footer-mark" src="/favicon-32.png"
                    srcset="/favicon-32.png 1x, /icon-180.png 2x"
                    width="26" height="26" alt="" />}
-          <span>{isHub ? 'Vanikar Games' : 'Card Games by Vanikar'}</span>
+          <span class:list={{ 'metal-teal': isHub }}>
+            {isHub ? 'Vanikar Games' : 'Card Games by Vanikar'}
+          </span>
         </div>
         {!isHub && <p class="footer-tagline">{t('footer.tagline')}</p>}
       </div>
@@ -57,7 +68,7 @@ const hub    = rootHref('/', locale);
         <div class="footer-heading">{t('footer.company')}</div>
         <ul class="footer-links">
           {/* On the hub this pointed at the page it was rendered on. */}
-          {!isHub && <li><a href={hub}>{t('nav.allGames')}</a></li>}
+          {!isHubRoot && <li><a href={hub}>{t('nav.allGames')}</a></li>}
           <li><a href={href('/about')}>{t('footer.about')}</a></li>
           <li><a href="mailto:info@vanikar.com">{t('footer.support')}</a></li>
           <li>
@@ -78,6 +89,7 @@ const hub    = rootHref('/', locale);
       <div class="footer-legal">
         <a href={href('/privacy')}>{t('nav.privacy')}</a>
         <a href={href('/terms')}>{t('nav.terms')}</a>
+        {analytics && <button type="button" data-cookie-settings>{t('cookie.settings')}</button>}
       </div>
     </div>
   </div>
@@ -95,8 +107,10 @@ const hub    = rootHref('/', locale);
     font-family: 'Cinzel Variable',serif; font-size: 1.05rem; font-weight: 700;
     color: var(--gold-light); display: flex; align-items: center; gap: .55rem;
   }
-  .footer-mark { width: 26px; height: 26px; display: block; flex-shrink: 0; }
-  .footer-mark--app { border-radius: 6px; }
+  /* Smaller than the header's 84px — this is a sign-off, not the masthead —
+     but the same lockup, scaled by the one variable it reads. */
+  .footer-lockup { display: block; flex-shrink: 0; --lockup-w: 62px; }
+  .footer-mark { width: 26px; height: 26px; border-radius: 6px; display: block; flex-shrink: 0; }
   .footer-tagline {
     font-size: .875rem; color: var(--text-muted); line-height: 1.7;
     max-width: 340px; margin-top: .85rem;
@@ -118,9 +132,16 @@ const hub    = rootHref('/', locale);
     padding-top: 1.5rem; border-top: 1px solid var(--border); flex-wrap: wrap; gap: .75rem;
   }
   .footer-copy  { font-size: .78rem; color: var(--text-dim); }
-  .footer-legal { display: flex; gap: 1.5rem; }
-  .footer-legal a { font-size: .78rem; color: var(--text-dim); transition: color var(--transition); }
-  .footer-legal a:hover { color: var(--text-secondary); }
+  .footer-legal { display: flex; flex-wrap: wrap; gap: 1.5rem; }
+  /* The cookie link is a button because it opens the banner rather than
+     navigating; it is styled to sit in the row as an equal. */
+  .footer-legal a,
+  .footer-legal button {
+    font-size: .78rem; color: var(--text-dim); transition: color var(--transition);
+    background: none; border: none; padding: 0; font-family: inherit; cursor: pointer;
+  }
+  .footer-legal a:hover,
+  .footer-legal button:hover { color: var(--text-secondary); }
   @media (min-width: 640px) {
     .footer-grid--product { grid-template-columns: 1fr 1fr; }
   }

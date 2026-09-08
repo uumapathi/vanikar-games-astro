@@ -1,0 +1,73 @@
+---
+/**
+ * The Vanikar Games mark: the wide sail-and-globe artwork with GAMES set at
+ * its top right, inside the teal gradient frame.
+ *
+ * The header and the footer each used to build a mark of their own and drifted
+ * apart — the header showed this framed lockup while the footer showed a bare
+ * square crop of the same artwork, so one page carried two different logos.
+ * There is one component now and they cannot diverge again.
+ *
+ * Size comes from --lockup-w (the artwork's width), set by whoever places it,
+ * so a media query on any ancestor resizes the whole lockup. The frame radius
+ * and padding scale from that width, and GAMES stays at 7.5% of it — the
+ * proportion the artwork itself was drawn to.
+ */
+const TEAL = `linear-gradient(180deg,
+  #b6ece8 0%, #63cec8 18%, #1d938d 40%,
+  #14727e 54%, #3fb5af 72%, #9ce4df 88%, #1c7f88 100%)`;
+---
+<span class="vk-lockup">
+  <span class="vk-frame" style={`background-image:${TEAL}`}>
+    <span class="vk-inner">
+      <span class="vk-art">
+        <img src="/vanikar-mark.png" width="84" height="48" alt="" />
+        <span class="vk-word" aria-hidden="true" style={`background-image:${TEAL}`}>GAMES</span>
+      </span>
+    </span>
+  </span>
+</span>
+
+<style>
+  /* 84px is the header's size; every caller sets --lockup-w explicitly, so the
+     fallback only matters if one forgets. */
+  .vk-lockup { --w: var(--lockup-w, 84px); display: block; }
+  .vk-frame {
+    display: block;
+    border-radius: calc(var(--w) * 0.1786);   /* 15px at 84px */
+    padding: 2px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.5), 0 4px 14px rgba(14,138,138,.25);
+    transition: transform .2s, box-shadow .2s;
+  }
+  .vk-inner {
+    display: block;
+    border-radius: calc(var(--w) * 0.1429);   /* 12px at 84px */
+    padding: calc(var(--w) * 0.0714) calc(var(--w) * 0.1071);  /* 6px 9px at 84px */
+    background: linear-gradient(180deg, rgba(63,181,175,.17), rgba(20,114,126,.05)), #08120a;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,.85);
+  }
+  /* Width is explicit rather than derived from the image: container-type
+     applies inline-axis containment, so a content-sized width collapses. */
+  .vk-art { position: relative; display: block; width: var(--w); container-type: inline-size; }
+  .vk-art img { width: 100%; height: auto; display: block; }
+  .vk-word {
+    position: absolute; top: 0; right: 0;
+    font-family: 'Cinzel Variable', serif; font-weight: 700; line-height: 1;
+    font-size: 7.5cqw; letter-spacing: .26em; margin-right: -.26em;
+    color: #63cec8;
+    -webkit-background-clip: text; background-clip: text;
+  }
+  @supports ((-webkit-background-clip: text) or (background-clip: text)) {
+    .vk-word { -webkit-text-fill-color: transparent; color: transparent; }
+  }
+  /* Lifts only when the lockup is itself a link, which is the header's case;
+     the footer places it as plain artwork. */
+  :global(a:hover) .vk-frame {
+    transform: scale(1.06);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.5), 0 7px 20px rgba(14,138,138,.42);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .vk-frame { transition: none; }
+    :global(a:hover) .vk-frame { transform: none; }
+  }
+</style>

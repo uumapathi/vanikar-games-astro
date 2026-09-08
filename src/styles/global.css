@@ -126,6 +126,24 @@ section { padding: 5rem 0; }
 .legal-content strong { color: var(--text-primary); }
 .legal-content a  { color: var(--gold); text-decoration: underline; text-underline-offset: 3px; }
 .legal-content code { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: .88em; color: var(--text-primary); background: rgba(255,255,255,.06); padding: .1em .35em; border-radius: 4px; }
+
+/* Metallic teal finish for the Vanikar wordmark, matching GAMES inside the
+   logo. Global because the header and the footer both set the wordmark and
+   had drifted to different colours while each kept its own copy of this.
+   The flat colour is the fallback where a background cannot be clipped to text. */
+.metal-teal {
+  color: #63cec8;
+  background-image: linear-gradient(180deg,
+    #b6ece8 0%, #63cec8 18%, #1d938d 40%,
+    #14727e 54%, #3fb5af 72%, #9ce4df 88%, #1c7f88 100%);
+  -webkit-background-clip: text; background-clip: text;
+  filter:
+    drop-shadow(0 1px 0 rgba(0,0,0,.6))
+    drop-shadow(0 -1px 0 rgba(143,222,219,.24));
+}
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .metal-teal { -webkit-text-fill-color: transparent; color: transparent; }
+}
 .legal-content a:hover { color: var(--gold-light); }
 
 /* ---- Responsive ---- */
