@@ -88,6 +88,23 @@ Check for its absence before deploying.
 > A production site shipping `noindex` looks perfectly healthy and simply never
 > ranks. This is the single easiest thing to get wrong here.
 
+### 2c. Google Analytics
+
+The Appwrite build was made with `PUBLIC_GA_MEASUREMENT_ID=G-PR6ZTLGRF3`, so the
+live site today loads GA4. The Azure builds so far were made **without** it — no
+`.env` in the repo, nothing in CI — so `dev.vanikar.games` and the prod host
+ship no analytics at all. Nothing breaks; the data just stops on cutover day.
+
+```bash
+PUBLIC_GA_MEASUREMENT_ID=G-PR6ZTLGRF3 npm run build
+```
+
+Check `dist/index.html` contains `googletagmanager.com/gtag/js?id=G-PR6ZTLGRF3`
+before deploying. Put the variable in the GitHub Actions secrets when CI is set up.
+
+The Privacy Policy (section 5) describes GA4 and how to opt out, so the
+disclosure side is already in place.
+
 ---
 
 ## 3. Deploy production
