@@ -23,6 +23,19 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SITE = process.env.SITE_URL || 'https://vanikar.games';
 const IS_DEV = /\/\/dev\./.test(SITE);
 
+/**
+ * NOINDEX=1 forces the noindex header on a build that is otherwise production.
+ *
+ * Needed while production is deployed but the custom domain is not yet bound:
+ * the *.azurestaticapps.net hostname is public and crawlable, and the build
+ * carries production canonicals. Faking SITE_URL to get the dev behaviour
+ * would poison those canonicals, so this is a separate switch.
+ *
+ * Drop the flag at cutover — a production site that ships noindex is invisible.
+ */
+const FORCE_NOINDEX = process.env.NOINDEX === '1';
+const NOINDEX = IS_DEV || FORCE_NOINDEX;
+
 const base = JSON.parse(fs.readFileSync(path.join(ROOT, 'swa.base.json'), 'utf8'));
 
 // --- derive the old -> new redirect table -----------------------------------
@@ -69,7 +82,7 @@ add('/cardgames/seep/', '/cardgames/sleep/');
 
 base.routes = [...base.routes, ...redirects];
 
-if (IS_DEV) {
+if (NOINDEX) {
   base.globalHeaders = { ...base.globalHeaders, 'X-Robots-Tag': 'noindex, nofollow' };
 }
 
@@ -80,7 +93,7 @@ fs.writeFileSync(out, JSON.stringify(base));
 
 const bytes = fs.statSync(out).size;
 const LIMIT = 20 * 1024;
-console.log(`staticwebapp.config.json  site=${SITE}${IS_DEV ? '  [noindex]' : ''}`);
+console.log(`staticwebapp.config.json  site=${SITE}${NOINDEX ? (FORCE_NOINDEX ? '  [NOINDEX — forced, remove at cutover]' : '  [noindex]') : ''}`);
 console.log(`  routes: ${base.routes.length} (${redirects.length} generated 301s) · ${(bytes / 1024).toFixed(1)} KB of 20 KB`);
 if (bytes > LIMIT) {
   console.error(`\nERROR: staticwebapp.config.json is ${(bytes / 1024).toFixed(1)} KB, over Azure's 20 KB limit.`);
