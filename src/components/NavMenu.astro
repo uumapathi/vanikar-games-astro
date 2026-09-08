@@ -38,7 +38,7 @@ const switchTarget = (l: (typeof LOCALES)[number]) =>
             <span class="brand-frame">
               <span class="brand-inner">
                 <span class="brand-art">
-                  <img src="/vanikar-mark.png" width="112" height="64" alt="" />
+                  <img src="/vanikar-mark.png" width="84" height="48" alt="" />
                   <span class="brand-word" aria-hidden="true">GAMES</span>
                 </span>
               </span>
@@ -178,22 +178,36 @@ const switchTarget = (l: (typeof LOCALES)[number]) =>
   }
   .brand-icon { width: 28px; height: 28px; border-radius: 7px; display: block; }
 
-  /* Hub header logo: the same framed lockup as the page, at the smallest size
-     where GAMES still reads. The bar grows to suit it — see .is-hub below. */
+  /* Hub header logo. Sized to match the mark on vanikar.com so the two
+     properties read as siblings: 64px overall (48px on phones), a 2px ring,
+     15px radius, 6px/9px padding, and the same scale-on-hover. The parent
+     site frames its logo with a teal-to-gold gradient border, which is the
+     same idea as this ring. */
   .brand-lockup { display: block; }
   .brand-frame {
-    display: block; border-radius: 8px; padding: 2px;
+    display: block; border-radius: 15px; padding: 2px;
     background-image: linear-gradient(180deg,
       #b6ece8 0%, #63cec8 18%, #1d938d 40%,
       #14727e 54%, #3fb5af 72%, #9ce4df 88%, #1c7f88 100%);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,.5), 0 1px 5px rgba(0,0,0,.55);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.5), 0 4px 14px rgba(14,138,138,.25);
+    transition: transform .2s, box-shadow .2s;
+  }
+  .navbar-brand:hover .brand-frame {
+    transform: scale(1.06);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.5), 0 7px 20px rgba(14,138,138,.42);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .brand-frame { transition: none; }
+    .navbar-brand:hover .brand-frame { transform: none; }
   }
   .brand-inner {
-    display: block; border-radius: 6px; padding: 3px 5px;
+    display: block; border-radius: 12px; padding: 6px 9px;
     background: linear-gradient(180deg, rgba(63,181,175,.17), rgba(20,114,126,.05)), #08120a;
     box-shadow: inset 0 2px 5px rgba(0,0,0,.85);
   }
-  .brand-art { position: relative; display: block; width: 112px; container-type: inline-size; }
+  /* Width is explicit rather than derived from the image: container-type
+     applies inline-axis containment, so a content-sized width collapses. */
+  .brand-art { position: relative; display: block; width: 84px; container-type: inline-size; }
   .brand-art img { width: 100%; height: auto; display: block; }
   .brand-word {
     position: absolute; top: 0; right: 0;
@@ -205,17 +219,16 @@ const switchTarget = (l: (typeof LOCALES)[number]) =>
     -webkit-background-clip: text; background-clip: text;
     -webkit-text-fill-color: transparent;
   }
-  /* A 190px lockup needs a bar roughly twice the default height. Only the hub
-     pays that cost; product pages keep the 68px bar and the app icon. */
+  /* A 64px logo needs slightly more room than the 68px default bar allows.
+     --nav-height is set on the body, not here, because .main-content padding
+     reads the same variable and would otherwise sit under the bar. */
   :global(body.is-hub) { --nav-height: 88px; }
   @media (max-width: 720px) {
-    .brand-art { width: 96px; }
-    :global(body.is-hub) { --nav-height: 78px; }
-    .navbar-brand { font-size: .95rem; letter-spacing: .08em; }
-  }
-  @media (max-width: 480px) {
-    .brand-art { width: 84px; }
+    .brand-frame { border-radius: 12px; }
+    .brand-inner { border-radius: 9px; padding: 5px 7px; }
+    .brand-art { width: 59px; }
     :global(body.is-hub) { --nav-height: 72px; }
+    .navbar-brand { font-size: .95rem; letter-spacing: .08em; }
   }
   .navbar-nav { display: flex; align-items: center; gap: .15rem; }
   .nav-link {
