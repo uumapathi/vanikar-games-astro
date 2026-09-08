@@ -1,0 +1,134 @@
+---
+/**
+ * Analytics consent banner.
+ *
+ * BaseLayout renders this only on builds that carry a measurement ID — a site
+ * with no non-essential cookies has nothing to ask about, and a banner that
+ * appears anyway is just noise.
+ *
+ * Where consent is required — the EU, the EEA and the UK, decided from the
+ * browser's timezone; see data/consent.ts — it is opt-in and real: the Google
+ * tag is not requested at all until a visitor accepts, so no request reaches
+ * Google and no IP address is disclosed beforehand. Outside that region there
+ * is no banner and analytics load normally, which is the point of asking only
+ * where the law asks. Declining anywhere clears any _ga cookies left behind.
+ *
+ * Everyone keeps the footer's Cookie settings link, so a visitor who was never
+ * asked can still turn analytics off.
+ *
+ * Accept and Reject are the same size, weight and colour on purpose. Under the
+ * ePrivacy rules refusing has to be as easy as agreeing, which rules out the
+ * common pattern of a bright Accept beside a muted "manage preferences".
+ */
+import { getLocale, useTranslations, rootHref } from '../i18n';
+import {
+  CONSENT_KEY, GRANTED, DENIED,
+  CONSENT_REGION_PREFIXES, CONSENT_REGION_ZONES,
+} from '../data/consent';
+
+const locale = getLocale(Astro.currentLocale);
+const t = useTranslations(locale);
+---
+<div id="cookie-banner" class="cc" role="region" aria-label={t('cookie.label')} hidden>
+  <p class="cc-text">
+    {t('cookie.body')} <a href={rootHref('/privacy', locale)}>{t('cookie.more')}</a>
+  </p>
+  <div class="cc-actions">
+    <button type="button" class="cc-btn" data-consent={DENIED}>{t('cookie.reject')}</button>
+    <button type="button" class="cc-btn" data-consent={GRANTED}>{t('cookie.accept')}</button>
+  </div>
+</div>
+
+<script define:vars={{ CONSENT_KEY, GRANTED, DENIED, CONSENT_REGION_PREFIXES, CONSENT_REGION_ZONES }}>
+  const banner = document.getElementById('cookie-banner');
+
+  const read = () => { try { return localStorage.getItem(CONSENT_KEY); } catch { return null; } };
+  const write = v => { try { localStorage.setItem(CONSENT_KEY, v); } catch { /* private mode */ } };
+
+  /* Fails towards asking: no timezone, or one we do not recognise, counts as
+     in-scope. Being asked unnecessarily is a small cost; not being asked when
+     the law required it is not. */
+  function mustAsk() {
+    let tz;
+    try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone; } catch { return true; }
+    if (!tz) return true;
+    return CONSENT_REGION_ZONES.includes(tz)
+      || CONSENT_REGION_PREFIXES.some(p => tz.startsWith(p));
+  }
+
+  /* Declining after having accepted should not leave the cookies behind. The
+     host is tried bare and dot-prefixed because gtag sets them on the
+     registrable domain, which is not always the one in location.hostname. */
+  function clearAnalyticsCookies() {
+    for (const pair of document.cookie.split(';')) {
+      const name = pair.split('=')[0].trim();
+      if (!/^_ga/.test(name) && name !== '_gid') continue;
+      for (const domain of ['', `; domain=${location.hostname}`, `; domain=.${location.hostname}`]) {
+        document.cookie = `${name}=; Max-Age=0; path=/${domain}`;
+      }
+    }
+  }
+
+  for (const btn of banner.querySelectorAll('[data-consent]')) {
+    btn.addEventListener('click', () => {
+      const choice = btn.dataset.consent;
+      write(choice);
+      banner.hidden = true;
+      if (choice === GRANTED) window.vkLoadAnalytics?.();
+      else clearAnalyticsCookies();
+    });
+  }
+
+  /* Reopening from the footer lets a visitor change their mind, which consent
+     has to be as easy to withdraw as it was to give. */
+  for (const el of document.querySelectorAll('[data-cookie-settings]')) {
+    el.addEventListener('click', e => { e.preventDefault(); banner.hidden = false; });
+  }
+
+  /* A stored decision always wins, wherever the visitor is: the head script has
+     already acted on "granted", and "denied" means load nothing. Only when
+     there is no decision does geography matter — ask inside the consent
+     region, and elsewhere just start, since no consent is required there and
+     Cookie settings remains available to turn it off. */
+  const stored = read();
+  if (stored !== GRANTED && stored !== DENIED) {
+    if (mustAsk()) banner.hidden = false;
+    else window.vkLoadAnalytics?.();
+  }
+</script>
+
+<style>
+  .cc {
+    position: fixed; z-index: 1200;
+    left: 1rem; right: 1rem; bottom: 1rem;
+    max-width: 46rem; margin: 0 auto;
+    display: flex; align-items: center; flex-wrap: wrap; gap: .85rem 1.25rem;
+    padding: 1rem 1.15rem;
+    background: rgba(10, 18, 10, .97);
+    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    border: 1px solid var(--border-gold, rgba(201,162,39,.28));
+    border-radius: var(--radius-md, 10px);
+    box-shadow: 0 16px 40px rgba(0,0,0,.55);
+  }
+  .cc[hidden] { display: none; }
+  .cc-text {
+    flex: 1 1 20rem; margin: 0;
+    font-size: .85rem; line-height: 1.6; color: var(--text-secondary);
+  }
+  .cc-text a { color: var(--gold); text-decoration: underline; text-underline-offset: 3px; }
+  .cc-actions { display: flex; gap: .6rem; flex: 0 0 auto; }
+  .cc-btn {
+    font-family: inherit; font-size: .85rem; font-weight: 700;
+    padding: .5rem 1.1rem; border-radius: var(--radius-full, 999px);
+    background: var(--gold-subtle, rgba(201,162,39,.1));
+    border: 1.5px solid var(--gold-border, rgba(201,162,39,.35));
+    color: var(--gold-light); cursor: pointer;
+    transition: background var(--transition), border-color var(--transition);
+  }
+  .cc-btn:hover { background: rgba(201,162,39,.2); border-color: var(--gold); }
+  @media (max-width: 560px) {
+    .cc { gap: .75rem; }
+    .cc-actions { width: 100%; }
+    .cc-btn { flex: 1; }
+  }
+</style>
