@@ -11,7 +11,7 @@
 import sharp from 'sharp';
 import path from 'node:path';
 
-const SRC = 'C:/Users/uumap/Work/AI/Claude/vanikar-games-astro/src/assets/vanikar-logo.png';
+const SRC = process.env.LOGO_SRC || 'C:/Users/uumap/OneDrive/Work/Vanikar/Marketing Assets/add metallic finishe.png';
 const OUT = process.argv[2] || 'src/assets/vanikar-mark.png';
 
 const FULL = 214;  // min-channel at/above this is background (catches the grey shadow)

@@ -29,7 +29,12 @@ const switchTarget = (l: (typeof LOCALES)[number]) =>
 <nav class="navbar">
   <div class="navbar-inner">
     <a href={isHub ? hubHref : productHome} class="navbar-brand">
-      <img class="brand-icon" src="/favicon-32.png" srcset="/favicon-32.png 1x, /icon-180.png 2x" width="28" height="28" alt="" />
+      {isHub
+        /* The hub is company-level, so it carries the Vanikar mark rather than
+           the Card Games app icon. The mark is wide, so it is sized by height
+           and left to keep its own aspect. */
+        ? <img class="brand-mark" src="/vanikar-mark.png" width="56" height="32" alt="" />
+        : <img class="brand-icon" src="/favicon-32.png" srcset="/favicon-32.png 1x, /icon-180.png 2x" width="28" height="28" alt="" />}
       <span>{isHub ? 'VANIKAR GAMES' : 'CARD GAMES'}</span>
     </a>
 
@@ -162,6 +167,7 @@ const switchTarget = (l: (typeof LOCALES)[number]) =>
     letter-spacing: .12em; color: var(--gold-light);
   }
   .brand-icon { width: 28px; height: 28px; border-radius: 7px; display: block; }
+  .brand-mark { height: 28px; width: auto; display: block; }
   .navbar-nav { display: flex; align-items: center; gap: .15rem; }
   .nav-link {
     padding: .45rem .85rem; border-radius: var(--radius-sm);
