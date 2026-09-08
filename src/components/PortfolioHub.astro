@@ -10,7 +10,6 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { Image } from 'astro:assets';
 import appicon from '../assets/appicon.png';
-import vanikarMark from '../assets/vanikar-mark.png';
 import { games, availableGames } from '../data/games';
 import { getLocale, localizedHref } from '../i18n';
 
@@ -34,6 +33,10 @@ const L = {
     moreTitle: 'More on the way',
     moreBody: 'Card Games is the first title from our studio. More games are in development — built to the same standard, on the same promise: no advertising, ever.',
     company: 'About the studio →',
+    soon: 'Coming soon',
+    chessName: 'Chess by Vanikar',        chessDesc: 'The game of kings, rebuilt for the phone — online, offline, or against an engine that meets you at your level.',
+    boardName: 'Board Games by Vanikar',  boardDesc: 'The boards families keep coming back to, with the same clean tables and the same honest rules.',
+    stratName: 'Strategy Games by Vanikar', stratDesc: 'Longer games for deeper evenings — tactical duels and campaigns, built to the same standard.',
   },
   es: {
     title: 'Vanikar Games – Juegos de cartas clásicos, reconstruidos',
@@ -49,6 +52,10 @@ const L = {
     moreTitle: 'Más en camino',
     moreBody: 'Card Games es el primer título de nuestro estudio. Hay más juegos en desarrollo, con el mismo cuidado y la misma promesa: nunca publicidad.',
     company: 'Sobre el estudio →',
+    soon: 'Próximamente',
+    chessName: 'Chess by Vanikar',        chessDesc: 'El juego de reyes, reconstruido para el celular: en línea, sin conexión o contra un motor que juega a tu nivel.',
+    boardName: 'Board Games by Vanikar',  boardDesc: 'Los tableros a los que las familias siempre vuelven, con las mismas mesas cuidadas y las mismas reglas honestas.',
+    stratName: 'Strategy Games by Vanikar', stratDesc: 'Partidas más largas para tardes más profundas: duelos tácticos y campañas, con el mismo cuidado.',
   },
   pt: {
     title: 'Vanikar Games – Jogos de cartas clássicos, reconstruídos',
@@ -64,6 +71,10 @@ const L = {
     moreTitle: 'Mais a caminho',
     moreBody: 'O Card Games é o primeiro título do nosso estúdio. Há mais jogos em desenvolvimento, com o mesmo capricho e a mesma promessa: nunca publicidade.',
     company: 'Sobre o estúdio →',
+    soon: 'Em breve',
+    chessName: 'Chess by Vanikar',        chessDesc: 'O jogo dos reis, reconstruído para o celular: online, offline ou contra um motor que acompanha o seu nível.',
+    boardName: 'Board Games by Vanikar',  boardDesc: 'Os tabuleiros aos quais as famílias sempre voltam, com as mesmas mesas caprichadas e as mesmas regras honestas.',
+    stratName: 'Strategy Games by Vanikar', stratDesc: 'Partidas mais longas para noites mais profundas: duelos táticos e campanhas, com o mesmo capricho.',
   },
   fr: {
     title: 'Vanikar Games – Jeux de cartes classiques, repensés',
@@ -79,6 +90,10 @@ const L = {
     moreTitle: 'D’autres arrivent',
     moreBody: 'Card Games est le premier titre de notre studio. D’autres jeux sont en développement, avec le même soin et la même promesse : jamais de publicité.',
     company: 'À propos du studio →',
+    soon: 'Bientôt',
+    chessName: 'Chess by Vanikar',        chessDesc: 'Le jeu des rois, repensé pour le téléphone : en ligne, hors ligne ou contre un moteur qui s’adapte à votre niveau.',
+    boardName: 'Board Games by Vanikar',  boardDesc: 'Les plateaux vers lesquels les familles reviennent toujours, avec les mêmes tables soignées et les mêmes règles honnêtes.',
+    stratName: 'Strategy Games by Vanikar', stratDesc: 'Des parties plus longues pour des soirées plus profondes : duels tactiques et campagnes, avec le même soin.',
   },
   de: {
     title: 'Vanikar Games – Klassische Kartenspiele, neu gebaut',
@@ -94,6 +109,10 @@ const L = {
     moreTitle: 'Mehr ist unterwegs',
     moreBody: 'Card Games ist der erste Titel unseres Studios. Weitere Spiele sind in Entwicklung — mit demselben Anspruch und demselben Versprechen: niemals Werbung.',
     company: 'Über das Studio →',
+    soon: 'Demnächst',
+    chessName: 'Chess by Vanikar',        chessDesc: 'Das Spiel der Könige, neu gebaut fürs Handy — online, offline oder gegen eine Engine, die sich deinem Niveau anpasst.',
+    boardName: 'Board Games by Vanikar',  boardDesc: 'Die Bretter, zu denen Familien immer zurückkehren, mit denselben sorgfältigen Tischen und denselben ehrlichen Regeln.',
+    stratName: 'Strategy Games by Vanikar', stratDesc: 'Längere Partien für tiefere Abende — taktische Duelle und Kampagnen, mit demselben Anspruch.',
   },
   hi: {
     title: 'Vanikar Games – क्लासिक ताश के खेल, नए सिरे से',
@@ -109,6 +128,10 @@ const L = {
     moreTitle: 'और भी आ रहे हैं',
     moreBody: 'Card Games हमारे स्टूडियो का पहला टाइटल है। और खेल विकास में हैं — उसी मानक पर, उसी वादे के साथ: कभी विज्ञापन नहीं।',
     company: 'स्टूडियो के बारे में →',
+    soon: 'जल्द आ रहा है',
+    chessName: 'Chess by Vanikar',        chessDesc: 'राजाओं का खेल, फ़ोन के लिए नए सिरे से — ऑनलाइन, ऑफ़लाइन, या ऐसे इंजन के खिलाफ जो आपके स्तर पर खेले।',
+    boardName: 'Board Games by Vanikar',  boardDesc: 'वे बोर्ड जिन पर परिवार बार-बार लौटते हैं — वही सधी हुई मेज़ें, वही ईमानदार नियम।',
+    stratName: 'Strategy Games by Vanikar', stratDesc: 'लंबी शामों के लिए लंबे खेल — रणनीतिक मुक़ाबले और अभियान, उसी मानक पर बने।',
   },
   it: {
     title: 'Vanikar Games – Giochi di carte classici, ricostruiti',
@@ -124,6 +147,10 @@ const L = {
     moreTitle: 'Altri in arrivo',
     moreBody: 'Card Games è il primo titolo del nostro studio. Altri giochi sono in sviluppo — con la stessa cura e la stessa promessa: mai pubblicità.',
     company: 'Sullo studio →',
+    soon: 'In arrivo',
+    chessName: 'Chess by Vanikar',        chessDesc: 'Il gioco dei re, ricostruito per il telefono: online, offline o contro un motore che si adatta al tuo livello.',
+    boardName: 'Board Games by Vanikar',  boardDesc: 'I tavolieri a cui le famiglie tornano sempre, con gli stessi tavoli curati e le stesse regole oneste.',
+    stratName: 'Strategy Games by Vanikar', stratDesc: 'Partite più lunghe per serate più profonde: duelli tattici e campagne, con la stessa cura.',
   },
   ja: {
     title: 'Vanikar Games – クラシックなカードゲームを、美しく',
@@ -139,8 +166,40 @@ const L = {
     moreTitle: '続きも準備中',
     moreBody: 'Card Gamesは私たちのスタジオの最初のタイトルです。同じ基準と同じ約束——広告は決して出さない——で、次のゲームを開発しています。',
     company: 'スタジオについて →',
+    soon: '近日公開',
+    chessName: 'Chess by Vanikar',        chessDesc: '王者のゲームを、スマートフォンのために作り直しました——オンラインでも、オフラインでも、あなたの棋力に合わせるエンジンとも。',
+    boardName: 'Board Games by Vanikar',  boardDesc: '家族が何度も戻ってくるボードゲームを、同じ丁寧なテーブルと同じ誠実なルールで。',
+    stratName: 'Strategy Games by Vanikar', stratDesc: 'じっくり遊ぶ夜のための長い対局——戦術的な一騎打ちとキャンペーンを、同じ基準で。',
   },
 }[lang];
+
+/* Placeholder glyphs for titles that have no artwork yet. Drawn rather than
+   sourced so they share one weight and one palette, and so a missing asset
+   never ships as a broken tile. */
+const G = (body: string) =>
+  `<svg viewBox="0 0 64 64" fill="none" stroke="#5cc9c3" stroke-width="2.4"
+        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${body}</svg>`;
+
+const upcoming = [
+  {
+    name: L.chessName, desc: L.chessDesc,
+    glyph: G(`<path d="M32 12v8M28 16h8"/><circle cx="32" cy="25" r="5"/>
+              <path d="M20 50c0-11 5-15 12-15s12 4 12 15z"/>
+              <rect x="17" y="50" width="30" height="6" rx="3"/>`),
+  },
+  {
+    name: L.boardName, desc: L.boardDesc,
+    glyph: G(`<rect x="12" y="12" width="40" height="40" rx="6"/>
+              <path d="M32 12v40M12 32h40"/>
+              <rect x="12" y="12" width="20" height="20" rx="6" fill="#5cc9c3" fill-opacity=".18" stroke="none"/>
+              <rect x="32" y="32" width="20" height="20" rx="6" fill="#5cc9c3" fill-opacity=".18" stroke="none"/>`),
+  },
+  {
+    name: L.stratName, desc: L.stratDesc,
+    glyph: G(`<path d="M32 10l11 6.5v13L32 36l-11-6.5v-13z"/>
+              <path d="M20 36l10 6v11l-10-6z"/><path d="M44 36l-10 6v11l10-6z"/>`),
+  },
+];
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -175,29 +234,7 @@ const jsonLd = {
   <section class="portfolio">
     <div class="container">
       <div class="section-header">
-        <!-- The heading is the lockup: the Vanikar mark with GAMES beneath it.
-             The visible parts are a logotype and stay in English, so the
-             localized heading rides along for search and screen readers. -->
-        <h1 class="hub-lockup">
-          <span class="hub-lockup-frame">
-            <span class="hub-lockup-inner">
-              <span class="hub-lockup-art">
-                <Image
-                  src={vanikarMark}
-                  alt=""
-                  width={844}
-                  widths={[400, 800, 844]}
-                  sizes="(max-width: 520px) 280px, 400px"
-                  quality={88}
-                  loading="eager"
-                  class="hub-mark"
-                />
-                <span class="hub-lockup-word" aria-hidden="true">GAMES</span>
-              </span>
-            </span>
-          </span>
-          <span class="hub-lockup-sr">{L.h1}</span>
-        </h1>
+        <h1 class="portfolio-title">{L.h1}</h1>
         <p class="section-subtitle">{L.lead}</p>
       </div>
 
@@ -220,6 +257,21 @@ const jsonLd = {
             <span class="product-cta">{L.cardCta}</span>
           </div>
         </a>
+
+        {/* Titles in development. No art exists yet, so each uses a drawn
+            glyph in the same 96px tile the shipped icon occupies — a real
+            placeholder rather than a stretched stand-in. Not links: there is
+            nothing to link to. */}
+        {upcoming.map(u => (
+          <div class="product-card product-card--soon">
+            <span class="product-icon product-glyph" aria-hidden="true" set:html={u.glyph} />
+            <div class="product-body">
+              <span class="product-badge product-badge--soon">{L.soon}</span>
+              <h2 class="product-name">{u.name}</h2>
+              <p class="product-desc">{u.desc}</p>
+            </div>
+          </div>
+        ))}
       </div>
 
       <div class="more-panel">
@@ -238,78 +290,29 @@ const jsonLd = {
       var(--bg-deep);
     min-height: 70vh;
   }
-  /* The wordmark sits in the empty wedge above the sail's tail, right-aligned
-     so it ends exactly where the sweep does. Sizing is container-relative so
-     that alignment holds at every width. */
-  .hub-lockup {
-    display: block;
-    width: clamp(320px, 52vw, 452px);
-    margin: 0 auto 1.25rem;
-  }
-  /* The band between the two rules carries the sail's own teal ramp, so the
-     frame is the same material as the mark. The white lip along its top edge
-     and the shadow inside the panel are what make it read as raised metal
-     around a recessed field — all CSS, so it scales with the artwork. */
-  .hub-lockup-frame {
-    display: block; border-radius: 16px; padding: 6px;
-    background-image: linear-gradient(180deg,
-      #b6ece8 0%, #63cec8 18%, #1d938d 40%,
-      #14727e 54%, #3fb5af 72%, #9ce4df 88%, #1c7f88 100%);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,.45), 0 3px 10px rgba(0,0,0,.5);
-  }
-  .hub-lockup-inner {
-    display: block; border-radius: 10px; padding: 16px 20px;
-    background:
-      linear-gradient(180deg, rgba(63,181,175,.17), rgba(20,114,126,.05)),
-      #08120a;
-    box-shadow: inset 0 3px 8px rgba(0,0,0,.85), 0 0 0 1px rgba(0,0,0,.55);
-  }
-  /* The container query lives here, not on the frame, so the wordmark scales
-     against the artwork's width rather than the padded box's. */
-  .hub-lockup-art {
-    position: relative; display: block;
-    container-type: inline-size;
-  }
-  .hub-lockup :global(.hub-mark) {
-    width: 100%; height: auto; display: block;
-  }
-  /* The wordmark is finished like the mark above it: the gradient stops are
-     sampled from the sail's own teal ramp — dark edge, bright specular band,
-     dark again — and the paired drop-shadows emboss it. text-shadow cannot be
-     used here because background-clip:text paints over it. */
-  .hub-lockup-word {
-    position: absolute; top: 0; right: 0;
+  .portfolio-title {
     font-family: 'Cinzel Variable', Georgia, serif;
-    font-weight: 700;
-    font-size: clamp(1.3rem, 3.4vw, 1.875rem);
-    /* letter-spacing leaves a trailing gap after the S, which would stop the
-       word short of the tail tip; the negative margin cancels exactly that. */
-    letter-spacing: .26em; margin-right: -.26em;
-    line-height: 1;
-    color: #2aa3a0;
-    background-image: linear-gradient(180deg,
-      #b6ece8 0%, #63cec8 18%, #1d938d 40%,
-      #14727e 54%, #3fb5af 72%, #9ce4df 88%, #1c7f88 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    filter:
-      drop-shadow(0 1px 0 rgba(0,0,0,.55))
-      drop-shadow(0 -1px 0 rgba(143,222,219,.22));
-  }
-  @supports (font-size: 1cqw) {
-    .hub-lockup-word { font-size: 7.5cqw; }
-  }
-  @supports ((-webkit-background-clip: text) or (background-clip: text)) {
-    .hub-lockup-word { -webkit-text-fill-color: transparent; color: transparent; }
-  }
-  .hub-lockup-sr {
-    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
-    overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+    font-size: clamp(1.9rem, 4.4vw, 2.9rem);
+    color: var(--gold-light);
+    margin: 0 0 .75rem;
   }
   .product-grid {
-    display: grid; gap: 1.5rem;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
-    max-width: 720px; margin: 0 auto;
+    display: grid; gap: 1.25rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 330px), 1fr));
+    max-width: 920px; margin: 0 auto;
+  }
+  /* Shipped titles are links; the rest are inert, so they lose the hover
+     affordance and sit back a step in contrast. */
+  .product-card--soon { cursor: default; opacity: .82; }
+  .product-card--soon:hover { border-color: var(--border); transform: none; }
+  .product-glyph {
+    display: grid; place-items: center;
+    background: linear-gradient(180deg, rgba(63,181,175,.14), rgba(20,114,126,.04)), #0b170c;
+    border: 1px solid rgba(92,201,195,.22);
+  }
+  .product-glyph :global(svg) { width: 58%; height: 58%; }
+  .product-badge--soon {
+    color: var(--text-muted); border-color: var(--border);
   }
   .product-card {
     display: flex; gap: 1.25rem; align-items: flex-start;

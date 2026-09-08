@@ -223,6 +223,17 @@ const switchTarget = (l: (typeof LOCALES)[number]) =>
      --nav-height is set on the body, not here, because .main-content padding
      reads the same variable and would otherwise sit under the bar. */
   :global(body.is-hub) { --nav-height: 88px; }
+  /* The hub bar carries only Privacy, Terms and the language picker, so the
+     brand is centred rather than pinned left. A three-column grid rather than
+     absolute positioning: the outer columns are equal, so the brand sits in
+     the true centre, and because they are real columns the brand can never
+     overlap the links the way an absolutely placed one does. */
+  :global(body.is-hub) .navbar-inner {
+    display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+  }
+  :global(body.is-hub) .navbar-brand  { grid-column: 2; justify-self: center; }
+  :global(body.is-hub) .navbar-nav    { grid-column: 3; justify-self: end; }
+  :global(body.is-hub) .navbar-toggle { grid-column: 3; justify-self: end; }
   @media (max-width: 720px) {
     .brand-frame { border-radius: 12px; }
     .brand-inner { border-radius: 9px; padding: 5px 7px; }
