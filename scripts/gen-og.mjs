@@ -41,7 +41,9 @@ function readGames() {
   return games;
 }
 
-const background = Buffer.from(`
+/* The card-suit flourish belongs to the Card Games product, not to the
+   portfolio hub that sits above it, so the corner mark is optional. */
+const bg = ({ suits = true } = {}) => Buffer.from(`
 <svg width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <radialGradient id="g" cx="25%" cy="40%" r="90%">
@@ -52,8 +54,10 @@ const background = Buffer.from(`
   <rect width="${W}" height="${H}" fill="url(#g)"/>
   <rect x="0" y="0" width="${W}" height="10" fill="${GOLD}"/>
   <text x="${W - 60}" y="${H - 40}" text-anchor="end" font-family="Georgia, serif" font-size="30" fill="${MUTED}">vanikar.games</text>
-  <text x="${W - 60}" y="80" text-anchor="end" font-family="Georgia, serif" font-size="30" fill="${GOLD}">♠ ♥ ♦ ♣</text>
+  ${suits ? `<text x="${W - 60}" y="80" text-anchor="end" font-family="Georgia, serif" font-size="30" fill="${GOLD}">♠ ♥ ♦ ♣</text>` : ''}
 </svg>`);
+
+const background = bg();
 
 const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
@@ -85,8 +89,48 @@ async function card(out, { iconFile, title, subtitle, footer }) {
   await sharp(background).composite(layers).png({ compressionLevel: 9, palette: true }).toFile(out);
 }
 
+/* The hub card carries the Vanikar lockup rather than the Card Games app
+   icon. The mark is wide, so it is laid out by width and the GAMES wordmark
+   is drawn over it at the same 7.5%-of-width proportion the site uses, ending
+   at the sail's tail. */
+async function hubCard(out) {
+  const MARK = path.join(ROOT, 'src', 'assets', 'vanikar-mark.png');
+  const markW = 400;
+  const meta = await sharp(MARK).metadata();
+  const markH = Math.round(markW * meta.height / meta.width);
+  const left = 80, top = Math.round((H - markH) / 2);
+
+  const mark = await sharp(MARK).resize(markW).png().toBuffer();
+  const fs2 = Math.round(markW * 0.075);
+  const wordmark = Buffer.from(`
+<svg width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg">
+  <text x="${left + markW}" y="${top + Math.round(fs2 * 0.92)}" text-anchor="end"
+        font-family="Georgia, serif" font-weight="bold" font-size="${fs2}"
+        letter-spacing="${(fs2 * 0.26).toFixed(1)}" fill="#63cec8">GAMES</text>
+</svg>`);
+
+  const t = await text(`<span foreground="${TEXT}" weight="bold">Vanikar Games</span>`, 'Georgia Bold 66', 600);
+  const s = await text(`<span foreground="${GOLD}">Timeless games, beautifully rebuilt</span>`, 'Georgia 32', 600);
+  const f = await text(`<span foreground="${MUTED}">Card games today · chess, board &amp; strategy coming</span>`, 'Georgia 26', 600);
+  const tm = await sharp(t).metadata(), sm = await sharp(s).metadata(), fm = await sharp(f).metadata();
+  const block = tm.height + 18 + sm.height + 26 + fm.height;
+  let y = Math.round((H - block) / 2);
+  const textX = left + markW + 60;
+
+  await sharp(bg({ suits: false })).composite([
+    { input: mark, left, top },
+    { input: wordmark, left: 0, top: 0 },
+    { input: t, left: textX, top: y },
+    { input: s, left: textX, top: (y += tm.height + 18) },
+    { input: f, left: textX, top: (y += sm.height + 26) },
+  ]).png({ compressionLevel: 9, palette: true }).toFile(out);
+}
+
 const games = readGames();
 console.log(`games found: ${games.length}`);
+
+await hubCard(path.join(OUT, 'vanikar.png'));
+console.log('wrote og/vanikar.png (portfolio hub)');
 
 await card(path.join(OUT, 'default.png'), {
   iconFile: APP_ICON,
