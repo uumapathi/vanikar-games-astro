@@ -117,7 +117,7 @@ const alternates   = isTranslated(basePath) && hreflangSet.length > 1
   <link rel="icon"             type="image/png"     href={isHub ? '/vanikar-icon-192.png' : '/icon-192.png'} sizes="192x192" />
   <link rel="apple-touch-icon"                      href={isHub ? '/vanikar-icon-180.png' : '/icon-180.png'} />
 </head>
-<body>
+<body class:list={{ 'is-hub': isHub }}>
   <NavMenu />
   <main class="main-content">
     <slot />

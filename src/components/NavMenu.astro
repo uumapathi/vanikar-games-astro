@@ -30,10 +30,20 @@ const switchTarget = (l: (typeof LOCALES)[number]) =>
   <div class="navbar-inner">
     <a href={isHub ? hubHref : productHome} class="navbar-brand">
       {isHub
-        /* The hub is company-level, so it carries the Vanikar mark rather than
-           the Card Games app icon. The mark is wide, so it is sized by height
-           and left to keep its own aspect. */
-        ? <img class="brand-mark" src="/vanikar-mark.png" width="56" height="32" alt="" />
+        /* The hub carries the full logo — framed mark with GAMES inside — not
+           the Card Games app icon. GAMES is 7.5% of the artwork's width, so the
+           lockup has to be ~190px for it to be legible at all, which is what
+           sets the taller bar on this page. */
+        ? <span class="brand-lockup">
+            <span class="brand-frame">
+              <span class="brand-inner">
+                <span class="brand-art">
+                  <img src="/vanikar-mark.png" width="112" height="64" alt="" />
+                  <span class="brand-word" aria-hidden="true">GAMES</span>
+                </span>
+              </span>
+            </span>
+          </span>
         : <img class="brand-icon" src="/favicon-32.png" srcset="/favicon-32.png 1x, /icon-180.png 2x" width="28" height="28" alt="" />}
       <span>{isHub ? 'VANIKAR GAMES' : 'CARD GAMES'}</span>
     </a>
@@ -167,7 +177,46 @@ const switchTarget = (l: (typeof LOCALES)[number]) =>
     letter-spacing: .12em; color: var(--gold-light);
   }
   .brand-icon { width: 28px; height: 28px; border-radius: 7px; display: block; }
-  .brand-mark { height: 28px; width: auto; display: block; }
+
+  /* Hub header logo: the same framed lockup as the page, at the smallest size
+     where GAMES still reads. The bar grows to suit it — see .is-hub below. */
+  .brand-lockup { display: block; }
+  .brand-frame {
+    display: block; border-radius: 8px; padding: 2px;
+    background-image: linear-gradient(180deg,
+      #b6ece8 0%, #63cec8 18%, #1d938d 40%,
+      #14727e 54%, #3fb5af 72%, #9ce4df 88%, #1c7f88 100%);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.5), 0 1px 5px rgba(0,0,0,.55);
+  }
+  .brand-inner {
+    display: block; border-radius: 6px; padding: 3px 5px;
+    background: linear-gradient(180deg, rgba(63,181,175,.17), rgba(20,114,126,.05)), #08120a;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,.85);
+  }
+  .brand-art { position: relative; display: block; width: 112px; container-type: inline-size; }
+  .brand-art img { width: 100%; height: auto; display: block; }
+  .brand-word {
+    position: absolute; top: 0; right: 0;
+    font-family: 'Cinzel Variable', serif; font-weight: 700; line-height: 1;
+    font-size: 7.5cqw; letter-spacing: .26em; margin-right: -.26em;
+    background-image: linear-gradient(180deg,
+      #b6ece8 0%, #63cec8 18%, #1d938d 40%,
+      #14727e 54%, #3fb5af 72%, #9ce4df 88%, #1c7f88 100%);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  /* A 190px lockup needs a bar roughly twice the default height. Only the hub
+     pays that cost; product pages keep the 68px bar and the app icon. */
+  :global(body.is-hub) { --nav-height: 88px; }
+  @media (max-width: 720px) {
+    .brand-art { width: 96px; }
+    :global(body.is-hub) { --nav-height: 78px; }
+    .navbar-brand { font-size: .95rem; letter-spacing: .08em; }
+  }
+  @media (max-width: 480px) {
+    .brand-art { width: 84px; }
+    :global(body.is-hub) { --nav-height: 72px; }
+  }
   .navbar-nav { display: flex; align-items: center; gap: .15rem; }
   .nav-link {
     padding: .45rem .85rem; border-radius: var(--radius-sm);
