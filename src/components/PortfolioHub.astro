@@ -10,6 +10,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { Image } from 'astro:assets';
 import appicon from '../assets/appicon.png';
+import vanikarMark from '../assets/vanikar-mark.png';
 import { games, availableGames } from '../data/games';
 import { getLocale, localizedHref } from '../i18n';
 
@@ -174,8 +175,23 @@ const jsonLd = {
   <section class="portfolio">
     <div class="container">
       <div class="section-header">
-        <div class="section-tag">{L.tag}</div>
-        <h1 class="portfolio-title">{L.h1}</h1>
+        <!-- The heading is the lockup: the Vanikar mark with GAMES beneath it.
+             The visible parts are a logotype and stay in English, so the
+             localized heading rides along for search and screen readers. -->
+        <h1 class="hub-lockup">
+          <Image
+            src={vanikarMark}
+            alt=""
+            width={480}
+            widths={[240, 480]}
+            sizes="(max-width: 520px) 140px, 172px"
+            quality={88}
+            loading="eager"
+            class="hub-mark"
+          />
+          <span class="hub-lockup-word" aria-hidden="true">Games</span>
+          <span class="hub-lockup-sr">{L.h1}</span>
+        </h1>
         <p class="section-subtitle">{L.lead}</p>
       </div>
 
@@ -216,11 +232,22 @@ const jsonLd = {
       var(--bg-deep);
     min-height: 70vh;
   }
-  .portfolio-title {
+  .hub-lockup {
+    display: flex; flex-direction: column; align-items: center;
+    gap: .35rem; margin: 0 0 1rem;
+  }
+  .hub-lockup :global(.hub-mark) {
+    width: clamp(140px, 20vw, 172px); height: auto; display: block;
+  }
+  .hub-lockup-word {
     font-family: 'Cinzel Variable', Georgia, serif;
-    font-size: clamp(2.2rem, 5vw, 3.4rem);
-    color: var(--gold-light);
-    margin-bottom: .75rem;
+    font-size: clamp(1.5rem, 3.4vw, 2.1rem);
+    letter-spacing: .42em; text-indent: .42em;
+    color: var(--gold-light); line-height: 1;
+  }
+  .hub-lockup-sr {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
   }
   .product-grid {
     display: grid; gap: 1.5rem;
