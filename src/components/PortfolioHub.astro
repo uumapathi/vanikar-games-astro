@@ -179,17 +179,23 @@ const jsonLd = {
              The visible parts are a logotype and stay in English, so the
              localized heading rides along for search and screen readers. -->
         <h1 class="hub-lockup">
-          <Image
-            src={vanikarMark}
-            alt=""
-            width={844}
-            widths={[400, 800, 844]}
-            sizes="(max-width: 520px) 280px, 400px"
-            quality={88}
-            loading="eager"
-            class="hub-mark"
-          />
-          <span class="hub-lockup-word" aria-hidden="true">GAMES</span>
+          <span class="hub-lockup-frame">
+            <span class="hub-lockup-inner">
+              <span class="hub-lockup-art">
+                <Image
+                  src={vanikarMark}
+                  alt=""
+                  width={844}
+                  widths={[400, 800, 844]}
+                  sizes="(max-width: 520px) 280px, 400px"
+                  quality={88}
+                  loading="eager"
+                  class="hub-mark"
+                />
+                <span class="hub-lockup-word" aria-hidden="true">GAMES</span>
+              </span>
+            </span>
+          </span>
           <span class="hub-lockup-sr">{L.h1}</span>
         </h1>
         <p class="section-subtitle">{L.lead}</p>
@@ -236,9 +242,32 @@ const jsonLd = {
      so it ends exactly where the sweep does. Sizing is container-relative so
      that alignment holds at every width. */
   .hub-lockup {
+    display: block;
+    width: clamp(320px, 52vw, 452px);
+    margin: 0 auto 1.25rem;
+  }
+  /* The band between the two rules carries the sail's own teal ramp, so the
+     frame is the same material as the mark. The white lip along its top edge
+     and the shadow inside the panel are what make it read as raised metal
+     around a recessed field — all CSS, so it scales with the artwork. */
+  .hub-lockup-frame {
+    display: block; border-radius: 16px; padding: 6px;
+    background-image: linear-gradient(180deg,
+      #b6ece8 0%, #63cec8 18%, #1d938d 40%,
+      #14727e 54%, #3fb5af 72%, #9ce4df 88%, #1c7f88 100%);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.45), 0 3px 10px rgba(0,0,0,.5);
+  }
+  .hub-lockup-inner {
+    display: block; border-radius: 10px; padding: 16px 20px;
+    background:
+      linear-gradient(180deg, rgba(63,181,175,.17), rgba(20,114,126,.05)),
+      #08120a;
+    box-shadow: inset 0 3px 8px rgba(0,0,0,.85), 0 0 0 1px rgba(0,0,0,.55);
+  }
+  /* The container query lives here, not on the frame, so the wordmark scales
+     against the artwork's width rather than the padded box's. */
+  .hub-lockup-art {
     position: relative; display: block;
-    width: clamp(280px, 46vw, 400px);
-    margin: 0 auto 1rem;
     container-type: inline-size;
   }
   .hub-lockup :global(.hub-mark) {
@@ -255,7 +284,7 @@ const jsonLd = {
     font-size: clamp(1.3rem, 3.4vw, 1.875rem);
     /* letter-spacing leaves a trailing gap after the S, which would stop the
        word short of the tail tip; the negative margin cancels exactly that. */
-    letter-spacing: .16em; margin-right: -.16em;
+    letter-spacing: .26em; margin-right: -.26em;
     line-height: 1;
     color: #2aa3a0;
     background-image: linear-gradient(180deg,
