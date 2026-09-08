@@ -63,6 +63,9 @@ const SP = {
 }[locale];
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const basePath     = unlocalizePath(Astro.url.pathname);
+/* The hub is company-level, so its tab icon is the Vanikar mark rather than
+   the Card Games app icon every product page uses. */
+const isHub = basePath === '/';
 const hreflangSet  = alternateLocales ?? LOCALES;
 const alternates   = isTranslated(basePath) && hreflangSet.length > 1
   ? hreflangSet.map(l => ({ lang: l, href: new URL(localizePath(basePath, l), Astro.site) }))
@@ -109,10 +112,10 @@ const alternates   = isTranslated(basePath) && hreflangSet.length > 1
     )}
 
   <!-- Favicon (app icon) -->
-  <link rel="icon"             type="image/png"     href="/favicon-32.png" sizes="32x32" />
-  <link rel="icon"             type="image/png"     href="/favicon-16.png" sizes="16x16" />
-  <link rel="icon"             type="image/png"     href="/icon-192.png" sizes="192x192" />
-  <link rel="apple-touch-icon"                      href="/icon-180.png" />
+  <link rel="icon"             type="image/png"     href={isHub ? '/vanikar-icon-32.png'  : '/favicon-32.png'} sizes="32x32" />
+  <link rel="icon"             type="image/png"     href={isHub ? '/vanikar-icon-16.png'  : '/favicon-16.png'} sizes="16x16" />
+  <link rel="icon"             type="image/png"     href={isHub ? '/vanikar-icon-192.png' : '/icon-192.png'} sizes="192x192" />
+  <link rel="apple-touch-icon"                      href={isHub ? '/vanikar-icon-180.png' : '/icon-180.png'} />
 </head>
 <body>
   <NavMenu />

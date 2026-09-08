@@ -183,13 +183,13 @@ const jsonLd = {
             src={vanikarMark}
             alt=""
             width={844}
-            widths={[260, 520, 844]}
-            sizes="(max-width: 520px) 190px, 260px"
+            widths={[400, 800, 844]}
+            sizes="(max-width: 520px) 280px, 400px"
             quality={88}
             loading="eager"
             class="hub-mark"
           />
-          <span class="hub-lockup-word" aria-hidden="true">Games</span>
+          <span class="hub-lockup-word" aria-hidden="true">GAMES</span>
           <span class="hub-lockup-sr">{L.h1}</span>
         </h1>
         <p class="section-subtitle">{L.lead}</p>
@@ -232,18 +232,46 @@ const jsonLd = {
       var(--bg-deep);
     min-height: 70vh;
   }
+  /* The wordmark sits in the empty wedge above the sail's tail, right-aligned
+     so it ends exactly where the sweep does. Sizing is container-relative so
+     that alignment holds at every width. */
   .hub-lockup {
-    display: flex; flex-direction: column; align-items: center;
-    gap: .35rem; margin: 0 0 1rem;
+    position: relative; display: block;
+    width: clamp(280px, 46vw, 400px);
+    margin: 0 auto 1rem;
+    container-type: inline-size;
   }
   .hub-lockup :global(.hub-mark) {
-    width: clamp(190px, 28vw, 260px); height: auto; display: block;
+    width: 100%; height: auto; display: block;
   }
+  /* The wordmark is finished like the mark above it: the gradient stops are
+     sampled from the sail's own teal ramp — dark edge, bright specular band,
+     dark again — and the paired drop-shadows emboss it. text-shadow cannot be
+     used here because background-clip:text paints over it. */
   .hub-lockup-word {
+    position: absolute; top: 0; right: 0;
     font-family: 'Cinzel Variable', Georgia, serif;
-    font-size: clamp(1.5rem, 3.4vw, 2.1rem);
-    letter-spacing: .42em; text-indent: .42em;
-    color: var(--gold-light); line-height: 1;
+    font-weight: 700;
+    font-size: clamp(1.3rem, 3.4vw, 1.875rem);
+    /* letter-spacing leaves a trailing gap after the S, which would stop the
+       word short of the tail tip; the negative margin cancels exactly that. */
+    letter-spacing: .16em; margin-right: -.16em;
+    line-height: 1;
+    color: #2aa3a0;
+    background-image: linear-gradient(180deg,
+      #b6ece8 0%, #63cec8 18%, #1d938d 40%,
+      #14727e 54%, #3fb5af 72%, #9ce4df 88%, #1c7f88 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    filter:
+      drop-shadow(0 1px 0 rgba(0,0,0,.55))
+      drop-shadow(0 -1px 0 rgba(143,222,219,.22));
+  }
+  @supports (font-size: 1cqw) {
+    .hub-lockup-word { font-size: 7.5cqw; }
+  }
+  @supports ((-webkit-background-clip: text) or (background-clip: text)) {
+    .hub-lockup-word { -webkit-text-fill-color: transparent; color: transparent; }
   }
   .hub-lockup-sr {
     position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;

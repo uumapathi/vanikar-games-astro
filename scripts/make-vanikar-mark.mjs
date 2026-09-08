@@ -75,5 +75,25 @@ await sharp(Buffer.from(data), { raw: { width: W, height: H, channels: 4 } })
   .png()
   .toFile(OUT);
 
+// Square icons for the hub's browser tab. The full mark is a wide sweep that
+// becomes an illegible smear at 16px, so the icons crop to the hook and globe
+// — the half that still reads at tab size.
+const ICONS = [16, 32, 180, 192];
+const square = await sharp(OUT)
+  .extract({ left: 0, top: 0, width: Math.round(cw * 0.52), height: ch })
+  .resize({ width: ch, height: ch, fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
+  .png()
+  .toBuffer();
+
+for (const size of ICONS) {
+  const file = `public/vanikar-icon-${size}.png`;
+  await sharp(square).resize(size, size).png({ compressionLevel: 9 }).toFile(file);
+}
+console.log(`  icons: ${ICONS.map(s => `${s}px`).join(', ')} -> public/vanikar-icon-*.png`);
+
+// Wide mark for the hub's nav brand, which sizes by height
+await sharp(OUT).resize({ height: 64 }).png({ compressionLevel: 9 }).toFile('public/vanikar-mark.png');
+console.log('  nav mark: public/vanikar-mark.png');
+
 const m = await sharp(OUT).metadata();
 console.log(`  wrote ${path.basename(OUT)}  ${m.width}x${m.height}`);
