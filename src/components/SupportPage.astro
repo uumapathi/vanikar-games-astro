@@ -1,0 +1,729 @@
+---
+/**
+ * Support page — a company page under the portfolio hub, not a Card Games one,
+ * so it wears hub chrome like About and the legal documents.
+ *
+ * Deliberately an address rather than a contact form. A form is a chain that
+ * can break silently and lose a customer's message; mail cannot, and the
+ * sender keeps their own copy. The "what to include" list recovers most of
+ * what a form's required fields would have bought.
+ *
+ * This is also the Support URL that App Store Connect and Google Play both
+ * ask for, which is why it answers the common questions rather than only
+ * printing an address — most people arriving here want an answer, not a reply.
+ *
+ * The answers carry an FAQPage schema, so `npm run faq-audit` checks every
+ * locale against English for drifted figures and mismatched questions. Keep
+ * the groups the same length in every language, and write counts as numerals
+ * everywhere ("3 games", not "three") so the audit can compare them.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from './Breadcrumb.astro';
+import { availableGames } from '../data/games';
+import { getLocale, useTranslations, localizedHref, rootHref } from '../i18n';
+
+const lang = getLocale(Astro.currentLocale);
+const t    = useTranslations(lang);
+const href = (p: string) => localizedHref(p, lang);
+const avail = availableGames.length;
+
+/** Product support. Company, press and legal mail stays on info@vanikar.com. */
+const SUPPORT_EMAIL = 'support@vanikar.games';
+const COMPANY_EMAIL = 'info@vanikar.com';
+
+const L = {
+  en: {
+    title: 'Support – Vanikar Games',
+    description: 'Help with Card Games by Vanikar — playing, subscriptions, accounts and troubleshooting. A person reads every message.',
+    h1: 'Support',
+    subtitle: 'A small studio, answering its own mail',
+    lead: "Something not working, a question about your subscription, or a game you would like us to build? Write to us. A person reads every message.",
+    emailLabel: 'Email us',
+    emailNote: 'We read everything and reply as quickly as we can.',
+    h2Include: 'What to include',
+    includeLead: 'None of it is required, but it turns a guess into a fix:',
+    include: [
+      'Which game, and whether you were playing online or against the computer',
+      'Your phone — iPhone or Android — and its OS version',
+      'The app version, at the bottom of Settings → About',
+      'What happened, and what you expected instead',
+      'A screenshot, if you have one',
+    ],
+    h2Faq: 'Common questions',
+    faqLead: 'Most answers are here already.',
+    groups: [
+      { title: 'Playing', items: [
+        { q: 'Do I need an account to play?',
+          a: 'Yes. Playing needs an account, online or offline — your games, subscription, statistics and friends live on the account rather than on one phone, so they follow you when you change device. It is free, and takes an email address and a password.' },
+        { q: 'Can I play without an internet connection?',
+          a: 'Yes. Once you have signed in, every game plays fully offline against AI opponents, with no connection and no mobile data.' },
+        { q: 'How do I play with friends?',
+          a: 'Create a private table and share the invite code. Your friends open the app, tap Join Friends and Family, then Join by code. AI players can fill any seat nobody takes, so the game always starts.' },
+        { q: 'Which phones does it run on?',
+          a: 'iOS 16 and later, and Android 9 and later.' },
+        { q: 'What languages is the app in?',
+          a: 'The app is in English for now, with more languages coming. This website is in 8.' },
+      ]},
+      { title: 'Trial, free games and Premium', items: [
+        { q: 'What is in the free trial?',
+          a: `Everything Premium has, for 14 days: all ${avail} games, online play and private tables. It starts by itself the first time you open the app, and no card is needed.` },
+        { q: 'What happens when the trial ends?',
+          a: 'Nothing is charged. You keep any 3 games of your choice, free and permanently, played offline against the computer. Subscribe if you want the whole catalogue and online play.' },
+        { q: 'Billing, cancelling or a refund',
+          a: "Subscriptions are sold and billed by the App Store or Google Play, and only they can cancel or refund one. Open your subscription settings on your device — the app's Manage subscription button goes straight there. Cancelling stops future renewals; you keep Premium until the paid period ends." },
+        { q: 'New phone, or Premium missing',
+          a: 'Tap Restore purchases in Settings. Your subscription belongs to your Vanikar account, not to the device.' },
+        { q: 'Can I change my 3 free games later?',
+          a: 'No — the 3 free games are a one-time choice. Use the trial to try everything before you decide, or subscribe to unlock all of them.' },
+        { q: 'What happens to my progress if I cancel?',
+          a: 'It stays. Your history, statistics and achievements are kept, and you drop back to your 3 free games offline. Resubscribing restores the rest.' },
+      ]},
+      { title: 'Your account', items: [
+        { q: 'Can I use the same account on my phone and in a browser?',
+          a: 'Yes — one Vanikar account covers both. A browser version is in development; when it arrives, a subscription bought in the mobile app carries over to it, and every game you have in the app will be available there too.' },
+        { q: 'Changing your display name or avatar',
+          a: 'Open My Profile from the menu in the app. Your email address comes from registration and cannot be changed there, so write to us if it needs to move.' },
+        { q: 'Forgotten password',
+          a: 'Tap Forgot password? on the sign-in screen and follow the email that arrives.' },
+        { q: 'Deleting your account',
+          a: 'You can delete it in the app, or write to us from the address on the account and we will do it. Deletion is permanent, and an active subscription has to be cancelled separately in your store settings.' },
+      ]},
+      { title: 'Everything else', items: [
+        { q: 'Are there ads?',
+          a: 'No. Not in the trial, not in the free tier, not in Premium, and not later.' },
+        { q: 'Voice chat is not working',
+          a: 'Voice at the table runs through Discord. Check that the app has microphone permission on your phone, and that your Discord account is linked in the app.' },
+      ]},
+    ],
+    quickMore: 'More about plans and prices →',
+    h2Other: 'Anything else',
+    otherPre: 'Press, business and legal enquiries go to',
+  },
+  es: {
+    title: 'Soporte – Vanikar Games',
+    description: 'Ayuda con Card Games by Vanikar: jugar, suscripciones, cuentas y problemas. Una persona lee cada mensaje.',
+    h1: 'Soporte',
+    subtitle: 'Un estudio pequeño que responde su propio correo',
+    lead: '¿Algo no funciona, una duda sobre tu suscripción o un juego que te gustaría que hiciéramos? Escríbenos. Una persona lee cada mensaje.',
+    emailLabel: 'Escríbenos',
+    emailNote: 'Leemos todo y respondemos lo antes posible.',
+    h2Include: 'Qué incluir',
+    includeLead: 'Nada de esto es obligatorio, pero convierte una conjetura en una solución:',
+    include: [
+      'Qué juego, y si jugabas en línea o contra la computadora',
+      'Tu teléfono — iPhone o Android — y la versión del sistema',
+      'La versión de la app, al final de Ajustes → Acerca de',
+      'Qué ocurrió y qué esperabas que ocurriera',
+      'Una captura de pantalla, si la tienes',
+    ],
+    h2Faq: 'Preguntas frecuentes',
+    faqLead: 'La mayoría de las respuestas ya están aquí.',
+    groups: [
+      { title: 'Jugar', items: [
+        { q: '¿Necesito una cuenta para jugar?',
+          a: 'Sí. Para jugar hace falta una cuenta, en línea o sin conexión: tus juegos, tu suscripción, tus estadísticas y tus amigos viven en la cuenta y no en un teléfono, así que te acompañan al cambiar de dispositivo. Es gratuita y solo pide un correo y una contraseña.' },
+        { q: '¿Puedo jugar sin conexión a internet?',
+          a: 'Sí. Una vez que has iniciado sesión, todos los juegos funcionan completamente sin conexión contra la IA, sin internet ni datos móviles.' },
+        { q: '¿Cómo juego con amigos?',
+          a: 'Crea una mesa privada y comparte el código de invitación. Tus amigos abren la app, tocan Join Friends and Family y luego Join by code. La IA puede ocupar los asientos que nadie tome, así la partida siempre empieza.' },
+        { q: '¿En qué teléfonos funciona?',
+          a: 'iOS 16 o posterior, y Android 9 o posterior.' },
+        { q: '¿En qué idiomas está la app?',
+          a: 'La app está en inglés por ahora, y llegarán más idiomas. Este sitio web está en 8.' },
+      ]},
+      { title: 'Prueba, juegos gratuitos y Premium', items: [
+        { q: '¿Qué incluye la prueba gratuita?',
+          a: `Todo lo de Premium, durante 14 días: los ${avail} juegos, juego en línea y mesas privadas. Empieza sola la primera vez que abres la app y no hace falta tarjeta.` },
+        { q: '¿Qué pasa cuando termina la prueba?',
+          a: 'No se cobra nada. Conservas 3 juegos a tu elección, gratis y para siempre, sin conexión contra la computadora. Suscríbete si quieres el catálogo completo y el juego en línea.' },
+        { q: 'Facturación, cancelación o reembolso',
+          a: 'Las suscripciones las venden y cobran el App Store o Google Play, y solo ellos pueden cancelarlas o reembolsarlas. Abre los ajustes de suscripción en tu dispositivo: el botón «Gestionar suscripción» de la app lleva directo allí. Cancelar detiene las renovaciones futuras; conservas Premium hasta que termine el periodo pagado.' },
+        { q: 'Teléfono nuevo, o Premium que no aparece',
+          a: 'Toca «Restaurar compras» en Ajustes. Tu suscripción pertenece a tu cuenta de Vanikar, no al dispositivo.' },
+        { q: '¿Puedo cambiar después mis 3 juegos gratuitos?',
+          a: 'No: los 3 juegos gratuitos son una elección única. Usa la prueba para probarlo todo antes de decidir, o suscríbete para desbloquearlos todos.' },
+        { q: '¿Qué pasa con mi progreso si cancelo?',
+          a: 'Se queda. Tu historial, tus estadísticas y tus logros se conservan, y vuelves a tus 3 juegos gratuitos sin conexión. Si te vuelves a suscribir, se restaura el resto.' },
+      ]},
+      { title: 'Tu cuenta', items: [
+        { q: '¿Puedo usar la misma cuenta en el teléfono y en el navegador?',
+          a: 'Sí: una sola cuenta de Vanikar sirve para ambos. La versión para navegador está en desarrollo; cuando llegue, la suscripción comprada en la app móvil se traslada a ella, y todos los juegos que tengas en la app estarán también allí.' },
+        { q: 'Cambiar tu nombre visible o tu avatar',
+          a: 'Abre My Profile desde el menú de la app. Tu correo viene del registro y no se puede cambiar ahí, así que escríbenos si hay que moverlo.' },
+        { q: 'Contraseña olvidada',
+          a: 'Toca «Forgot password?» en la pantalla de inicio de sesión y sigue el correo que llega.' },
+        { q: 'Eliminar tu cuenta',
+          a: 'Puedes eliminarla en la app, o escribirnos desde el correo de la cuenta y lo haremos nosotros. La eliminación es permanente, y una suscripción activa debe cancelarse aparte en los ajustes de tu tienda.' },
+      ]},
+      { title: 'Todo lo demás', items: [
+        { q: '¿Hay anuncios?',
+          a: 'No. Ni en la prueba, ni en la versión gratuita, ni en Premium, ni más adelante.' },
+        { q: 'El chat de voz no funciona',
+          a: 'La voz en la mesa funciona a través de Discord. Comprueba que la app tenga permiso de micrófono en tu teléfono y que tu cuenta de Discord esté vinculada en la app.' },
+      ]},
+    ],
+    quickMore: 'Más sobre planes y precios →',
+    h2Other: 'Cualquier otra cosa',
+    otherPre: 'Prensa, negocios y asuntos legales:',
+  },
+  pt: {
+    title: 'Suporte – Vanikar Games',
+    description: 'Ajuda com o Card Games by Vanikar: jogar, assinaturas, contas e problemas. Uma pessoa lê cada mensagem.',
+    h1: 'Suporte',
+    subtitle: 'Um estúdio pequeno que responde ao próprio e-mail',
+    lead: 'Algo não funciona, uma dúvida sobre a assinatura, ou um jogo que você gostaria que a gente fizesse? Escreva para nós. Uma pessoa lê cada mensagem.',
+    emailLabel: 'Escreva para nós',
+    emailNote: 'Lemos tudo e respondemos assim que possível.',
+    h2Include: 'O que incluir',
+    includeLead: 'Nada disso é obrigatório, mas transforma um palpite em solução:',
+    include: [
+      'Qual jogo, e se você estava online ou contra o computador',
+      'Seu telefone — iPhone ou Android — e a versão do sistema',
+      'A versão do app, no fim de Configurações → Sobre',
+      'O que aconteceu e o que você esperava que acontecesse',
+      'Uma captura de tela, se tiver',
+    ],
+    h2Faq: 'Perguntas frequentes',
+    faqLead: 'A maioria das respostas já está aqui.',
+    groups: [
+      { title: 'Jogar', items: [
+        { q: 'Preciso de uma conta para jogar?',
+          a: 'Sim. Para jogar é preciso uma conta, online ou offline: seus jogos, sua assinatura, suas estatísticas e seus amigos ficam na conta e não em um aparelho, então acompanham você na troca de telefone. É gratuita e pede só um e-mail e uma senha.' },
+        { q: 'Dá para jogar sem internet?',
+          a: 'Sim. Depois de entrar na conta, todos os jogos funcionam totalmente offline contra a IA, sem conexão e sem dados móveis.' },
+        { q: 'Como jogo com amigos?',
+          a: 'Crie uma mesa privada e compartilhe o código de convite. Seus amigos abrem o app, tocam em Join Friends and Family e depois em Join by code. A IA pode ocupar os lugares que ninguém pegar, então a partida sempre começa.' },
+        { q: 'Em quais telefones funciona?',
+          a: 'iOS 16 ou mais recente, e Android 9 ou mais recente.' },
+        { q: 'Em que idiomas está o app?',
+          a: 'O app está em inglês por enquanto, e mais idiomas estão a caminho. Este site está em 8.' },
+      ]},
+      { title: 'Teste, jogos gratuitos e Premium', items: [
+        { q: 'O que tem no teste gratuito?',
+          a: `Tudo o que o Premium tem, por 14 dias: os ${avail} jogos, jogo online e mesas privadas. Começa sozinho na primeira vez que você abre o app, e não precisa de cartão.` },
+        { q: 'O que acontece quando o teste acaba?',
+          a: 'Nada é cobrado. Você fica com 3 jogos à sua escolha, de graça e para sempre, offline contra o computador. Assine se quiser o catálogo inteiro e o jogo online.' },
+        { q: 'Cobrança, cancelamento ou reembolso',
+          a: 'As assinaturas são vendidas e cobradas pela App Store ou pelo Google Play, e só eles podem cancelar ou reembolsar. Abra as configurações de assinatura no seu aparelho: o botão «Gerenciar assinatura» do app leva direto. Cancelar interrompe as renovações futuras; você mantém o Premium até o fim do período pago.' },
+        { q: 'Telefone novo, ou Premium sumido',
+          a: 'Toque em «Restaurar compras» nas Configurações. Sua assinatura pertence à sua conta Vanikar, não ao aparelho.' },
+        { q: 'Posso trocar depois meus 3 jogos gratuitos?',
+          a: 'Não: os 3 jogos gratuitos são uma escolha única. Use o teste para experimentar tudo antes de decidir, ou assine para liberar todos.' },
+        { q: 'O que acontece com meu progresso se eu cancelar?',
+          a: 'Fica tudo. Seu histórico, suas estatísticas e suas conquistas são mantidos, e você volta aos seus 3 jogos gratuitos offline. Se assinar de novo, o resto é restaurado.' },
+      ]},
+      { title: 'Sua conta', items: [
+        { q: 'Posso usar a mesma conta no telefone e no navegador?',
+          a: 'Sim: uma única conta Vanikar serve para os dois. A versão para navegador está em desenvolvimento; quando chegar, a assinatura comprada no app móvel passa para ela, e todos os jogos que você tiver no app estarão lá também.' },
+        { q: 'Mudar seu nome de exibição ou avatar',
+          a: 'Abra My Profile pelo menu do app. Seu e-mail vem do cadastro e não pode ser alterado ali, então escreva para nós se precisar mudar.' },
+        { q: 'Esqueci a senha',
+          a: 'Toque em «Forgot password?» na tela de entrada e siga o e-mail que chegar.' },
+        { q: 'Excluir sua conta',
+          a: 'Você pode excluir no app, ou escrever para nós do e-mail da conta que fazemos isso. A exclusão é permanente, e uma assinatura ativa precisa ser cancelada à parte nas configurações da sua loja.' },
+      ]},
+      { title: 'Todo o resto', items: [
+        { q: 'Tem anúncios?',
+          a: 'Não. Nem no teste, nem na versão gratuita, nem no Premium, nem depois.' },
+        { q: 'O chat de voz não funciona',
+          a: 'A voz na mesa funciona pelo Discord. Confira se o app tem permissão de microfone no seu telefone e se sua conta do Discord está vinculada no app.' },
+      ]},
+    ],
+    quickMore: 'Mais sobre planos e preços →',
+    h2Other: 'Qualquer outra coisa',
+    otherPre: 'Imprensa, negócios e assuntos jurídicos:',
+  },
+  fr: {
+    title: 'Assistance – Vanikar Games',
+    description: 'Aide pour Card Games by Vanikar : jouer, abonnements, comptes et dépannage. Une personne lit chaque message.',
+    h1: 'Assistance',
+    subtitle: 'Un petit studio qui répond lui-même à son courrier',
+    lead: 'Quelque chose ne fonctionne pas, une question sur votre abonnement, ou un jeu que vous aimeriez nous voir créer ? Écrivez-nous. Une personne lit chaque message.',
+    emailLabel: 'Écrivez-nous',
+    emailNote: 'Nous lisons tout et répondons dès que possible.',
+    h2Include: 'Quoi indiquer',
+    includeLead: 'Rien n’est obligatoire, mais cela transforme une supposition en correction :',
+    include: [
+      'Quel jeu, et si vous jouiez en ligne ou contre l’ordinateur',
+      'Votre téléphone — iPhone ou Android — et la version du système',
+      'La version de l’application, en bas de Réglages → À propos',
+      'Ce qui s’est passé, et ce que vous attendiez',
+      'Une capture d’écran, si vous en avez une',
+    ],
+    h2Faq: 'Questions fréquentes',
+    faqLead: 'La plupart des réponses sont déjà ici.',
+    groups: [
+      { title: 'Jouer', items: [
+        { q: 'Faut-il un compte pour jouer ?',
+          a: 'Oui. Un compte est nécessaire pour jouer, en ligne comme hors ligne : vos jeux, votre abonnement, vos statistiques et vos amis appartiennent au compte et non à un téléphone, ils vous suivent donc lorsque vous changez d’appareil. Il est gratuit et demande une adresse e-mail et un mot de passe.' },
+        { q: 'Peut-on jouer sans connexion internet ?',
+          a: 'Oui. Une fois connecté, tous les jeux se jouent entièrement hors ligne contre l’IA, sans connexion ni données mobiles.' },
+        { q: 'Comment jouer avec des amis ?',
+          a: 'Créez une table privée et partagez le code d’invitation. Vos amis ouvrent l’application, touchent Join Friends and Family, puis Join by code. L’IA peut occuper les places que personne ne prend, la partie démarre donc toujours.' },
+        { q: 'Sur quels téléphones cela fonctionne-t-il ?',
+          a: 'iOS 16 et versions ultérieures, et Android 9 et versions ultérieures.' },
+        { q: 'Dans quelles langues est l’application ?',
+          a: 'L’application est en anglais pour l’instant, d’autres langues arrivent. Ce site est disponible en 8.' },
+      ]},
+      { title: 'Essai, jeux gratuits et Premium', items: [
+        { q: 'Que contient l’essai gratuit ?',
+          a: `Tout ce que contient Premium, pendant 14 jours : les ${avail} jeux, le jeu en ligne et les tables privées. Il démarre tout seul à la première ouverture de l’application, sans carte bancaire.` },
+        { q: 'Que se passe-t-il à la fin de l’essai ?',
+          a: 'Rien n’est facturé. Vous gardez 3 jeux de votre choix, gratuitement et définitivement, hors ligne contre l’ordinateur. Abonnez-vous si vous voulez tout le catalogue et le jeu en ligne.' },
+        { q: 'Facturation, résiliation ou remboursement',
+          a: 'Les abonnements sont vendus et facturés par l’App Store ou Google Play, et eux seuls peuvent les résilier ou les rembourser. Ouvrez les réglages d’abonnement de votre appareil : le bouton « Gérer l’abonnement » de l’application y mène directement. Résilier arrête les renouvellements à venir ; vous gardez Premium jusqu’à la fin de la période payée.' },
+        { q: 'Nouveau téléphone, ou Premium introuvable',
+          a: 'Touchez « Restaurer les achats » dans les Réglages. Votre abonnement appartient à votre compte Vanikar, pas à l’appareil.' },
+        { q: 'Puis-je changer mes 3 jeux gratuits plus tard ?',
+          a: 'Non : les 3 jeux gratuits sont un choix unique. Profitez de l’essai pour tout essayer avant de décider, ou abonnez-vous pour les débloquer tous.' },
+        { q: 'Que devient ma progression si je résilie ?',
+          a: 'Elle reste. Votre historique, vos statistiques et vos succès sont conservés, et vous revenez à vos 3 jeux gratuits hors ligne. Un nouvel abonnement restaure le reste.' },
+      ]},
+      { title: 'Votre compte', items: [
+        { q: 'Puis-je utiliser le même compte sur mon téléphone et dans un navigateur ?',
+          a: 'Oui : un seul compte Vanikar couvre les deux. Une version navigateur est en développement ; à sa sortie, un abonnement acheté dans l’application mobile y sera valable, et tous les jeux que vous possédez dans l’application y seront également disponibles.' },
+        { q: 'Changer votre nom affiché ou votre avatar',
+          a: 'Ouvrez My Profile depuis le menu de l’application. Votre adresse e-mail vient de l’inscription et ne peut pas y être modifiée : écrivez-nous s’il faut la changer.' },
+        { q: 'Mot de passe oublié',
+          a: 'Touchez « Forgot password? » sur l’écran de connexion et suivez l’e-mail reçu.' },
+        { q: 'Supprimer votre compte',
+          a: 'Vous pouvez le supprimer dans l’application, ou nous écrire depuis l’adresse du compte et nous le ferons. La suppression est définitive, et un abonnement actif doit être résilié séparément dans les réglages de votre boutique.' },
+      ]},
+      { title: 'Le reste', items: [
+        { q: 'Y a-t-il de la publicité ?',
+          a: 'Non. Ni dans l’essai, ni dans la version gratuite, ni dans Premium, ni plus tard.' },
+        { q: 'Le chat vocal ne fonctionne pas',
+          a: 'La voix à la table passe par Discord. Vérifiez que l’application a l’autorisation micro sur votre téléphone et que votre compte Discord y est bien lié.' },
+      ]},
+    ],
+    quickMore: 'En savoir plus sur les offres et les tarifs →',
+    h2Other: 'Pour tout le reste',
+    otherPre: 'Presse, partenariats et questions juridiques :',
+  },
+  de: {
+    title: 'Support – Vanikar Games',
+    description: 'Hilfe zu Card Games by Vanikar: Spielen, Abos, Konten und Fehlersuche. Jede Nachricht liest ein Mensch.',
+    h1: 'Support',
+    subtitle: 'Ein kleines Studio, das seine Post selbst beantwortet',
+    lead: 'Etwas funktioniert nicht, eine Frage zum Abo, oder ein Spiel, das wir bauen sollen? Schreib uns. Jede Nachricht liest ein Mensch.',
+    emailLabel: 'Schreib uns',
+    emailNote: 'Wir lesen alles und antworten so schnell wir können.',
+    h2Include: 'Was hilft',
+    includeLead: 'Nichts davon ist Pflicht, aber es macht aus einer Vermutung eine Lösung:',
+    include: [
+      'Welches Spiel, und ob online oder gegen den Computer',
+      'Dein Telefon — iPhone oder Android — und die Systemversion',
+      'Die App-Version, ganz unten unter Einstellungen → Über',
+      'Was passiert ist, und was du erwartet hast',
+      'Ein Screenshot, falls vorhanden',
+    ],
+    h2Faq: 'Häufige Fragen',
+    faqLead: 'Die meisten Antworten stehen schon hier.',
+    groups: [
+      { title: 'Spielen', items: [
+        { q: 'Brauche ich ein Konto zum Spielen?',
+          a: 'Ja. Zum Spielen braucht es ein Konto, online wie offline: Spiele, Abo, Statistiken und Freunde gehören zum Konto und nicht zu einem Telefon, sie ziehen also mit dir um, wenn du das Gerät wechselst. Es ist kostenlos und braucht nur E-Mail-Adresse und Passwort.' },
+        { q: 'Kann ich ohne Internetverbindung spielen?',
+          a: 'Ja. Sobald du angemeldet bist, läuft jedes Spiel vollständig offline gegen die KI, ohne Verbindung und ohne mobile Daten.' },
+        { q: 'Wie spiele ich mit Freunden?',
+          a: 'Erstelle einen privaten Tisch und teile den Einladungscode. Deine Freunde öffnen die App, tippen auf Join Friends and Family und dann auf Join by code. Die KI kann freie Plätze übernehmen, damit die Partie immer startet.' },
+        { q: 'Auf welchen Telefonen läuft es?',
+          a: 'iOS 16 und neuer, und Android 9 und neuer.' },
+        { q: 'In welchen Sprachen gibt es die App?',
+          a: 'Die App ist vorerst auf Englisch, weitere Sprachen kommen. Diese Website gibt es in 8.' },
+      ]},
+      { title: 'Testphase, Gratis-Spiele und Premium', items: [
+        { q: 'Was ist in der kostenlosen Testphase enthalten?',
+          a: `Alles aus Premium, 14 Tage lang: alle ${avail} Spiele, Online-Partien und private Tische. Sie startet beim ersten Öffnen der App von selbst, ganz ohne Karte.` },
+        { q: 'Was passiert am Ende der Testphase?',
+          a: 'Es wird nichts abgebucht. Du behältst 3 Spiele deiner Wahl, kostenlos und dauerhaft, offline gegen den Computer. Abonniere, wenn du den ganzen Katalog und Online-Partien willst.' },
+        { q: 'Abrechnung, Kündigung oder Erstattung',
+          a: 'Abos werden vom App Store oder von Google Play verkauft und abgerechnet; nur dort lassen sie sich kündigen oder erstatten. Öffne die Abo-Einstellungen auf deinem Gerät — die Schaltfläche „Abo verwalten“ in der App führt direkt dorthin. Kündigen stoppt künftige Verlängerungen; Premium bleibt bis zum Ende der bezahlten Laufzeit.' },
+        { q: 'Neues Telefon, oder Premium fehlt',
+          a: 'Tippe in den Einstellungen auf „Käufe wiederherstellen“. Dein Abo gehört zu deinem Vanikar-Konto, nicht zum Gerät.' },
+        { q: 'Kann ich meine 3 Gratis-Spiele später tauschen?',
+          a: 'Nein — die 3 Gratis-Spiele sind eine einmalige Wahl. Nutze die Testphase, um alles auszuprobieren, oder abonniere, um alle freizuschalten.' },
+        { q: 'Was passiert mit meinem Fortschritt, wenn ich kündige?',
+          a: 'Er bleibt. Verlauf, Statistiken und Erfolge werden behalten, und du fällst auf deine 3 Gratis-Spiele offline zurück. Ein neues Abo stellt den Rest wieder her.' },
+      ]},
+      { title: 'Dein Konto', items: [
+        { q: 'Kann ich dasselbe Konto auf dem Telefon und im Browser nutzen?',
+          a: 'Ja — ein Vanikar-Konto gilt für beides. Eine Browser-Version ist in Entwicklung; sobald sie da ist, gilt ein in der mobilen App gekauftes Abo auch dort, und jedes Spiel, das du in der App hast, ist dort ebenfalls verfügbar.' },
+        { q: 'Anzeigenamen oder Avatar ändern',
+          a: 'Öffne My Profile im Menü der App. Deine E-Mail-Adresse stammt aus der Registrierung und lässt sich dort nicht ändern — schreib uns, wenn sie umziehen soll.' },
+        { q: 'Passwort vergessen',
+          a: 'Tippe im Anmeldebildschirm auf „Forgot password?“ und folge der E-Mail, die ankommt.' },
+        { q: 'Konto löschen',
+          a: 'Du kannst es in der App löschen, oder uns von der Adresse des Kontos aus schreiben — dann erledigen wir das. Die Löschung ist endgültig, und ein laufendes Abo muss separat in den Einstellungen deines Stores gekündigt werden.' },
+      ]},
+      { title: 'Alles Weitere', items: [
+        { q: 'Gibt es Werbung?',
+          a: 'Nein. Nicht in der Testphase, nicht in der Gratis-Version, nicht in Premium, und auch später nicht.' },
+        { q: 'Der Sprachchat funktioniert nicht',
+          a: 'Die Sprache am Tisch läuft über Discord. Prüfe, ob die App auf deinem Telefon Mikrofon-Zugriff hat und ob dein Discord-Konto in der App verknüpft ist.' },
+      ]},
+    ],
+    quickMore: 'Mehr zu Tarifen und Preisen →',
+    h2Other: 'Alles andere',
+    otherPre: 'Presse, Geschäftliches und Rechtliches:',
+  },
+  hi: {
+    title: 'सहायता – Vanikar Games',
+    description: 'Card Games by Vanikar में मदद — खेलना, सब्सक्रिप्शन, खाता और गड़बड़ियाँ। हर संदेश एक इंसान पढ़ता है।',
+    h1: 'सहायता',
+    subtitle: 'एक छोटा स्टूडियो, जो अपने ईमेल खुद पढ़ता है',
+    lead: 'कुछ काम नहीं कर रहा, सब्सक्रिप्शन पर कोई सवाल है, या कोई ऐसा खेल जो हम बनाएँ? हमें लिखिए। हर संदेश एक इंसान पढ़ता है।',
+    emailLabel: 'हमें लिखें',
+    emailNote: 'हम सब कुछ पढ़ते हैं और जितनी जल्दी हो सके जवाब देते हैं।',
+    h2Include: 'क्या बताएँ',
+    includeLead: 'कुछ भी ज़रूरी नहीं, पर इससे अंदाज़ा सीधे समाधान बन जाता है:',
+    include: [
+      'कौन-सा खेल, और आप ऑनलाइन खेल रहे थे या कंप्यूटर के खिलाफ',
+      'आपका फ़ोन — iPhone या Android — और उसका OS संस्करण',
+      'ऐप का संस्करण, Settings → About में सबसे नीचे',
+      'क्या हुआ, और आपको क्या होने की उम्मीद थी',
+      'एक स्क्रीनशॉट, अगर हो तो',
+    ],
+    h2Faq: 'आम सवाल',
+    faqLead: 'ज़्यादातर जवाब यहीं मिल जाएँगे।',
+    groups: [
+      { title: 'खेलना', items: [
+        { q: 'क्या खेलने के लिए खाता ज़रूरी है?',
+          a: 'हाँ। खेलने के लिए खाता चाहिए — ऑनलाइन हो या ऑफ़लाइन। आपके खेल, सब्सक्रिप्शन, आँकड़े और दोस्त खाते से जुड़े होते हैं, किसी एक फ़ोन से नहीं, इसलिए डिवाइस बदलने पर भी साथ चलते हैं। खाता मुफ़्त है और इसके लिए बस एक ईमेल पता और पासवर्ड चाहिए।' },
+        { q: 'क्या बिना इंटरनेट के खेल सकते हैं?',
+          a: 'हाँ। साइन इन कर लेने के बाद हर खेल पूरी तरह ऑफ़लाइन, AI के खिलाफ चलता है — न कनेक्शन चाहिए, न मोबाइल डेटा।' },
+        { q: 'दोस्तों के साथ कैसे खेलें?',
+          a: 'एक निजी टेबल बनाइए और इनवाइट कोड साझा कीजिए। आपके दोस्त ऐप खोलकर Join Friends and Family, फिर Join by code चुनते हैं। खाली सीटें AI भर सकता है, इसलिए खेल हमेशा शुरू हो जाता है।' },
+        { q: 'यह किन फ़ोनों पर चलता है?',
+          a: 'iOS 16 और उससे नया, और Android 9 और उससे नया।' },
+        { q: 'ऐप किन भाषाओं में है?',
+          a: 'फ़िलहाल ऐप अंग्रेज़ी में है, और भाषाएँ आ रही हैं। यह वेबसाइट 8 भाषाओं में है।' },
+      ]},
+      { title: 'ट्रायल, मुफ़्त खेल और Premium', items: [
+        { q: 'मुफ़्त ट्रायल में क्या मिलता है?',
+          a: `Premium का सब कुछ, 14 दिन के लिए: सभी ${avail} खेल, ऑनलाइन खेल और निजी टेबल। ऐप पहली बार खोलते ही यह अपने आप शुरू हो जाता है, और कार्ड की ज़रूरत नहीं।` },
+        { q: 'ट्रायल खत्म होने पर क्या होता है?',
+          a: 'कुछ भी नहीं कटता। आप अपनी पसंद के 3 खेल हमेशा के लिए मुफ़्त रख लेते हैं, जो ऑफ़लाइन कंप्यूटर के खिलाफ खेले जाते हैं। पूरा संग्रह और ऑनलाइन खेल चाहिए तो सब्सक्राइब कीजिए।' },
+        { q: 'बिलिंग, रद्द करना या रिफ़ंड',
+          a: 'सब्सक्रिप्शन App Store या Google Play बेचते और वसूलते हैं, और वही उन्हें रद्द या रिफ़ंड कर सकते हैं। अपने डिवाइस की सब्सक्रिप्शन सेटिंग्स खोलें — ऐप का «Manage subscription» बटन सीधे वहीं ले जाता है। रद्द करने से आगे का नवीनीकरण रुकता है; भुगतान की अवधि खत्म होने तक Premium बना रहता है।' },
+        { q: 'नया फ़ोन, या Premium नहीं दिख रहा',
+          a: 'Settings में «Restore purchases» दबाएँ। आपका सब्सक्रिप्शन आपके Vanikar खाते से जुड़ा है, डिवाइस से नहीं।' },
+        { q: 'क्या मैं बाद में अपने 3 मुफ़्त खेल बदल सकता हूँ?',
+          a: 'नहीं — 3 मुफ़्त खेल एक बार का चुनाव हैं। तय करने से पहले ट्रायल में सब आज़मा लीजिए, या सब्सक्राइब करके सभी खोल लीजिए।' },
+        { q: 'रद्द करने पर मेरी प्रगति का क्या होगा?',
+          a: 'वह बनी रहती है। आपका इतिहास, आँकड़े और उपलब्धियाँ सुरक्षित रहती हैं, और आप अपने 3 मुफ़्त खेलों पर ऑफ़लाइन लौट आते हैं। दोबारा सब्सक्राइब करने पर बाकी सब वापस आ जाता है।' },
+      ]},
+      { title: 'आपका खाता', items: [
+        { q: 'क्या वही खाता फ़ोन और ब्राउज़र दोनों पर चलेगा?',
+          a: 'हाँ — एक ही Vanikar खाता दोनों के लिए काफ़ी है। ब्राउज़र वाला संस्करण बन रहा है; आने पर, मोबाइल ऐप में ली गई सब्सक्रिप्शन वहाँ भी चलेगी, और ऐप में आपके सभी खेल वहाँ भी उपलब्ध होंगे।' },
+        { q: 'अपना प्रदर्शित नाम या अवतार बदलना',
+          a: 'ऐप के मेन्यू से My Profile खोलिए। आपका ईमेल पंजीकरण से आता है और वहाँ बदला नहीं जा सकता — बदलना हो तो हमें लिखिए।' },
+        { q: 'पासवर्ड भूल गए',
+          a: 'साइन-इन स्क्रीन पर «Forgot password?» दबाएँ और आने वाले ईमेल का पालन करें।' },
+        { q: 'खाता हटाना',
+          a: 'आप इसे ऐप में हटा सकते हैं, या खाते वाले पते से हमें लिखें और हम हटा देंगे। हटाना स्थायी है, और चालू सब्सक्रिप्शन आपकी स्टोर सेटिंग्स में अलग से रद्द करना होगा।' },
+      ]},
+      { title: 'बाकी सब', items: [
+        { q: 'क्या विज्ञापन आते हैं?',
+          a: 'नहीं। न ट्रायल में, न मुफ़्त संस्करण में, न Premium में, और न आगे कभी।' },
+        { q: 'वॉइस चैट काम नहीं कर रहा',
+          a: 'टेबल पर आवाज़ Discord से चलती है। देखिए कि ऐप को आपके फ़ोन में माइक्रोफ़ोन की अनुमति है और आपका Discord खाता ऐप में जुड़ा हुआ है।' },
+      ]},
+    ],
+    quickMore: 'योजनाओं और कीमतों के बारे में और →',
+    h2Other: 'बाकी सब कुछ',
+    otherPre: 'प्रेस, व्यापार और कानूनी विषय:',
+  },
+  it: {
+    title: 'Assistenza – Vanikar Games',
+    description: 'Aiuto per Card Games by Vanikar: giocare, abbonamenti, account e problemi. Ogni messaggio lo legge una persona.',
+    h1: 'Assistenza',
+    subtitle: 'Uno studio piccolo che risponde da sé alla posta',
+    lead: 'Qualcosa non funziona, una domanda sull’abbonamento, o un gioco che vorresti vedere? Scrivici. Ogni messaggio lo legge una persona.',
+    emailLabel: 'Scrivici',
+    emailNote: 'Leggiamo tutto e rispondiamo il prima possibile.',
+    h2Include: 'Cosa indicare',
+    includeLead: 'Niente è obbligatorio, ma trasforma un’ipotesi in una soluzione:',
+    include: [
+      'Quale gioco, e se giocavi online o contro il computer',
+      'Il telefono — iPhone o Android — e la versione del sistema',
+      'La versione dell’app, in fondo a Impostazioni → Info',
+      'Cosa è successo e cosa ti aspettavi',
+      'Uno screenshot, se ce l’hai',
+    ],
+    h2Faq: 'Domande frequenti',
+    faqLead: 'Quasi tutte le risposte sono già qui.',
+    groups: [
+      { title: 'Giocare', items: [
+        { q: 'Serve un account per giocare?',
+          a: 'Sì. Per giocare serve un account, online o offline: giochi, abbonamento, statistiche e amici stanno sull’account e non su un telefono, quindi ti seguono quando cambi dispositivo. È gratuito e richiede solo un indirizzo e-mail e una password.' },
+        { q: 'Si può giocare senza connessione a internet?',
+          a: 'Sì. Una volta effettuato l’accesso, ogni gioco funziona completamente offline contro l’IA, senza connessione e senza dati mobili.' },
+        { q: 'Come gioco con gli amici?',
+          a: 'Crea un tavolo privato e condividi il codice d’invito. I tuoi amici aprono l’app, toccano Join Friends and Family e poi Join by code. L’IA può occupare i posti che nessuno prende, così la partita parte sempre.' },
+        { q: 'Su quali telefoni funziona?',
+          a: 'iOS 16 e successivi, e Android 9 e successivi.' },
+        { q: 'In che lingue è l’app?',
+          a: 'Per ora l’app è in inglese, altre lingue sono in arrivo. Questo sito è disponibile in 8.' },
+      ]},
+      { title: 'Prova, giochi gratuiti e Premium', items: [
+        { q: 'Cosa c’è nella prova gratuita?',
+          a: `Tutto quello che offre Premium, per 14 giorni: tutti i ${avail} giochi, il gioco online e i tavoli privati. Parte da sola la prima volta che apri l’app, e non serve la carta.` },
+        { q: 'Cosa succede quando finisce la prova?',
+          a: 'Non viene addebitato nulla. Tieni 3 giochi a tua scelta, gratis e per sempre, offline contro il computer. Abbonati se vuoi tutto il catalogo e il gioco online.' },
+        { q: 'Pagamenti, disdetta o rimborso',
+          a: 'Gli abbonamenti sono venduti e fatturati da App Store o Google Play, e solo loro possono disdirli o rimborsarli. Apri le impostazioni abbonamento sul dispositivo: il pulsante «Gestisci abbonamento» dell’app porta lì direttamente. La disdetta ferma i rinnovi futuri; Premium resta fino alla fine del periodo pagato.' },
+        { q: 'Telefono nuovo, o Premium sparito',
+          a: 'Tocca «Ripristina acquisti» nelle Impostazioni. L’abbonamento appartiene al tuo account Vanikar, non al dispositivo.' },
+        { q: 'Posso cambiare più avanti i miei 3 giochi gratuiti?',
+          a: 'No: i 3 giochi gratuiti sono una scelta unica. Usa la prova per provare tutto prima di decidere, oppure abbonati per sbloccarli tutti.' },
+        { q: 'Che fine fanno i miei progressi se disdico?',
+          a: 'Restano. Cronologia, statistiche e obiettivi vengono conservati, e torni ai tuoi 3 giochi gratuiti offline. Riabbonandoti si ripristina il resto.' },
+      ]},
+      { title: 'Il tuo account', items: [
+        { q: 'Posso usare lo stesso account sul telefono e nel browser?',
+          a: 'Sì: un solo account Vanikar vale per entrambi. Una versione per browser è in sviluppo; quando arriverà, l’abbonamento acquistato nell’app mobile varrà anche lì, e tutti i giochi che hai nell’app saranno disponibili anche su browser.' },
+        { q: 'Cambiare nome visualizzato o avatar',
+          a: 'Apri My Profile dal menu dell’app. Il tuo indirizzo e-mail viene dalla registrazione e lì non si può cambiare: scrivici se deve essere spostato.' },
+        { q: 'Password dimenticata',
+          a: 'Tocca «Forgot password?» nella schermata di accesso e segui l’e-mail che arriva.' },
+        { q: 'Eliminare l’account',
+          a: 'Puoi eliminarlo nell’app, oppure scriverci dall’indirizzo dell’account e lo facciamo noi. L’eliminazione è definitiva, e un abbonamento attivo va disdetto a parte nelle impostazioni del tuo store.' },
+      ]},
+      { title: 'Tutto il resto', items: [
+        { q: 'Ci sono pubblicità?',
+          a: 'No. Né nella prova, né nella versione gratuita, né in Premium, né più avanti.' },
+        { q: 'La chat vocale non funziona',
+          a: 'La voce al tavolo passa da Discord. Controlla che l’app abbia il permesso per il microfono sul telefono e che il tuo account Discord sia collegato nell’app.' },
+      ]},
+    ],
+    quickMore: 'Altro su piani e prezzi →',
+    h2Other: 'Tutto il resto',
+    otherPre: 'Stampa, business e questioni legali:',
+  },
+  ja: {
+    title: 'サポート – Vanikar Games',
+    description: 'Card Games by Vanikar のサポート——プレイ、サブスクリプション、アカウント、トラブル。すべてのメッセージに人が目を通します。',
+    h1: 'サポート',
+    subtitle: '自分たちでメールを読む、小さなスタジオです',
+    lead: 'うまく動かない、サブスクリプションの疑問、作ってほしいゲーム——どれでもお書きください。すべてのメッセージに人が目を通します。',
+    emailLabel: 'メールでのお問い合わせ',
+    emailNote: 'すべて拝読し、できるだけ早くお返事します。',
+    h2Include: '書き添えていただきたいこと',
+    includeLead: 'どれも必須ではありませんが、推測が解決に変わります。',
+    include: [
+      'どのゲームか、オンラインかコンピュータ対戦か',
+      'お使いの端末——iPhone か Android か——と OS のバージョン',
+      'アプリのバージョン（設定 → このアプリについて の最下部）',
+      '何が起きたか、どうなると思っていたか',
+      'あれば、スクリーンショット',
+    ],
+    h2Faq: 'よくあるご質問',
+    faqLead: 'たいていの答えは、ここにあります。',
+    groups: [
+      { title: 'プレイについて', items: [
+        { q: 'プレイにアカウントは必要ですか？',
+          a: 'はい。オンラインでもオフラインでも、プレイにはアカウントが必要です。ゲーム、サブスクリプション、統計、フレンドは端末ではなくアカウントに紐づくため、機種を変えてもそのまま引き継がれます。作成は無料で、メールアドレスとパスワードだけで済みます。' },
+        { q: 'インターネットがなくても遊べますか？',
+          a: 'はい。サインインのあとは、すべてのゲームが完全オフラインで AI と対戦できます。通信もモバイルデータも不要です。' },
+        { q: '友だちと遊ぶには？',
+          a: 'プライベートテーブルを作り、招待コードを共有してください。お友だちはアプリを開き、Join Friends and Family、続いて Join by code を選びます。空いた席は AI が埋められるので、対局は必ず始まります。' },
+        { q: 'どの端末で動きますか？',
+          a: 'iOS 16 以降、および Android 9 以降です。' },
+        { q: 'アプリは何語に対応していますか？',
+          a: '現在アプリは英語のみで、対応言語は今後増えます。このウェブサイトは 8 言語でご覧いただけます。' },
+      ]},
+      { title: '無料トライアル・無料ゲーム・Premium', items: [
+        { q: '無料トライアルには何が含まれますか？',
+          a: `Premium のすべてが 14 日間ご利用いただけます。${avail} 本すべてのゲーム、オンライン対戦、プライベートテーブルが対象です。アプリを初めて開いた時点で自動的に始まり、カード登録は不要です。` },
+        { q: 'トライアルが終わるとどうなりますか？',
+          a: '課金は発生しません。お好きな 3 本を無料のまま永続的に保持でき、オフラインでコンピュータと対戦できます。全ラインナップとオンライン対戦をご希望なら、サブスクリプションへどうぞ。' },
+        { q: '支払い・解約・返金',
+          a: 'サブスクリプションは App Store または Google Play が販売・請求しており、解約と返金もそちらでのみ行えます。端末のサブスクリプション設定をお開きください（アプリの「サブスクリプションの管理」から直接開けます）。解約すると次回以降の更新が止まり、支払い済みの期間が終わるまで Premium はそのままご利用いただけます。' },
+        { q: '機種変更後に Premium が見当たらない',
+          a: '設定の「購入を復元」をタップしてください。サブスクリプションは端末ではなく Vanikar アカウントに紐づいています。' },
+        { q: '無料の 3 本を後から選び直せますか？',
+          a: 'いいえ。無料の 3 本は一度きりの選択です。決める前にトライアルですべてお試しいただくか、サブスクリプションですべて解放してください。' },
+        { q: '解約すると記録はどうなりますか？',
+          a: '残ります。履歴・統計・実績はそのまま保持され、無料の 3 本をオフラインで遊ぶ状態に戻ります。再開すれば、残りも元どおりです。' },
+      ]},
+      { title: 'アカウント', items: [
+        { q: '同じアカウントをスマートフォンとブラウザの両方で使えますか？',
+          a: 'はい。ひとつの Vanikar アカウントで両方に対応します。ブラウザ版は開発中で、公開後はモバイルアプリで購入したサブスクリプションがそのまま有効になり、アプリでお持ちのゲームはすべてブラウザ版でも使えます。' },
+        { q: '表示名やアバターを変更する',
+          a: 'アプリのメニューから My Profile を開いてください。メールアドレスは登録時のもので、ここでは変更できません。変更が必要な場合はご連絡ください。' },
+        { q: 'パスワードを忘れた',
+          a: 'サインイン画面の「Forgot password?」をタップし、届いたメールに従ってください。' },
+        { q: 'アカウントの削除',
+          a: 'アプリから削除できます。アカウントのアドレスからご連絡いただければ、こちらで削除することも可能です。削除は取り消せません。また、有効なサブスクリプションはストアの設定で別途解約が必要です。' },
+      ]},
+      { title: 'そのほか', items: [
+        { q: '広告は表示されますか？',
+          a: 'いいえ。トライアルにも、無料版にも、Premium にも、この先も表示しません。' },
+        { q: 'ボイスチャットが動かない',
+          a: 'テーブルの音声は Discord を通しています。アプリに端末のマイク権限があるか、Discord アカウントがアプリで連携済みかをご確認ください。' },
+      ]},
+    ],
+    quickMore: 'プランと料金について →',
+    h2Other: 'そのほかのお問い合わせ',
+    otherPre: '報道・ビジネス・法務のお問い合わせ：',
+  },
+}[lang];
+
+const homeHref = rootHref('/', lang);
+const pageUrl  = new URL(rootHref('/support', lang), Astro.site).href;
+const crumbs   = [{ name: t('nav.home'), href: homeHref }, { name: t('footer.support') }];
+const allFaqs  = L.groups.flatMap(g => g.items);
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: crumbs[0].name, item: new URL(homeHref, Astro.site).href },
+      { '@type': 'ListItem', position: 2, name: crumbs[1].name, item: pageUrl },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: allFaqs.map(f => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ContactPage',
+    url: pageUrl,
+    name: L.h1,
+    description: L.description,
+    inLanguage: lang,
+    mainEntity: {
+      '@type': 'Organization',
+      name: 'Vanikar LLC',
+      url: 'https://vanikar.com',
+      logo: new URL('/vanikar-icon-180.png', Astro.site).href,
+      contactPoint: [{
+        '@type': 'ContactPoint',
+        contactType: 'customer support',
+        email: SUPPORT_EMAIL,
+        availableLanguage: ['en', 'es', 'pt', 'fr', 'de', 'hi', 'it', 'ja'],
+      }],
+    },
+  },
+];
+---
+<BaseLayout
+  title={L.title}
+  description={L.description}
+  image="/og/vanikar.png"
+>
+  <Fragment slot="head">
+    {jsonLd.map(schema => (
+      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    ))}
+  </Fragment>
+
+  <section class="legal-page support-page">
+    <div class="container-narrow">
+      <div class="page-crumbs"><Breadcrumb items={crumbs} /></div>
+      <div class="legal-header">
+        <h1>{L.h1}</h1>
+        <p class="legal-date">{L.subtitle}</p>
+      </div>
+
+      <div class="legal-content">
+        <p>{L.lead}</p>
+
+        {/* The address is plain text as well as a link: a mailto: does nothing
+            on a machine with no mail client configured, and someone reading on
+            a phone may want to type it into webmail. */}
+        <div class="contact-card">
+          <div class="contact-label">{L.emailLabel}</div>
+          <a class="contact-email" href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>
+          <p class="contact-note">{L.emailNote}</p>
+        </div>
+
+        <h2>{L.h2Faq}</h2>
+        <p>{L.faqLead}</p>
+        {/* <details> rather than scripted panels: it opens without JavaScript,
+            is keyboard-navigable for free, and browser find-in-page can search
+            closed answers. Same markup and styling as the FAQs elsewhere. */}
+        {L.groups.map(group => (
+          <Fragment>
+            <h3 class="faq-group">{group.title}</h3>
+            <div class="faq-list">
+              {group.items.map(f => (
+                <details class="faq-item">
+                  <summary>{f.q}</summary>
+                  <p>{f.a}</p>
+                </details>
+              ))}
+            </div>
+          </Fragment>
+        ))}
+        <p><a href={href('/pricing')}>{L.quickMore}</a></p>
+
+        <h2>{L.h2Include}</h2>
+        <p>{L.includeLead}</p>
+        <ul>{L.include.map(item => <li>{item}</li>)}</ul>
+
+        <h2>{L.h2Other}</h2>
+        <p>{L.otherPre} <a href={`mailto:${COMPANY_EMAIL}`}>{COMPANY_EMAIL}</a>.</p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-crumbs { margin-bottom: 1.5rem; }
+  .contact-card {
+    margin: 1.75rem 0 2.5rem; padding: 1.5rem 1.25rem; text-align: center;
+    background: var(--gold-subtle, rgba(201,162,39,.07));
+    border: 1px solid var(--gold-border, rgba(201,162,39,.3));
+    border-radius: var(--radius-md, 10px);
+  }
+  .contact-label {
+    font-size: .72rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .18em; color: var(--text-muted); margin-bottom: .6rem;
+  }
+  /* Not Cinzel: it is an all-caps face, and an address rendered
+     SUPPORT@VANIKAR.GAMES reads as though the case mattered. */
+  .contact-email {
+    font-family: 'Inter Variable', sans-serif; font-size: 1.25rem; font-weight: 700;
+    color: var(--gold-light); text-decoration: none; overflow-wrap: anywhere;
+  }
+  .contact-email:hover { text-decoration: underline; text-underline-offset: 4px; }
+  .contact-note { font-size: .82rem; color: var(--text-muted); margin: .7rem 0 0; }
+
+  /* Matches the accordion on the home, pricing and game pages. */
+  .faq-group {
+    font-size: .72rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .18em; color: var(--text-muted);
+    margin: 2rem 0 .85rem; font-family: 'Inter Variable', sans-serif;
+  }
+  .faq-list { margin-bottom: .5rem; }
+  .faq-item {
+    border: 1px solid var(--border); border-radius: var(--radius-md);
+    background: var(--bg-card); margin-bottom: .6rem; overflow: hidden;
+  }
+  .faq-item summary {
+    cursor: pointer; padding: .9rem 1.15rem; font-size: .92rem; font-weight: 600;
+    color: var(--text-primary); font-family: 'Inter Variable', sans-serif;
+    list-style: none; position: relative; padding-right: 2.2rem;
+    transition: color var(--transition);
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary::after {
+    content: '+'; position: absolute; right: 1.1rem; top: 50%; translate: 0 -50%;
+    color: var(--gold); font-size: 1.1rem; transition: transform var(--transition);
+  }
+  .faq-item[open] summary::after { transform: rotate(45deg); }
+  .faq-item summary:hover { color: var(--gold-light); }
+  .faq-item p {
+    padding: 0 1.15rem 1rem; margin: 0;
+    font-size: .88rem; color: var(--text-secondary); line-height: 1.7;
+  }
+</style>

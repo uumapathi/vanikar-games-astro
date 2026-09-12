@@ -310,7 +310,10 @@ const jsonLd = [
         <h2>{L.h2Touch}</h2>
         <p>
           {L.pTouchPre}
-          <a href="mailto:info@vanikar.com">info@vanikar.com</a>
+          {/* Product feedback belongs on the support address, not the
+              company one; the legal documents keep info@ as Vanikar LLC's
+              contact of record. */}
+          <a href="mailto:support@vanikar.games">support@vanikar.games</a>
           {L.pTouchMid}
           <a href="https://vanikar.com" target="_blank" rel="noopener">vanikar.com</a>.
         </p>

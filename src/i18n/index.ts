@@ -58,7 +58,7 @@ export function unlocalizePath(pathname: string): string {
 export const PRODUCT_BASE = '/cardgames';
 
 /** Company-wide pages that stay at the domain root, shared by every product. */
-const SHARED_PATHS = new Set(['/', '/about', '/privacy', '/terms']);
+const SHARED_PATHS = new Set(['/', '/about', '/support', '/privacy', '/terms']);
 
 /**
  * Pages that wear the portfolio hub's chrome rather than a product's.
@@ -72,7 +72,7 @@ const SHARED_PATHS = new Set(['/', '/about', '/privacy', '/terms']);
  * but is not the hub, so a link back to the hub is useful there and would be
  * a self-link on the hub. Callers that care use isHubRoot for that.
  */
-const HUB_CHROME_PATHS = new Set(['/', '/about', '/privacy', '/terms']);
+const HUB_CHROME_PATHS = new Set(['/', '/about', '/support', '/privacy', '/terms']);
 
 /** True when `path` (already unlocalized) should render the hub's header and footer. */
 export function usesHubChrome(path: string): boolean {
@@ -111,7 +111,7 @@ export function productPath(path: string): string {
  * whether to link to a localized path or fall back to the English page.
  */
 export const TRANSLATED_PATHS = new Set<string>([
-  '/', '/about', PRODUCT_BASE,
+  '/', '/about', '/support', PRODUCT_BASE,
 ]);
 
 /** Path prefixes whose entire subtree is translated (every game and hub page) */

@@ -70,7 +70,7 @@ const hub    = rootHref('/', locale);
           {/* On the hub this pointed at the page it was rendered on. */}
           {!isHubRoot && <li><a href={hub}>{t('nav.allGames')}</a></li>}
           <li><a href={href('/about')}>{t('footer.about')}</a></li>
-          <li><a href="mailto:info@vanikar.com">{t('footer.support')}</a></li>
+          <li><a href={href('/support')}>{t('footer.support')}</a></li>
           <li>
             <a href="https://vanikar.com" target="_blank" rel="noopener">
               Vanikar LLC<span class="footer-ext" aria-hidden="true">↗</span>
