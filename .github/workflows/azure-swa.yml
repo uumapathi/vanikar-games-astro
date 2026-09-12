@@ -8,10 +8,14 @@ name: Deploy to Azure Static Web Apps
 # derived from it, and scripts/gen-swa-config.mjs adds X-Robots-Tag: noindex
 # whenever it points at a dev host. Getting it wrong publishes a site that
 # either competes with production or advertises the wrong domain.
+#
+# Two stacks, one workflow. Every push builds and deploys dev; a push to
+# `release` deploys production as well. GitHub runs the workflow file from the
+# branch that was pushed, so this works without the file being on master.
 
 on:
   push:
-    branches: [master]
+    branches: [master, release]
   pull_request:
     types: [opened, synchronize, reopened, closed]
     branches: [master]
@@ -20,7 +24,7 @@ on:
       environment:
         description: Which stack to deploy
         type: choice
-        options: [dev]
+        options: [dev, prod]
         default: dev
 
 concurrency:
@@ -29,7 +33,10 @@ concurrency:
 
 jobs:
   build_and_deploy:
-    if: github.event_name != 'pull_request' || github.event.action != 'closed'
+    if: >-
+      github.event_name == 'push' ||
+      (github.event_name == 'pull_request' && github.event.action != 'closed') ||
+      (github.event_name == 'workflow_dispatch' && inputs.environment == 'dev')
     runs-on: ubuntu-latest
     name: Build and deploy (dev)
     env:
@@ -61,6 +68,48 @@ jobs:
         uses: Azure/static-web-apps-deploy@v1
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_SWA_TOKEN_MKT_DEV }}
+          action: upload
+          app_location: dist
+          skip_app_build: true
+          skip_api_build: true
+
+  # Production builds for vanikar.games (the SITE_URL default). Until DNS is cut
+  # over, the prod Static Web App is only reachable at its azurestaticapps.net
+  # hostname, so it ships noindex to keep that hostname out of search. At
+  # cutover, delete the NOINDEX line below — docs/LAUNCH.md step 2b.
+  build_and_deploy_prod:
+    if: >-
+      (github.event_name == 'push' && github.ref == 'refs/heads/release') ||
+      (github.event_name == 'workflow_dispatch' && inputs.environment == 'prod')
+    runs-on: ubuntu-latest
+    name: Build and deploy (prod)
+    env:
+      NOINDEX: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Audit content
+        run: |
+          npm run overlay-audit
+          npm run faq-audit
+
+      - name: Deploy
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_SWA_TOKEN_MKT_PROD }}
           action: upload
           app_location: dist
           skip_app_build: true

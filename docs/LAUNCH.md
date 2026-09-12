@@ -83,8 +83,9 @@ wording is live. Nothing to change there.
 ### 2b. Drop the temporary noindex
 
 Production is currently deployed with a forced `noindex` because it is only
-reachable at its `azurestaticapps.net` hostname. **Building without the flag is
-what removes it** — there is nothing to edit:
+reachable at its `azurestaticapps.net` hostname. The flag lives in the prod job
+of `.github/workflows/azure-swa.yml` (`NOINDEX: '1'`) — **delete that line at
+cutover**; building without it is what removes the header:
 
 ```bash
 npm run build          # production, indexable  ← use this at cutover
@@ -266,9 +267,12 @@ Tools → **Import from Google Search Console**, which picks up the same sitemap
 
 ### CI
 
-`.github/workflows/azure-swa.yml` currently deploys **dev only**, triggered on
-`master`. Add a production job gated on `release`, using the secret
-`AZURE_SWA_TOKEN_MKT_PROD` (already stored) and **no** `NOINDEX`.
+`.github/workflows/azure-swa.yml` deploys **dev on every push** to `master` or
+`release`, and **production on pushes to `release`** (secret
+`AZURE_SWA_TOKEN_MKT_PROD`). Either stack can also be run by hand from the
+Actions tab (`workflow_dispatch`, pick `dev` or `prod`) — but only once the
+file is on `master`, since GitHub lists workflows from the default branch. The
+prod job carries `NOINDEX: '1'` until cutover (step 2b).
 
 ### Branches
 
