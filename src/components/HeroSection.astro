@@ -5,6 +5,7 @@ import { availableGames, comingSoonGames } from '../data/games';
 import { getLocale, localizedHref, rootHref, useTranslations } from '../i18n';
 import Breadcrumb from './Breadcrumb.astro';
 import { launchCopy } from '../data/launch';
+import { WEB_APP_URL } from '../data/stores';
 import appicon     from '../assets/appicon.png';
 import vanikarLogo from '../assets/vanikar-logo.png';
 
@@ -28,6 +29,7 @@ const copy = {
     tables:     'Friends & Family Tables',
     download:   '🚀 Coming Soon — Explore the Games',
     browse:     '🔔 Get Notified at Launch',
+    playWeb:    '▶ Play in Browser',
     by:         'by',
     noAds:      '100% ad-free — always',
     pricing:    'Simple, honest pricing',
@@ -45,6 +47,7 @@ const copy = {
     tables:     'Mesas con amigos y familia',
     download:   '🚀 Muy pronto — Explora los juegos',
     browse:     '🔔 Avísame en el lanzamiento',
+    playWeb:    '▶ Jugar en el navegador',
     by:         'de',
     noAds:      '100% sin anuncios — siempre',
     pricing:    'Precios simples y honestos',
@@ -62,6 +65,7 @@ const copy = {
     tables:     'Mesas com amigos e família',
     download:   '🚀 Em breve — Explore os jogos',
     browse:     '🔔 Avise-me no lançamento',
+    playWeb:    '▶ Jogar no navegador',
     by:         'de',
     noAds:      '100% sem anúncios — sempre',
     pricing:    'Preços simples e honestos',
@@ -79,6 +83,7 @@ const copy = {
     tables:     'Tables entre amis et en famille',
     download:   '🚀 Bientôt disponible — Découvrez les jeux',
     browse:     '🔔 Être averti au lancement',
+    playWeb:    '▶ Jouer dans le navigateur',
     by:         'par',
     noAds:      '100 % sans publicité — toujours',
     pricing:    'Des prix simples et honnêtes',
@@ -96,6 +101,7 @@ const copy = {
     tables:     'Tische mit Freunden & Familie',
     download:   '🚀 Demnächst — Spiele entdecken',
     browse:     '🔔 Zum Start benachrichtigen',
+    playWeb:    '▶ Im Browser spielen',
     by:         'von',
     noAds:      '100 % werbefrei — immer',
     pricing:    'Einfache, ehrliche Preise',
@@ -113,6 +119,7 @@ const copy = {
     tables:     'दोस्तों और परिवार के साथ टेबल',
     download:   '🚀 जल्द आ रहा है — गेम देखें',
     browse:     '🔔 लॉन्च पर सूचित करें',
+    playWeb:    '▶ ब्राउज़र में खेलें',
     by:         'द्वारा',
     noAds:      '100% विज्ञापन-मुक्त — हमेशा',
     pricing:    'सरल, ईमानदार कीमतें',
@@ -130,6 +137,7 @@ const copy = {
     tables:     'Tavoli con amici e famiglia',
     download:   '🚀 In arrivo — Scopri i giochi',
     browse:     '🔔 Avvisami al lancio',
+    playWeb:    '▶ Gioca nel browser',
     by:         'di',
     noAds:      '100% senza pubblicità — sempre',
     pricing:    'Prezzi semplici e onesti',
@@ -147,6 +155,7 @@ const copy = {
     tables:     '友人・家族テーブル',
     download:   '🚀 近日公開 — ゲームを見る',
     browse:     '🔔 リリース時にお知らせ',
+    playWeb:    '▶ ブラウザでプレイ',
     by:         'by',
     noAds:      '広告は100%なし — ずっと',
     pricing:    'シンプルで誠実な料金',
@@ -232,6 +241,9 @@ const copy = {
 
         <div class="hero-actions">
           <button type="button" data-store="App Store / Google Play" class="btn btn-primary">{L.cta}</button>
+          {/* The browser version needs no install, so it is the one CTA that
+              works on whatever the visitor is reading this on. */}
+          <a href={WEB_APP_URL} class="btn btn-secondary btn-web">{copy.playWeb}</a>
           <a href={href('/games')} class="btn btn-secondary">{L.ctaSecondary}</a>
         </div>
 
@@ -239,6 +251,8 @@ const copy = {
           <button type="button" data-store="App Store" class="platform-badge">iOS</button>
           <span>&middot;</span>
           <button type="button" data-store="Google Play" class="platform-badge">Android</button>
+          <span>&middot;</span>
+          <a href={WEB_APP_URL} class="platform-badge">Web</a>
         </div>
       </div>
 
@@ -392,6 +406,9 @@ const copy = {
     text-transform: uppercase; letter-spacing: .12em; margin-top: .3rem;
   }
   .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.75rem; }
+  /* Gold-outlined so it sits between the filled download button and the plain
+     catalogue link: a way to play, not just a page to read. */
+  .btn-web { border-color: var(--gold-border); color: var(--gold-light); }
   .hero-platforms {
     display: flex; align-items: center;
     gap: .5rem; font-size: .78rem; color: var(--text-dim);

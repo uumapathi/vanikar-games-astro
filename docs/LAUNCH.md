@@ -68,6 +68,15 @@ export const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=PLA
 
 Paste the real App Store and Play Store URLs and set `STORES_LIVE = true`.
 
+The same file exports `WEB_APP_URL`, the browser version of the game. It is not
+a placeholder: it is derived from `SITE_URL`, so the dev site links to
+`play.dev.vanikar.games` and the production build links to
+`play.vanikar.games`. **That host must resolve by cutover** — today it only
+does so via the wildcard CNAME (step 4), which points at Appwrite. Add an
+explicit `play` CNAME to the web app's Static Web App before deleting the
+wildcard, or set `PUBLIC_WEB_APP_URL` at build time to point the links
+elsewhere until it exists.
+
 `src/data/launch.ts` already has `IS_LAUNCHED = true`, so all the "available now"
 wording is live. Nothing to change there.
 
@@ -157,9 +166,11 @@ Lower TTLs to 5 minutes ~24h beforehand so a mistake is cheap to undo.
 ### On the wildcard
 
 Deleting it means `play.vanikar.games` stops resolving — it currently only
-resolves *because of* the wildcard. That is fine while the web app does not
-exist; add an explicit `play` CNAME when it does. Leaving the wildcard in place
-after Appwrite is decommissioned means stray subdomains resolve to a dead host.
+resolves *because of* the wildcard. The site now links to that host from the
+nav, hero, download section, footer and store picker (see step 2a), so add an
+explicit `play` CNAME **before** deleting the wildcard. Leaving the wildcard in
+place after Appwrite is decommissioned means stray subdomains resolve to a dead
+host.
 
 ---
 

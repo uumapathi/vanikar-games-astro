@@ -1,6 +1,7 @@
 ---
 import VanikarLockup from './VanikarLockup.astro';
 import { getLocale, useTranslations, localizedHref, rootHref, unlocalizePath, localizePath, isTranslated, usesHubChrome, PRODUCT_BASE, LOCALES, LOCALE_LABELS } from '../i18n';
+import { WEB_APP_URL } from '../data/stores';
 
 const locale = getLocale(Astro.currentLocale);
 const t      = useTranslations(locale);
@@ -59,6 +60,9 @@ const switchTarget = (l: (typeof LOCALES)[number]) =>
       {isHub && !isHubRoot && <a href={hubHref} class="nav-link">{t('nav.home')}</a>}
       <a href={href('/privacy')}   class:list={['nav-link', { active: isPrivacy }]}>{t('nav.privacy')}</a>
       <a href={href('/terms')}     class:list={['nav-link', { active: isTerms }]}>{t('nav.terms')}</a>
+      {/* Two ways in: the browser version is a real link and plays at once;
+          the store button still has to work out which store to send you to. */}
+      {!isHub && <a href={WEB_APP_URL} class="nav-link nav-cta nav-cta--web">{t('nav.playWeb')}</a>}
       {!isHub && <button type="button" data-store="App Store / Google Play" class="nav-link nav-cta">{t('nav.getApp')}</button>}
       <div class="lang-dd" id="lang-dd">
         <button class="lang-dd-btn" id="lang-dd-btn" aria-haspopup="true" aria-expanded="false" aria-label="Language">
@@ -110,6 +114,7 @@ const switchTarget = (l: (typeof LOCALES)[number]) =>
            lang={l}>{LOCALE_LABELS[l]}</a>
       ))}
     </div>
+    {!isHub && <a href={WEB_APP_URL} class="nav-cta nav-cta--web" style="text-align:center;margin-top:.5rem;width:100%">{t('nav.playWeb')}</a>}
     {!isHub && <button type="button" data-store="App Store / Google Play" class="nav-cta" style="text-align:center;margin-top:.5rem;width:100%">{t('nav.getApp')}</button>}
   </div>
 </nav>
@@ -227,8 +232,18 @@ const switchTarget = (l: (typeof LOCALES)[number]) =>
     padding: .5rem 1.2rem; margin-left: .5rem;
     /* rendered as <button> until real store URLs exist */
     border: none; font-family: inherit; font-size: inherit; cursor: pointer;
+    /* A pill broken over two lines reads as a bug; when the bar is tight the
+       plain links are the ones that wrap. */
+    white-space: nowrap;
   }
   .nav-cta:hover { background: var(--gold-light); }
+  /* The browser link is the outlined twin of the filled store button, so the
+     pair reads as two routes to the same app rather than two competing CTAs. */
+  .nav-cta--web {
+    background: var(--gold-subtle); color: var(--gold-light) !important;
+    border: 1.5px solid var(--gold-border); padding: calc(.5rem - 1.5px) 1.2rem;
+  }
+  .nav-cta--web:hover { background: rgba(201,162,39,.16); border-color: var(--gold); }
   .lang-dd { position: relative; margin-left: .6rem; }
   .lang-dd-btn {
     display: flex; align-items: center; gap: .5rem;

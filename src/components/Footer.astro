@@ -1,6 +1,7 @@
 ---
 import VanikarLockup from './VanikarLockup.astro';
 import { getLocale, useTranslations, localizedHref, rootHref, unlocalizePath, usesHubChrome } from '../i18n';
+import { WEB_APP_URL } from '../data/stores';
 
 const year   = new Date().getFullYear();
 const locale = getLocale(Astro.currentLocale);
@@ -51,6 +52,13 @@ const hub    = rootHref('/', locale);
         <div class="footer-col">
           <div class="footer-heading">{t('footer.waysToPlay')}</div>
           <ul class="footer-links">
+            {/* The one entry here that is the game itself rather than a page
+                about it, so it leads and is marked as leaving the site. */}
+            <li>
+              <a href={WEB_APP_URL} class="footer-play">
+                {t('footer.playWeb')}<span class="footer-ext" aria-hidden="true">↗</span>
+              </a>
+            </li>
             <li><a href={href('/online-card-games')}>{t('footer.online')}</a></li>
             <li><a href={href('/multiplayer-card-games')}>{t('footer.multiplayer')}</a></li>
             <li><a href={href('/card-games-with-friends')}>{t('footer.withFriends')}</a></li>
@@ -122,6 +130,7 @@ const hub    = rootHref('/', locale);
   .footer-links { display: flex; flex-direction: column; gap: .55rem; }
   .footer-links a { font-size: .9rem; color: var(--text-secondary); transition: color var(--transition); }
   .footer-links a:hover { color: var(--gold-light); }
+  .footer-links .footer-play { color: var(--gold); font-weight: 600; }
   .footer-ext { font-size: .72em; margin-left: .3em; opacity: .6; }
   .footer-trademarks {
     font-size: .72rem; color: var(--text-dim); line-height: 1.7;

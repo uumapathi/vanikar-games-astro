@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import { getLocale, localizedHref } from '../i18n';
+import { WEB_APP_URL } from '../data/stores';
 import appicon from '../assets/appicon.png';
 
 const lang = getLocale(Astro.currentLocale);
@@ -8,51 +9,51 @@ const href = (p: string) => localizedHref(p, lang);
 const copy = {
   en: {
     tag: '♠ Get the App', title: 'Deal Yourself In',
-    subtitle: 'Free to download on iOS and Android. Create a free account, pick a game, and play — online or offline.',
-    iosLabel: 'Download on the', playLabel: 'Get it on',
-    note: 'Free to play  ·  iOS 16+  ·  Android 9+  ·  In English — more languages coming soon',
+    subtitle: 'Free to download on iOS and Android, or play right in your browser. Create a free account, pick a game, and play — online or offline.',
+    iosLabel: 'Download on the', playLabel: 'Get it on', webLabel: 'Play in your', webName: 'Browser',
+    note: 'Free to play  ·  iOS 16+  ·  Android 9+  ·  Any modern browser  ·  In English — more languages coming soon',
   },
   es: {
     tag: '♠ Consigue la app', title: 'Reparte y juega',
-    subtitle: 'Descarga gratis en iOS y Android. Crea una cuenta gratuita, elige un juego y juega — en línea o sin conexión.',
-    iosLabel: 'Descárgala en el', playLabel: 'Disponible en',
-    note: 'Gratis  ·  iOS 16+  ·  Android 9+  ·  En inglés — más idiomas próximamente',
+    subtitle: 'Descarga gratis en iOS y Android, o juega directamente en el navegador. Crea una cuenta gratuita, elige un juego y juega — en línea o sin conexión.',
+    iosLabel: 'Descárgala en el', playLabel: 'Disponible en', webLabel: 'Juega en tu', webName: 'Navegador',
+    note: 'Gratis  ·  iOS 16+  ·  Android 9+  ·  Cualquier navegador moderno  ·  En inglés — más idiomas próximamente',
   },
   pt: {
     tag: '♠ Baixe o app', title: 'Entre na jogada',
-    subtitle: 'Baixe grátis no iOS e no Android. Crie uma conta gratuita, escolha um jogo e jogue — online ou offline.',
-    iosLabel: 'Baixar na', playLabel: 'Disponível no',
-    note: 'Grátis para jogar  ·  iOS 16+  ·  Android 9+  ·  Em inglês — mais idiomas em breve',
+    subtitle: 'Baixe grátis no iOS e no Android, ou jogue direto no navegador. Crie uma conta gratuita, escolha um jogo e jogue — online ou offline.',
+    iosLabel: 'Baixar na', playLabel: 'Disponível no', webLabel: 'Jogue no seu', webName: 'Navegador',
+    note: 'Grátis para jogar  ·  iOS 16+  ·  Android 9+  ·  Qualquer navegador moderno  ·  Em inglês — mais idiomas em breve',
   },
   fr: {
     tag: '♠ Obtenir l’app', title: 'À vous de jouer',
-    subtitle: 'Téléchargement gratuit sur iOS et Android. Créez un compte gratuit, choisissez un jeu et lancez-vous — en ligne ou hors ligne.',
-    iosLabel: 'Télécharger dans l’', playLabel: 'Disponible sur',
-    note: 'Gratuit  ·  iOS 16+  ·  Android 9+  ·  En anglais — d’autres langues arrivent bientôt',
+    subtitle: 'Téléchargement gratuit sur iOS et Android, ou jouez directement dans votre navigateur. Créez un compte gratuit, choisissez un jeu et lancez-vous — en ligne ou hors ligne.',
+    iosLabel: 'Télécharger dans l’', playLabel: 'Disponible sur', webLabel: 'Jouez dans votre', webName: 'Navigateur',
+    note: 'Gratuit  ·  iOS 16+  ·  Android 9+  ·  Tout navigateur récent  ·  En anglais — d’autres langues arrivent bientôt',
   },
   de: {
     tag: '♠ App holen', title: 'Misch dich ein',
-    subtitle: 'Kostenlos für iOS und Android. Leg ein kostenloses Konto an, wähl ein Spiel und spiel los — online oder offline.',
-    iosLabel: 'Laden im', playLabel: 'Jetzt bei',
-    note: 'Kostenlos spielbar  ·  iOS 16+  ·  Android 9+  ·  Auf Englisch — weitere Sprachen folgen bald',
+    subtitle: 'Kostenlos für iOS und Android, oder spiel direkt im Browser. Leg ein kostenloses Konto an, wähl ein Spiel und spiel los — online oder offline.',
+    iosLabel: 'Laden im', playLabel: 'Jetzt bei', webLabel: 'Spiel im', webName: 'Browser',
+    note: 'Kostenlos spielbar  ·  iOS 16+  ·  Android 9+  ·  Jeder moderne Browser  ·  Auf Englisch — weitere Sprachen folgen bald',
   },
   hi: {
     tag: '♠ ऐप पाएँ', title: 'खेल में शामिल हों',
-    subtitle: 'iOS और Android पर मुफ़्त डाउनलोड करें। एक मुफ़्त अकाउंट बनाइए, गेम चुनिए और खेलिए — ऑनलाइन या ऑफ़लाइन।',
-    iosLabel: 'डाउनलोड करें', playLabel: 'उपलब्ध है',
-    note: 'खेलने के लिए मुफ़्त  ·  iOS 16+  ·  Android 9+  ·  अंग्रेज़ी में — और भाषाएँ जल्द आ रही हैं',
+    subtitle: 'iOS और Android पर मुफ़्त डाउनलोड करें, या सीधे ब्राउज़र में खेलें। एक मुफ़्त अकाउंट बनाइए, गेम चुनिए और खेलिए — ऑनलाइन या ऑफ़लाइन।',
+    iosLabel: 'डाउनलोड करें', playLabel: 'उपलब्ध है', webLabel: 'खेलें अपने', webName: 'ब्राउज़र में',
+    note: 'खेलने के लिए मुफ़्त  ·  iOS 16+  ·  Android 9+  ·  कोई भी आधुनिक ब्राउज़र  ·  अंग्रेज़ी में — और भाषाएँ जल्द आ रही हैं',
   },
   it: {
     tag: '♠ Scarica l’app', title: 'Siediti al tavolo',
-    subtitle: 'Gratis su iOS e Android. Crea un account gratuito, scegli un gioco e gioca — online o offline.',
-    iosLabel: 'Scarica su', playLabel: 'Disponibile su',
-    note: 'Gratis  ·  iOS 16+  ·  Android 9+  ·  In inglese — altre lingue in arrivo',
+    subtitle: 'Gratis su iOS e Android, oppure gioca direttamente nel browser. Crea un account gratuito, scegli un gioco e gioca — online o offline.',
+    iosLabel: 'Scarica su', playLabel: 'Disponibile su', webLabel: 'Gioca nel tuo', webName: 'Browser',
+    note: 'Gratis  ·  iOS 16+  ·  Android 9+  ·  Qualsiasi browser moderno  ·  In inglese — altre lingue in arrivo',
   },
   ja: {
     tag: '♠ アプリを入手', title: 'さあ、テーブルへ',
-    subtitle: 'iOSとAndroidで無料ダウンロード。無料アカウントを作成し、ゲームを選んでプレイ——オンラインでもオフラインでも。',
-    iosLabel: 'ダウンロードは', playLabel: '入手は',
-    note: '無料でプレイ  ·  iOS 16+  ·  Android 9+  ·  英語版 — 他の言語も順次対応',
+    subtitle: 'iOSとAndroidで無料ダウンロード、またはそのままブラウザでプレイ。無料アカウントを作成し、ゲームを選んでプレイ——オンラインでもオフラインでも。',
+    iosLabel: 'ダウンロードは', playLabel: '入手は', webLabel: 'プレイは', webName: 'ブラウザで',
+    note: '無料でプレイ  ·  iOS 16+  ·  Android 9+  ·  最新のブラウザ  ·  英語版 — 他の言語も順次対応',
   },
 }[lang];
 ---
@@ -88,6 +89,15 @@ const copy = {
           <span class="btn-store-name">Google Play</span>
         </div>
       </button>
+      {/* Same shape as the two store buttons, but a real link: there is no
+          store in the way, so nothing to gate on STORES_LIVE. */}
+      <a href={WEB_APP_URL} class="btn-store">
+        <span class="btn-store-icon btn-store-web" aria-hidden="true">▶</span>
+        <div class="btn-store-text">
+          <span class="btn-store-label">{copy.webLabel}</span>
+          <span class="btn-store-name">{copy.webName}</span>
+        </div>
+      </a>
     </div>
 
     <p class="download-note">{copy.note}</p>
@@ -112,6 +122,13 @@ const copy = {
     flex-wrap: wrap; margin-top: 2.5rem;
   }
   .btn-store-appicon { width: 36px; height: 36px; border-radius: 9px; flex-shrink: 0; }
+  /* A play glyph in a tile the same size as the app icon beside it, so the
+     three buttons line up as one row. */
+  .btn-store-web {
+    width: 36px; height: 36px; border-radius: 9px; flex-shrink: 0;
+    display: grid; place-items: center; font-size: 1rem;
+    background: var(--gold); color: var(--bg-deep);
+  }
   .download-note { margin-top: 1.5rem; font-size: .8rem; color: var(--text-dim); }
 
 </style>

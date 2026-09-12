@@ -159,6 +159,8 @@ export const ui = {
     'nav.privacy':   'Privacy',
     'nav.terms':     'Terms',
     'nav.getApp':    'Get the App',
+    'nav.playWeb':   'Play Now',
+    'footer.playWeb': 'Play in Your Browser',
 
     'footer.tagline':      'Classic card tables, beautifully reimagined. Play online, practice with AI, and compete in tournaments — all in one app.',
     'footer.waysToPlay':   'Ways to Play',
@@ -194,6 +196,8 @@ export const ui = {
     'nav.privacy':   'Privacidad',
     'nav.terms':     'Términos',
     'nav.getApp':    'Descargar App',
+    'nav.playWeb':   'Jugar ahora',
+    'footer.playWeb': 'Jugar en el navegador',
 
     'footer.tagline':      'Mesas de cartas clásicas, bellamente reinventadas. Juega en línea, practica contra la IA y compite en torneos — todo en una sola app.',
     'footer.waysToPlay':   'Formas de jugar',
@@ -229,6 +233,8 @@ export const ui = {
     'nav.privacy':   'Privacidade',
     'nav.terms':     'Termos',
     'nav.getApp':    'Baixar o app',
+    'nav.playWeb':   'Jogar agora',
+    'footer.playWeb': 'Jogar no navegador',
 
     'footer.tagline':      'Mesas de cartas clássicas, lindamente reimaginadas. Jogue online, pratique contra a IA e dispute torneios — tudo em um só app.',
     'footer.waysToPlay':   'Formas de jogar',
@@ -264,6 +270,8 @@ export const ui = {
     'nav.privacy':   'Confidentialité',
     'nav.terms':     'Conditions',
     'nav.getApp':    'Télécharger l’app',
+    'nav.playWeb':   'Jouer maintenant',
+    'footer.playWeb': 'Jouer dans le navigateur',
 
     'footer.tagline':      'Des tables de cartes classiques, magnifiquement réinventées. Jouez en ligne, entraînez-vous contre l’IA et participez à des tournois — le tout dans une seule app.',
     'footer.waysToPlay':   'Façons de jouer',
@@ -299,6 +307,8 @@ export const ui = {
     'nav.privacy':   'Datenschutz',
     'nav.terms':     'AGB',
     'nav.getApp':    'App holen',
+    'nav.playWeb':   'Jetzt spielen',
+    'footer.playWeb': 'Im Browser spielen',
 
     'footer.tagline':      'Klassische Kartentische, wunderschön neu gedacht. Online spielen, gegen KI üben und in Turnieren antreten — alles in einer App.',
     'footer.waysToPlay':   'Spielmöglichkeiten',
@@ -334,6 +344,8 @@ export const ui = {
     'nav.privacy':   'गोपनीयता',
     'nav.terms':     'शर्तें',
     'nav.getApp':    'ऐप पाएं',
+    'nav.playWeb':   'अभी खेलें',
+    'footer.playWeb': 'ब्राउज़र में खेलें',
 
     'footer.tagline':      'क्लासिक कार्ड टेबल, खूबसूरती से नए रूप में। ऑनलाइन खेलें, AI के साथ अभ्यास करें और टूर्नामेंट में मुकाबला करें — सब एक ही ऐप में।',
     'footer.waysToPlay':   'खेलने के तरीके',
@@ -369,6 +381,8 @@ export const ui = {
     'nav.privacy':   'Privacy',
     'nav.terms':     'Termini',
     'nav.getApp':    'Scarica l’app',
+    'nav.playWeb':   'Gioca ora',
+    'footer.playWeb': 'Gioca nel browser',
 
     'footer.tagline':      'Tavoli da gioco classici, splendidamente reinventati. Gioca online, allenati con l’IA e competi nei tornei — tutto in un’unica app.',
     'footer.waysToPlay':   'Modi per giocare',
@@ -404,6 +418,8 @@ export const ui = {
     'nav.privacy':   'プライバシー',
     'nav.terms':     '利用規約',
     'nav.getApp':    'アプリを入手',
+    'nav.playWeb':   '今すぐプレイ',
+    'footer.playWeb': 'ブラウザでプレイ',
 
     'footer.tagline':      'クラシックなカードテーブルを、美しく再構築。オンラインで対戦し、AIと練習し、トーナメントで競う——すべてひとつのアプリで。',
     'footer.waysToPlay':   '遊び方',
