@@ -9,9 +9,14 @@ name: Deploy to Azure Static Web Apps
 # whenever it points at a dev host. Getting it wrong publishes a site that
 # either competes with production or advertises the wrong domain.
 #
-# Two stacks, one workflow. Every push builds and deploys dev; a push to
-# `release` deploys production as well. GitHub runs the workflow file from the
-# branch that was pushed, so this works without the file being on master.
+# Two stacks, one workflow, one branch each: `release` deploys dev, `master`
+# deploys production. Work lands on `release` and is promoted by pull request
+# into `master`, and those PRs get a preview on the dev stack.
+#
+# GitHub runs the workflow file from the branch that was pushed, so the
+# master -> production half of this only fires once this file exists on
+# `master`. Merging `release` into `master` is what puts it there — and that
+# same merge is the first thing it deploys.
 
 on:
   push:
@@ -34,7 +39,7 @@ concurrency:
 jobs:
   build_and_deploy:
     if: >-
-      github.event_name == 'push' ||
+      (github.event_name == 'push' && github.ref == 'refs/heads/release') ||
       (github.event_name == 'pull_request' && github.event.action != 'closed') ||
       (github.event_name == 'workflow_dispatch' && inputs.environment == 'dev')
     runs-on: ubuntu-latest
@@ -73,18 +78,19 @@ jobs:
           skip_app_build: true
           skip_api_build: true
 
-  # Production builds for vanikar.games (the SITE_URL default). Until DNS is cut
-  # over, the prod Static Web App is only reachable at its azurestaticapps.net
-  # hostname, so it ships noindex to keep that hostname out of search. At
-  # cutover, delete the NOINDEX line below — docs/LAUNCH.md step 2b.
+  # Production builds for vanikar.games (the SITE_URL default).
+  #
+  # Indexable: the NOINDEX flag that protected the bare azurestaticapps.net
+  # hostname before cutover is gone, because a production site that ships
+  # noindex is invisible. Do not put it back — the canonical tags point every
+  # page at vanikar.games, which is what keeps the azurestaticapps hostname
+  # from competing now that it answers for real.
   build_and_deploy_prod:
     if: >-
-      (github.event_name == 'push' && github.ref == 'refs/heads/release') ||
+      (github.event_name == 'push' && github.ref == 'refs/heads/master') ||
       (github.event_name == 'workflow_dispatch' && inputs.environment == 'prod')
     runs-on: ubuntu-latest
     name: Build and deploy (prod)
-    env:
-      NOINDEX: '1'
     steps:
       - uses: actions/checkout@v4
         with:

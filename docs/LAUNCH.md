@@ -25,29 +25,86 @@ or repoint it.
 
 ---
 
-## 1. Decide how the apex will resolve
+## 1. Move DNS hosting to Azure DNS
 
-**This is the one genuine blocker, so settle it before launch day.**
+**Do this days before cutover, on its own. Mail is the risk, not the website.**
 
 Azure Static Web Apps has no fixed IP. A subdomain binds with a plain `CNAME`,
-but an apex (`vanikar.games`, no `www`) needs an `ALIAS`/`ANAME` record — a
-CNAME-like record legal at the zone root. The apex currently uses `A` + `AAAA`
-records pointing at Fastly, which is how Appwrite serves it; those cannot be
-reused for Azure.
+but the apex (`vanikar.games`, no `www`) needs an `ALIAS`/`ANAME` — a CNAME-like
+record legal at the zone root. The zone is on IONOS's *registrar* nameservers
+(`ns1033.ui-dns.org`, `ns1105.ui-dns.com`, `ns1074.ui-dns.biz`,
+`ns1106.ui-dns.de`), whose editor offers A / AAAA / CNAME / MX / NS / TXT / SPF
+/ DMARC / SRV / CAA and **no ALIAS**. IONOS *Cloud* DNS is a different product
+and would mean delegating the zone anyway.
 
-Pick one:
+So the apex cannot be pointed at Azure while the zone stays where it is. Move
+the zone to **Azure DNS** — the domain stays registered at IONOS; only the
+nameservers change.
 
-| Option | What it means | Trade-off |
+> Cloudflare is an equal alternative (CNAME flattening, free) and is worth
+> taking instead if you want its geo headers for the cookie banner. The steps
+> below are the same shape either way.
+
+### 1.1 Write the zone down first
+
+The zone has a **wildcard `* CNAME → appwrite.network`**, and it answers for
+*any* name that has no explicit record — `definitely-not-a-selector._domainkey`
+resolves. That means **you cannot enumerate this zone from outside**: a DNS
+lookup cannot tell a real record from the wildcard. Export it from the IONOS
+panel and treat that export as the only authoritative list.
+
+What is visible from outside today:
+
+| Name | Type | Value |
 |---|---|---|
-| **A. IONOS supports ALIAS/ANAME** | Point an apex ALIAS at the SWA hostname | Simplest by far. Check the IONOS DNS editor for an `ALIAS` or `ANAME` type — if the list is only A / AAAA / CNAME / MX / TXT / SRV / NS / CAA, this option is out |
-| **B. Move DNS hosting to Azure DNS** | Change nameservers at IONOS; domain stays registered there | Cleanest long-term, native SWA alias support. **You must recreate MX, SPF, DKIM, the Google verification TXT and the dev CNAMEs, or mail and verification break** |
-| **C. Move DNS to Cloudflare** | Free tier, CNAME flattening at apex | Same migration care as B; adds a second vendor |
-| **D. Serve on `www`, forward apex** | `www` is canonical, IONOS forwards apex → www | Avoids the apex problem entirely, but `site` in `astro.config.mjs` must become `https://www.vanikar.games` and every canonical, hreflang, sitemap entry and OG URL changes. Only choose this deliberately |
+| `@` | A | `151.101.3.52`, `151.101.67.52`, `151.101.131.52`, `151.101.195.52` (Fastly → Appwrite) |
+| `@` | AAAA | `2a04:4e42:200::820`, `2a04:4e42:400::820`, `2a04:4e42:600::820` |
+| `@` | MX | `mx.zoho.com` (10), `mx2.zoho.com` (20), `mx3.zoho.com` (30) |
+| `@` | TXT | `v=spf1 include:zohomail.com ~all` |
+| `@` | TXT | `google-site-verification=t8hNk8QL7P0TsWsiuzDvrXmgiUOcBDJbLn-0Cr3KcNI` |
+| `www` | CNAME | `appwrite.network` |
+| `*` | CNAME | `appwrite.network` |
+| `dev` | CNAME | `proud-pebble-01df7b70f.6.azurestaticapps.net` |
+| `play.dev` | CNAME | `ashy-field-065158f0f.3.azurestaticapps.net` |
 
-**Recommendation:** check for option A first — it is one record change. If IONOS
-does not offer it, take B. Under B, do the DNS migration as its own task on a
-quiet day, verify mail still flows, *then* do the cutover below. Do not combine
-the two.
+**DKIM appears not to exist.** An explicit record always beats a wildcard, and
+every `_domainkey` name returns the wildcard — so there is no DKIM record in
+this zone. Confirm in the Zoho admin console before you assume that is fine;
+if Zoho shows DKIM as configured for `vanikar.games`, find the selector there
+and carry it across. Mail without DKIM still delivers, but signs nothing.
+
+There is no `_dmarc` record either. Adding one is a good idea, but do it
+*after* the move, not during.
+
+### 1.2 Build the zone in Azure, then switch
+
+```bash
+az account set --subscription 1c396eb7-1206-40ad-8a35-097bade203d7
+az network dns zone create -g rg-vanikar-prod -n vanikar.games
+az network dns zone show -g rg-vanikar-prod -n vanikar.games --query nameServers -o tsv
+```
+
+Recreate **every** record from the IONOS export in the new zone *before*
+touching nameservers — MX, both TXTs, `dev`, `play.dev`, the wildcard, and
+anything the export turns up that is not in the table above. Leave the apex and
+`www` pointing at Appwrite for now: this step changes *who answers*, not *what
+they answer*.
+
+Then, at IONOS: lower the zone TTL to 300 seconds, wait a day, and only then
+change the nameservers to the four Azure returned.
+
+### 1.3 Verify before going further
+
+```bash
+dig +short NS vanikar.games            # the four Azure nameservers
+dig +short MX vanikar.games            # mx/mx2/mx3.zoho.com
+dig +short TXT vanikar.games           # SPF + google-site-verification
+```
+
+Send a mail to a `@vanikar.games` address and reply from it. Confirm Search
+Console still shows the property as verified. **Stop here until mail is proven
+to work.** The website has not changed at this point and Appwrite is still
+serving it, so there is nothing to roll back except the nameservers.
 
 ---
 
@@ -80,23 +137,22 @@ elsewhere until it exists.
 `src/data/launch.ts` already has `IS_LAUNCHED = true`, so all the "available now"
 wording is live. Nothing to change there.
 
-### 2b. Drop the temporary noindex
+### 2b. The temporary noindex — done
 
-Production is currently deployed with a forced `noindex` because it is only
-reachable at its `azurestaticapps.net` hostname. The flag lives in the prod job
-of `.github/workflows/azure-swa.yml` (`NOINDEX: '1'`) — **delete that line at
-cutover**; building without it is what removes the header:
+**Production is indexable.** The `NOINDEX: '1'` flag is gone from the prod job
+of `.github/workflows/azure-swa.yml`, and the deployed build carries no
+`X-Robots-Tag`. Nothing to do here at cutover.
+
+Verify rather than assume — one header decides whether the site can rank at all:
 
 ```bash
-npm run build          # production, indexable  ← use this at cutover
-NOINDEX=1 npm run build   # what is deployed today
+curl -sI https://vanikar.games/ | grep -i x-robots   # expect no output
 ```
 
-The build log prints `[NOINDEX — forced, remove at cutover]` when the flag is on.
-Check for its absence before deploying.
-
 > A production site shipping `noindex` looks perfectly healthy and simply never
-> ranks. This is the single easiest thing to get wrong here.
+> ranks. This is the single easiest thing to get wrong here. Do not reintroduce
+> the flag; the canonical tags are what keep the `azurestaticapps.net` hostname
+> from competing, and they point every page at `vanikar.games`.
 
 ### 2c. Google Analytics
 
@@ -141,65 +197,112 @@ Expect no `x-robots-tag`, and a canonical of `https://vanikar.games/cardgames/he
 
 ---
 
-## 4. DNS changes at IONOS
+## 4. Cut the domain over to Azure
 
-Lower TTLs to 5 minutes ~24h beforehand so a mistake is cheap to undo.
+By this point the zone is on Azure DNS (step 1) and mail is proven. **Azure
+production already serves a byte-equivalent copy of the live Appwrite site** —
+same `/games/…` URLs, same canonicals, same Google Analytics property, real
+404s on unknown paths. So this cutover changes the server, not the site. The
+new `/cardgames/` site is a separate, later deploy.
 
-### Change
+### 4.1 Bind `www` first
 
-| Record | From | To |
-|---|---|---|
-| `@` (apex) A + AAAA | Fastly `151.101.*` / `2a04:4e42:*` | **Delete**, replace per your step-1 choice |
-| `@` (apex) ALIAS | — | `black-grass-013598300.3.azurestaticapps.net` |
-| `www` CNAME | `appwrite.network` | `black-grass-013598300.3.azurestaticapps.net` |
-| `*` wildcard CNAME | `appwrite.network` | **Delete**, or repoint — see note below |
-
-### Keep — do not touch
-
-- `MX` → `mx.zoho.com` (10), `mx2` (20), `mx3` (30)
-- `TXT` SPF → `v=spf1 include:zohomail.com ~all`
-- `TXT` DKIM → read the selector from IONOS / the Zoho admin console
-- `TXT` → `google-site-verification=t8hNk8QL7P0TsWsiuzDvrXmgiUOcBDJbLn-0Cr3KcNI`
-  — this is what keeps Search Console verified. Removing it un-verifies the property.
-- `dev` CNAME → `proud-pebble-01df7b70f.6.azurestaticapps.net`
-- `play.dev` CNAME → `ashy-field-065158f0f.3.azurestaticapps.net`
-
-### On the wildcard
-
-Deleting it means `play.vanikar.games` stops resolving — it currently only
-resolves *because of* the wildcard. The site now links to that host from the
-nav, hero, download section, footer and store picker (see step 2a), so add an
-explicit `play` CNAME **before** deleting the wildcard. Leaving the wildcard in
-place after Appwrite is decommissioned means stray subdomains resolve to a dead
-host.
-
----
-
-## 5. Bind the domains in Azure
-
-Only once DNS resolves — Azure rejects the binding otherwise.
+`www` is the safe rehearsal: it is a plain CNAME, and nothing canonical points
+at it, so breaking it breaks nothing.
 
 ```bash
-nslookup -type=CNAME www.vanikar.games 8.8.8.8      # confirm it points at Azure
+az account set --subscription 1c396eb7-1206-40ad-8a35-097bade203d7
+
+# point www at Azure (replaces the appwrite.network CNAME)
+az network dns record-set cname set-record -g rg-vanikar-prod -z vanikar.games \
+  -n www --cname black-grass-013598300.3.azurestaticapps.net
+
+az staticwebapp hostname set --name swa-vanikar-mkt-prod \
+  --resource-group rg-vanikar-prod --hostname www.vanikar.games
+```
+
+Wait for `Ready` (about four minutes on dev, through `Validating` → `Adding`),
+then confirm `https://www.vanikar.games/` serves and its certificate is valid.
+If anything is wrong, put the CNAME back and nothing has been lost.
+
+### 4.2 Bind the apex
+
+An Azure DNS **alias record** points the zone root straight at the Static Web
+App resource — this is the thing IONOS could not do:
+
+```bash
+SWA_ID=$(az staticwebapp show -n swa-vanikar-mkt-prod -g rg-vanikar-prod --query id -o tsv)
+
+# remove the Fastly records that point at Appwrite
+az network dns record-set a    delete -g rg-vanikar-prod -z vanikar.games -n @ -y
+az network dns record-set aaaa delete -g rg-vanikar-prod -z vanikar.games -n @ -y
+
+az network dns record-set a create -g rg-vanikar-prod -z vanikar.games \
+  -n @ --target-resource "$SWA_ID" --ttl 300
 
 az staticwebapp hostname set --name swa-vanikar-mkt-prod \
   --resource-group rg-vanikar-prod --hostname vanikar.games
-az staticwebapp hostname set --name swa-vanikar-mkt-prod \
-  --resource-group rg-vanikar-prod --hostname www.vanikar.games
-
-az staticwebapp hostname list --name swa-vanikar-mkt-prod \
-  --resource-group rg-vanikar-prod --query "[].{host:name,status:status}" -o table
 ```
 
-Wait for both to read `Ready`. On dev this took about four minutes through
-`Validating` → `Adding` → `Ready`. Certificates are issued and renewed
-automatically.
+**The Free tier allows exactly two custom domains** — apex and `www` fills it.
 
-**The Free tier allows exactly two custom domains** — apex and `www` uses both.
+### 4.3 The wildcard
+
+`* CNAME → appwrite.network` currently answers for every unlisted name,
+including `play.vanikar.games`, which the site links to from the nav, hero,
+download section, footer and store picker. **Add an explicit `play` CNAME
+before deleting the wildcard**, or the browser version 404s from every one of
+those links:
+
+```bash
+az network dns record-set cname set-record -g rg-vanikar-prod -z vanikar.games \
+  -n play --cname <the play SWA hostname>
+```
+
+Delete the wildcard once Appwrite is decommissioned — left in place it points
+stray subdomains at a dead host. Check the IONOS export first for anything else
+that was relying on it.
+
+### 4.4 Keep — do not touch
+
+- `MX` → `mx.zoho.com` (10), `mx2` (20), `mx3` (30)
+- `TXT` SPF → `v=spf1 include:zohomail.com ~all`
+- `TXT` → `google-site-verification=t8hNk8QL7P0TsWsiuzDvrXmgiUOcBDJbLn-0Cr3KcNI`
+  — this is what keeps Search Console verified. Removing it un-verifies the property.
+- `dev` → `proud-pebble-01df7b70f.6.azurestaticapps.net`
+- `play.dev` → `ashy-field-065158f0f.3.azurestaticapps.net`
 
 ---
 
-## 6. Verify
+## 5. Confirm the switch actually happened
+
+The response header is the proof — Appwrite and Azure are indistinguishable by
+eye, because that is the point.
+
+```bash
+curl -sI https://vanikar.games/ | grep -iE 'server|x-appwrite|x-azure'
+```
+
+`swoole-http-server` / `X-Appwrite-*` means you are still on Appwrite and DNS
+has not propagated. No Appwrite headers means Azure is answering.
+
+```bash
+for u in / /games/ /games/hearts/ /pricing/ /zzz-not-real/; do
+  printf '%-20s %s\n' "$u" "$(curl -s -o /dev/null -w '%{http_code}' https://vanikar.games$u)"
+done
+curl -sI https://vanikar.games/ | grep -i x-robots     # expect NOTHING
+```
+
+Expect 200s and a 404 on the last one. An `x-robots-tag` here means the site
+cannot rank — fix before anything else.
+
+---
+
+## 6. Verify — after the new site ships
+
+*Step 5 checks the domain moved. This checks the `/cardgames/` site went live,
+which is the separate, later deploy (step 3). Until then these paths 404 by
+design: production is serving the old URL shape on purpose.*
 
 ```bash
 for u in "" cardgames/ cardgames/hearts/ cardgames/availablegames/ \
@@ -267,12 +370,26 @@ Tools → **Import from Google Search Console**, which picks up the same sitemap
 
 ### CI
 
-`.github/workflows/azure-swa.yml` deploys **dev on every push** to `master` or
-`release`, and **production on pushes to `release`** (secret
-`AZURE_SWA_TOKEN_MKT_PROD`). Either stack can also be run by hand from the
-Actions tab (`workflow_dispatch`, pick `dev` or `prod`) — but only once the
-file is on `master`, since GitHub lists workflows from the default branch. The
-prod job carries `NOINDEX: '1'` until cutover (step 2b).
+`.github/workflows/azure-swa.yml` gives each branch one stack:
+
+| Branch | Deploys | Secret |
+|---|---|---|
+| `release` | dev — `dev.vanikar.games` | `AZURE_SWA_TOKEN_MKT_DEV` |
+| `master` | **production** | `AZURE_SWA_TOKEN_MKT_PROD` |
+
+Work lands on `release`; promoting it is a pull request into `master`, and
+those PRs get a preview on the dev stack. Either stack can also be run by hand
+from the Actions tab (`workflow_dispatch`, pick `dev` or `prod`) — but only
+once the file is on `master`, since GitHub lists workflows from the default
+branch. The prod job builds indexable — the pre-cutover `NOINDEX` flag has been
+removed (step 2b).
+
+> **The master half is dormant until the file reaches master.** GitHub runs the
+> workflow from the branch that was pushed, and `master` is still at `40fa8b8`
+> with only a stale workflow that targets a `main` branch that does not exist.
+> Merging `release` into `master` is what arms this — and that merge is the
+> first thing it will deploy to production. Do not push `master` before you
+> mean to publish it.
 
 ### Branches
 
@@ -339,9 +456,8 @@ this a thirty-second rollback instead of an outage.
 
 **Commands**
 ```bash
-npm run build          # production (indexable)
-NOINDEX=1 npm run build   # production URLs, noindex header
-SITE_URL=https://dev.vanikar.games npm run build   # dev
+npm run build          # production (indexable) — what prod ships
+SITE_URL=https://dev.vanikar.games npm run build   # dev (noindex, automatic)
 npm run faq-audit      # FAQ content checks
 npm run overlay-audit  # translation completeness, all 8 locales
 node scripts/gen-og.mjs        # regenerate OG cards
