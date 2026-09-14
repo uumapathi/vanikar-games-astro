@@ -112,18 +112,15 @@ serving it, so there is nothing to roll back except the nameservers.
 
 Both live in the repo. Do these first so the deployed artifact is correct.
 
-### 2a. Store URLs
+### 2a. Store URLs — done
 
-`src/data/stores.ts` currently holds placeholders and every store button shows an
-alert instead of navigating:
+`src/data/stores.ts` holds the live listings and `STORES_LIVE = true`, so every
+store button navigates:
 
 ```ts
-export const STORES_LIVE = false;
-export const APP_STORE_URL = 'https://apps.apple.com/app/idPLACEHOLDER';
-export const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=PLACEHOLDER';
+export const APP_STORE_URL = 'https://apps.apple.com/app/id6776043744';
+export const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com.vanikar.cardgames';
 ```
-
-Paste the real App Store and Play Store URLs and set `STORES_LIVE = true`.
 
 The same file exports `WEB_APP_URL`, the browser version of the game. It is not
 a placeholder: it is derived from `SITE_URL`, so the dev site links to
