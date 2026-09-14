@@ -161,7 +161,7 @@ const alternates   = isTranslated(basePath) && hreflangSet.length > 1
     <h2 id="sp-title" class="sp-title">{SP.title}</h2>
     <p class="sp-body">{SP.body}</p>
     <div class="sp-actions">
-      <a href={WEB_APP_URL} class="btn btn-primary sp-btn">▶ {SP.web}</a>
+      <a href={WEB_APP_URL} target="_blank" rel="noopener" class="btn btn-primary sp-btn">▶ {SP.web}</a>
       <button type="button" data-store="App Store"   class="btn btn-secondary sp-btn">{SP.ios}</button>
       <button type="button" data-store="Google Play" class="btn btn-secondary sp-btn">{SP.play}</button>
     </div>

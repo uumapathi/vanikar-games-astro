@@ -243,7 +243,7 @@ const copy = {
           <button type="button" data-store="App Store / Google Play" class="btn btn-primary">{L.cta}</button>
           {/* The browser version needs no install, so it is the one CTA that
               works on whatever the visitor is reading this on. */}
-          <a href={WEB_APP_URL} class="btn btn-secondary btn-web">{copy.playWeb}</a>
+          <a href={WEB_APP_URL} target="_blank" rel="noopener" class="btn btn-secondary btn-web">{copy.playWeb}</a>
           <a href={href('/games')} class="btn btn-secondary">{L.ctaSecondary}</a>
         </div>
 
@@ -252,7 +252,7 @@ const copy = {
           <span>&middot;</span>
           <button type="button" data-store="Google Play" class="platform-badge">Android</button>
           <span>&middot;</span>
-          <a href={WEB_APP_URL} class="platform-badge">Web</a>
+          <a href={WEB_APP_URL} target="_blank" rel="noopener" class="platform-badge">Web</a>
         </div>
       </div>
 

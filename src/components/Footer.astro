@@ -55,7 +55,7 @@ const hub    = rootHref('/', locale);
             {/* The one entry here that is the game itself rather than a page
                 about it, so it leads and is marked as leaving the site. */}
             <li>
-              <a href={WEB_APP_URL} class="footer-play">
+              <a href={WEB_APP_URL} target="_blank" rel="noopener" class="footer-play">
                 {t('footer.playWeb')}<span class="footer-ext" aria-hidden="true">↗</span>
               </a>
             </li>

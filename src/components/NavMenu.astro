@@ -64,7 +64,7 @@ const switchTarget = (l: (typeof LOCALES)[number]) =>
       {!isTerms   && <a href={href('/terms')}   class="nav-link">{t('nav.terms')}</a>}
       {/* Two ways in: the browser version is a real link and plays at once;
           the store button still has to work out which store to send you to. */}
-      {!isHub && <a href={WEB_APP_URL} class="nav-link nav-cta nav-cta--web">{t('nav.playWeb')}</a>}
+      {!isHub && <a href={WEB_APP_URL} target="_blank" rel="noopener" class="nav-link nav-cta nav-cta--web">{t('nav.playWeb')}</a>}
       {!isHub && <button type="button" data-store="App Store / Google Play" class="nav-link nav-cta">{t('nav.getApp')}</button>}
       <div class="lang-dd" id="lang-dd">
         <button class="lang-dd-btn" id="lang-dd-btn" aria-haspopup="true" aria-expanded="false" aria-label="Language">
@@ -116,7 +116,7 @@ const switchTarget = (l: (typeof LOCALES)[number]) =>
            lang={l}>{LOCALE_LABELS[l]}</a>
       ))}
     </div>
-    {!isHub && <a href={WEB_APP_URL} class="nav-cta nav-cta--web" style="text-align:center;margin-top:.5rem;width:100%">{t('nav.playWeb')}</a>}
+    {!isHub && <a href={WEB_APP_URL} target="_blank" rel="noopener" class="nav-cta nav-cta--web" style="text-align:center;margin-top:.5rem;width:100%">{t('nav.playWeb')}</a>}
     {!isHub && <button type="button" data-store="App Store / Google Play" class="nav-cta" style="text-align:center;margin-top:.5rem;width:100%">{t('nav.getApp')}</button>}
   </div>
 </nav>
